@@ -1,0 +1,193 @@
+\chapter{Second-Order Linear Differential Equations \& Oscillations}
+\index{Second-Order ODEs}
+\index{Harmonic Oscillator}
+\index{Damped Oscillations}
+\index{Overdamped}
+\index{Critically Damped}
+\index{Underdamped}
+\index{Driven Oscillations}
+\index{Resonance}
+\index{Quality Factor}
+
+\begin{chapterobjectives}
+Upon mastering this chapter, students will be able to:
+\begin{enumerate}
+    \item Solve homogeneous linear second-order ODEs with constant coefficients using the characteristic auxiliary equation.
+    \item Classify and physically interpret the three distinct damping regimes: overdamped, critically damped, and underdamped.
+    \item Find particular solutions to inhomogeneous ODEs using undetermined coefficients and variation of parameters.
+    \item Analyze driven mechanical and electrical oscillators, deriving the amplitude magnification and phase lag curves.
+    \item Calculate the resonance frequency, resonance peak height, and bandwidth in terms of the Quality factor ($Q$).
+    \item Compute and simulate damped and driven multi-frequency resonances numerically in Python.
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{Homogeneous Linear Second-Order ODEs with Constant Coefficients}
+Second-order differential equations are central to physics because Newton's second law $\vec{F} = m\frac{d^2\vec{x}}{dt^2}$, wave equations $\nabla^2 \psi = \frac{1}{v^2}\frac{\partial^2 \psi}{\partial t^2}$, and Schrödinger's equation are all of second order.
+
+The standard homogeneous equation with real constant coefficients is:
+\begin{equation}
+a\frac{d^2 x}{dt^2} + b\frac{dx}{dt} + c x = 0
+\end{equation}
+Substituting the trial solution $x(t) = e^{rt}$ yields the algebraic \textbf{characteristic equation}:
+\begin{equation}
+a r^2 + b r + c = 0 \implies r_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{equation}
+
+\section{The Damped Harmonic Oscillator and Three Dynamic Regimes}
+Consider a particle of mass $m$ attached to a spring of constant $k$ moving in a viscous damping medium with drag force $F_d = -b\dot{x}$. Newton's second law gives:
+\begin{equation}
+m\ddot{x} + b\dot{x} + kx = 0 \iff \ddot{x} + 2\gamma\dot{x} + \omega_0^2 x = 0
+\end{equation}
+where $\omega_0 \equiv \sqrt{k/m}$ is the **undamped natural frequency**, and $\gamma \equiv \frac{b}{2m}$ is the **damping coefficient**. The characteristic roots are:
+\begin{equation}
+r_{1,2} = -\gamma \pm \sqrt{\gamma^2 - \omega_0^2}
+\end{equation}
+
+Depending on the discriminant $\Delta = \gamma^2 - \omega_0^2$, the system exhibits three distinct physical regimes:
+\begin{enumerate}
+    \item \textbf{Overdamped ($\gamma > \omega_0$):} Roots are real, distinct, and negative. The mass returns exponentially to equilibrium without oscillating:
+    \begin{equation}
+    x(t) = C_1 e^{-(\gamma - \sqrt{\gamma^2 - \omega_0^2})t} + C_2 e^{-(\gamma + \sqrt{\gamma^2 - \omega_0^2})t}
+    \end{equation}
+    \item \textbf{Critically Damped ($\gamma = \omega_0$):} Repeated real root $r_1 = r_2 = -\gamma$. The system returns to equilibrium in the fastest possible time without overshoot:
+    \begin{equation}
+    x(t) = (C_1 + C_2 t)e^{-\gamma t}
+    \end{equation}
+    This is the ideal design for automobile shock absorbers and analog galvanometer meters.
+    \item \textbf{Underdamped ($\gamma < \omega_0$):} Roots are complex conjugates $r_{1,2} = -\gamma \pm i\omega_d$, where $\omega_d \equiv \sqrt{\omega_0^2 - \gamma^2}$ is the \textbf{damped angular frequency}:
+    \begin{equation}
+    x(t) = A e^{-\gamma t}\cos(\omega_d t - \phi)
+    \end{equation}
+    The system oscillates with exponentially decaying amplitude envelopes $\pm A e^{-\gamma t}$.
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llccX}
+\toprule
+\textbf{Regime} & \textbf{Condition} & \textbf{Characteristic Roots} & \textbf{Oscillatory?} & \textbf{Engineering Application} \\
+\midrule
+Overdamped & $\gamma > \omega_0$ & Real, distinct: $r_1 \neq r_2 < 0$ & No & Heavy industrial door closers \\
+Critically Damped & $\gamma = \omega_0$ & Real, repeated: $r = -\gamma$ & No & Vehicle suspension, seismographs \\
+Underdamped & $\gamma < \omega_0$ & Complex: $-\gamma \pm i\omega_d$ & Yes & Quartz clocks, atomic force microscopy \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of the three damping regimes in physical harmonic systems.}
+\label{tab:ch09_damping_regimes}
+\end{table}
+
+\section{Driven Oscillations and Resonance}
+When subjected to an external sinusoidal driving force $F(t) = F_0 \cos(\omega t)$, the equation of motion becomes:
+\begin{equation}
+\ddot{x} + 2\gamma\dot{x} + \omega_0^2 x = \frac{F_0}{m}\cos(\omega t)
+\end{equation}
+The steady-state particular solution is:
+\begin{equation}
+x_p(t) = A(\omega)\cos(\omega t - \delta)
+\end{equation}
+where the steady-state amplitude $A(\omega)$ and phase lag $\delta(\omega)$ are:
+\begin{align}
+A(\omega) &= \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega^2)^2 + 4\gamma^2\omega^2}} \\
+\delta(\omega) &= \arctan\left(\frac{2\gamma\omega}{\omega_0^2 - \omega^2}\right)
+\end{align}
+
+\begin{mathdefinition}[Resonance Frequency and Quality Factor]
+The amplitude $A(\omega)$ reaches its absolute maximum at the \textbf{amplitude resonance frequency}:
+\begin{equation}
+\omega_r = \sqrt{\omega_0^2 - 2\gamma^2} \quad (\text{valid for } \gamma < \omega_0/\sqrt{2})
+\end{equation}
+The sharpness of the resonance curve is quantified by the dimensionless \textbf{Quality factor ($Q$)}:
+\begin{equation}
+Q \equiv \frac{\omega_0}{2\gamma} = \frac{\omega_0}{\Delta\omega_{\text{FWHM}}}
+\end{equation}
+where $\Delta\omega_{\text{FWHM}}$ is the full width at half-maximum of the energy resonance profile.
+\end{mathdefinition}
+
+\begin{pitfallbox}[Distinction Between Three Characteristic Frequencies]
+Do not conflate the three distinct frequencies in damped systems:
+\begin{itemize}
+    \item Undamped natural frequency: $\omega_0 = \sqrt{k/m}$.
+    \item Damped natural frequency: $\omega_d = \sqrt{\omega_0^2 - \gamma^2} < \omega_0$.
+    \item Amplitude resonance frequency: $\omega_r = \sqrt{\omega_0^2 - 2\gamma^2} < \omega_d < \omega_0$.
+\end{itemize}
+Only in the weakly damped limit ($\gamma \ll \omega_0$ or $Q \gg 1$) do these three frequencies converge: $\omega_0 \approx \omega_d \approx \omega_r$.
+\end{pitfallbox}
+
+\section{Worked Examples and Physical Applications}
+
+\begin{psctexample}[Driven Oscillator Amplitude and Phase Response]
+An instrument package of mass $m = 2.0\text{ kg}$ is mounted on springs with effective constant $k = 800\text{ N/m}$ and damping $b = 4.0\text{ N}\cdot\text{s/m}$. A harmonic shaker applies driving force $F_0 = 10\text{ N}$ at frequency $\omega = 18\text{ rad/s}$.
+Calculate: (a) undamped frequency $\omega_0$, (b) damping ratio $\gamma$, (c) quality factor $Q$, and (d) steady-state amplitude $A$ and phase lag $\delta$.
+
+\textbf{\color{rbruNavy}Picture / Conceptualization:}
+The mass is driven harmonically near its natural resonance. Damping limits the peak amplitude.
+
+\textbf{\color{rbruNavy}Strategy / Governing Laws:}
+Use the definitions $\omega_0 = \sqrt{k/m}$, $\gamma = b/(2m)$, and the steady-state response formulas for $A(\omega)$ and $\delta(\omega)$.
+
+\textbf{\color{rbruNavy}Calculation / Analytical Solution:}
+1. Natural frequency and damping parameter:
+\begin{align}
+\omega_0 &= \sqrt{\frac{800}{2.0}} = 20\text{ rad/s} \\
+\gamma &= \frac{4.0}{2(2.0)} = 1.0\text{ s}^{-1}
+\end{align}
+2. Quality factor:
+\begin{equation}
+Q = \frac{\omega_0}{2\gamma} = \frac{20}{2(1.0)} = 10
+\end{equation}
+3. Steady-state amplitude at $\omega = 18\text{ rad/s}$:
+\begin{align}
+\omega_0^2 - \omega^2 &= 20^2 - 18^2 = 400 - 324 = 76\text{ (rad/s)}^2 \\
+2\gamma\omega &= 2(1.0)(18) = 36\text{ (rad/s)}^2 \\
+\text{Denominator} &= \sqrt{(76)^2 + (36)^2} = \sqrt{5776 + 1296} = \sqrt{7072} \approx 84.1\text{ (rad/s)}^2 \\
+A(18) &= \frac{F_0 / m}{\text{Denominator}} = \frac{10 / 2.0}{84.1} = \frac{5.0}{84.1} \approx 0.0595\text{ m} = 5.95\text{ cm}
+\end{align}
+4. Phase lag:
+\begin{equation}
+\delta = \arctan\left(\frac{36}{76}\right) = \arctan(0.4737) \approx 0.442\text{ rad} = 25.3^\circ
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+Because $\omega < \omega_0$, the driving frequency is below resonance, and the response lags by less than $90^\circ$ ($\delta = 25.3^\circ$). At exact resonance ($\omega = \omega_0 = 20\text{ rad/s}$), the phase lag would be exactly $90^\circ$, and amplitude would reach $A_{\text{max}} \approx \frac{F_0/m}{2\gamma\omega_0} = \frac{5.0}{40} = 0.125\text{ m} = 12.5\text{ cm}$.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Driven Harmonic Resonance Curves in Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+omega_0 = 20.0
+F0_m = 5.0
+omega = np.linspace(5, 35, 1000)
+
+for Q in [2, 5, 10, 20]:
+    gamma = omega_0 / (2 * Q)
+    A = F0_m / np.sqrt((omega_0**2 - omega**2)**2 + 4 * gamma**2 * omega**2)
+    print(f"Q = {Q:2d}: Peak Amplitude = {np.max(A)*100:.2f} cm")
+\end{pythonbox}
+
+\section{Summary of Key Formulas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Oscillator Parameter} & \textbf{Formula} & \textbf{Physical Meaning} \\
+\midrule
+Natural Frequency & $\omega_0 = \sqrt{k/m}$ & Oscillation frequency without damping or driving \\
+Damped Frequency & $\omega_d = \sqrt{\omega_0^2 - \gamma^2}$ & Actual oscillation rate under viscous resistance \\
+Amplitude Resonance & $\omega_r = \sqrt{\omega_0^2 - 2\gamma^2}$ & Frequency of maximum steady-state displacement response \\
+Quality Factor ($Q$) & $Q = \frac{\omega_0}{2\gamma} = 2\pi \frac{E}{\Delta E_{\text{cycle}}}$ & Measure of energy retention per cycle and frequency selectivity \\
+\bottomrule
+\end{tabularx}
+\caption{Key relationships for damped and driven harmonic oscillators.}
+\label{tab:ch09_summary}
+\end{table}
+
+\section{Chapter Exercises}
+\begin{enumerate}
+    \item \textbf{Underdamped Logarithmic Decrement:} Show that the ratio of two successive maximum displacements $x_n$ and $x_{n+1}$ of an underdamped oscillator separated by period $T = 2\pi/\omega_d$ satisfies $\delta_{\text{log}} \equiv \ln(x_n / x_{n+1}) = \gamma T = \frac{2\pi\gamma}{\sqrt{\omega_0^2 - \gamma^2}}$.
+    \item \textbf{Bridge Resonance Safety:} An army detachment marches across a suspension bridge of mass $M = 50,000\text{ kg}$ and natural frequency $f_0 = 1.2\text{ Hz}$. Explain why troops are ordered to break step using the resonance amplitude formula.
+    \item \textbf{Electrical-Mechanical Analogies:} Construct a dictionary table mapping mass $m$, damping $b$, spring $k$, position $x$, and driving force $F_0$ to their electrical series $LRC$ circuit counterparts.
+\end{enumerate}

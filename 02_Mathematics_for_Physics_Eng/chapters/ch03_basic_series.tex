@@ -1,0 +1,172 @@
+\chapter{Infinite Series \& Approximations}
+\index{Infinite Series}
+\index{Taylor Series}
+\index{Maclaurin Series}
+\index{Convergence Tests}
+\index{Ratio Test}
+\index{Binomial Expansion}
+\index{Relativistic Energy Approximation}
+\index{Radius of Convergence}
+
+\begin{chapterobjectives}
+Upon mastering this chapter, students will be able to:
+\begin{enumerate}
+    \item Expand transcendental and algebraic functions into infinite power series using Taylor and Maclaurin theorems.
+    \item Rigorously determine radii and intervals of convergence using the Ratio, Root, and Integral tests.
+    \item Apply binomial and asymptotic series to model perturbation phenomena in classical and modern physics.
+    \item Evaluate truncation errors and quantify higher-order anharmonic corrections (e.g., large-amplitude pendulums, relativistic dynamics).
+    \item Validate series approximations and compute truncation errors computationally using Python.
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{Introduction and Power Series Representation}
+Many fundamental differential equations in physics cannot be integrated into elementary closed-form expressions. Infinite series expansions serve as one of the most powerful analytical instruments in mathematical physics, enabling us to approximate complex potentials, linearize nonlinear dynamical equations, and study asymptotic limits.
+
+A general power series centered at $x = x_0$ is defined as:
+\begin{equation}
+S(x) = \sum_{n=0}^{\infty} a_n (x - x_0)^n = a_0 + a_1(x - x_0) + a_2(x - x_0)^2 + \cdots
+\end{equation}
+
+\begin{maththeorem}[Taylor and Maclaurin Series Expansion]
+If a real- or complex-valued function $f(x)$ is infinitely differentiable ($C^\infty$) in an open neighborhood containing $x_0$, it may be represented by its \textbf{Taylor series}:
+\begin{equation}
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n
+\end{equation}
+When the expansion is centered at the origin ($x_0 = 0$), it is designated as a \textbf{Maclaurin series}:
+\begin{equation}
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots
+\end{equation}
+\end{maththeorem}
+
+\section{Convergence Criteria and Radius of Convergence}
+A power series is physically meaningful only within its domain of convergence. The series $\sum a_n (x - x_0)^n$ converges absolutely inside the interval $|x - x_0| < R$, where $R$ is the \textbf{radius of convergence}.
+
+\begin{mathdefinition}[Cauchy-Hadamard and D'Alembert Ratio Tests]
+The radius of convergence $R$ can be calculated directly from the series coefficients:
+\begin{equation}
+\frac{1}{R} = \lim_{n \to \infty} \left|\frac{a_{n+1}}{a_n}\right| \quad \text{or} \quad \frac{1}{R} = \lim_{n \to \infty} \sqrt[n]{|a_n|}
+\end{equation}
+\begin{itemize}
+    \item If $R = \infty$, the series converges for all $x \in \mathbb{R}$ (e.g., $e^x, \sin x, \cos x$).
+    \item If $0 < R < \infty$, the series converges for $|x - x_0| < R$ and diverges for $|x - x_0| > R$.
+    \item The boundary points $x = x_0 \pm R$ must be investigated individually using the Alternating Series (Leibniz) test or the Integral test.
+\end{itemize}
+\end{mathdefinition}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llcc}
+\toprule
+\textbf{Function} & \textbf{Maclaurin Series Expansion} & \textbf{Radius $R$} & \textbf{Interval} \\
+\midrule
+$e^x$ & $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots = \sum_{n=0}^\infty \frac{x^n}{n!}$ & $\infty$ & $(-\infty, \infty)$ \\
+$\sin x$ & $x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots = \sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{(2n+1)!}$ & $\infty$ & $(-\infty, \infty)$ \\
+$\cos x$ & $1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots = \sum_{n=0}^\infty \frac{(-1)^n x^{2n}}{(2n)!}$ & $\infty$ & $(-\infty, \infty)$ \\
+$\ln(1+x)$ & $x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots = \sum_{n=1}^\infty \frac{(-1)^{n-1} x^n}{n}$ & $1$ & $(-1, 1]$ \\
+$(1+x)^p$ & $1 + px + \frac{p(p-1)}{2!}x^2 + \frac{p(p-1)(p-2)}{3!}x^3 + \cdots$ & $1$ & $(-1, 1)$ \\
+\bottomrule
+\end{tabularx}
+\caption{Standard Maclaurin expansions of elementary mathematical physics functions.}
+\label{tab:ch03_expansions}
+\end{table}
+
+\begin{pitfallbox}[Truncation Outside the Radius of Convergence]
+Approximating a function by the first few terms of its Taylor series is only valid when $|x - x_0| \ll R$. Attempting to compute $(1+x)^{-1/2}$ for $x = 2.5$ using $1 - \frac{1}{2}x + \frac{3}{8}x^2$ leads to diverging oscillations, because $x$ lies outside the unit convergence radius $R = 1$.
+\end{pitfallbox}
+
+\section{Physical Applications: Asymptotic Expansions}
+
+\subsection{Relativistic Kinetic Energy}
+In special relativity, the total energy of a particle with rest mass $m$ moving at speed $v$ is $E = \gamma m c^2$, where $\gamma = (1 - v^2/c^2)^{-1/2}$. The relativistic kinetic energy is:
+\begin{equation}
+K = E - mc^2 = (\gamma - 1)mc^2 = \left[\left(1 - \frac{v^2}{c^2}\right)^{-1/2} - 1\right]mc^2
+\end{equation}
+In the non-relativistic limit ($v \ll c$, so $\beta \equiv v/c \ll 1$), we apply the generalized binomial expansion $(1 - \beta^2)^{-1/2} = 1 + \frac{1}{2}\beta^2 + \frac{3}{8}\beta^4 + \frac{5}{16}\beta^6 + \mathcal{O}(\beta^8)$:
+\begin{equation}
+K = \left(1 + \frac{1}{2}\frac{v^2}{c^2} + \frac{3}{8}\frac{v^4}{c^4} + \cdots - 1\right)mc^2 = \frac{1}{2}mv^2 + \frac{3}{8}m\frac{v^4}{c^2} + \mathcal{O}\left(\frac{v^6}{c^4}\right)
+\end{equation}
+The leading term recovers classical Newtonian kinetic energy $K_{\text{classical}} = \frac{1}{2}mv^2$, while the second term provides the first-order relativistic correction!
+
+\section{Worked Examples and Physical Applications}
+
+\begin{psctexample}[Large-Amplitude Simple Pendulum Period Correction]
+The exact differential equation of an undamped simple pendulum of length $L$ is:
+\begin{equation}
+\frac{d^2\theta}{dt^2} + \frac{g}{L}\sin\theta = 0
+\end{equation}
+Using the Maclaurin expansion of $\sin\theta$, obtain the third-order governing equation and derive the fractional correction to the natural frequency $\omega_0 = \sqrt{g/L}$ for finite amplitude $\theta_0$.
+
+\textbf{\color{rbruNavy}Picture / Conceptualization:}
+For tiny amplitudes $\theta \ll 1$, $\sin\theta \approx \theta$, giving simple harmonic motion. For larger amplitudes, restoring torque is weaker than linear, lengthening the oscillation period.
+
+\textbf{\color{rbruNavy}Strategy / Governing Laws:}
+Expand $\sin\theta = \theta - \frac{\theta^3}{6} + \mathcal{O}(\theta^5)$. Substitute this into the equation of motion to produce the Duffing-type nonlinear oscillator:
+\begin{equation}
+\ddot{\theta} + \omega_0^2\left(\theta - \frac{\theta^3}{6}\right) = 0
+\end{equation}
+
+\textbf{\color{rbruNavy}Calculation / Analytical Solution:}
+Assume an approximate harmonic solution $\theta(t) \approx \theta_0\cos(\omega t)$. 
+Using the trigonometric identity $\cos^3(\omega t) = \frac{3}{4}\cos(\omega t) + \frac{1}{4}\cos(3\omega t)$, substitute into the nonlinear term:
+\begin{equation}
+-\omega^2\theta_0\cos(\omega t) + \omega_0^2\left[\theta_0\cos(\omega t) - \frac{\theta_0^3}{6}\left(\frac{3}{4}\cos(\omega t) + \frac{1}{4}\cos(3\omega t)\right)\right] = 0
+\end{equation}
+Equating the secular fundamental harmonic coefficients of $\cos(\omega t)$:
+\begin{equation}
+-\omega^2 + \omega_0^2\left(1 - \frac{\theta_0^2}{8}\right) = 0 \implies \omega \approx \omega_0\sqrt{1 - \frac{\theta_0^2}{8}} \approx \omega_0\left(1 - \frac{\theta_0^2}{16}\right)
+\end{equation}
+The modified period $T = \frac{2\pi}{\omega}$ becomes:
+\begin{equation}
+T \approx \frac{T_0}{1 - \frac{\theta_0^2}{16}} \approx T_0\left(1 + \frac{\theta_0^2}{16}\right)
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+For an initial amplitude $\theta_0 = 30^\circ \approx 0.524\text{ rad}$, the period increases by approximately $\frac{(0.524)^2}{16} \approx 1.7\%$. This demonstrates why high-precision mechanical clocks require amplitude stabilization.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Taylor Series Truncation Error Analysis in Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-2, 2, 200)
+f_exact = np.sin(x)
+
+# Taylor polynomials centered at 0
+p1 = x
+p3 = x - x**3 / 6.0
+p5 = x - x**3 / 6.0 + x**5 / 120.0
+
+err_p1 = np.abs(f_exact - p1)
+err_p3 = np.abs(f_exact - p3)
+err_p5 = np.abs(f_exact - p5)
+
+print(f"At x = 1.0 rad: Exact={np.sin(1.0):.6f}")
+print(f"P1 error: {err_p1[150]:.6f}, P3 error: {err_p3[150]:.6f}, P5 error: {err_p5[150]:.6f}")
+\end{pythonbox}
+
+\section{Summary of Key Formulas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Expansion / Test} & \textbf{Mathematical Formula} & \textbf{Physical Application} \\
+\midrule
+Taylor Series & $f(x) = \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n$ & Perturbation theory, equilibrium potential expansions \\
+Ratio Test Radius & $R = \lim_{n \to \infty} |a_n / a_{n+1}|$ & Valid boundary limits for mathematical physics models \\
+Binomial Expansion & $(1+x)^p = 1 + px + \frac{p(p-1)}{2}x^2 + \cdots$ & Relativistic velocity limits, electrostatic multipole fields \\
+Small Angle Approximation & $\cos\theta \approx 1 - \frac{\theta^2}{2}, \; \sin\theta \approx \theta$ & Harmonic oscillator approximations in mechanics and optics \\
+\bottomrule
+\end{tabularx}
+\caption{Summary of infinite series expansions and physical approximations.}
+\label{tab:ch03_summary}
+\end{table}
+
+\section{Chapter Exercises}
+\begin{enumerate}
+    \item \textbf{Electric Dipole Potential:} Two point charges $+q$ and $-q$ are situated on the $z$-axis at $z = +d/2$ and $z = -d/2$. Write the exact potential at $(0, 0, z)$ for $z > d/2$, and use the binomial series to show that the leading term is the dipole potential $V \approx \frac{q d}{4\pi\epsilon_0 z^2}$.
+    \item \textbf{Planck's Radiation Law Limit:} Planck's spectral energy density is given by $\rho(\nu) = \frac{8\pi h\nu^3}{c^3}\frac{1}{e^{h\nu/k_B T} - 1}$. Expand the exponential for $h\nu \ll k_B T$ to deduce the classical Rayleigh-Jeans formula.
+    \item \textbf{Radius of Convergence:} Determine the radius of convergence of the series $\sum_{n=1}^\infty \frac{n^2 x^n}{3^n (n+1)!}$.
+\end{enumerate}

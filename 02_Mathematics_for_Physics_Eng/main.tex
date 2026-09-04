@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% English Academic Textbook Style for RBRU Physics
+\usepackage{styles/rbru_book_style_en}
+
+% Font and typographic configuration
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Courier New}[Scale=0.92]
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=rbruNavy,
+    citecolor=rbruGreen,
+    filecolor=rbruSlate,      
+    urlcolor=rbruNavy,
+    pdftitle={Mathematics for Physics - Asst. Prof. Dr. Chewa Thassana},
+    pdfauthor={Asst. Prof. Dr. Chewa Thassana},
+    pdfsubject={Mathematical Physics, Active Learning, and Scientific Computing},
+    pdfkeywords={Coordinate Systems, Vector Calculus, Series, Complex Analysis, Linear Algebra, ODEs, Python Simulation}
+}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/cover}
+\include{frontmatter/title}
+\include{frontmatter/preface}
+\include{frontmatter/syllabus}
+
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+\mainmatter
+
+% All 9 Core Chapters
+\include{chapters/ch01_coordinate_systems}
+\include{chapters/ch02_vectors}
+\include{chapters/ch03_basic_series}
+\include{chapters/ch04_complex_numbers}
+\include{chapters/ch05_matrices}
+\include{chapters/ch06_derivatives}
+\include{chapters/ch07_integrals}
+\include{chapters/ch08_ode}
+\include{chapters/ch09_second_order_odes}
+
+% Appendix: Reference Formulas & Vector Identities
+\appendix
+\include{backmatter/appendix}
+
+\backmatter
+% Bibliography, Subject Index, and Author Biography
+\include{backmatter/references}
+\clearpage
+\printindex
+\include{backmatter/biography}
+
+\end{document}

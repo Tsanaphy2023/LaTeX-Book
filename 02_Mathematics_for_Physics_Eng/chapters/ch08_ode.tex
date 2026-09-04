@@ -1,0 +1,161 @@
+\chapter{First-Order Ordinary Differential Equations}
+\index{Differential Equations}
+\index{Ordinary Differential Equations}
+\index{Integrating Factor}
+\index{Separable Equations}
+\index{Exact Equations}
+\index{Terminal Velocity}
+\index{RC Circuit Transient}
+\index{Time Constant}
+
+\begin{chapterobjectives}
+Upon mastering this chapter, students will be able to:
+\begin{enumerate}
+    \item Classify ordinary differential equations by order, degree, and linearity.
+    \item Solve separable, homogeneous, exact, and linear first-order differential equations analytically.
+    \item Construct and apply integrating factors $\mu(x) = \exp\left(\int P(x)\,dx\right)$ to solve general linear ODEs.
+    \item Formulate dynamical initial-value problems for charging capacitors ($RC$), energizing inductors ($RL$), and thermal relaxation.
+    \item Model nonlinear atmospheric drag (quadratic air resistance) and calculate terminal velocities.
+    \item Implement adaptive numerical ODE solvers using Python's \texttt{scipy.integrate.solve\_ivp}.
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{Classification and General Structure of ODEs}
+In dynamical systems, Newton's second law $\vec{F} = m\frac{d^2\vec{r}}{dt^2}$, radioactive decay $\frac{dN}{dt} = -\lambda N$, and circuit laws are formulated as differential equations relating an unknown function to its derivatives.
+
+An ordinary differential equation (ODE) contains only one independent variable. The \textbf{order} is the highest derivative present. A first-order ODE can be written in explicit form:
+\begin{equation}
+\frac{dy}{dx} = f(x, y) \quad \text{or differential form} \quad M(x, y)\,dx + N(x, y)\,dy = 0
+\end{equation}
+
+\section{Fundamental Analytical Solution Methods}
+
+\subsection{Separable Differential Equations}
+If the right-hand side factors into functions of $x$ and $y$ separately:
+\begin{equation}
+\frac{dy}{dx} = g(x)h(y) \implies \frac{1}{h(y)}\,dy = g(x)\,dx
+\end{equation}
+Integrating both sides yields the general solution:
+\begin{equation}
+\int \frac{1}{h(y)}\,dy = \int g(x)\,dx + C
+\end{equation}
+
+\subsection{First-Order Linear ODEs and Integrating Factors}
+A first-order equation is \textbf{linear} if it can be arranged in the canonical standard form:
+\begin{equation}
+\frac{dy}{dx} + P(x)y = Q(x)
+\end{equation}
+
+\begin{maththeorem}[The Integrating Factor Method]
+Multiplying both sides by the \textbf{integrating factor} $\mu(x) \equiv \exp\left(\int P(x)\,dx\right)$ transforms the left-hand side into the derivative of a product:
+\begin{equation}
+\frac{d}{dx}\left[\mu(x)y\right] = \mu(x)Q(x)
+\end{equation}
+Integrating directly yields the general solution:
+\begin{equation}
+y(x) = \frac{1}{\mu(x)}\left[\int \mu(x)Q(x)\,dx + C\right]
+\end{equation}
+\end{maththeorem}
+
+\begin{pitfallbox}[Ensuring Standard Normal Form]
+Before computing the integrating factor $\mu(x) = e^{\int P(x)dx}$, the differential equation \textbf{must} have a leading coefficient of unity for $\frac{dy}{dx}$. If given $x\frac{dy}{dx} + 2y = 4x^2$, one must first divide by $x$ to identify $P(x) = 2/x$, giving $\mu(x) = e^{\int (2/x)dx} = x^2$.
+\end{pitfallbox}
+
+\section{Physical Applications: Atmospheric Drag and Terminal Velocity}
+Consider a body of mass $m$ falling vertically under gravity $g$ through a fluid. At high Reynolds numbers (e.g., a skydiver in air), the drag force is proportional to the square of velocity:
+\begin{equation}
+F_{\text{drag}} = -c v^2, \quad c = \frac{1}{2}\rho_{\text{air}} C_D A
+\end{equation}
+Newton's second law gives:
+\begin{equation}
+m\frac{dv}{dt} = mg - cv^2 \implies \frac{dv}{dt} = g\left(1 - \frac{v^2}{v_t^2}\right)
+\end{equation}
+where $v_t \equiv \sqrt{\frac{mg}{c}}$ is the \textbf{terminal velocity}, reached when drag balances gravity ($dv/dt = 0$).
+
+\section{Worked Examples and Physical Applications}
+
+\begin{psctexample}[Analytical Solution of Skydiver with Quadratic Drag]
+Assuming the skydiver drops from rest ($v(0) = 0$), solve the nonlinear ODE for $v(t)$ and compute the time required to reach $95\%$ of terminal velocity.
+
+\textbf{\color{rbruNavy}Picture / Conceptualization:}
+The skydiver accelerates downward. As speed increases, opposing air drag grows quadratically until it equals gravitational weight.
+
+\textbf{\color{rbruNavy}Strategy / Governing Laws:}
+The equation is separable: $\frac{dv}{1 - (v/v_t)^2} = g\,dt$. Integrate using partial fractions or the hyperbolic substitution $\int \frac{du}{1 - u^2} = \tanh^{-1}(u)$.
+
+\textbf{\color{rbruNavy}Calculation / Analytical Solution:}
+1. Separate variables:
+\begin{equation}
+\int \frac{dv}{v_t^2 - v^2} = \frac{g}{v_t^2}\int dt
+\end{equation}
+Using the standard integral $\int \frac{dv}{v_t^2 - v^2} = \frac{1}{2v_t}\ln\left|\frac{v_t + v}{v_t - v}\right|$:
+\begin{equation}
+\frac{1}{2v_t}\ln\left(\frac{v_t + v}{v_t - v}\right) = \frac{gt}{v_t^2} + C
+\end{equation}
+2. Initial condition $v(0) = 0 \implies \ln(1) = 0 \implies C = 0$.
+3. Exponentiating both sides:
+\begin{equation}
+\frac{v_t + v}{v_t - v} = e^{2gt/v_t} \implies v(t) = v_t\left(\frac{e^{2gt/v_t} - 1}{e^{2gt/v_t} + 1}\right) = v_t \tanh\left(\frac{gt}{v_t}\right)
+\end{equation}
+4. Time to reach $v = 0.95 v_t$:
+\begin{equation}
+\tanh\left(\frac{gt_{95}}{v_t}\right) = 0.95 \implies \frac{gt_{95}}{v_t} = \tanh^{-1}(0.95) = \frac{1}{2}\ln\left(\frac{1.95}{0.05}\right) = \frac{1}{2}\ln(39) \approx 1.832
+\end{equation}
+Therefore:
+\begin{equation}
+t_{95} \approx 1.832\frac{v_t}{g}
+\end{equation}
+For a typical human skydiver with $v_t \approx 54\text{ m/s}$ ($195\text{ km/h}$) and $g = 9.8\text{ m/s}^2$:
+\begin{equation}
+t_{95} \approx 1.832\left(\frac{54}{9.8}\right) \approx 10.1\text{ seconds}
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+Because $\tanh(x) \to 1$ as $x \to \infty$, the terminal velocity is approached asymptotically. In approximately 10 seconds, the skydiver reaches over $95\%$ of their final steady speed.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Nonlinear ODE Integration with SciPy solve\_ivp]
+import numpy as np
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+
+g = 9.8
+vt = 54.0
+
+def ode_drag(t, v):
+    return g * (1.0 - (v / vt)**2)
+
+sol = solve_ivp(ode_drag, [0, 20], [0.0], t_eval=np.linspace(0, 20, 200))
+
+v_analytical = vt * np.tanh(g * sol.t / vt)
+max_error = np.max(np.abs(sol.y[0] - v_analytical))
+
+print(f"Terminal velocity: {vt:.1f} m/s")
+print(f"Maximum discrepancy between numerical and analytical solutions: {max_error:.2e} m/s")
+\end{pythonbox}
+
+\section{Summary of Key Formulas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Equation Type} & \textbf{Standard Form} & \textbf{Solution Method} \\
+\midrule
+Separable & $\frac{dy}{dx} = g(x)h(y)$ & Direct integration: $\int \frac{dy}{h(y)} = \int g(x)dx + C$ \\
+Linear 1st-Order & $\frac{dy}{dx} + P(x)y = Q(x)$ & Integrating factor: $\mu(x) = \exp(\int P(x)dx)$ \\
+Exact Equation & $M\,dx + N\,dy = 0, \; \frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$ & Potential function: $\phi(x,y) = C$ \\
+$RC$ Circuit Discharge & $R\frac{dQ}{dt} + \frac{Q}{C} = 0$ & Exponential relaxation: $Q(t) = Q_0 e^{-t/\tau}, \; \tau = RC$ \\
+\bottomrule
+\end{tabularx}
+\caption{Classification and solution methods for first-order ordinary differential equations.}
+\label{tab:ch08_summary}
+\end{table}
+
+\section{Chapter Exercises}
+\begin{enumerate}
+    \item \textbf{Series RL Circuit:} A circuit consists of an inductance $L$ and resistance $R$ connected to a constant voltage $V_0$. At $t = 0$, the switch is closed. Solve $L\frac{dI}{dt} + RI = V_0$ with $I(0) = 0$ and identify the time constant.
+    \item \textbf{Newton's Law of Cooling:} A metal ingot at $800^\circ\text{C}$ is placed in a quenching bath maintained at $25^\circ\text{C}$. After $2\text{ minutes}$, the temperature is $400^\circ\text{C}$. Determine the time required for the temperature to drop to $50^\circ\text{C}$.
+    \item \textbf{Bernoulli Differential Equation:} Solve the nonlinear Bernoulli equation $\frac{dy}{dx} + \frac{1}{x}y = x y^2$ using the change of variable $u = y^{1-2} = y^{-1}$.
+\end{enumerate}

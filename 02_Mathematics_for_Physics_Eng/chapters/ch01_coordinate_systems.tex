@@ -1,0 +1,212 @@
+\chapter{Curvilinear Coordinate Systems \& Scale Factors}
+\index{Coordinate Systems}
+\index{Cartesian Coordinates}
+\index{Cylindrical Coordinates}
+\index{Spherical Coordinates}
+\index{Scale Factors}
+\index{Differential Elements}
+\index{Metric Tensor}
+\index{Lamé Coefficients}
+
+\begin{chapterobjectives}
+Upon mastering this chapter, students will be able to:
+\begin{enumerate}
+    \item Rigorously define and transform between Cartesian $(x, y, z)$, cylindrical $(\rho, \phi, z)$, and spherical $(r, \theta, \phi)$ coordinates.
+    \item Derive metric scale factors (Lamé coefficients $h_i$) for arbitrary orthogonal curvilinear coordinates.
+    \item Formulate differential displacement vectors $d\vec{r}$, directed surface elements $d\vec{a}$, and differential volume elements $dV$.
+    \item Transform position, velocity, and acceleration vectors across non-Cartesian bases with time-dependent unit vectors.
+    \item Apply spherical coordinates to geodesics, celestial coordinates, and satellite orbital geometry.
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{Introduction and Cartesian Coordinate Foundations}
+In theoretical physics, formulating dynamic laws, field distributions, and conservation principles requires a rigorous frame of reference. Selecting a coordinate system whose geometric symmetry reflects that of the physical boundary conditions significantly reduces the analytical complexity of governing differential equations.
+
+The Cartesian coordinate system $(x, y, z)$ represents the fundamental baseline. Three mutually orthogonal axes intersect at the origin $O(0,0,0)$, forming a right-handed basis characterized by fixed unit vectors $\hat{i}, \hat{j}, \hat{k}$ satisfying the orthonormality condition:
+\begin{equation}
+\hat{e}_i \cdot \hat{e}_j = \delta_{ij} = \begin{cases} 1, & i = j \\ 0, & i \neq j \end{cases}
+\end{equation}
+where $\delta_{ij}$ is the Kronecker delta. The position vector $\vec{r}$ of a point $P(x, y, z)$ is:
+\begin{equation}
+\vec{r} = x\hat{i} + y\hat{j} + z\hat{k}
+\end{equation}
+The differential displacement vector and squared infinitesimal arc length are:
+\begin{align}
+d\vec{r} &= dx\,\hat{i} + dy\,\hat{j} + dz\,\hat{k} \\
+ds^2 &= |d\vec{r}|^2 = dx^2 + dy^2 + dz^2
+\end{align}
+The differential volume element is simply $dV = dx\,dy\,dz$.
+
+\begin{mathdefinition}[Orthogonal Curvilinear Coordinates and Scale Factors]
+Let $(u_1, u_2, u_3)$ be generalized coordinates related to Cartesian coordinates by invertibly differentiable functions $x = x(u_1, u_2, u_3)$, $y = y(u_1, u_2, u_3)$, and $z = z(u_1, u_2, u_3)$. The system is \textbf{orthogonal} if the local basis vectors are mutually perpendicular. The \textbf{metric scale factors} (Lamé coefficients) are defined as:
+\begin{equation}
+h_i = \left|\frac{\partial \vec{r}}{\partial u_i}\right| = \sqrt{\left(\frac{\partial x}{\partial u_i}\right)^2 + \left(\frac{\partial y}{\partial u_i}\right)^2 + \left(\frac{\partial z}{\partial u_i}\right)^2}
+\end{equation}
+The unit basis vectors are $\hat{e}_i = \frac{1}{h_i}\frac{\partial \vec{r}}{\partial u_i}$. The differential line and volume elements become:
+\begin{align}
+ds^2 &= h_1^2 du_1^2 + h_2^2 du_2^2 + h_3^2 du_3^2 \\
+dV &= h_1 h_2 h_3\,du_1\,du_2\,du_3
+\end{align}
+For Cartesian coordinates, $h_x = h_y = h_z = 1$.
+\end{mathdefinition}
+
+\section{Cylindrical Coordinate System}
+Physical configurations exhibiting axial or rotational symmetry around a preferred axis---such as magnetic fields produced by long solenoids, laminar fluid flow through pipes, or rotating flywheels---are most naturally represented in cylindrical coordinates $(\rho, \phi, z)$.
+
+Here, $\rho \in [0, \infty)$ is the perpendicular radial distance from the $z$-axis, $\phi \in [0, 2\pi)$ is the azimuthal angle measured counterclockwise from the positive $x$-axis, and $z \in (-\infty, \infty)$ is the axial coordinate:
+\begin{equation}
+x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
+\end{equation}
+Inverting these relations yields:
+\begin{equation}
+\rho = \sqrt{x^2 + y^2}, \quad \phi = \arctan\left(\frac{y}{x}\right), \quad z = z
+\end{equation}
+
+To compute the scale factors, we differentiate $\vec{r}(\rho, \phi, z) = \rho\cos\phi\,\hat{i} + \rho\sin\phi\,\hat{j} + z\,\hat{k}$:
+\begin{align}
+\frac{\partial \vec{r}}{\partial \rho} &= \cos\phi\,\hat{i} + \sin\phi\,\hat{j} \implies h_\rho = 1 \\
+\frac{\partial \vec{r}}{\partial \phi} &= -\rho\sin\phi\,\hat{i} + \rho\cos\phi\,\hat{j} \implies h_\phi = \rho \\
+\frac{\partial \vec{r}}{\partial z} &= \hat{k} \implies h_z = 1
+\end{align}
+Thus, the orthonormal unit vectors are:
+\begin{align}
+\hat{\rho} &= \cos\phi\,\hat{i} + \sin\phi\,\hat{j} \\
+\hat{\phi} &= -\sin\phi\,\hat{i} + \cos\phi\,\hat{j} \\
+\hat{k} &= \hat{k}
+\end{align}
+The differential displacement, line element squared, and volume element are:
+\begin{align}
+d\vec{r} &= d\rho\,\hat{\rho} + \rho\,d\phi\,\hat{\phi} + dz\,\hat{k} \\
+ds^2 &= d\rho^2 + \rho^2 d\phi^2 + dz^2 \\
+dV &= \rho\,d\rho\,d\phi\,dz
+\end{align}
+
+\begin{pitfallbox}[Time Derivatives of Non-Cartesian Unit Vectors]
+Unlike Cartesian unit vectors $(\hat{i}, \hat{j}, \hat{k})$ which remain invariant in space and time, cylindrical and spherical unit vectors depend on position. When differentiating with respect to time $t$:
+\begin{equation}
+\dot{\hat{\rho}} = \frac{d\hat{\rho}}{dt} = \dot{\phi}\,\hat{\phi}, \quad \dot{\hat{\phi}} = -\dot{\phi}\,\hat{\rho}
+\end{equation}
+Neglecting these geometric derivative terms produces severe errors in velocity and acceleration derivations.
+\end{pitfallbox}
+
+\section{Spherical Coordinate System}
+For central force fields (e.g., Newtonian gravity, Coulomb potential) and spherically symmetric wave propagation, spherical coordinates $(r, \theta, \phi)$ are indispensable.
+
+The coordinates are defined as:
+\begin{itemize}
+    \item $r \in [0, \infty)$: radial distance from the origin.
+    \item $\theta \in [0, \pi]$: polar (zenith) angle measured from the positive $z$-axis.
+    \item $\phi \in [0, 2\pi)$: azimuthal angle in the $xy$-plane from the positive $x$-axis.
+\end{itemize}
+The Cartesian transformation equations are:
+\begin{equation}
+x = r\sin\theta\cos\phi, \quad y = r\sin\theta\sin\phi, \quad z = r\cos\theta
+\end{equation}
+The metric scale factors are obtained from $\vec{r}(r, \theta, \phi)$:
+\begin{align}
+h_r &= \left|\frac{\partial \vec{r}}{\partial r}\right| = 1 \\
+h_\theta &= \left|\frac{\partial \vec{r}}{\partial \theta}\right| = r \\
+h_\phi &= \left|\frac{\partial \vec{r}}{\partial \phi}\right| = r\sin\theta
+\end{align}
+Consequently, the differential elements are:
+\begin{align}
+d\vec{r} &= dr\,\hat{r} + r\,d\theta\,\hat{\theta} + r\sin\theta\,d\phi\,\hat{\phi} \\
+ds^2 &= dr^2 + r^2 d\theta^2 + r^2\sin^2\theta\,d\phi^2 \\
+dV &= r^2\sin\theta\,dr\,d\theta\,d\phi
+\end{align}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{lcccc}
+\toprule
+\textbf{Coordinate System} & \textbf{Coordinates} & \textbf{Scale Factors} $(h_1, h_2, h_3)$ & \textbf{Infinitesimal Volume} $dV$ \\
+\midrule
+Cartesian & $(x, y, z)$ & $(1, 1, 1)$ & $dx\,dy\,dz$ \\
+Cylindrical & $(\rho, \phi, z)$ & $(1, \rho, 1)$ & $\rho\,d\rho\,d\phi\,dz$ \\
+Spherical & $(r, \theta, \phi)$ & $(1, r, r\sin\theta)$ & $r^2\sin\theta\,dr\,d\theta\,d\phi$ \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of metric scale factors and volume elements across standard coordinate systems.}
+\label{tab:ch01_scale_factors}
+\end{table}
+
+\section{Worked Examples and Physical Applications}
+
+\begin{psctexample}[Kinematic Acceleration in Cylindrical Coordinates]
+A point particle moves in a plane ($z = 0$) such that its radial distance is $\rho(t) = \rho_0 e^{\alpha t}$ while rotating with a constant angular speed $\omega = \dot{\phi}$. Determine the general acceleration vector $\vec{a}(t)$ in cylindrical basis.
+
+\textbf{\color{rbruNavy}Picture / Conceptualization:}
+The particle spirals outward in the $xy$-plane. The coordinate basis vectors $\hat{\rho}$ and $\hat{\phi}$ rotate with the particle at rate $\omega$.
+
+\textbf{\color{rbruNavy}Strategy / Governing Laws:}
+Express position $\vec{r} = \rho\hat{\rho}$. Differentiate twice with respect to time, applying the kinematic chain rule to account for $\dot{\hat{\rho}} = \dot{\phi}\hat{\phi}$ and $\dot{\hat{\phi}} = -\dot{\phi}\hat{\rho}$.
+
+\textbf{\color{rbruNavy}Calculation / Analytical Solution:}
+1. Velocity vector:
+\begin{equation}
+\vec{v} = \dot{\vec{r}} = \dot{\rho}\hat{\rho} + \rho\dot{\hat{\rho}} = \dot{\rho}\hat{\rho} + \rho\dot{\phi}\hat{\phi}
+\end{equation}
+2. Acceleration vector:
+\begin{align}
+\vec{a} &= \frac{d\vec{v}}{dt} = \ddot{\rho}\hat{\rho} + \dot{\rho}\dot{\hat{\rho}} + (\dot{\rho}\dot{\phi} + \rho\ddot{\phi})\hat{\phi} + \rho\dot{\phi}\dot{\hat{\phi}} \nonumber\\
+&= (\ddot{\rho} - \rho\dot{\phi}^2)\hat{\rho} + (2\dot{\rho}\dot{\phi} + \rho\ddot{\phi})\hat{\phi}
+\end{align}
+3. Substituting $\rho(t) = \rho_0 e^{\alpha t}$, $\dot{\rho} = \alpha\rho$, $\ddot{\rho} = \alpha^2\rho$, $\dot{\phi} = \omega$, and $\ddot{\phi} = 0$:
+\begin{equation}
+\vec{a}(t) = (\alpha^2 - \omega^2)\rho_0 e^{\alpha t}\hat{\rho} + 2\alpha\omega\rho_0 e^{\alpha t}\hat{\phi}
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+The radial component contains the centrifugal acceleration term $-\rho\omega^2$, while the azimuthal component $2\alpha\omega\rho$ is the Coriolis acceleration. When $\alpha = \omega$, the radial acceleration vanishes, yielding purely tangential acceleration.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Trajectory and Scale Factor Verification in Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters for spiral motion
+t = np.linspace(0, 2, 500)
+rho_0 = 1.0
+alpha = 0.8
+omega = 4.0
+
+rho = rho_0 * np.exp(alpha * t)
+phi = omega * t
+
+x = rho * np.cos(phi)
+y = rho * np.sin(phi)
+
+# Acceleration components
+a_rho = (alpha**2 - omega**2) * rho
+a_phi = 2 * alpha * omega * rho
+
+print(f"At t = 1.0s: rho = {rho_0*np.exp(alpha):.3f} m")
+print(f"Radial acceleration: {a_rho[250]:.3f} m/s^2, Tangential: {a_phi[250]:.3f} m/s^2")
+\end{pythonbox}
+
+\section{Summary of Key Formulas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Concept} & \textbf{Formula} & \textbf{Physical Significance} \\
+\midrule
+Metric Scale Factor & $h_i = |\partial\vec{r}/\partial u_i|$ & Local arc length per unit coordinate variation \\
+Infinitesimal Line Element & $ds^2 = \sum_{i} h_i^2 du_i^2$ & Invariant metric distance in differential geometry \\
+Cylindrical Basis Derivatives & $\dot{\hat{\rho}} = \dot{\phi}\hat{\phi}, \; \dot{\hat{\phi}} = -\dot{\phi}\hat{\rho}$ & Origin of centripetal and Coriolis inertial terms \\
+Spherical Solid Angle & $d\Omega = \sin\theta\,d\theta\,d\phi$ & Measure of angular aperture in radiation and scattering \\
+\bottomrule
+\end{tabularx}
+\caption{Summary of coordinate geometry relations and physical interpretations.}
+\label{tab:ch01_summary}
+\end{table}
+
+\section{Chapter Exercises}
+\begin{enumerate}
+    \item \textbf{Analytical Transformation:} Find the spherical coordinates $(r, \theta, \phi)$ of the point given in Cartesian coordinates by $P(-2, 2\sqrt{3}, -4)$.
+    \item \textbf{Scale Factor Derivation:} Consider parabolic cylindrical coordinates $(u, v, z)$ defined by $x = \frac{1}{2}(u^2 - v^2)$, $y = uv$, $z = z$. Calculate scale factors $h_u, h_v, h_z$ and show that the coordinate system is orthogonal.
+    \item \textbf{Solid Angle of a Cone:} A right-circular cone has a semi-vertical angle $\alpha$. By integrating the spherical solid angle $d\Omega = \sin\theta\,d\theta\,d\phi$, prove that the solid angle subtended at the apex is $\Omega = 2\pi(1 - \cos\alpha)$.
+\end{enumerate}

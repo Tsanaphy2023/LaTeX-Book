@@ -1,0 +1,193 @@
+\chapter{Vector Analysis \& Differential Field Operators}
+\index{Vector Analysis}
+\index{Dot Product}
+\index{Cross Product}
+\index{Scalar Triple Product}
+\index{Vector Triple Product}
+\index{Gradient}
+\index{Divergence}
+\index{Curl}
+\index{Laplacian}
+\index{Conservative Fields}
+\index{Lorentz Force}
+
+\begin{chapterobjectives}
+Upon mastering this chapter, students will be able to:
+\begin{enumerate}
+    \item Perform sophisticated algebraic manipulations with dot, cross, and triple vector products.
+    \item Compute and physically interpret gradient ($\nabla$), divergence ($\nabla \cdot$), and curl ($\nabla \times$) in Cartesian and curvilinear geometries.
+    \item Evaluate conservative vector fields, construct scalar potential functions, and test for irrotational and solenoidal conditions.
+    \item Formulate vector identities essential for electrodynamics, continuum mechanics, and fluid dynamics.
+    \item Visualize vector fields and streamline topologies computationally using scientific Python.
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{Vector Algebra and Triple Products}
+Physical quantities characterized by both magnitude and spatial orientation are represented mathematically as vectors. In three-dimensional Euclidean space, let $\vec{A} = A_x\hat{i} + A_y\hat{j} + A_z\hat{k}$ and $\vec{B} = B_x\hat{i} + B_y\hat{j} + B_z\hat{k}$.
+
+The scalar (dot) product is defined by:
+\begin{equation}
+\vec{A} \cdot \vec{B} = |\vec{A}||\vec{B}|\cos\theta = A_x B_x + A_y B_y + A_z B_z
+\end{equation}
+The vector (cross) product produces an orthogonal axial vector according to the right-hand rule:
+\begin{equation}
+\vec{A} \times \vec{B} = |\vec{A}||\vec{B}|\sin\theta\,\hat{n} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ A_x & A_y & A_z \\ B_x & B_y & B_z \end{vmatrix}
+\end{equation}
+
+\subsection{Triple Products and Geometric Interpretations}
+The \textbf{scalar triple product} represents the signed volume of the parallelepiped subtended by vectors $\vec{A}, \vec{B}, \vec{C}$:
+\begin{equation}
+\vec{A} \cdot (\vec{B} \times \vec{C}) = \begin{vmatrix} A_x & A_y & A_z \\ B_x & B_y & B_z \\ C_x & C_y & C_z \end{vmatrix}
+\end{equation}
+This product is cyclic: $\vec{A} \cdot (\vec{B} \times \vec{C}) = \vec{B} \cdot (\vec{C} \times \vec{A}) = \vec{C} \cdot (\vec{A} \times \vec{B})$.
+
+The \textbf{vector triple product} satisfies the celebrated ``BAC--CAB'' identity:
+\begin{equation}
+\vec{A} \times (\vec{B} \times \vec{C}) = \vec{B}(\vec{A} \cdot \vec{C}) - \vec{C}(\vec{A} \cdot \vec{B})
+\end{equation}
+This identity is fundamental in classical mechanics for formulating the angular momentum of rotating rigid bodies $\vec{L} = \sum m_i [\vec{r}_i \times (\vec{\omega} \times \vec{r}_i)]$.
+
+\section{Differential Field Operators: Gradient, Divergence, and Curl}
+Spatial variation of physical fields requires the Del (Nabla) vector differential operator:
+\begin{equation}
+\nabla \equiv \hat{i}\frac{\partial}{\partial x} + \hat{j}\frac{\partial}{\partial y} + \hat{k}\frac{\partial}{\partial z}
+\end{equation}
+
+\begin{mathdefinition}[The Gradient of a Scalar Field]
+For a scalar field $\psi(x, y, z)$, the \textbf{gradient} $\nabla \psi$ is a vector field pointing in the direction of the greatest rate of spatial increase of $\psi$, with magnitude equal to that maximum directional rate of change:
+\begin{equation}
+\nabla \psi = \frac{\partial \psi}{\partial x}\hat{i} + \frac{\partial \psi}{\partial y}\hat{j} + \frac{\partial \psi}{\partial z}\hat{k}
+\end{equation}
+Geometrically, $\nabla \psi$ is perpendicular to the equipotential or level surface $\psi(x, y, z) = C$ at every point.
+\end{mathdefinition}
+
+\begin{mathdefinition}[The Divergence of a Vector Field]
+The \textbf{divergence} of a vector field $\vec{A}$ represents the net volumetric flux density outflow per unit infinitesimal volume from a given point:
+\begin{equation}
+\nabla \cdot \vec{A} = \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z}
+\end{equation}
+If $\nabla \cdot \vec{A} = 0$ everywhere, the field is called \textbf{solenoidal} (e.g., the magnetic field $\vec{B}$ in Maxwell's second law $\nabla \cdot \vec{B} = 0$, indicating the non-existence of magnetic monopoles).
+\end{mathdefinition}
+
+\begin{mathdefinition}[The Curl of a Vector Field]
+The \textbf{curl} of a vector field $\vec{A}$ measures the microscopic circulation density or rotational vorticity around an infinitesimal loop:
+\begin{equation}
+\nabla \times \vec{A} = \left(\frac{\partial A_z}{\partial y} - \frac{\partial A_y}{\partial z}\right)\hat{i} + \left(\frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x}\right)\hat{j} + \left(\frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y}\right)\hat{k}
+\end{equation}
+A vector field with $\nabla \times \vec{A} = \vec{0}$ is called \textbf{irrotational} or \textbf{conservative}.
+\end{mathdefinition}
+
+\begin{maththeorem}[Null Identities of Vector Calculus]
+For any twice continuously differentiable scalar field $\psi$ and vector field $\vec{A}$:
+\begin{align}
+\nabla \times (\nabla \psi) &= \vec{0} \quad \text{(The curl of any gradient field is identically zero)} \\
+\nabla \cdot (\nabla \times \vec{A}) &= 0 \quad \text{(The divergence of any curl field is identically zero)}
+\end{align}
+\end{maththeorem}
+
+\begin{pitfallbox}[Common Operator Confusion]
+Do not confuse the Laplacian of a scalar with the vector Laplacian. 
+For a scalar field:
+\begin{equation}
+\nabla^2 \psi = \nabla \cdot (\nabla \psi) = \frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2} + \frac{\partial^2 \psi}{\partial z^2}
+\end{equation}
+For a vector field, the vector Laplacian is defined via the curl-of-curl identity:
+\begin{equation}
+\nabla^2 \vec{A} \equiv \nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A})
+\end{equation}
+In Cartesian coordinates, $\nabla^2 \vec{A} = (\nabla^2 A_x)\hat{i} + (\nabla^2 A_y)\hat{j} + (\nabla^2 A_z)\hat{k}$, but this component-wise equality fails in curvilinear coordinates because unit vectors depend on spatial coordinates!
+\end{pitfallbox}
+
+\section{Conservative Vector Fields and Potential Theory}
+A vector force field $\vec{F}$ is conservative if the work done $W = \int_{C} \vec{F} \cdot d\vec{r}$ between any two points is independent of the path. The following four statements are mathematically equivalent in a simply connected domain:
+\begin{enumerate}
+    \item $\oint_C \vec{F} \cdot d\vec{r} = 0$ for every closed contour $C$.
+    \item $\int_A^B \vec{F} \cdot d\vec{r}$ is path-independent.
+    \item $\vec{F}$ can be expressed as the negative gradient of a scalar potential: $\vec{F} = -\nabla V$.
+    \item $\vec{F}$ is irrotational everywhere: $\nabla \times \vec{F} = \vec{0}$.
+\end{enumerate}
+
+\section{Worked Examples and Physical Applications}
+
+\begin{psctexample}[Testing Conservatism and Finding the Potential Function]
+Consider the gravitational/electrostatic type force field:
+\begin{equation}
+\vec{F}(x, y, z) = (2xy + z^3)\hat{i} + x^2\hat{j} + 3xz^2\hat{k}
+\end{equation}
+Determine whether $\vec{F}$ is conservative. If so, construct its potential energy function $V(x, y, z)$ such that $\vec{F} = -\nabla V$ with $V(0,0,0) = 0$.
+
+\textbf{\color{rbruNavy}Picture / Conceptualization:}
+The field components depend on polynomial combinations of spatial coordinates. We test whether the field possesses microscopic vorticity.
+
+\textbf{\color{rbruNavy}Strategy / Governing Laws:}
+Compute $\nabla \times \vec{F}$. If the curl vanishes identically, determine $V$ by integrating the partial derivative conditions $-\frac{\partial V}{\partial x} = F_x$, $-\frac{\partial V}{\partial y} = F_y$, $-\frac{\partial V}{\partial z} = F_z$.
+
+\textbf{\color{rbruNavy}Calculation / Analytical Solution:}
+1. Evaluate the curl:
+\begin{equation}
+\nabla \times \vec{F} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\ 2xy + z^3 & x^2 & 3xz^2 \end{vmatrix}
+= \hat{i}(0 - 0) - \hat{j}(3z^2 - 3z^2) + \hat{k}(2x - 2x) = \vec{0}
+\end{equation}
+Because $\nabla \times \vec{F} = \vec{0}$ everywhere, $\vec{F}$ is conservative.
+
+2. Integrate for $V(x, y, z)$:
+\begin{align}
+\frac{\partial V}{\partial x} &= -(2xy + z^3) \implies V(x, y, z) = -x^2 y - xz^3 + g(y, z) \\
+\frac{\partial V}{\partial y} &= -x^2 + \frac{\partial g}{\partial y} = -x^2 \implies \frac{\partial g}{\partial y} = 0 \implies g(y, z) = h(z) \\
+\frac{\partial V}{\partial z} &= -3xz^2 + h'(z) = -3xz^2 \implies h'(z) = 0 \implies h(z) = C
+\end{align}
+Given the reference condition $V(0,0,0) = 0$, the integration constant is $C = 0$.
+Thus:
+\begin{equation}
+V(x, y, z) = -(x^2 y + xz^3)
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+Because $\vec{F} = -\nabla V$, moving a test particle along any closed trajectory in this field yields net zero energy dissipation, ensuring complete conservation of mechanical energy $E = T + V$.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Vector Field Divergence and Streamline Visualization]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define 2D grid
+Y, X = np.mgrid[-2:2:100j, -2:2:100j]
+
+# Dipole-like electric vector field
+U = X / (X**2 + Y**2 + 0.1)**1.5
+V = Y / (X**2 + Y**2 + 0.1)**1.5
+
+# Numerical divergence: dU/dx + dV/dy
+dx = X[0, 1] - X[0, 0]
+dy = Y[1, 0] - Y[0, 0]
+div = np.gradient(U, axis=1)/dx + np.gradient(V, axis=0)/dy
+
+print(f"Max divergence near core: {np.max(div):.2f}")
+print("Streamlines smoothly diverge radially outwards from the positive source.")
+\end{pythonbox}
+
+\section{Summary of Key Formulas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Operator / Law} & \textbf{Mathematical Definition} & \textbf{Physical Meaning} \\
+\midrule
+Gradient $\nabla \psi$ & $\sum_i \frac{1}{h_i}\frac{\partial \psi}{\partial u_i}\hat{e}_i$ & Maximum directional spatial derivative; normal to level surfaces \\
+Divergence $\nabla \cdot \vec{A}$ & $\frac{1}{h_1 h_2 h_3}\sum_i \frac{\partial}{\partial u_i}\left(\frac{h_1 h_2 h_3}{h_i}A_i\right)$ & Net outflow flux density per unit volume (sources and sinks) \\
+Curl $\nabla \times \vec{A}$ & $\frac{1}{h_1 h_2 h_3}\begin{vmatrix} h_1\hat{e}_1 & h_2\hat{e}_2 & h_3\hat{e}_3 \\ \partial/\partial u_1 & \partial/\partial u_2 & \partial/\partial u_3 \\ h_1 A_1 & h_2 A_2 & h_3 A_3 \end{vmatrix}$ & Circulation vorticity around microscopic loops \\
+Laplacian $\nabla^2 \psi$ & $\nabla \cdot (\nabla \psi)$ & Mean curvature; appears in Poisson and wave equations \\
+\bottomrule
+\end{tabularx}
+\caption{Summary of differential vector operators in orthogonal curvilinear coordinates.}
+\label{tab:ch02_summary}
+\end{table}
+
+\section{Chapter Exercises}
+\begin{enumerate}
+    \item \textbf{BAC-CAB Expansion:} Prove algebraically that $(\vec{A} \times \vec{B}) \cdot (\vec{C} \times \vec{D}) = (\vec{A} \cdot \vec{C})(\vec{B} \cdot \vec{D}) - (\vec{A} \cdot \vec{D})(\vec{B} \cdot \vec{C})$.
+    \item \textbf{Angular Velocity Field:} The velocity field of a rigid body rotating with constant angular velocity $\vec{\omega} = \omega\hat{k}$ is $\vec{v} = \vec{\omega} \times \vec{r}$. Calculate $\nabla \cdot \vec{v}$ and $\nabla \times \vec{v}$. What is the physical significance of $\nabla \times \vec{v}$?
+    \item \textbf{Solenoidal and Irrotational Check:} Show that the field $\vec{B}(\vec{r}) = \frac{\vec{m} \times \vec{r}}{r^3}$ (magnetic dipole field) satisfies $\nabla \cdot \vec{B} = 0$ for $r \neq 0$.
+\end{enumerate}

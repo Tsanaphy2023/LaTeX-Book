@@ -1,0 +1,147 @@
+\chapter{Multiple Integrals \& Field Theorems}
+\index{Multiple Integrals}
+\index{Jacobian Determinant}
+\index{Line Integrals}
+\index{Surface Integrals}
+\index{Green's Theorem}
+\index{Stokes' Theorem}
+\index{Gauss's Divergence Theorem}
+\index{Maxwell's Equations}
+
+\begin{chapterobjectives}
+Upon mastering this chapter, students will be able to:
+\begin{enumerate}
+    \item Evaluate multiple integrals over general domains using Fubini's theorem.
+    \item Perform coordinate transformations in multivariable integrals using the Jacobian determinant.
+    \item Calculate line integrals of vector fields along specified paths and surface fluxes through arbitrary surfaces.
+    \item State, prove, and apply Green's theorem, Stokes' circulation theorem, and Gauss's Divergence theorem.
+    \item Connect differential and integral formulations of physical laws (Maxwell's equations, continuity equation).
+    \item Implement numerical multiple integration algorithms in Python.
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{Multiple Integrals and the Jacobian Transformation}
+Physical quantities such as total mass $M = \iiint \rho(\vec{r})\,dV$, center of mass $\vec{r}_{\text{cm}} = \frac{1}{M}\iiint \vec{r}\rho\,dV$, and moments of inertia require integration over two- and three-dimensional spatial manifolds.
+
+When changing integration variables from $(x, y, z)$ to curvilinear coordinates $(u, v, w)$, the volume transformation is scaled by the absolute value of the \textbf{Jacobian determinant}:
+\begin{equation}
+J \equiv \frac{\partial(x, y, z)}{\partial(u, v, w)} = \begin{vmatrix} \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} & \frac{\partial x}{\partial w} \\ \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} & \frac{\partial y}{\partial w} \\ \frac{\partial z}{\partial u} & \frac{\partial z}{\partial v} & \frac{\partial z}{\partial w} \end{vmatrix}
+\end{equation}
+The integral transformation law is:
+\begin{equation}
+\iiint_V f(x, y, z)\,dx\,dy\,dz = \iiint_{V'} f(x(u,v,w), y(u,v,w), z(u,v,w))\,|J|\,du\,dv\,dw
+\end{equation}
+For orthogonal curvilinear coordinates, the Jacobian equals the product of the scale factors: $|J| = h_1 h_2 h_3$. Specifically:
+\begin{itemize}
+    \item Cylindrical: $|J| = \rho \implies dV = \rho\,d\rho\,d\phi\,dz$.
+    \item Spherical: $|J| = r^2\sin\theta \implies dV = r^2\sin\theta\,dr\,d\theta\,d\phi$.
+\end{itemize}
+
+\section{The Fundamental Theorems of Vector Integral Calculus}
+
+\begin{maththeorem}[Green's Theorem in the Plane]
+Let $C$ be a positively oriented (counterclockwise), piecewise-smooth, simple closed curve enclosing region $D \subset \mathbb{R}^2$. If $P(x, y)$ and $Q(x, y)$ have continuous partial derivatives on $D$:
+\begin{equation}
+\oint_C (P\,dx + Q\,dy) = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)dA
+\end{equation}
+\end{maththeorem}
+
+\begin{maththeorem}[Stokes' Theorem (Circulation Theorem)]
+Let $S$ be an oriented piecewise-smooth surface bounded by a closed contour $C = \partial S$ oriented by the right-hand rule with respect to the unit normal $\hat{n}$. For any continuously differentiable vector field $\vec{A}$:
+\begin{equation}
+\oint_C \vec{A} \cdot d\vec{r} = \iint_S (\nabla \times \vec{A}) \cdot d\vec{a}
+\end{equation}
+\end{maththeorem}
+In electrodynamics, applying Stokes' theorem to Faraday's law $\nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t}$ generates the macroscopic induction law:
+\begin{equation}
+\mathcal{E} = \oint_C \vec{E} \cdot d\vec{r} = -\frac{d}{dt}\iint_S \vec{B} \cdot d\vec{a} = -\frac{d\Phi_B}{dt}
+\end{equation}
+
+\begin{maththeorem}[Gauss's Divergence Theorem]
+Let $V$ be a compact three-dimensional region bounded by a closed surface $S = \partial V$ oriented with an outward-pointing unit normal $\hat{n}$. For any continuously differentiable vector field $\vec{A}$:
+\begin{equation}
+\oiint_S \vec{A} \cdot d\vec{a} = \iiint_V (\nabla \cdot \vec{A})\,dV
+\end{equation}
+\end{maththeorem}
+Gauss's divergence theorem bridges the microscopic differential form of Gauss's law $\nabla \cdot \vec{E} = \frac{\rho}{\epsilon_0}$ and its macroscopic integral form $\oiint_S \vec{E} \cdot d\vec{a} = \frac{Q_{\text{enclosed}}}{\epsilon_0}$.
+
+\begin{pitfallbox}[Orientation and Right-Hand Rule Conventions]
+In Stokes' theorem, the boundary curve $C$ must be traversed such that when walking along $C$ with one's head pointing in the direction of the surface normal $\hat{n}$, the surface $S$ lies to one's left. In Gauss's theorem, $S$ must be a \textbf{closed} surface, and $d\vec{a} = \hat{n}\,da$ must point \textbf{outward}.
+\end{pitfallbox}
+
+\section{Worked Examples and Physical Applications}
+
+\begin{psctexample}[Verification of Gauss's Divergence Theorem]
+Let $\vec{F}(x, y, z) = x\hat{i} + y\hat{j} + z\hat{k} = \vec{r}$. Verify Gauss's divergence theorem over a solid sphere of radius $R$ centered at the origin.
+
+\textbf{\color{rbruNavy}Picture / Conceptualization:}
+The vector field points radially outward everywhere from the origin with magnitude proportional to distance. The bounding surface is the sphere $S$ of radius $R$.
+
+\textbf{\color{rbruNavy}Strategy / Governing Laws:}
+Evaluate both sides of $\oiint_S \vec{F} \cdot d\vec{a} = \iiint_V (\nabla \cdot \vec{F})\,dV$ independently and compare the results.
+
+\textbf{\color{rbruNavy}Calculation / Analytical Solution:}
+1. Volume integral:
+Compute the divergence of the position vector:
+\begin{equation}
+\nabla \cdot \vec{r} = \frac{\partial x}{\partial x} + \frac{\partial y}{\partial y} + \frac{\partial z}{\partial z} = 1 + 1 + 1 = 3
+\end{equation}
+Integrate over the spherical volume:
+\begin{equation}
+\iiint_V (\nabla \cdot \vec{F})\,dV = 3 \iiint_V dV = 3\left(\frac{4}{3}\pi R^3\right) = 4\pi R^3
+\end{equation}
+
+2. Surface integral:
+On the spherical surface of radius $R$, the outward unit normal is $\hat{n} = \hat{r}$, and the vector field is $\vec{F} = R\hat{r}$.
+The surface area element is $d\vec{a} = \hat{r}\,da$.
+\begin{equation}
+\oiint_S \vec{F} \cdot d\vec{a} = \oiint_S (R\hat{r}) \cdot (\hat{r}\,da) = R \oiint_S da = R (4\pi R^2) = 4\pi R^3
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+Both calculations yield precisely $4\pi R^3$. The divergence theorem converted a two-dimensional spherical surface integral into a trivial volume integral of a constant scalar divergence!
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Numerical Verification of Flux through a Sphere]
+import numpy as np
+
+# Monte Carlo integration over unit sphere
+N = 1000000
+pts = np.random.uniform(-1, 1, (N, 3))
+r_sq = np.sum(pts**2, axis=1)
+inside = pts[r_sq <= 1.0]
+
+vol_sphere = (len(inside) / N) * 8.0 # Box volume is 2^3 = 8
+div_F = 3.0
+vol_integral = div_F * vol_sphere
+
+exact = 4.0 * np.pi * (1.0)**3
+print(f"Numerical Volume Integral: {vol_integral:.4f}")
+print(f"Exact Analytical Flux:     {exact:.4f}")
+\end{pythonbox}
+
+\section{Summary of Key Formulas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Theorem} & \textbf{Integral Equation} & \textbf{Physical Meaning} \\
+\midrule
+Green's Theorem & $\oint_{\partial D} (P dx + Q dy) = \iint_D (\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}) dA$ & Planar circulation equals enclosed vorticity flux \\
+Stokes' Theorem & $\oint_{\partial S} \vec{A} \cdot d\vec{r} = \iint_S (\nabla \times \vec{A}) \cdot d\vec{a}$ & Faraday's induction and Ampère's circuital laws \\
+Divergence Theorem & $\oiint_{\partial V} \vec{A} \cdot d\vec{a} = \iiint_V (\nabla \cdot \vec{A}) dV$ & Gauss's law for electrostatic and gravitational flux \\
+Jacobian Rule & $dV = |\det J|\,du_1 du_2 du_3$ & Geometric volume distortion under curvilinear transforms \\
+\bottomrule
+\end{tabularx}
+\caption{Summary of fundamental integral transformation theorems.}
+\label{tab:ch07_summary}
+\end{table}
+
+\section{Chapter Exercises}
+\begin{enumerate}
+    \item \textbf{Stokes' Theorem on a Paraboloid:} Verify Stokes' theorem for $\vec{A} = -y\hat{i} + x\hat{j} + z\hat{k}$ over the paraboloid surface $z = 1 - x^2 - y^2$ ($z \ge 0$) bounded by the unit circle in the $xy$-plane.
+    \item \textbf{Gravitational Field Divergence:} Show that for the Newtonian gravitational field $\vec{g} = -\frac{GM}{r^2}\hat{r}$, $\oiint_S \vec{g} \cdot d\vec{a} = -4\pi GM$ for any closed surface enclosing the origin.
+    \item \textbf{Jacobian in Elliptic Coordinates:} Calculate the Jacobian determinant for planar elliptic coordinates $x = a\cosh u\cos v$, $y = a\sinh u\sin v$.
+\end{enumerate}

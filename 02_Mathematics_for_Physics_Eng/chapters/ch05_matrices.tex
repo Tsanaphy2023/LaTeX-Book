@@ -1,0 +1,170 @@
+\chapter{Linear Algebra \& Matrix Mechanics}
+\index{Matrix Algebra}
+\index{Determinants}
+\index{Eigenvalues}
+\index{Eigenvectors}
+\index{Diagonalization}
+\index{Hermitian Matrix}
+\index{Unitary Matrix}
+\index{Coupled Oscillators}
+\index{Inertia Tensor}
+
+\begin{chapterobjectives}
+Upon mastering this chapter, students will be able to:
+\begin{enumerate}
+    \item Perform matrix operations, evaluate determinants, and construct matrix inverses.
+    \item Classify symmetric, orthogonal, Hermitian, and unitary transformation matrices.
+    \item Formulate and solve the secular eigenvalue problem $\det(\mathbf{A} - \lambda\mathbf{I}) = 0$.
+    \item Diagonalize linear operators and construct similarity transformation matrices.
+    \item Apply matrix techniques to physical problems: coupled oscillators, normal modes, moment of inertia tensors, and quantum mechanical observables.
+    \item Solve large eigenvalue systems numerically using Python's `numpy.linalg`.
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{Matrix Operations and Special Classes of Matrices}
+Linear relationships permeate theoretical physics. Systems of linear equations, spatial rotations, coordinate transformations, and quantum state evolutions are formulated through matrices.
+
+Let $\mathbf{A} \in \mathbb{C}^{n \times n}$ denote an $n \times n$ square matrix with elements $A_{ij}$.
+\begin{itemize}
+    \item \textbf{Transpose:} $(\mathbf{A}^T)_{ij} = A_{ji}$.
+    \item \textbf{Complex Conjugate Transpose (Hermitian Adjoint):} $\mathbf{A}^\dagger \equiv (\mathbf{A}^*)^T$, so $(A^\dagger)_{ij} = A_{ji}^*$.
+    \item \textbf{Trace:} $\text{Tr}(\mathbf{A}) = \sum_{i=1}^n A_{ii}$ (invariant under cyclic permutations).
+    \item \textbf{Determinant:} Scalar measure of volumetric scaling under the linear transformation $\det(\mathbf{A})$. If $\det(\mathbf{A}) \neq 0$, the matrix is invertible, with inverse satisfying $\mathbf{A}\mathbf{A}^{-1} = \mathbf{I}$.
+\end{itemize}
+
+\begin{mathdefinition}[Classification of Transformation Matrices]
+A square matrix $\mathbf{A}$ is classified according to its algebraic symmetries:
+\begin{itemize}
+    \item \textbf{Symmetric:} $\mathbf{A}^T = \mathbf{A}$ (Real entries).
+    \item \textbf{Orthogonal:} $\mathbf{A}^T \mathbf{A} = \mathbf{I} \implies \mathbf{A}^{-1} = \mathbf{A}^T$ (Preserves Euclidean vector norms and angles; e.g., 3D rotation matrices).
+    \item \textbf{Hermitian:} $\mathbf{A}^\dagger = \mathbf{A}$ (Generalization of symmetric to complex space; all eigenvalues are real, representing quantum observables).
+    \item \textbf{Unitary:} $\mathbf{U}^\dagger \mathbf{U} = \mathbf{I} \implies \mathbf{U}^{-1} = \mathbf{U}^\dagger$ (Preserves quantum probability amplitudes; e.g., time evolution operator $U(t) = e^{-iHt/\hbar}$).
+\end{itemize}
+\end{mathdefinition}
+
+\section{The Eigenvalue Problem and Diagonalization}
+\begin{mathdefinition}[Secular Equation]
+A non-zero column vector $\vec{v} \neq \vec{0}$ is an \textbf{eigenvector} of $\mathbf{A}$ with corresponding \textbf{eigenvalue} $\lambda$ if:
+\begin{equation}
+\mathbf{A}\vec{v} = \lambda\vec{v} \iff (\mathbf{A} - \lambda\mathbf{I})\vec{v} = \vec{0}
+\end{equation}
+For non-trivial solutions to exist, the coefficient matrix must be singular, yielding the \textbf{characteristic (secular) equation}:
+\begin{equation}
+\det(\mathbf{A} - \lambda\mathbf{I}) = 0
+\end{equation}
+Expanding this determinant yields an $n$-th degree polynomial whose roots are the eigenvalues $\lambda_1, \lambda_2, \dots, \lambda_n$.
+\end{mathdefinition}
+
+\begin{maththeorem}[Spectral Theorem for Hermitian Matrices]
+If $\mathbf{A}$ is an $n \times n$ Hermitian (or real symmetric) matrix:
+\begin{enumerate}
+    \item All $n$ eigenvalues $\lambda_k$ are strictly real.
+    \item Eigenvectors corresponding to distinct eigenvalues are mutually orthogonal: $\vec{v}_i^\dagger \vec{v}_j = 0$ for $\lambda_i \neq \lambda_j$.
+    \item There exists a unitary matrix $\mathbf{U}$ formed by orthonormalized eigenvectors as columns such that:
+    \begin{equation}
+    \mathbf{U}^\dagger \mathbf{A} \mathbf{U} = \mathbf{\Lambda} = \text{diag}(\lambda_1, \lambda_2, \dots, \lambda_n)
+    \end{equation}
+\end{enumerate}
+\end{maththeorem}
+
+\begin{pitfallbox}[Non-Commutative Matrix Products]
+Matrix multiplication is fundamentally non-commutative: in general, $\mathbf{A}\mathbf{B} \neq \mathbf{B}\mathbf{A}$.
+The commutator is defined as:
+\begin{equation}
+[\mathbf{A}, \mathbf{B}] \equiv \mathbf{A}\mathbf{B} - \mathbf{B}\mathbf{A}
+\end{equation}
+In quantum mechanics, if two observable operators do not commute ($[\mathbf{A}, \mathbf{B}] \neq \mathbf{0}$), they cannot be measured simultaneously with arbitrary precision (Robertson-Schrödinger uncertainty relation $\Delta A \Delta B \ge \frac{1}{2}|\langle [\mathbf{A}, \mathbf{B}] \rangle|$).
+\end{pitfallbox}
+
+\section{Physical Applications: Coupled Oscillators and Normal Modes}
+Consider two identical masses $m$ connected by springs of stiffness $k$ between fixed walls and coupled by a central spring of stiffness $k_c$. The equations of motion are:
+\begin{align}
+m\ddot{x}_1 &= -k x_1 - k_c (x_1 - x_2) \\
+m\ddot{x}_2 &= -k x_2 - k_c (x_2 - x_1)
+\end{align}
+In matrix notation, defining displacement vector $\vec{x} = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}$:
+\begin{equation}
+m\begin{pmatrix} \ddot{x}_1 \\ \ddot{x}_2 \end{pmatrix} + \begin{pmatrix} k + k_c & -k_c \\ -k_c & k + k_c \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}
+\end{equation}
+Assuming harmonic solutions $\vec{x}(t) = \vec{v} e^{i\omega t}$, we obtain the generalized eigenvalue problem $\mathbf{K}\vec{v} = \omega^2 m \vec{v}$.
+
+\section{Worked Examples and Physical Applications}
+
+\begin{psctexample}[Normal Modes of Coupled Masses]
+Find the normal frequencies $\omega_1, \omega_2$ and normal mode vectors for the coupled system with $k_c = k$.
+
+\textbf{\color{rbruNavy}Picture / Conceptualization:}
+Two masses oscillating along a straight line. In mode 1, they oscillate in phase (center spring unstretched). In mode 2, they oscillate in anti-phase (center spring maximally stretched).
+
+\textbf{\color{rbruNavy}Strategy / Governing Laws:}
+The stiffness matrix with $k_c = k$ is $\mathbf{K} = k\begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix}$.
+Solve the characteristic equation $\det(\mathbf{K} - \lambda m \mathbf{I}) = 0$, where $\lambda = \omega^2$.
+
+\textbf{\color{rbruNavy}Calculation / Analytical Solution:}
+1. Secular determinant:
+\begin{equation}
+\begin{vmatrix} 2k - m\omega^2 & -k \\ -k & 2k - m\omega^2 \end{vmatrix} = 0 \implies (2k - m\omega^2)^2 - k^2 = 0
+\end{equation}
+2. Solving for $\omega^2$:
+\begin{equation}
+2k - m\omega^2 = \pm k \implies \omega_1^2 = \frac{k}{m}, \quad \omega_2^2 = \frac{3k}{m}
+\end{equation}
+3. Eigenvectors (Normal Modes):
+For $\omega_1 = \sqrt{k/m}$:
+\begin{equation}
+\begin{pmatrix} k & -k \\ -k & k \end{pmatrix}\begin{pmatrix} v_{11} \\ v_{12} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_{11} = v_{12} \implies \vec{v}_1 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}
+\end{equation}
+For $\omega_2 = \sqrt{3k/m}$:
+\begin{equation}
+\begin{pmatrix} -k & -k \\ -k & -k \end{pmatrix}\begin{pmatrix} v_{21} \\ v_{22} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_{21} = -v_{22} \implies \vec{v}_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix}
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+In the symmetric mode $\vec{v}_1$, both masses move in unison ($x_1 = x_2$), so the coupling spring never changes length, yielding the single-mass frequency $\omega_1 = \sqrt{k/m}$. In the antisymmetric mode $\vec{v}_2$, the masses move in opposite directions ($x_1 = -x_2$), subjecting each mass to strong restoring force from the coupling spring and increasing the natural frequency to $\sqrt{3k/m}$.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Eigenvalue and Normal Mode Computation in Python]
+import numpy as np
+
+# System parameters
+m = 1.0  # kg
+k = 10.0 # N/m
+
+# Stiffness matrix K
+K = np.array([[2*k, -k],
+              [-k, 2*k]])
+
+# Eigenvalues and eigenvectors
+evals, evecs = np.linalg.eigh(K / m)
+frequencies = np.sqrt(evals)
+
+print(f"Normal Mode Frequencies (rad/s): {frequencies}")
+print("Orthonormal Eigenvectors (Columns):")
+print(evecs)
+\end{pythonbox}
+
+\section{Summary of Key Formulas}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Property / Operation} & \textbf{Formula} & \textbf{Physical Meaning} \\
+\midrule
+Characteristic Equation & $\det(\mathbf{A} - \lambda\mathbf{I}) = 0$ & Frequencies of normal modes, energy eigenvalues \\
+Hermitian Matrix & $\mathbf{H}^\dagger = \mathbf{H}$ & Observables in quantum theory have real spectra \\
+Unitary Transformation & $\mathbf{U}^\dagger \mathbf{U} = \mathbf{I}$ & Conservation of total probability and vector lengths \\
+Inertia Tensor Diagonalization & $\mathbf{R}^T \mathbf{I} \mathbf{R} = \text{diag}(I_1, I_2, I_3)$ & Finding principal axes of rotation in rigid body mechanics \\
+\bottomrule
+\end{tabularx}
+\caption{Key matrix algebra formulas and their physical interpretations.}
+\label{tab:ch05_summary}
+\end{table}
+
+\section{Chapter Exercises}
+\begin{enumerate}
+    \item \textbf{Pauli Spin Matrices:} The Pauli spin matrices in quantum mechanics are $\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, $\sigma_y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$, $\sigma_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$. Prove that each is Hermitian and find their eigenvalues and normalized eigenvectors.
+    \item \textbf{Inertia Tensor:} A system consists of three equal masses $m$ located at $(a, 0, 0)$, $(0, a, a)$, and $(0, 0, a)$. Calculate the inertia tensor components $I_{ij}$ and diagonalize the matrix to determine the principal moments of inertia.
+    \item \textbf{Three-Coupled Oscillators:} Write the $3 \times 3$ stiffness matrix for three coupled masses in a ring topology and calculate the normal mode frequencies.
+\end{enumerate}
