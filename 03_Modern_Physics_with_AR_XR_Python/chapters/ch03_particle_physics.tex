@@ -1,4 +1,308 @@
-\chapter{ฟิสิกส์ของอนุภาค (Particle Physics)}
+\chapter{ฟิสิกส์อนุภาคและแบบจำลองมาตรฐาน (Particle Physics and the Standard Model)}
+\label{chap:particle_physics}
+\index{ฟิสิกส์อนุภาค}
+\index{แบบจำลองมาตรฐาน}
+\index{ควาร์ก}
+\index{ฮิกส์โบซอน}
 
-\section{แบบจำลองมาตรฐาน (Standard Model of Particle Physics)}
-การจำแนกอนุภาคมูลฐาน: ควาร์ก 6 รส, เลปตอน 6 ชนิด, เกจโบซอน และฮิกส์โบซอน
+\begin{chapterobjectives}
+เมื่อศึกษาบทที่ 3 จบแล้ว นิสิตและผู้ศึกษาสามารถ:
+\begin{enumerate}
+    \item จำแนกอันตรกิริยามูลฐานทั้ง 4 แรงในธรรมชาติและอนุภาคสื่อแรง (Gauge Bosons) ได้อย่างถูกต้อง
+    \item อธิบายองค์ประกอบของแบบจำลองมาตรฐาน (Standard Model) ทั้งในส่วนของแฟร์มิออน (ควาร์กและเลปตอน) และโบซอน
+    \item วิเคราะห์กฎการอนุรักษ์ในปฏิกิริยาอนุภาค ได้แก่ ประจุไฟฟ้า เลขแบริออน เลขเลปตอน และสเตรนจ์เนส
+    \item วาดและตีความแผนภาพไฟน์แมน (Feynman Diagrams) สำหรับอันตรกิริยาแม่เหล็กไฟฟ้าและแรงนิวเคลียร์อย่างอ่อน
+    \item อธิบายบทบาทของสนามฮิกส์ (Higgs Field) ในการสร้างมวลแก่อนุภาคมูลฐาน
+    \item เขียนโปรแกรม Python เพื่อคำนวณการอนุรักษ์ 4-โมเมนตัม และการสร้างมวลคงตัว (Invariant Mass Reconstruction)
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{อันตรกิริยามูลฐาน 4 แรงในธรรมชาติ}
+\index{อันตรกิริยามูลฐาน}
+\index{แรงนิวเคลียร์}
+
+ในระดับมูลฐาน ปรากฏการณ์ทางกายภาพทั้งหมดในเอกภพถูกควบคุมด้วยอันตรกิริยา 4 แรงหลัก:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{l Z Z Y}
+\toprule
+\textbf{อันตรกิริยา} & \textbf{ความแรงสัมพัทธ์} & \textbf{ระยะทำการ (Range)} & \textbf{อนุภาคสื่อแรง (Mediator)} \\
+\midrule
+แรงเข้ม (Strong) & $1$ & $\approx 10^{-15}\text{ m}$ & กลูออน ($g$, Gluon) 8 ชนิด \\
+แม่เหล็กไฟฟ้า (EM) & $10^{-2}$ & อนันต์ ($\infty$) & โฟตอน ($\gamma$, Photon) \\
+แรงอ่อน (Weak) & $10^{-7}$ & $\approx 10^{-18}\text{ m}$ & $W^+$, $W^-$, $Z^0$ Bosons \\
+แรงโน้มถ่วง (Gravity) & $10^{-39}$ & อนันต์ ($\infty$) & กราวิตอน ($G$, Graviton - สมมติฐาน) \\
+\bottomrule
+\end{tabularx}
+\caption{เปรียบเทียบคุณลักษณะของ 4 แรงมูลฐานในธรรมชาติ}
+\label{tab:four_fundamental_forces}
+\end{table}
+
+\section{แบบจำลองมาตรฐาน (The Standard Model)}
+\index{ควาร์ก}
+\index{เลปตอน}
+\index{แฟร์มิออน}
+
+แบบจำลองมาตรฐานคือทฤษฎีควอนตัมสนาม (Quantum Field Theory) ที่อธิบายอนุภาคพื้นฐานที่เป็นองค์ประกอบของสสารและแรงสื่อสาร (ยกเว้นแรงโน้มถ่วง) อนุภาคในแบบจำลองมาตรฐานแบ่งเป็น 2 กลุ่มใหญ่ตามค่าสปิน:
+
+\subsection{1. แฟร์มิออน (Fermions: สปิน $s = 1/2$)}
+เป็นอนุภาคที่สร้างสสาร เป็นไปตามหลักการกีดกันของเพาลี (Pauli Exclusion Principle) แบ่งออกเป็น 3 ยุค (Generations):
+\begin{itemize}
+    \item \textbf{ควาร์ก (Quarks):} มีประจุเศษส่วนและมีประจุสี (Color Charge: แดง เขียว น้ำเงิน) ประกอบด้วย:
+    \begin{itemize}
+        \item รุ่นที่ 1: อัพ ($u, +2/3e$) และ ดาวน์ ($d, -1/3e$)
+        \item รุ่นที่ 2: ชาร์ม ($c, +2/3e$) และ สเตรนจ์ ($s, -1/3e$)
+        \item รุ่นที่ 3: ท็อป ($t, +2/3e$) และ บอตทอม ($b, -1/3e$)
+    \end{itemize}
+    \item \textbf{เลปตอน (Leptons):} ไม่มีประจุสี ไม่ทำอันตรกิริยาอย่างเข้ม ประกอบด้วย:
+    \begin{itemize}
+        \item รุ่นที่ 1: อิเล็กตรอน ($e^-$) และ อิเล็กตรอนนิวทริโน ($\nu_e$)
+        \item รุ่นที่ 2: มิวออน ($\mu^-$) และ มิวออนนิวทริโน ($\nu_\mu$)
+        \item รุ่นที่ 3: ทาว ($\tau^-$) และ ทาวน์นิวทริโน ($\nu_\tau$)
+    \end{itemize}
+\end{itemize}
+
+\subsection{2. เกจโบซอน (Gauge Bosons: สปิน $s = 1$)}
+อนุภาคสื่อแรงตามสมมาตรเกจ $SU(3)_C \times SU(2)_L \times U(1)_Y$: โฟตอน ($\gamma$), กลูออน ($g$), โบซอนเวกเตอร์ $W^{\pm}$ และ $Z^0$
+
+\subsection{3. สเกลาร์โบซอน: ฮิกส์โบซอน (Higgs Boson: สปิน $s = 0$)}
+ค้นพบที่เซิร์น (CERN LHC) ในปี ค.ศ. 2012 มวลประมาณ $125.1\text{ GeV}/c^2$ ทำหน้าที่ให้มวลแก่อนุภาคผ่านกลไกการทำลายสมมาตรทางไฟฟ้า-อ่อนอย่างเกิดขึ้นเอง (Spontaneous Symmetry Breaking)
+
+\section{ฮาดรอนและโครงสร้างควาร์ก (Hadrons: Baryons and Mesons)}
+\index{ฮาดรอน}
+\index{แบริออน}
+\index{เมซอน}
+\index{การกักขังประจุสี}
+
+เนื่องจากปรากฏการณ์ \textbf{การกักขังประจุสี (Color Confinement)} ในทฤษฎีควอนตัมโครโมไดนามิกส์ (QCD) ควาร์กเดี่ยวไม่สามารถปรากฏอยู่อย่างอิสระได้ ควาร์กจึงต้องรวมตัวกันเป็นกลุ่มที่ประจุสีรวมเป็นกลาง เรียกว่า \textbf{ฮาดรอน (Hadrons)}:
+\begin{enumerate}
+    \item \textbf{แบริออน (Baryons):} ประกอบด้วย 3 ควาร์ก ($qqq$) เช่น:
+    \begin{itemize}
+        \item โปรตอน ($p$): มีโครงสร้างควาร์กเป็น $uud$ (ประจุรวม $= +2/3 + 2/3 - 1/3 = +1$)
+        \item นิวตรอน ($n$): มีโครงสร้างควาร์กเป็น $udd$ (ประจุรวม $= +2/3 - 1/3 - 1/3 = 0$)
+    \end{itemize}
+    \item \textbf{เมซอน (Mesons):} ประกอบด้วยควาร์กและแอนติควาร์ก ($q\bar{q}$) เช่น ไพออนบวก ($\pi^+ = u\bar{d}$)
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Proton Bag
+    \draw[line width=1.5pt, darkNavy, fill=cyan!10] (0, 0) circle (1.8cm);
+    \node at (0, 2.1) [font=\bfseries\color{darkNavy}] {โปรตอน ($p = uud$)};
+    
+    % Quark 1 (u)
+    \filldraw[red!80!black] (-0.7, 0.5) circle (10pt);
+    \node at (-0.7, 0.5) [color=white, font=\footnotesize\bfseries] {$u$};
+    \node at (-0.7, 1.0) [font=\scriptsize, color=red!80!black] {Red};
+    
+    % Quark 2 (u)
+    \filldraw[green!60!black] (0.7, 0.5) circle (10pt);
+    \node at (0.7, 0.5) [color=white, font=\footnotesize\bfseries] {$u$};
+    \node at (0.7, 1.0) [font=\scriptsize, color=green!60!black] {Green};
+    
+    % Quark 3 (d)
+    \filldraw[blue!80!black] (0, -0.7) circle (10pt);
+    \node at (0, -0.7) [color=white, font=\footnotesize\bfseries] {$d$};
+    \node at (0, -1.2) [font=\scriptsize, color=blue!80!black] {Blue};
+    
+    % Gluon springs
+    \draw[decorate, decoration={coil, aspect=0.7, segment length=3.5mm, amplitude=2mm}, line width=1.2pt, color=quantumGold] 
+        (-0.4, 0.5) -- (0.4, 0.5);
+    \draw[decorate, decoration={coil, aspect=0.7, segment length=3.5mm, amplitude=2mm}, line width=1.2pt, color=quantumGold] 
+        (-0.5, 0.2) -- (-0.1, -0.4);
+    \draw[decorate, decoration={coil, aspect=0.7, segment length=3.5mm, amplitude=2mm}, line width=1.2pt, color=quantumGold] 
+        (0.5, 0.2) -- (0.1, -0.4);
+    \node at (0, 0.1) [font=\scriptsize\bfseries\color{quantumGold}] {Gluons};
+\end{tikzpicture}
+\caption{แบบจำลองโครงสร้างควาร์กและกลูออนภายในโปรตอน แสดงสมดุลประจุสี (Color Neutrality)}
+\label{fig:proton_quarks}
+\end{figure}
+
+\section{แผนภาพไฟน์แมน (Feynman Diagrams)}
+\index{แผนภาพไฟน์แมน}
+\index{การสลายตัวบีตา}
+
+ริชาร์ด ไฟน์แมน (Richard P. Feynman) ได้ประดิษฐ์แผนภาพเชิงภาพที่ทรงอานุภาพเพื่อคำนวณแอมพลิจูดการกระเจิงของอนุภาคในทฤษฎีควอนตัมสนาม ตัวอย่างคลาสสิกคือ \textbf{การสลายตัวบีตาลบ (Beta-minus Decay)} ของนิวตรอนเป็นโปรตอน:
+\begin{equation}
+n \to p + e^- + \bar{\nu}_e
+\end{equation}
+ในระดับควาร์ก ปฏิกิริยานี้คือควาร์กดาวน์เปลี่ยนเป็นควาร์กอัพผ่านการปลดปล่อยโบซอนเสมือน $W^-$:
+\begin{equation}
+d \to u + W^- \to u + e^- + \bar{\nu}_e
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Incoming quark d
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=darkNavy] (-3, 0) -- (-1.5, 0);
+    \draw[line width=1.4pt, color=darkNavy] (-1.5, 0) -- (0, 0);
+    \node at (-2.8, 0.3) [font=\footnotesize\bfseries] {ควาร์ก $d$};
+    
+    % Outgoing quark u
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=darkNavy] (0, 0) -- (1.5, 1.5);
+    \draw[line width=1.4pt, color=darkNavy] (1.5, 1.5) -- (3, 1.5);
+    \node at (2.8, 1.8) [font=\footnotesize\bfseries] {ควาร์ก $u$};
+    
+    % W- boson propagator
+    \draw[decorate, decoration={snake, amplitude=2.5mm, segment length=5mm}, line width=1.3pt, color=neonPurple] 
+        (0, 0) -- (2.0, -1.2);
+    \node at (0.8, -0.9) [font=\footnotesize\bfseries\color{neonPurple}] {$W^-$};
+    
+    % Vertex 2: electron and antineutrino
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=red!80!black] (2.0, -1.2) -- (3.2, -0.5);
+    \draw[line width=1.4pt, color=red!80!black] (3.2, -0.5) -- (4.2, 0.0);
+    \node at (4.0, 0.3) [font=\footnotesize\bfseries\color{red!80!black}] {อิเล็กตรอน ($e^-$)};
+    
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=emeraldGlow] (4.2, -2.4) -- (3.1, -1.8);
+    \draw[line width=1.4pt, color=emeraldGlow] (3.1, -1.8) -- (2.0, -1.2);
+    \node at (4.3, -2.6) [font=\footnotesize\bfseries\color{emeraldGlow}] {แอนตินิวทริโน ($\bar{\nu}_e$)};
+    
+    % Vertices
+    \filldraw[darkNavy] (0, 0) circle (3pt);
+    \filldraw[neonPurple] (2.0, -1.2) circle (3pt);
+\end{tikzpicture}
+\caption{แผนภาพไฟน์แมนแสดงการสลายตัวบีตาลบในระดับควาร์ก ($d \to u + W^- \to u + e^- + \bar{\nu}_e$)}
+\label{fig:feynman_beta_decay}
+\end{figure}
+
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Hadron Structure}
+\index{WebXR}
+\index{Hadron AR}
+
+\begin{arbox}[การจำลองโครงสร้าง 3D ควาร์ก-กลูออน และเครื่องเร่งอนุภาคชนกัน]
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\begin{enumerate}
+    \item แสดงการจัดเรียงควาร์ก 3 มิติ ภายในโปรตอน นิวตรอน และไพออน พร้อมสนามพลังสี (Flux Tube / Color String) เชื่อมต่อกัน
+    \item เมื่อผู้เรียนใช้มือจำลองดึงควาร์กตัวหนึ่งออกจากกลุ่ม พลังงานศักย์ของเส้นแรงกลูออนจะเพิ่มขึ้นเป็นเส้นตรง ($V(r) = \sigma r$) จนกระทั่งเกิดปรากฏการณ์ \textbf{String Breaking} กลายเป็นคู่ควาร์ก-แอนติควาร์กใหม่
+    \item การจำลองเหตุการณ์ชนกันของโปรตอนในเครื่องตรวจวัด ATLAS / CMS ที่ LHC พร้อมร่องรอยการกระจายตัวของอนุภาคในระบบพิกัดทรงกระบอก
+\end{enumerate}
+\end{arbox}
+
+\section{การคำนวณเชิงตัวเลขด้วย Python: Invariant Mass Reconstruction}
+\index{Python}
+\index{LHC}
+\index{มวลคงตัว}
+
+ในฟิสิกส์พลังงานสูง เมื่ออนุภาคที่ไม่เสถียร (เช่น ฮิกส์โบซอน $H^0$) สลายตัวอย่างรวดเร็วเป็นสองโฟตอน ($H^0 \to \gamma_1 + \gamma_2$) นักฟิสิกส์จะคำนวณ \textbf{มวลคงตัว (Invariant Mass, $M$)}:
+\begin{equation}
+M^2 c^4 = (E_1 + E_2)^2 - (\mathbf{p}_1 + \mathbf{p}_2)^2 c^2 = 2 E_1 E_2 (1 - \cos\theta)
+\end{equation}
+
+\begin{pythonbox}[invariant\_mass\_higgs.py: การวิเคราะห์สเปกตรัมมวลคงตัวของฮิกส์โบซอน]
+import numpy as np
+
+def simulate_higgs_reconstruction(num_events=100000):
+    """
+    จำลองการวัดมวลคงตัวจากการสลายตัวของฮิกส์โบซอนเป็น 2 โฟตอน
+    M_Higgs = 125.1 GeV, การแจกแจงแบบ Breit-Wigner ร่วมกับ Gaussian Detector Resolution
+    """
+    np.random.seed(42)
+    m_higgs_true = 125.1  # GeV/c^2
+    gamma_width = 0.004   # ความกว้างธรรมชาติของฮิกส์ (GeV)
+    resolution = 1.5      # ความคลาดเคลื่อนของเครื่องตรวจวัด (GeV)
+    
+    # สุ่มเหตุการณ์สัญญาณ (Signal Events)
+    sig_mass = np.random.normal(m_higgs_true, resolution, int(num_events * 0.05))
+    
+    # สุ่มสัญญาณพื้นหลังแบบเอ็กซ์โพเนนเชียล (Background Events)
+    bg_mass = np.random.exponential(scale=35.0, size=int(num_events * 0.95)) + 100.0
+    
+    # รวมข้อมูลทั้งหมด
+    total_data = np.concatenate([sig_mass, bg_mass])
+    total_data = total_data[(total_data >= 110.0) & (total_data <= 140.0)]
+    
+    counts, bin_edges = np.histogram(total_data, bins=60, range=(110, 140))
+    peak_bin = np.argmax(counts)
+    peak_mass = 0.5 * (bin_edges[peak_bin] + bin_edges[peak_bin+1])
+    
+    print(f"=== Higgs Invariant Mass Analysis ===")
+    print(f"Total detected events in [110, 140] GeV: {len(total_data)}")
+    print(f"Reconstructed Peak Mass: {peak_mass:.2f} GeV/c^2 (Expected: 125.10 GeV/c^2)")
+
+simulate_higgs_reconstruction()
+\end{pythonbox}
+
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+
+\begin{psctexample}[พลังงานปลดปล่อยในการสลายตัวของไพออนนิ่ง]
+\textbf{โจทย์ (Problem):} \\
+ไพออนบวก ($\pi^+$) ขณะอยู่นิ่ง เกิดการสลายตัวผ่านอันตรกิริยาอย่างอ่อนเป็นมิวออนบวกและมิวออนนิวทริโน:
+\begin{equation}
+\pi^+ \to \mu^+ + \nu_\mu
+\end{equation}
+กำหนดมวลนิ่ง: $m_\pi = 139.57\text{ MeV}/c^2$, $m_\mu = 105.66\text{ MeV}/c^2$ และสมมติให้นิวทริโนไร้มวล ($m_\nu \approx 0$)
+\begin{enumerate}
+    \item จงคำนวณโมเมนตัมของมิวออนและนิวทริโนที่เกิดขึ้น
+    \item จงหาพลังงานจลน์ของมิวออน
+\end{enumerate}
+
+\textbf{ยุทธวิธี (Strategy):} \\
+เนื่องจากไพออนตั้งต้นอยู่นิ่ง โมเมนตัมรวมตั้งต้นเป็นศูนย์:
+\begin{equation}
+\mathbf{p}_\mu + \mathbf{p}_\nu = 0 \implies |\mathbf{p}_\mu| = |\mathbf{p}_\nu| = p
+\end{equation}
+การอนุรักษ์พลังงานรวมสัมพัทธภาพ:
+\begin{equation}
+E_\pi = m_\pi c^2 = E_\mu + E_\nu = \sqrt{(pc)^2 + (m_\mu c^2)^2} + pc
+\end{equation}
+
+\textbf{การคำนวณ (Computation):} \\
+จัดรูปสมการเพื่อหา $pc$:
+\begin{align}
+m_\pi c^2 - pc &= \sqrt{(pc)^2 + (m_\mu c^2)^2} \\
+(m_\pi c^2)^2 - 2 (m_\pi c^2)(pc) + (pc)^2 &= (pc)^2 + (m_\mu c^2)^2 \\
+pc &= \frac{(m_\pi c^2)^2 - (m_\mu c^2)^2}{2 m_\pi c^2}
+\end{align}
+แทนค่าตัวเลขในหน่วย MeV:
+\begin{equation}
+pc = \frac{(139.57)^2 - (105.66)^2}{2 (139.57)} = \frac{19479.78 - 11164.04}{279.14} = \frac{8315.74}{279.14} \approx 29.79\text{ MeV}
+\end{equation}
+ดังนั้น โมเมนตัมของทั้งสองอนุภาคคือ $p \approx 29.79\text{ MeV}/c$
+
+พลังงานรวมของมิวออนคือ:
+\begin{equation}
+E_\mu = \sqrt{(pc)^2 + (m_\mu c^2)^2} = \sqrt{(29.79)^2 + (105.66)^2} \approx \sqrt{887.44 + 11164.04} \approx 109.78\text{ MeV}
+\end{equation}
+พลังงานจลน์ของมิวออนคำนวณจาก:
+\begin{equation}
+K_\mu = E_\mu - m_\mu c^2 = 109.78 - 105.66 = 4.12\text{ MeV}
+\end{equation}
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+พลังงานปลดปล่อยทั้งหมดของปฏิกิริยานี้คือ $Q = (m_\pi - m_\mu)c^2 \approx 33.91\text{ MeV}$ ทว่ามิวออนได้รับพลังงานจลน์ไปเพียง $4.12\text{ MeV}$ เท่านั้น พลังงานส่วนใหญ่ถึง $29.79\text{ MeV}$ (คิดเป็น 88\%) ถูกถ่ายทอดไปให้นิวทริโนที่ไร้มวล นี่คือลักษณะเฉพาะของการอนุรักษ์โมเมนตัมในระบบอนุภาคสัมพัทธภาพ
+\qedexam
+\end{psctexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{l Z Y}
+\toprule
+\textbf{กลุ่มอนุภาค} & \textbf{สมาชิกหลัก} & \textbf{คุณลักษณะทางฟิสิกส์} \\
+\midrule
+ควาร์ก (Quarks) & $u, d, c, s, t, b$ & มีประจุไฟฟ้าเศษส่วนและประจุสี ทำอันตรกิริยาอย่างเข้ม \\
+เลปตอน (Leptons) & $e, \mu, \tau, \nu_e, \nu_\mu, \nu_\tau$ & ไม่มีประจุสี ทำอันตรกิริยาไฟฟ้าและอย่างอ่อน \\
+เกจโบซอน & $\gamma, g, W^\pm, Z^0$ & อนุภาคสื่อแรงสปิน 1 ตามทฤษฎีเกจ \\
+ฮิกส์โบซอน & $H^0$ & อนุภาคสเกลาร์สปิน 0 ให้มวลแก่อนุภาค \\
+มวลคงตัว & $M^2 c^4 = (\sum E_i)^2 - (\sum \mathbf{p}_i)^2 c^2$ & เครื่องมือสร้างอนุภาคที่สลายตัวอย่างรวดเร็ว \\
+\bottomrule
+\end{tabularx}
+\caption{สรุปโครงสร้างอนุภาคมูลฐานในแบบจำลองมาตรฐาน}
+\label{tab:standard_model_summary}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item จงระบุว่าปฏิกิริยาอนุภาคต่อไปนี้สามารถเกิดขึ้นได้หรือไม่ หากเกิดไม่ได้ให้ระบุกฎการอนุรักษ์ที่ถูกละเมิด:
+    \begin{enumerate}
+        \item $p \to e^+ + \pi^0$
+        \item $\pi^- + p \to K^0 + \Lambda^0$
+        \item $\mu^- \to e^- + \gamma$
+    \end{enumerate}
+    \item จงเขียนโครงสร้างควาร์กของอนุภาคแอนติโปรตอน ($\bar{p}$) และแอนตินิวตรอน ($\bar{n}$) พร้อมตรวจสอบประจุไฟฟ้ารวม
+    \item ในการสลายตัวของ $Z^0$ โบซอนที่อยู่นิ่งเป็นคู่อิเล็กตรอน-โพซิตรอน ($Z^0 \to e^- + e^+$) จงคำนวณพลังงานจลน์ของอิเล็กตรอน (กำหนด $M_Z \approx 91.19\text{ GeV}/c^2$)
+\end{enumerate}

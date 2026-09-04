@@ -1,22 +1,47 @@
 \documentclass[12pt,a4paper,oneside]{book}
+
+% 1. Master Style for Modern Physics with AR/XR & Python
 \usepackage{styles/modern_physics_style}
+
+% 2. Font configuration for XeLaTeX (Sarabun font)
 \usepackage{fontspec}
 \defaultfontfeatures{Mapping=tex-text}
-\setmainfont{TH Sarabun New}
+\setmainfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
 
+% 3. Hyperref Setup
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=cyberBlue,
-    pdftitle={Modern Physics with AR/XR & Python - Dr. Chewa Thassana},
-    pdfauthor={Dr. Chewa Thassana}
+    citecolor=neonPurple,
+    urlcolor=cyberBlue,
+    filecolor=emeraldGlow,
+    pdftitle={ฟิสิกส์แผนใหม่: การจำลองเสมือนจริง AR/XR ร่วมกับการคำนวณเชิงตัวเลขด้วย Python - ผศ.ดร.ชีวะ ทัศนา},
+    pdfauthor={ผศ.ดร.ชีวะ ทัศนา}
 }
 
 \begin{document}
-\frontmatter
-\include{frontmatter/title}
-\tableofcontents
 
+% Frontmatter
+\frontmatter
+\input{frontmatter/cover}
+\include{frontmatter/title}
+\include{frontmatter/preface}
+\include{frontmatter/syllabus}
+
+% Table of Contents, Figures, Tables
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+% Mainmatter: 7 Core Chapters
 \mainmatter
 \include{chapters/ch01_special_relativity}
 \include{chapters/ch02_quantum_mechanics}
@@ -25,5 +50,17 @@
 \include{chapters/ch05_nuclear_physics}
 \include{chapters/ch06_quantum_computing}
 \include{chapters/ch07_astrophysics}
+
+% Appendix
+\appendix
+\renewcommand{\thechapter}{ก}
+\include{backmatter/appendix}
+
+% Backmatter
+\backmatter
+\include{backmatter/references}
+\clearpage
+\printindex
+\include{backmatter/biography}
 
 \end{document}

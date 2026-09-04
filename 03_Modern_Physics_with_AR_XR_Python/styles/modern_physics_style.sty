@@ -1,51 +1,324 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{styles/modern_physics_style}[2026/09/04 Modern Physics AR/XR Style]
+\ProvidesPackage{styles/modern_physics_style}[2026/09/04 Modern Physics with AR/XR & Python Master Style]
 
+% 1. Page Geometry (RBRU Standard: Left 1.5in, Top 1.5in, Right 1.0in, Bottom 1.0in)
 \RequirePackage{geometry}
-\geometry{a4paper, top=1.5in, bottom=1.0in, left=1.5in, right=1.0in}
-\RequirePackage{amsmath,amssymb,mathtools,physics,siunitx}
-\RequirePackage{graphicx,xcolor,listings}
-\RequirePackage[most]{tcolorbox}
+\geometry{
+    a4paper,
+    top=1.5in,
+    bottom=1.0in,
+    left=1.5in,
+    right=1.0in,
+    headheight=36pt,
+    headsep=12pt,
+    footskip=0.5in
+}
 
+% 1.1 Thai Linebreak & Hyphenation for XeLaTeX
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.5pt
+
+% 1.2 Thai Academic Terminology (RBRU Standard without colons)
+\renewcommand{\chaptername}{บทที่}
+\renewcommand{\figurename}{ภาพที่}
+\renewcommand{\tablename}{ตารางที่}
+\renewcommand{\contentsname}{สารบัญ}
+\renewcommand{\listfigurename}{สารบัญภาพ}
+\renewcommand{\listtablename}{สารบัญตาราง}
+\renewcommand{\appendixname}{ภาคผนวก}
+\renewcommand{\bibname}{บรรณานุกรม}
+\renewcommand{\indexname}{ดัชนีสืบค้นคำสำคัญ}
+
+% 2. Math & Physics Packages
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\RequirePackage{physics}
+\RequirePackage{esint}
+\RequirePackage{enumitem}
+
+% 3. Graphics, TikZ, Tables & Floats
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{thaisep}{\quad}
+\captionsetup{labelsep=thaisep}
+\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=darkNavy}, textfont={bf}, labelsep=thaisep}
+\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=darkNavy}, textfont={bf}, labelsep=thaisep}
+
+% 3.1 Indexing System
+\RequirePackage{imakeidx}
+\makeindex[columns=2, title=ดัชนีสืบค้นคำสำคัญ, intoc]
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,patterns,decorations.pathmorphing}
+
+% 4. Color Palette (Cyberpunk / Modern Physics Identity)
+\RequirePackage{xcolor}
 \definecolor{cyberBlue}{HTML}{0284C7}
-\definecolor{darkNavy}{HTML}{0F172A}
+\definecolor{darkNavy}{HTML}{0A1128}
 \definecolor{neonPurple}{HTML}{7C3AED}
+\definecolor{emeraldGlow}{HTML}{10B981}
+\definecolor{quantumGold}{HTML}{F59E0B}
+\definecolor{rbruLightBg}{HTML}{F8FAFC}
 \definecolor{codeBackground}{HTML}{0F172A}
+\definecolor{slateGrey}{HTML}{4A5568}
 
-\newtcolorbox{arbox}[1][]{
+% 5. Chapter & Section Formatting
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{titlesec}
+
+% Cyber-Modern Chapter Banner Box with Spacetime & Quantum Motifs
+\newtcolorbox{chapterbannerbox}{
     enhanced,
-    colback=white,
+    width=\textwidth,
+    arc=6pt,
+    boxrule=1pt,
+    colframe=darkNavy!90!black,
+    interior style={left color=darkNavy!98!black, right color=darkNavy!85!neonPurple},
+    colback=darkNavy,
+    borderline east={4pt}{0pt}{quantumGold},
+    top=16pt, bottom=16pt, left=16pt, right=20pt,
+    drop shadow=black!15,
+    underlay={
+        \begin{tcbclipinterior}
+            \begin{scope}[opacity=0.20]
+                % Spacetime Light Cone & Coordinate Grid
+                \draw[cyan!60!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.5);
+                % 4D Spacetime Axes
+                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.0, 0.8) -- (4.8, 0.8) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.0, 0.8) -- (1.0, 4.0) node[above, font=\scriptsize\bfseries\color{white}] {$ct$};
+                % Relativistic Light Cone Lines (x = +/- ct)
+                \draw[quantumGold, line width=1.3pt, dashed] (1.0, 0.8) -- (4.0, 3.8);
+                \draw[quantumGold, line width=1.3pt, dashed] (1.0, 0.8) -- (-0.5, 2.3);
+                % Quantum Wavefunction / De Broglie Harmonic Packet
+                \draw[cyan, line width=1.5pt, domain=0.4:6.8, samples=100] 
+                    plot (\x, {2.2 + 0.8*sin(3.5*\x r) * exp(-0.12*(\x-3.4)*(\x-3.4))});
+                % Orbital Electron Cloud Shell
+                \draw[rotate around={30:(3.4,2.2)}, neonPurple!80!white, line width=1.0pt, dashdotted] 
+                    (3.4,2.2) ellipse (2.8cm and 1.1cm);
+                \draw[rotate around={-40:(3.4,2.2)}, emeraldGlow, line width=0.9pt] 
+                    (3.4,2.2) ellipse (2.4cm and 0.8cm);
+            \end{scope}
+        \end{tcbclipinterior}
+    }
+}
+
+\newcommand{\rbruchapterbanner}[1]{%
+    \begin{chapterbannerbox}
+        \raggedleft
+        {\fontsize{44}{50}\selectfont\bfseries\color{white} \chaptertitlename\ \thechapter\par}
+        \vspace{6pt}
+        {\color{quantumGold}\rule{0.50\textwidth}{2pt}\par}
+        \vspace{6pt}
+        {\fontsize{25}{31}\selectfont\bfseries\color{white} #1\par}
+    \end{chapterbannerbox}
+}
+
+\newcommand{\rbruunnumberedchapterbanner}[1]{%
+    \begin{chapterbannerbox}
+        \raggedleft
+        \vspace{4pt}
+        {\fontsize{29}{35}\selectfont\bfseries\color{white} #1\par}
+        \vspace{4pt}
+    \end{chapterbannerbox}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {\rbruchapterbanner}
+
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {\rbruunnumberedchapterbanner}
+
+\titlespacing*{\chapter}{0pt}{0pt}{22pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{16}{20}\bfseries\color{darkNavy}}
+  {\thesection}
+  {1em}
+  {}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{14}{18}\bfseries\color{cyberBlue}}
+  {\thesubsection}
+  {0.8em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{12}{15}\bfseries\color{neonPurple}}
+  {\thesubsubsection}
+  {0.6em}
+  {}
+
+% 6. Academic & Simulation Boxes (tcolorbox)
+
+% Learning Objectives Box (OBE Bloom's Taxonomy)
+\newtcolorbox{chapterobjectives}[1][วัตถุประสงค์เชิงพฤติกรรมประจำบท]{
+    enhanced,
+    colback=rbruLightBg,
+    colframe=darkNavy,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2.5mm,
+    boxrule=1pt,
+    leftrule=4.5mm,
+    drop shadow=black!8
+}
+
+% Definition Box
+\newtcolorbox[auto counter, number within=chapter]{mathdefinition}[1][]{
+    enhanced,
+    colback=rbruLightBg,
     colframe=cyberBlue,
     fonttitle=\bfseries,
-    title=AR/XR Simulation Frame: #1,
+    title=นิยามที่~\thetcbcounter\ #1,
+    arc=3mm,
+    boxrule=1.2pt,
+    leftrule=5mm,
+    drop shadow=black!10
+}
+
+% Theorem Box
+\newtcolorbox[auto counter, number within=chapter]{maththeorem}[1][]{
+    enhanced,
+    colback=white,
+    colframe=darkNavy,
+    fonttitle=\bfseries,
+    title=ทฤษฎีบทที่~\thetcbcounter\ #1,
+    arc=2mm,
+    boxrule=1pt,
+    leftrule=4mm,
+    drop shadow=black!10
+}
+
+% P-S-C-T Worked Example Box
+\newtcolorbox[auto counter, number within=chapter]{psctexample}[1][]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=quantumGold,
+    fonttitle=\bfseries,
+    title=ตัวอย่างที่~\thetcbcounter\ #1,
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm,
+    pad at break=2mm
+}
+
+% AR/XR Interactive Simulation Frame Box
+\newtcolorbox{arbox}[1][การจำลองเสมือนจริง AR/XR]{
+    enhanced,
+    breakable,
+    colback=cyan!5!white,
+    colframe=cyberBlue,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title=\textbf{AR/XR Interactive Simulation:} #1,
     arc=3mm,
     boxrule=1.2pt,
     leftrule=5mm,
     drop shadow=cyberBlue!20
 }
 
-\newtcolorbox{pythonbox}[1][]{
+% Pitfall Box
+\newtcolorbox{pitfallbox}[1][ข้อควรระวังทางฟิสิกส์]{
     enhanced,
-    colback=white,
-    colframe=neonPurple,
+    colback=red!5!white,
+    colframe=red!75!black,
     fonttitle=\bfseries,
-    title=Python Computational Engine: #1,
+    title=\textbf{ข้อควรระวัง (Pitfall Alert):} #1,
     arc=2mm,
-    boxrule=1pt,
+    boxrule=0.8pt,
     leftrule=4mm
 }
 
+% Concept Check Box
+\newtcolorbox{conceptcheck}[1][คำถามทบทวนแนวคิด]{
+    enhanced,
+    colback=teal!5!white,
+    colframe=teal!75!black,
+    fonttitle=\bfseries,
+    title=\textbf{Active Learning (Concept Check):} #1,
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm
+}
+
+% Physics Application Box
+\newtcolorbox{physicsconnection}[1][การประยุกต์ใช้ในโลกจริง]{
+    enhanced,
+    colback=green!5!white,
+    colframe=emeraldGlow!90!black,
+    fonttitle=\bfseries,
+    title=\textbf{Physics in the Real World:} #1,
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm
+}
+
+% QED symbol
+\newcommand{\qedexam}{\hfill\textcolor{quantumGold}{$\blacksquare$}}
+
+% 7. Python Scientific Code Listings
+\RequirePackage{listings}
 \lstdefinestyle{modernpython}{
     language=Python,
     backgroundcolor=\color{codeBackground},
     basicstyle=\ttfamily\footnotesize\color{white},
     keywordstyle=\color{cyan}\bfseries,
-    stringstyle=\color{yellow!80!white},
+    stringstyle=\color{quantumGold},
     commentstyle=\color{green!60!white}\itshape,
     numberstyle=\tiny\color{gray},
     numbers=left,
     stepnumber=1,
+    numbersep=6pt,
     frame=single,
-    breaklines=true
+    rulecolor=\color{gray!30},
+    breaklines=true,
+    breakatwhitespace=false,
+    showspaces=false,
+    showstringspaces=false,
+    tabsize=4
 }
 \lstset{style=modernpython}
+
+% Python simulation tcolorbox
+\newtcblisting{pythonbox}[1][การจำลองเชิงคำนวณด้วย Python (Python Engine)]{
+    enhanced,
+    breakable,
+    colback=codeBackground,
+    colframe=neonPurple,
+    coltitle=white,
+    fonttitle=\bfseries\small,
+    title={#1},
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=3.5mm,
+    pad at break=2mm,
+    listing only,
+    listing options={
+        style=modernpython
+    }
+}
+
+% 8. Header and Footer (fancyhdr)
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\fancyhead[L]{\slshape \nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\endinput

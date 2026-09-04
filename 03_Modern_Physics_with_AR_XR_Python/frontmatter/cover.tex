@@ -1,0 +1,115 @@
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\noindent%
+\begin{tikzpicture}[remember picture, overlay]
+    % 1. Background: Cyber Deep Space Midnight Navy
+    \definecolor{coverDark}{HTML}{060A17}
+    \definecolor{coverMid}{HTML}{0D152F}
+    \definecolor{coverCyan}{HTML}{00E5FF}
+    \definecolor{coverPurple}{HTML}{8B5CF6}
+    \definecolor{coverGold}{HTML}{FBBF24}
+    \definecolor{coverEmerald}{HTML}{10B981}
+    \definecolor{coverPink}{HTML}{EC4899}
+    
+    % Canvas background fill
+    \fill[coverDark] ($(current page.south west)+(-1.5,-1.5)$) rectangle ($(current page.north east)+(1.5,1.5)$);
+    
+    % Ambient glowing energy nodes
+    \shade[inner color=coverMid!95!coverCyan, outer color=coverDark, opacity=0.4] 
+        ($(current page.north east)+(-2, -5)$) circle (9.5cm);
+    \shade[inner color=coverMid!90!coverPurple, outer color=coverDark, opacity=0.35] 
+        ($(current page.south west)+(3, 7)$) circle (11cm);
+    \shade[inner color=coverMid!80!coverGold, outer color=coverDark, opacity=0.25] 
+        ($(current page.center)+(1, -1.0)$) circle (8cm);
+
+    % 2. 4D Spacetime Grid & Quantum Metric Wireframe
+    \begin{scope}[opacity=0.14]
+        \foreach \x in {-10,-8,...,10} {
+            \draw[coverCyan, thin] ($(current page.center)+(\x, -15)$) -- ($(current page.center)+(\x*0.4, 15)$);
+        }
+        \foreach \y in {-14,-11,...,14} {
+            \draw[coverPurple, thin] ($(current page.center)+(-11, \y)$) to[out=15, in=195] ($(current page.center)+(11, \y+0.7)$);
+        }
+    \end{scope}
+
+    % 3. Central Scientific Art: Spacetime Light Cone & Atomic Quantum Cloud
+    \begin{scope}[shift={($(current page.center)+(0.5, -1.0)$)}]
+        % Relativistic Light Cones (Past and Future Cones)
+        \draw[very thick, coverCyan, opacity=0.45] (-3.8, 3.5) -- (0,0) -- (3.8, 3.5);
+        \draw[very thick, coverCyan, opacity=0.45] (-3.8, -3.5) -- (0,0) -- (3.8, -3.5);
+        \draw[thick, coverCyan!80, opacity=0.4] (0, 3.5) ellipse (3.8cm and 0.85cm);
+        \draw[thick, coverCyan!80, opacity=0.4] (0, -3.5) ellipse (3.8cm and 0.85cm);
+
+        % Concentric Quantum Electron Orbitals (Bohr / Sommerfeld / Dirac Waves)
+        \draw[very thick, coverPurple, opacity=0.55, rotate=35] (0,0) ellipse (6.8cm and 2.4cm);
+        \draw[thick, coverEmerald, opacity=0.5, rotate=-45] (0,0) ellipse (6.2cm and 2.1cm);
+        \draw[very thick, coverGold, opacity=0.6, rotate=75] (0,0) ellipse (5.6cm and 1.8cm);
+        
+        % Photons and De Broglie Wave Packets
+        \draw[ultra thick, coverCyan, domain=-4.8:4.8, samples=150, smooth, opacity=0.85] 
+            plot (\x, {0.75*sin(4.2*\x r)*exp(-0.10*\x*\x)});
+        \draw[very thick, coverGold, domain=-4.5:4.5, samples=120, smooth, opacity=0.7] 
+            plot (\x, {-0.60*cos(3.6*\x r)*exp(-0.09*\x*\x)});
+            
+        % Central Core: Nucleus & Quantum Node
+        \fill[white] (0,0) circle (3.8pt);
+        \draw[coverCyan, ultra thick] (0,0) circle (7.0pt);
+        \draw[coverGold, thick, dashed] (0,0) circle (12.0pt);
+        
+        % Holographic Formulas Floating in Spacetime
+        \node[coverCyan!90, font=\large\bfseries] at (-3.6, 2.0) {$E = \gamma m c^2$};
+        \node[coverGold!90, font=\large\bfseries] at (3.5, 2.2) {$i\hbar\frac{\partial \Psi}{\partial t} = \hat{H}\Psi$};
+        \node[coverEmerald!90, font=\large\bfseries] at (-3.8, -2.1) {$\Delta x \Delta p \ge \frac{\hbar}{2}$};
+        \node[coverPink!90, font=\large\bfseries] at (3.6, -1.9) {$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$};
+    \end{scope}
+
+    % 4. Main Title & Academic Typography
+    \node[anchor=north, align=center, text=white] at ($(current page.north)+(0, -4.0)$) {
+        {\fontsize{36}{42}\selectfont\bfseries\color{white} ฟิสิกส์แผนใหม่} \\[3.2mm]
+        {\fontsize{18}{24}\selectfont\bfseries\color{coverCyan} การจำลองเสมือนจริง AR/XR ร่วมกับภาษา Python} \\[3.5mm]
+        {\fontsize{13}{17}\selectfont\color{coverGold} MODERN PHYSICS WITH AR/XR SIMULATIONS \& COMPUTATIONAL PYTHON}
+    };
+    
+    % Minimalist Cyber Divider
+    \draw[ultra thick, coverGold] ($(current page.north)+(-4.5, -7.5)$) -- ($(current page.north)+(4.5, -7.5)$);
+    \fill[coverCyan] ($(current page.north)+(0, -7.5)$) circle (3.5pt);
+
+    % 5. Core Highlights / Key Focus Chips
+    \node[anchor=north, align=center] at ($(current page.north)+(0, -8.3)$) {
+        \textcolor{white!90}{\fontsize{10.5}{14.5}\selectfont 
+        $\bullet$ สัมพัทธภาพพิเศษและกาล-อวกาศ \quad 
+        $\bullet$ กลศาสตร์ควอนตัมและสมการชเรอดิงเงอร์ \quad 
+        $\bullet$ ฟิสิกส์ของอนุภาค} \\[1.8mm]
+        \textcolor{white!90}{\fontsize{10.5}{14.5}\selectfont 
+        $\bullet$ สถาปัตยกรรม WebXR \& Three.js \quad 
+        $\bullet$ ฟิสิกส์นิวเคลียร์ \quad 
+        $\bullet$ ควอนตัมคอมพิวเตอร์ \quad 
+        $\bullet$ ดาราศาสตร์ฟิสิกส์} \\[2.2mm]
+        \textcolor{coverCyan!95}{\fontsize{9.5}{13}\selectfont 
+        ห้องปฏิบัติการเสมือนจริง 3 มิติ ควบคุมไร้สัมผัส พร้อมโค้ดการคำนวณเชิงตัวเลขภาษา Python}
+    };
+
+    % 6. Author Portrait & Credentials: Bottom Left Placement
+    \coordinate (authorPhoto) at ($(current page.south west)+(3.8, 3.8)$);
+    
+    % Glowing ambient rings
+    \shade[inner color=coverCyan!35, outer color=coverDark, opacity=0.45] (authorPhoto) circle (2.5cm);
+    \draw[coverGold, thick, dashed, opacity=0.75] (authorPhoto) circle (2.22cm);
+    \draw[coverCyan, ultra thick, opacity=0.95] (authorPhoto) circle (2.05cm);
+    
+    % Centered circular portrait
+    \node at (authorPhoto) {\includegraphics[width=4.0cm]{images/author_chewa_circle_final}};
+
+    % Author Name and Affiliation
+    \node[anchor=west, align=left] at ($(authorPhoto)+(2.6, 0.4)$) {
+        {\fontsize{24}{28}\bfseries\color{white} ผศ.ดร.ชีวะ ทัศนา} \\[2.2mm]
+        {\fontsize{11.5}{15}\selectfont\color{coverCyan!95} ผู้ช่วยศาสตราจารย์ประจำสาขาวิชาฟิสิกส์} \\[1.5mm]
+        {\fontsize{10.5}{14}\selectfont\color{white!80} คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี} \\[1.2mm]
+        {\fontsize{10}{13}\selectfont\color{white!70} วท.บ. (เกียรตินิยม), วท.ม. (ฟิสิกส์), ปร.ด. (ฟิสิกส์)}
+    };
+
+\end{tikzpicture}
+\clearpage
+\restoregeometry
+\end{titlepage}

@@ -1,4 +1,236 @@
-\chapter{สถาปัตยกรรม AR/XR ในการศึกษาวิชาฟิสิกส์ (AR/XR Frameworks)}
+\chapter{เทคโนโลยีการจำลองเสมือนจริง AR/XR และ WebXR ในการสอนฟิสิกส์ (AR/XR Frameworks for Physics)}
+\label{chap:ar_xr_frameworks}
+\index{WebXR}
+\index{Three.js}
+\index{MediaPipe}
+\index{การจำลองเสมือนจริง}
 
-\section{สถาปัตยกรรม WebXR และ Three.js}
-การผสานกล้องเว็บแคมและการตรวจจับข้อต่อมือ 21 จุดด้วย MediaPipe Hands เพื่อควบคุมอนุภาคเสมือนจริงแบบเรียลไทม์ 60 FPS
+\begin{chapterobjectives}
+เมื่อศึกษาบทที่ 4 จบแล้ว นิสิตและผู้ศึกษาสามารถ:
+\begin{enumerate}
+    \item อธิบายสถาปัตยกรรมของ WebXR Device API และวงจรชีวิตของเซสชัน AR/VR
+    \item ประยุกต์ใช้ไลบรารี Three.js ในการสร้างฉากสามมิติ เรนเดอร์โมเดลฟิสิกส์ และควบคุมแสงเงาแบบ PBR (Physically Based Rendering)
+    \item ผสานระบบตรวจจับข้อต่อนิ้วมือ 21 จุด 3 มิติ (MediaPipe Hands) สำหรับการโต้ตอบกับแบบจำลองฟิสิกส์แบบไร้การสัมผัส
+    \item ออกแบบวงรอบแอนิเมชันความเร็ว 60 เฟรมต่อวินาที ที่ไม่มีขยะในหน่วยความจำ (Zero-Garbage Collection Loop)
+    \item พัฒนาเว็บแอปพลิเคชัน AR แบบ Standalone เพื่อจำลองการเปลี่ยนระดับพลังงานในอะตอมของบอร์ (Bohr Atom Simulator)
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{วิวัฒนาการและบทบาทของ WebXR ในการศึกษาฟิสิกส์}
+\index{Spatial Computing}
+\index{ความเป็นจริงเสริม}
+
+มโนทัศน์ในวิชาฟิสิกส์แผนใหม่ เช่น ปริภูมิ-เวลา 4 มิติ ความน่าจะเป็นของออร์บิทัลอิเล็กตรอน หรือการสลายตัวของนิวเคลียส เป็นปรากฏการณ์ที่ไม่สามารถมองเห็นได้ด้วยตาเปล่าในชีวิตประจำวัน การใช้เทคโนโลยี \textbf{ความเป็นจริงขยาย (Extended Reality: XR)} ซึ่งครอบคลุมทั้ง Augmented Reality (AR) และ Virtual Reality (VR) จึงเปิดมิติใหม่ในการแปลงนามธรรมทางคณิตศาสตร์ให้กลายเป็นวัตถุเชิงพื้นที่ (Spatial Objects) ที่ผู้เรียนสามารถสังเกตและมีปฏิสัมพันธ์ได้รอบทิศทาง
+
+\textbf{WebXR Device API} คือมาตรฐานเว็บสากลของ W3C ที่อนุญาตให้เว็บเบราว์เซอร์สามารถเข้าถึงเซนเซอร์ตรวจจับตำแหน่งและการเคลื่อนไหว 6 แกนอิสระ (6-DoF Tracking) ของสมาร์ตโฟนหรือแว่นตาอัจฉริยะ (Head-Mounted Displays) ได้โดยตรง โดยผู้ใช้ไม่ต้องติดตั้งแอปพลิเคชันเสริมใดๆ
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Real World Layer
+    \draw[darkNavy, fill=gray!10, rounded corners=6pt] (-5, -1.8) rectangle (5, -0.6);
+    \node at (0, -1.2) [font=\footnotesize\bfseries\color{darkNavy}] {สภาพแวดล้อมโลกจริง (Physical World \& Camera Video Feed)};
+    
+    % WebXR Hardware Abstraction Layer
+    \draw[cyberBlue, fill=cyan!10, rounded corners=6pt] (-5, 0.0) rectangle (5, 1.2);
+    \node at (0, 0.6) [font=\footnotesize\bfseries\color{cyberBlue}] {WebXR Device API (Pose, Hit-Test, View Matrix, Projection Matrix)};
+    
+    % Three.js & Shader Engine
+    \draw[neonPurple, fill=purple!10, rounded corners=6pt] (-5, 1.8) rectangle (5, 3.0);
+    \node at (0, 2.4) [font=\footnotesize\bfseries\color{neonPurple}] {Three.js Scene Graph \& Custom GLSL Physics Shaders};
+    
+    % Interaction Layer (MediaPipe)
+    \draw[emeraldGlow, fill=green!10, rounded corners=6pt] (-5, 3.6) rectangle (5, 4.8);
+    \node at (0, 4.2) [font=\footnotesize\bfseries\color{emeraldGlow!80!black}] {MediaPipe Hands 21-Joint 3D Gesture Controller (Zero-Touch Interface)};
+    
+    % Connecting arrows
+    \draw[-{Stealth[scale=1.2]}, line width=1.5pt, slateGrey] (0, -0.6) -- (0, 0.0);
+    \draw[-{Stealth[scale=1.2]}, line width=1.5pt, slateGrey] (0, 1.2) -- (0, 1.8);
+    \draw[-{Stealth[scale=1.2]}, line width=1.5pt, slateGrey] (0, 3.0) -- (0, 3.6);
+\end{tikzpicture}
+\caption{สถาปัตยกรรมซอฟต์แวร์จำลองเสมือนจริง WebXR ร่วมกับ Three.js และ MediaPipe Hands}
+\label{fig:webxr_architecture}
+\end{figure}
+
+\section{วงจรชีวิตของ WebXR Session และการเรนเดอร์ 3 มิติ}
+\index{WebXR Session}
+\index{Hit-Test}
+
+ขั้นตอนการทำงานของแอปพลิเคชัน WebXR มีลำดับดังต่อไปนี้:
+\begin{enumerate}
+    \item \textbf{ตรวจสอบการรองรับอุปกรณ์ (Device Capability Check):} เรียกใช้ฟังก์ชัน \\
+    \texttt{navigator.xr.isSessionSupported('immersive-ar')}
+    \item \textbf{ร้องขอเปิดเซสชัน (Request Session):} เรียกใช้คำสั่ง \\
+    \texttt{navigator.xr.requestSession('immersive-ar', \{requiredFeatures: ['hit-test']\})}
+    \item \textbf{การจับพื้นผิวจริง (Hit-Testing):} ยิงลำแสงเสมือน (Virtual Raycast) จากกึ่งกลางหน้าจอไปกระทบพื้นผิวจริง เพื่อกำหนดพิกัดอ้างอิงของจุดศูนย์กลางการทดลอง (Anchor Pose)
+    \item \textbf{วงรอบการเรนเดอร์ (Render Loop):} รับค่าการขยับของกล้องผ่าน \\
+    \texttt{XRSession.requestAnimationFrame(onXRFrame)} เพื่อปรับปรุงการเรนเดอร์ของ Three.js ให้ตรงกับมุมมองของผู้ใช้อย่างแม่นยำ
+\end{enumerate}
+
+\section{การควบคุมแบบไร้สัมผัสด้วย MediaPipe Hands}
+\index{MediaPipe}
+\index{Hand Tracking}
+
+MediaPipe Hands ของ Google ใช้โครงข่ายประสาทเทียมแบบ Deep Learning ที่ได้รับการเทรนให้ตรวจจับจุดข้อต่อนิ้วมือ 21 จุดในพิกัด 3 มิติ ($x, y, z$) จากเฟรมวิดีโอกล้องหน้าหรือหลังแบบเรียลไทม์
+ท่าทางสำคัญที่นำมาใช้ในการควบคุมการทดลองฟิสิกส์:
+\begin{itemize}
+    \item \textbf{Pinch Gesture (นิ้วโป้งแตะปลายนิ้วชี้):} ใช้จับอนุภาค ยืดบ่อศักย์ หรือหมุนกรวยแสง
+    \item \textbf{Palm Facing (หงายฝ่ามือ):} ใช้เป็นแท่นรองรับอนุภาคเสมือนหรือกล่องพลังงาน
+    \item \textbf{Index Pointing (ชี้ตำแหน่ง):} ใช้เลือกสถานะควอนตัม ($n=1, 2, 3$)
+\end{itemize}
+
+\section{วิศวกรรมลูปประสิทธิภาพสูง (Zero-GC Loop Engineering)}
+\index{Zero-GC}
+\index{Garbage Collection}
+
+ในแอนิเมชัน 60 FPS เบราว์เซอร์มีเวลาประมวลผลเพียง $16.67\text{ ms}$ ต่อเฟรม หากโค้ดสร้างอ็อบเจกต์ใหม่ในลูป เช่น \texttt{new THREE.Vector3()} ขยะในหน่วยความจำจะสะสมอย่างรวดเร็วและกระตุ้นการทำงานของ Garbage Collector (GC Pause) ส่งผลให้ภาพกระตุกอย่างรุนแรง
+
+\begin{pitfallbox}[การจัดสรรหน่วยความจำในลูปแอนิเมชัน 60 FPS]
+\textbf{ข้อพึงปฏิบัติอย่างเคร่งครัด:}
+\begin{itemize}
+    \item ประกาศตัวแปรชั่วคราว เช่น เวกเตอร์และเมทริกซ์ ไว้นอกลูปหลักเสมอ (Global/Module Scope Scratchpad)
+    \item ใช้เมธอด \texttt{.copy()}, \texttt{.set()}, หรือ \texttt{.add()} แทนการสร้างอินสแตนซ์ใหม่
+    \item ลบ Geometry และ Material ที่ไม่ได้ใช้ออกจาก VRAM ด้วยคำสั่ง \texttt{.dispose()}
+\end{itemize}
+\end{pitfallbox}
+
+\section{ตัวอย่างโค้ดระบบเต็ม: แบบจำลองอะตอมบอร์เสมือนจริงใน WebXR}
+\index{Bohr Atom AR}
+\index{JavaScript}
+
+\begin{pythonbox}[bohr\_atom\_webxr.html: โครงสร้างโค้ดจำลองอะตอมบอร์แบบสมบูรณ์]
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>WebXR Bohr Atom Simulator - Dr. Chewa Thassana</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Sarabun', sans-serif; }
+        #ar-button {
+            position: absolute; bottom: 20px; left: 50%;
+            transform: translateX(-50%); padding: 12px 24px;
+            background: #0284C7; color: white; border: none;
+            border-radius: 8px; font-weight: bold; font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <button id="ar-button">เข้าสู่โหมดการทดลอง AR</button>
+    <script>
+        let scene, camera, renderer, xrSession = null;
+        let electron, nucleus, orbitLines = [];
+        let currentLevel = 1, targetRadius = 1.0;
+        const scratchVec = new THREE.Vector3(); // Zero-GC scratchpad
+
+        function initScene() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.01, 20);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.xr.enabled = true;
+            document.body.appendChild(renderer.domElement);
+
+            // นิวเคลียส (โปรตอน)
+            const nucGeo = new THREE.SphereGeometry(0.06, 32, 32);
+            const nucMat = new THREE.MeshStandardMaterial({ color: 0xF59E0B, roughness: 0.2 });
+            nucleus = new THREE.Mesh(nucGeo, nucMat);
+            nucleus.position.set(0, 0, -1.0);
+            scene.add(nucleus);
+
+            // อิเล็กตรอน
+            const elecGeo = new THREE.SphereGeometry(0.02, 16, 16);
+            const elecMat = new THREE.MeshBasicMaterial({ color: 0x0284C7 });
+            electron = new THREE.Mesh(elecGeo, elecMat);
+            scene.add(electron);
+
+            // แสงสว่าง
+            const light = new THREE.PointLight(0xffffff, 1.5, 10);
+            light.position.set(1, 2, 0);
+            scene.add(light);
+            scene.add(new THREE.AmbientLight(0x404040));
+        }
+
+        let angle = 0;
+        function renderLoop(timestamp, frame) {
+            angle += 0.03;
+            const r = 0.3 * (currentLevel ** 2);
+            electron.position.x = nucleus.position.x + r * Math.cos(angle);
+            electron.position.z = nucleus.position.z + r * Math.sin(angle);
+            electron.position.y = nucleus.position.y;
+
+            renderer.render(scene, camera);
+        }
+
+        document.getElementById('ar-button').addEventListener('click', async () => {
+            if (navigator.xr) {
+                const session = await navigator.xr.requestSession('immersive-ar', {
+                    requiredFeatures: ['local-floor']
+                });
+                renderer.xr.setSession(session);
+                renderer.setAnimationLoop(renderLoop);
+            } else {
+                alert('อุปกรณ์ไม่รองรับ WebXR กรุณาใช้สมาร์ตโฟนที่รองรับ ARCore');
+            }
+        });
+
+        initScene();
+    </script>
+</body>
+</html>
+\end{pythonbox}
+
+\section{ตัวอย่างการแก้ปัญหาเชิงเทคนิคตามระเบียบวิธี P-S-C-T}
+
+\begin{psctexample}[การปรับค่าพิกัดการแปลงพื้นที่สำหรับ AR Tracking ให้เรียบเนียน (Smooth Interpolation)]
+\textbf{โจทย์ (Problem):} \\
+ในการจำลอง AR เมื่อเครื่องมือตรวจวัด (เช่น MediaPipe หรือ WebXR Hit-Test) ส่งตำแหน่งจุดสัมผัส ($x_t, y_t, z_t$) เข้ามาทุกเฟรม มักพบปัญหาการสั่นไหวเล็กน้อยของข้อมูล (Jittering / Noise) ส่งผลให้อิเล็กตรอนเสมือนสั่นกระตุกจนสูญเสียความสมจริง จงออกแบบตัวกรองทางคณิตศาสตร์ที่คำนวณได้อย่างรวดเร็วในรอบเฟรม 60 FPS เพื่อให้การเคลื่อนที่ราบรื่น
+
+\textbf{ยุทธวิธี (Strategy):} \\
+ใช้ตัวกรองแบบชะลอชี้กำลังหรือการประมาณค่าในช่วงเชิงเส้น (Linear Interpolation: LERP) ระหว่างตำแหน่งปัจจุบัน $\mathbf{P}_{\text{curr}}$ และตำแหน่งเป้าหมาย $\mathbf{P}_{\text{target}}$:
+\begin{equation}
+\mathbf{P}(t + \Delta t) = \mathbf{P}(t) + \alpha \left( \mathbf{P}_{\text{target}} - \mathbf{P}(t) \right) = (1 - \alpha)\mathbf{P}(t) + \alpha \mathbf{P}_{\text{target}}
+\end{equation}
+โดยที่ $\alpha \in (0, 1]$ คือแฟกเตอร์การผ่อนคลาย (Smoothing Factor)
+
+\textbf{การคำนวณ (Computation):} \\
+หากต้องการให้การตอบสนองมีความหน่วง 95\% เข้าสู่เป้าหมายภายในเวลา $T = 0.2\text{ วินาที}$ ที่ความถี่เฟรม $60\text{ Hz}$ ($\Delta t = 1/60\text{ s}$ หรือมีจำนวน 12 เฟรม):
+\begin{equation}
+(1 - \alpha)^{12} \le 0.05 \implies 1 - \alpha = (0.05)^{1/12} \approx 0.779 \implies \alpha \approx 0.22
+\end{equation}
+ดังนั้น การเขียนโค้ด LERP ในลูปแอนิเมชันคือ:
+\begin{equation}
+\mathbf{P}_{\text{curr}}.\text{lerp}(\mathbf{P}_{\text{target}}, 0.22)
+\end{equation}
+
+\textbf{ข้อคิดทางฟิสิกส์และวิศวกรรม (Takeaway):} \\
+การคำนวณ LERP แบบเวกเตอร์ใช้การบวกและคูณสเกลาร์เพียง 3 มิติ ซึ่งใช้เวลาน้อยกว่า $0.001\text{ ms}$ บน CPU จึงไม่กระทบต่อ Frame Budget ของเบราว์เซอร์ แต่สามารถกำจัดความสั่นไหวของเซนเซอร์ AR ได้อย่างมีประสิทธิภาพสูงสุด
+\qedexam
+\end{psctexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{l Z Y}
+\toprule
+\textbf{เทคโนโลยี / ฟังก์ชัน} & \textbf{เครื่องมือหลัก} & \textbf{หน้าที่ในการศึกษาฟิสิกส์} \\
+\midrule
+WebXR Device API & W3C Standard & เชื่อมต่อฮาร์ดแวร์ AR/VR บนเบราว์เซอร์โดยตรง \\
+Three.js & WebGL / WebGPU & จัดการฉาก เรนเดอร์วัสดุ แสงเงา และตาข่ายสามมิติ \\
+MediaPipe Hands & Machine Learning & ติดตามข้อต่อนิ้วมือ 21 จุด เพื่อควบคุมการทดลองไร้สัมผัส \\
+Zero-GC Loop & Object Pooling & ป้องกันการกระตุกของภาพ รักษาอัตราเฟรมคงที่ 60 FPS \\
+Spatial LERP & $(1-\alpha)\mathbf{x}_0 + \alpha\mathbf{x}_1$ & ลดสัญญาณรบกวนจากการตรวจจับตำแหน่งของกล้อง AR \\
+\bottomrule
+\end{tabularx}
+\caption{สรุปเครื่องมือและเทคนิคหลักในการสร้างแบบจำลองฟิสิกส์ด้วย WebXR}
+\label{tab:ar_xr_summary}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item จงอธิบายความแตกต่างระหว่าง AR แบบมาร์กเกอร์ (Marker-based AR) และ AR แบบตรวจจับระนาบพื้นผิว (Surface / Markerless AR via Hit-Testing) ในแง่ของการนำมาประยุกต์ใช้ในการทดลองฟิสิกส์
+    \item หากต้องการจำลองสนามแม่เหล็ก $B$ รอบลวดตัวนำที่มีกระแสไฟฟ้าไหลผ่าน จงร่างอัลกอริทึมในการแสดงเส้นแรงแม่เหล็กเสมือนจริงในมุมมอง 3 มิติ
+    \item เหตุใดการสร้างอินสแตนซ์เวกเตอร์ใหม่ (\texttt{new THREE.Vector3()}) ภายในฟังก์ชัน \texttt{requestAnimationFrame} จึงก่อให้เกิดปัญหาต่อประสบการณ์ของผู้ใช้ และมีแนวทางแก้ไขอย่างไร?
+\end{enumerate}

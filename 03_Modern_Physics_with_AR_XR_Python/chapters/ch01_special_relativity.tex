@@ -1,13 +1,362 @@
 \chapter{ทฤษฎีสัมพัทธภาพพิเศษ (Special Relativity)}
+\label{chap:special_relativity}
+\index{สัมพัทธภาพพิเศษ}
+\index{ไอน์สไตน์}
 
-\section{สัจพจน์ของไอน์สไตน์และการแปลงลอเรนซ์}
-1. กฎทางฟิสิกส์ย่อมเหมือนกันในทุกกรอบอ้างอิงเฉื่อย
-2. อัตราเร็วของแสง $ ในสุญญากาศมีค่าคงที่เสมอในทุกกรอบอ้างอิง
+\begin{chapterobjectives}
+เมื่อศึกษาบทที่ 1 จบแล้ว นิสิตและผู้ศึกษาสามารถ:
+\begin{enumerate}
+    \item อธิบายข้อจำกัดของกลศาสตร์นิวตันและการทดลองของไมเคิลสัน-มอร์ลีย์ (Michelson-Morley Experiment) ได้อย่างถูกต้อง
+    \item สรุปสัจพจน์ของไอน์สไตน์ทั้งสองประการ และพิสูจน์ที่มาของการแปลงแบบลอเรนซ์ (Lorentz Transformations)
+    \item คำนวณปรากฏการณ์การยืดออกของเวลา (Time Dilation) และการหดสั้นของความยาว (Length Contraction)
+    \item วิเคราะห์โครงสร้างปริภูมิ-เวลา 4 มิติ (Minkowski Spacetime) และกรวยแสง (Light Cone)
+    \item คำนวณความสัมพันธ์ระหว่างโมเมนตัมสัมพัทธภาพและพลังงานรวม $E^2 = p^2 c^2 + m_0^2 c^4$
+    \item ออกแบบและพัฒนาสคริปต์ Python เพื่อจำลองการแปลงพิกัดและการพล็อตกราฟตัวคูณลอเรนซ์ $\gamma(v)$
+\end{enumerate}
+\end{chapterobjectives}
 
-ตัวคูณลอเรนซ์ (Lorentz Factor):
+\section{วิกฤตการณ์ฟิสิกส์ดั้งเดิมและการทดลองของไมเคิลสัน-มอร์ลีย์}
+\index{ไมเคิลสัน-มอร์ลีย์}
+\index{อีเทอร์}
+
+ในช่วงปลายคริสต์ศตวรรษที่ 19 ทฤษฎีแม่เหล็กไฟฟ้าของเจมส์ คลาร์ก แมกซ์เวลล์ (James Clerk Maxwell) ระบุว่า คลื่นแม่เหล็กไฟฟ้าเคลื่อนที่ด้วยอัตราเร็วในสุญญากาศคงที่เสมอคือ
 \begin{equation}
-\gamma = \frac{1}{\sqrt{1 - v^2/c^2}}
+c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} \approx 2.99792458 \times 10^8 \text{ m/s}
+\end{equation}
+ทว่าในกรอบกลศาสตร์ดั้งเดิมของกาลิเลโอและนิวตัน ความเร็วใดๆ ย่อมขึ้นอยู่กับกรอบอ้างอิงเฉื่อย (Inertial Reference Frame) ซึ่งก่อให้เกิดสมมติฐานเกี่ยวกับตัวกลางพาแสงที่เรียกว่า \textbf{อีเทอร์เรืองแสง (Luminiferous Aether)}
+
+อัลเบิร์ต ไมเคิลสัน (Albert A. Michelson) และเอ็ดเวิร์ด มอร์ลีย์ (Edward W. Morley) ได้ทำการทดลองอันลือลั่นในปี ค.ศ. 1887 โดยใช้เครื่องแทรกสอดแสง (Interferometer) เพื่อตรวจจับ "ลมของอีเทอร์" (Aether Drift) จากการเคลื่อนที่ของโลกรอบดวงอาทิตย์ ผลลัพธ์ที่ได้ปรากฏเป็น \textit{ศูนย์ (Null Result)} อย่างน่าทึ่ง นั่นคือแสงมีความเร็วเท่าเดิมในทุกทิศทาง โดยไม่ขึ้นกับการเคลื่อนที่ของโลกเลยแม้แต่น้อย
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Source and beam splitter
+    \draw[darkNavy, thick, fill=cyan!15] (0,0) rectangle (0.8,0.8);
+    \node at (0.4, 0.4) [font=\footnotesize\bfseries] {แหล่งกำเนิด};
+    \draw[-{Stealth[scale=1.2]}, red!80!black, line width=1.5pt] (0.8, 0.4) -- (3.0, 0.4);
+    
+    % Beam splitter (semi-transparent mirror)
+    \draw[thick, fill=blue!10, rotate around={45:(3.5,0.4)}] (3.2, -0.3) rectangle (3.8, 1.1);
+    \node at (3.5, -0.3) [font=\scriptsize, align=center] {แผ่นแบ่งลำแสง\\(Beam Splitter)};
+    
+    % Transmitted path to Mirror 1
+    \draw[-{Stealth[scale=1.2]}, red!80!black, line width=1.2pt] (3.5, 0.4) -- (6.5, 0.4);
+    \draw[{Stealth[scale=1.2]}-, blue!80!black, line width=1.2pt, dashed] (3.5, 0.5) -- (6.5, 0.5);
+    \draw[darkNavy, fill=gray!40, thick] (6.5, -0.2) rectangle (6.7, 1.0);
+    \node at (6.6, 1.3) [font=\footnotesize\bfseries] {กระจก $M_1$};
+    
+    % Reflected path to Mirror 2
+    \draw[-{Stealth[scale=1.2]}, red!80!black, line width=1.2pt] (3.5, 0.4) -- (3.5, 3.4);
+    \draw[{Stealth[scale=1.2]}-, blue!80!black, line width=1.2pt, dashed] (3.6, 0.4) -- (3.6, 3.4);
+    \draw[darkNavy, fill=gray!40, thick] (2.9, 3.4) rectangle (4.1, 3.6);
+    \node at (3.5, 3.9) [font=\footnotesize\bfseries] {กระจก $M_2$};
+    
+    % Combined beam to Detector
+    \draw[-{Stealth[scale=1.2]}, purple, line width=1.5pt] (3.5, 0.4) -- (3.5, -2.0);
+    \draw[darkNavy, fill=quantumGold!30, thick] (2.8, -2.4) rectangle (4.2, -2.0);
+    \node at (3.5, -2.2) [font=\footnotesize\bfseries] {เครื่องตรวจวัด (Detector)};
+    
+    % Distances L1 and L2
+    \draw[<->, slateGrey, thick] (3.5, 0.9) -- (6.5, 0.9) node[midway, above, font=\scriptsize] {$L_1$};
+    \draw[<->, slateGrey, thick] (4.0, 0.4) -- (4.0, 3.4) node[midway, right, font=\scriptsize] {$L_2$};
+\end{tikzpicture}
+\caption{ผังการทดลองของไมเคิลสัน-มอร์ลีย์ (Michelson-Morley Experiment) ซึ่งแสดงผลลัพธ์เป็นศูนย์}
+\label{fig:michelson_morley}
+\end{figure}
+
+\section{สัจพจน์ของไอน์สไตน์ (Einstein's Postulates)}
+\index{สัจพจน์ของไอน์สไตน์}
+
+ในปี ค.ศ. 1905 อัลเบิร์ต ไอน์สไตน์ ได้เสนอแนวคิดปฏิวัติวงการฟิสิกส์ โดยตั้งสมมติฐานมูลฐาน 2 ข้อ:
+
+\begin{mathdefinition}[สัจพจน์สองประการของทฤษฎีสัมพัทธภาพพิเศษ]
+\begin{enumerate}
+    \item \textbf{หลักความสัมพัทธ์ (Principle of Relativity):} กฎเกณฑ์ทางฟิสิกส์ทั้งปวงย่อมมีรูปแบบทางคณิตศาสตร์เหมือนกันในทุกกรอบอ้างอิงเฉื่อย (Inertial Frames of Reference) ไม่มีกรอบอ้างอิงใดที่มีอภิสิทธิ์เหนือกรอบอื่น
+    \item \textbf{ความคงที่ของอัตราเร็วแสง (Constancy of the Speed of Light):} อัตราเร็วของแสงในสุญญากาศ $c$ มีค่าคงที่สัมบูรณ์เท่ากันเสมอในทุกกรอบอ้างอิงเฉื่อย โดยไม่ขึ้นกับสถานะการเคลื่อนที่ของแหล่งกำเนิดแสงหรือผู้สังเกต
+\end{enumerate}
+\end{mathdefinition}
+
+\section{การแปลงแบบลอเรนซ์ (Lorentz Transformations)}
+\index{การแปลงแบบลอเรนซ์}
+\index{ตัวคูณลอเรนซ์}
+
+พิจารณากรอบอ้างอิงสองกรอบ $S$ และ $S'$ โดยที่ $S'$ เคลื่อนที่สัมพันธ์กับ $S$ ด้วยความเร็วคงที่ $v$ ในแนวแกน $+x$ โดยสมมติว่าจุดกำเนิด $O$ และ $O'$ ทับกันพอดีที่เวลา $t = t' = 0$ การแปลงพิกัดของกาลิเลโอดั้งเดิม ($x' = x - vt, t' = t$) ไม่สามารถรักษาความคงที่ของ $c$ ได้ ไอน์สไตน์จึงอนุมานการแปลงที่ถูกต้อง:
+
+\begin{maththeorem}[สมการการแปลงแบบลอเรนซ์]
+การแปลงพิกัดและเวลาระหว่างกรอบ $S(x, y, z, t)$ และกรอบ $S'(x', y', z', t')$ ถูกกำหนดโดย:
+\begin{align}
+x' &= \gamma (x - vt) \\
+y' &= y \\
+z' &= z \\
+t' &= \gamma \left( t - \frac{vx}{c^2} \right)
+\end{align}
+โดยที่ $\gamma$ คือ \textbf{ตัวคูณลอเรนซ์ (Lorentz Factor)}:
+\begin{equation}
+\gamma = \frac{1}{\sqrt{1 - \beta^2}} = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}, \quad \beta = \frac{v}{c}
+\end{equation}
+และการแปลงผกผัน (Inverse Lorentz Transformation) จาก $S'$ กลับสู่ $S$ ทำได้โดยเปลี่ยนเครื่องหมายของ $v$:
+\begin{align}
+x &= \gamma (x' + vt') \\
+t &= \gamma \left( t' + \frac{vx'}{c^2} \right)
+\end{align}
+\end{maththeorem}
+
+\section{ผลสืบเนื่องทางจลนศาสตร์: การยืดออกของเวลาและการหดสั้นของความยาว}
+\index{การยืดออกของเวลา}
+\index{การหดสั้นของความยาว}
+\index{เวลาเฉพาะ}
+
+\subsection{การยืดออกของเวลา (Time Dilation)}
+พิจารณานาฬิกาแสงที่อยู่นิ่งในกรอบ $S'$ ช่วงเวลาที่นาฬิกาบันทึกได้ในกรอบที่ตัวเองอยู่นิ่งเรียกว่า \textbf{เวลาเฉพาะ (Proper Time, $\Delta t_0$)} เมื่อผู้สังเกตในกรอบ $S$ วัดช่วงเวลาของเหตุการณ์เดียวกัน จะพบว่าเวลาเดินช้าลงตามความสัมพันธ์:
+\begin{equation}
+\Delta t = \gamma \Delta t_0 = \frac{\Delta t_0}{\sqrt{1 - v^2/c^2}} \ge \Delta t_0
 \end{equation}
 
-\section{การจำลองการยืดของเวลาและการหดสั้นของความยาวด้วย Python}
-ดูสคริปต์การแปลงพิกัดสี่มิติในโฟลเดอร์ \texttt{python_code/relativity_transforms.py}
+\subsection{การหดสั้นของความยาว (Length Contraction)}
+วัตถุที่มีความยาววัดได้ขณะอยู่นิ่งในกรอบของตัวเองเรียกว่า \textbf{ความยาวเฉพาะ (Proper Length, $L_0$)} เมื่อผู้สังเกตที่เคลื่อนที่สัมพันธ์กับวัตถุด้วยความเร็ว $v$ ในแนวขนานกับมิติของวัตถุวัดความยาว จะพบว่าความยาวหดสั้นลง:
+\begin{equation}
+L = \frac{L_0}{\gamma} = L_0 \sqrt{1 - \frac{v^2}{c^2}} \le L_0
+\end{equation}
+โปรดสังเกตว่า มิติในแนวตั้งฉากกับการเคลื่อนที่ ($y$ และ $z$) จะไม่มีการเปลี่ยนแปลงความยาวเลย ($L_\perp = L_{0\perp}$)
+
+\begin{pitfallbox}[ความเข้าใจผิดเกี่ยวกับความยาวเฉพาะและเวลาเฉพาะ]
+ผู้เริ่มต้นศึกษามักสับสนว่า "ใครเห็นเวลาช้าลง" หรือ "สิ่งของหดสั้นจริงหรือไม่ทางกายภาพ":
+\begin{itemize}
+    \item เวลาเฉพาะ $\Delta t_0$ ต้องเป็นเวลาที่วัดจาก \textbf{นาฬิกาเรือนเดียวที่อยู่ประจำที่ตำแหน่งเดิมของเหตุการณ์ทั้งสอง} เสมอ
+    \item ความยาวเฉพาะ $L_0$ ต้องวัดในกรอบอ้างอิงที่วัตถุนั้นอยู่นิ่งสัมพัทธ์
+    \item การหดสั้นไม่ใช่การบีบอัดเชิงกลศาสตร์ของเนื้อสาร แต่เป็นผลจากธรรมชาติของปริภูมิ-เวลา (Spacetime) ที่สังเกตจากต่างกรอบอ้างอิง
+\end{itemize}
+\end{pitfallbox}
+
+\section{ปริภูมิ-เวลา 4 มิติ และกรวยแสง (Minkowski Spacetime \& Light Cone)}
+\index{มินคอฟสกี}
+\index{กรวยแสง}
+\index{ช่วงปริภูมิเวลา}
+
+แฮร์มันน์ มินคอฟสกี (Hermann Minkowski) ได้เสนอการรวมปริภูมิสามมิติเข้ากับเวลาเป็น \textbf{กาลอวกาศ 4 มิติ (Spacetime Continuum)} โดยกำหนดพิกัด 4 มิติเป็น $x^\mu = (ct, x, y, z)$ ช่วงปริภูมิเวลาสัมบูรณ์ (Invariant Spacetime Interval) ระหว่างสองเหตุการณ์นิยามโดย:
+\begin{equation}
+\Delta s^2 = c^2 \Delta t^2 - \left( \Delta x^2 + \Delta y^2 + \Delta z^2 \right)
+\end{equation}
+ค่า $\Delta s^2$ มีคุณสมบัติคงตัวแบบลอเรนซ์ (Lorentz Invariant) ซึ่งแบ่งออกเป็น 3 ย่าน:
+\begin{enumerate}
+    \item $\Delta s^2 > 0$ : \textbf{เหมือนเวลา (Timelike)} เหตุการณ์ทั้งสองสามารถเชื่อมโยงกันด้วยความสัมพันธ์เชิงเหตุและผล (Causality) ได้
+    \item $\Delta s^2 = 0$ : \textbf{เหมือนแสง (Lightlike หรือ Null)} เส้นทางของอนุภาคที่เคลื่อนที่ด้วยความเร็วแสง (เช่น โฟตอน)
+    \item $\Delta s^2 < 0$ : \textbf{เหมือนปริภูมิ (Spacelike)} ไม่มีสัญญาณใดในเอกภพสามารถส่งหากันได้ทัน (ไม่มีความสัมพันธ์เชิงสาเหตุ)
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Axes
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (-3.5,0) -- (3.5,0) node[right, font=\footnotesize\bfseries] {$x$ (Space)};
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0,-2.5) -- (0,3.5) node[above, font=\footnotesize\bfseries] {$ct$ (Time)};
+    
+    % Light cone lines
+    \draw[cyan, line width=1.5pt] (-2.8,-2.8) -- (2.8,2.8);
+    \draw[cyan, line width=1.5pt] (-2.8,2.8) -- (2.8,-2.8);
+    
+    % Shading Future Light Cone
+    \fill[cyan!15, opacity=0.7] (0,0) -- (2.5,2.5) -- (-2.5,2.5) -- cycle;
+    \fill[quantumGold!15, opacity=0.7] (0,0) -- (2.5,-2.5) -- (-2.5,-2.5) -- cycle;
+    
+    % Labels
+    \node at (0, 1.6) [font=\footnotesize\bfseries, align=center, color=darkNavy] {อนาคตสัมบูรณ์\\(Future Light Cone)};
+    \node at (0, -1.6) [font=\footnotesize\bfseries, align=center, color=darkNavy] {อดีตสัมบูรณ์\\(Past Light Cone)};
+    \node at (2.2, 0.8) [font=\scriptsize\color{purple}, align=center] {ย่านเหมือนปริภูมิ\\$\Delta s^2 < 0$};
+    \node at (-2.2, 0.8) [font=\scriptsize\color{purple}, align=center] {ย่านเหมือนปริภูมิ\\$\Delta s^2 < 0$};
+    
+    % Light ray
+    \node at (2.5, 2.8) [font=\scriptsize\bfseries\color{cyan}] {ลำแสง ($x = ct$)};
+    \node at (-2.5, 2.8) [font=\scriptsize\bfseries\color{cyan}] {ลำแสง ($x = -ct$)};
+    
+    % Worldline
+    \draw[red!80!black, line width=1.8pt, smooth] plot coordinates {(0,0) (0.3, 0.8) (0.2, 1.7) (0.6, 2.7)};
+    \node at (0.8, 2.9) [font=\scriptsize\bfseries\color{red!80!black}] {เส้นทางโลก (Worldline)};
+    
+    % Event at origin
+    \filldraw[darkNavy] (0,0) circle (2.5pt) node[below right, font=\footnotesize\bfseries] {ปัจจุบัน ($O$)};
+\end{tikzpicture}
+\caption{แผนภาพกรวยแสง (Light Cone) แสดงโครงสร้างการส่งผ่านผลเชิงเหตุและผล (Causality) ในปริภูมิ-เวลามินคอฟสกี}
+\label{fig:light_cone}
+\end{figure}
+
+\section{พลศาสตร์สัมพัทธภาพ: โมเมนตัมและพลังงานรวม}
+\index{โมเมนตัมสัมพัทธภาพ}
+\index{พลังงานนิ่ง}
+\index{สมมูลมวล-พลังงาน}
+
+เมื่อวัตถุมีความเร็วเข้าใกล้อัตราเร็วแสง นิยามโมเมนตัมแบบนิวตัน $\mathbf{p} = m\mathbf{v}$ จำเป็นต้องได้รับการปรับปรุงตามทฤษฎีสัมพัทธภาพ เพื่อให้สอดคล้องกับกฎการอนุรักษ์โมเมนตัมในทุกกรอบเฉื่อย:
+\begin{equation}
+\mathbf{p} = \gamma m_0 \mathbf{v} = \frac{m_0 \mathbf{v}}{\sqrt{1 - v^2/c^2}}
+\end{equation}
+โดยที่ $m_0$ คือมวลนิ่ง (Rest Mass) ของอนุภาค
+
+พลังงานรวมสัมพัทธภาพ (Total Relativistic Energy, $E$) ประกอบด้วย \textbf{พลังงานนิ่ง (Rest Energy, $E_0$)} และ \textbf{พลังงานจลน์สัมพัทธภาพ ($K$)}:
+\begin{equation}
+E = \gamma m_0 c^2 = K + m_0 c^2
+\end{equation}
+ดังนั้น พลังงานจลน์จึงมีค่าเท่ากับ:
+\begin{equation}
+K = (\gamma - 1) m_0 c^2 = \left( \frac{1}{\sqrt{1 - v^2/c^2}} - 1 \right) m_0 c^2
+\end{equation}
+เมื่อ $v \ll c$ สามารถกระจายอนุกรมเทย์เลอร์ $\gamma \approx 1 + \frac{1}{2}\frac{v^2}{c^2}$ จะได้ $K \approx \frac{1}{2}m_0 v^2$ ซึ่งสอดคล้องกับกลศาสตร์คลาสสิกของนิวตันอย่างสมบูรณ์แบบ
+
+ความสัมพันธ์พื้นฐานระหว่างพลังงานรวม โมเมนตัม และมวลนิ่ง กำหนดโดย:
+\begin{equation}
+E^2 = (pc)^2 + (m_0 c^2)^2
+\end{equation}
+สำหรับอนุภาคที่ไร้มวลนิ่ง เช่น โฟตอน ($m_0 = 0$) สมการจะลดรูปเหลือ:
+\begin{equation}
+E = pc
+\end{equation}
+
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 4D Spacetime Visualizer}
+\index{WebXR}
+\index{การจำลอง AR}
+
+\begin{arbox}[การแปลงพิกัดปริภูมิ-เวลา 4 มิติ และกรวยแสงปฏิสัมพันธ์]
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\begin{enumerate}
+    \item แสดงภาพกรวยแสง (Light Cone) แบบโปร่งใส 3 มิติ ลอยตัวในห้องเรียนจริงผ่าน WebXR
+    \item ผู้เรียนสามารถเลื่อนแถบควบคุมความเร็ว $\beta = v/c$ ตั้งแต่ $0.00$ ถึง $0.99$ เพื่อสังเกตการเอียง (Shear / Hyperbolic Rotation) ของแกนพิกัด $x'$ และ $ct'$ เทียบกับแกน $x$ และ $ct$
+    \item ตรวจสอบเส้นทางโลก (Worldline) ของอนุภาคความเร็วสูง และสังเกตการหดตัวของยานอวกาศเสมือนจริง
+\end{enumerate}
+
+\textbf{ข้อกำหนดทางเทคนิค (Technical Specification):}
+\begin{itemize}
+    \item \textbf{Shader Pipeline:} GLSL Fragment Shader คำนวณไฮเปอร์โบลา $\Delta s^2 = \text{const}$ แบบเรียลไทม์
+    \item \textbf{Tracking:} MediaPipe Hands ควบคุมการหมุนมุมมองและ Pinch Gesture เพื่อเร่งความเร็วของยาน
+    \item \textbf{Performance Target:} $60\text{ FPS}$ บนเบราว์เซอร์มือถือ รองรับ WebXR API
+\end{itemize}
+\end{arbox}
+
+\section{การคำนวณเชิงตัวเลขด้วย Python: การวิเคราะห์ตัวคูณลอเรนซ์}
+\index{Python}
+\index{NumPy}
+\index{Matplotlib}
+
+ต่อไปนี้เป็นสคริปต์ Python วิเคราะห์ค่าตัวคูณลอเรนซ์ $\gamma$ และพลังงานจลน์สัมพัทธภาพเทียบกับค่าคลาสสิก:
+
+\begin{pythonbox}[relativity\_kinematics.py: การวิเคราะห์ตัวคูณลอเรนซ์และพลังงานจลน์]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ค่าคงตัวมูลฐาน
+c = 2.99792458e8     # อัตราเร็วแสง (m/s)
+m_e = 9.1093837e-31   # มวลนิ่งของอิเล็กตรอน (kg)
+eV = 1.602176634e-19  # จูลต่ออิเล็กตรอนโวลต์
+
+# กำหนดช่วงความเร็วสัมพันธ์ beta = v/c จาก 0 ถึง 0.99
+beta = np.linspace(0.001, 0.99, 1000)
+gamma = 1.0 / np.sqrt(1.0 - beta**2)
+
+# คำนวณพลังงานจลน์สัมพัทธภาพและพลังงานจลน์แบบคลาสสิก (หน่วย MeV)
+K_rel_MeV = (gamma - 1.0) * m_e * c**2 / (1e6 * eV)
+K_classical_MeV = 0.5 * m_e * (beta * c)**2 / (1e6 * eV)
+
+# แสดงผลค่าตัวเลขที่สำคัญ
+print("=== Relativistic Kinematics Calculation ===")
+speeds = [0.1, 0.5, 0.8, 0.9, 0.95, 0.99, 0.999]
+for v_rel in speeds:
+    g = 1.0 / np.sqrt(1.0 - v_rel**2)
+    k_rel = (g - 1.0) * 0.5109989  # พลังงานจลน์อิเล็กตรอน MeV
+    k_cla = 0.5 * 0.5109989 * v_rel**2
+    ratio = k_rel / k_cla
+    print(f"beta = {v_rel:5.3f} | gamma = {g:7.3f} | K_rel = {k_rel:9.4f} MeV | Ratio = {ratio:6.2f}")
+\end{pythonbox}
+
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+
+\begin{psctexample}[การสลายตัวของมิวออนในบรรยากาศโลก (Muon Decay Paradox)]
+\textbf{โจทย์ (Problem):} \\
+มิวออน ($\mu$) ก่อตัวขึ้นในชั้นบรรยากาศสตราโตสเฟียร์ที่ระดับความสูง $H = 10\text{ km}$ เหนือพื้นโลก ด้วยความเร็ว $v = 0.995c$ โดยมิวออนมีอายุขัยเฉลี่ยขณะอยู่นิ่ง (Proper Lifetime) เท่ากับ $\tau_0 = 2.20\,\mu\text{s}$ 
+\begin{enumerate}
+    \item ตามการคำนวณแบบคลาสสิก มิวออนจะเคลื่อนที่ได้ระยะทางเท่าใดก่อนสลายตัว และสามารถมาถึงพื้นผิวโลกได้หรือไม่?
+    \item จากมุมมองของผู้สังเกตบนพื้นโลก (Earth Frame) จงอธิบายว่าเหตุใดจึงตรวจพบมิวออนบนพื้นผิวโลกได้เป็นจำนวนมาก
+    \item จากมุมมองของมิวออนเอง (Muon Frame) จงอธิบายว่ามิวออนเดินทางมาถึงพื้นโลกได้อย่างไร
+\end{enumerate}
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item ในกรอบคลาสสิก ระยะทางคือ $d = v \tau_0$
+    \item ในกรอบโลก เวลาของมิวออนยืดออก $\Delta t = \gamma \tau_0$ ดังนั้นระยะทางที่มิวออนเคลื่อนที่ได้คือ $d = v \Delta t$
+    \item ในกรอบมิวออน ระยะทางความสูง $10\text{ km}$ หดสั้นลง $H' = H / \gamma$ แต่มิวออนมีเวลาสลายตัวเท่าเดิมคือ $\tau_0$
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+คำนวณตัวคูณลอเรนซ์สำหรับความเร็ว $v = 0.995c$:
+\begin{equation}
+\gamma = \frac{1}{\sqrt{1 - (0.995)^2}} = \frac{1}{\sqrt{1 - 0.990025}} = \frac{1}{\sqrt{0.009975}} \approx 10.0125
+\end{equation}
+
+\textit{1. การวิเคราะห์แบบคลาสสิก:}
+\begin{equation}
+d_{\text{classical}} = v \tau_0 = (0.995 \times 3.00 \times 10^8\text{ m/s}) \times (2.20 \times 10^{-6}\text{ s}) \approx 656.7\text{ m} \approx 0.66\text{ km}
+\end{equation}
+เนื่องจาก $0.66\text{ km} \ll 10\text{ km}$ มิวออนเกือบทั้งหมดจึงควรสลายตัวไปหมดก่อนถึงพื้นโลก ซึ่งขัดแย้งกับข้อเท็จจริงจากการทดลอง
+
+\textit{2. การวิเคราะห์ในกรอบโลก (Time Dilation):}
+เวลาชีวิตของมิวออนที่สังเกตจากบนโลกจะยืดออกเป็น:
+\begin{equation}
+\Delta t = \gamma \tau_0 = (10.0125) \times (2.20\,\mu\text{s}) \approx 22.03\,\mu\text{s}
+\end{equation}
+ระยะทางที่มิวออนเคลื่อนที่ได้ในกรอบโลกจึงเป็น:
+\begin{equation}
+d_{\text{Earth}} = v \Delta t = (0.995 \times 3.00 \times 10^8\text{ m/s}) \times (22.03 \times 10^{-6}\text{ s}) \approx 6576\text{ m} \approx 6.58\text{ km}
+\end{equation}
+หากพิจารณาการกระจายทางสถิติของอายุขัย $N(t) = N_0 e^{-t/\Delta t}$ จะพบมิวออนจำนวนมากสามารถรอดชีวิตมาถึงสถานีตรวจวัดบนพื้นโลกได้จริง!
+
+\textit{3. การวิเคราะห์ในกรอบมิวออน (Length Contraction):}
+ในกรอบที่มิวออนอยู่นิ่ง โลกกำลังพุ่งเข้าหามันด้วยความเร็ว $0.995c$ ระยะทางความหนาของบรรยากาศจะหดสั้นลง:
+\begin{equation}
+H' = \frac{H}{\gamma} = \frac{10\,000\text{ m}}{10.0125} \approx 998.75\text{ m} \approx 1.0\text{ km}
+\end{equation}
+เวลาที่โลกใช้ในการพุ่งผ่านมิวออนคือ:
+\begin{equation}
+\Delta t' = \frac{H'}{v} = \frac{998.75\text{ m}}{0.995 \times 3.00 \times 10^8\text{ m/s}} \approx 3.35\,\mu\text{s}
+\end{equation}
+ซึ่งใกล้เคียงกับอายุขัย $\tau_0 = 2.20\,\mu\text{s}$ ทำให้มิวออนมีโอกาสชนพื้นโลกได้อย่างสมเหตุสมผล
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+ทั้งสองกรอบอ้างอิงให้ข้อสรุปทางกายภาพเดียวกันคือ "มิวออนตรวจพบบนพื้นผิวโลกได้" โดยกรอบโลกอธิบายด้วยปรากฏการณ์การยืดออกของเวลา (Time Dilation) ขณะที่กรอบมิวออนอธิบายด้วยการหดสั้นของความยาว (Length Contraction) นี่คือความสอดคล้องอย่างงดงามของทฤษฎีสัมพัทธภาพพิเศษ
+\qedexam
+\end{psctexample}
+
+\begin{conceptcheck}[คำถามทบทวนแนวคิด]
+\begin{enumerate}
+    \item ยานอวกาศลำหนึ่งมีความเร็วสัมพัทธ์ $0.8c$ เมื่อเทียบกับสถานีอวกาศ หากนักบินอวกาศบนยานยิงแสงเลเซอร์ไปข้างหน้า ผู้สังเกตบนสถานีอวกาศจะวัดอัตราเร็วของลำแสงเลเซอร์ได้เท่าใด?
+    \item มีเงื่อนไขใดหรือไม่ที่ทำให้เหตุการณ์สองเหตุการณ์เกิดขึ้นพร้อมกันในทุกกรอบอ้างอิงเฉื่อย? จงอธิบายโดยใช้สมการการแปลงลอเรนซ์
+\end{enumerate}
+\end{conceptcheck}
+
+\section{สรุปสาระสำคัญประจำบท}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{l Z Y}
+\toprule
+\textbf{หัวข้อ} & \textbf{สมการหลัก} & \textbf{ความหมายเชิงกายภาพ} \\
+\midrule
+ตัวคูณลอเรนซ์ & $\gamma = \frac{1}{\sqrt{1 - v^2/c^2}}$ & สเกลาร์มาตรวัดความเบี่ยงเบนจากกลศาสตร์นิวตัน ($\gamma \ge 1$) \\
+การยืดของเวลา & $\Delta t = \gamma \Delta t_0$ & เวลาในกรอบที่วัตถุเคลื่อนที่เดินช้ากว่าเวลาเฉพาะ \\
+การหดสั้นของความยาว & $L = L_0 / \gamma$ & ความยาวในทิศทางการเคลื่อนที่จะหดสั้นลงเมื่อสังเกตจากกรอบอื่น \\
+ช่วงปริภูมิ-เวลา & $\Delta s^2 = c^2\Delta t^2 - |\Delta\mathbf{r}|^2$ & ปริมาณคงตัวลอเรนซ์ จำแนกย่านแสง เวลา และปริภูมิ \\
+โมเมนตัมสัมพัทธภาพ & $\mathbf{p} = \gamma m_0 \mathbf{v}$ & กฎอนุรักษ์โมเมนตัมคงรูปในทุกกรอบอ้างอิงเฉื่อย \\
+สมมูลมวล-พลังงาน & $E^2 = (pc)^2 + (m_0 c^2)^2$ & พลังงานรวมของอนุภาคที่มีมวลและอนุภาคไร้มวล \\
+\bottomrule
+\end{tabularx}
+\caption{สรุปความสัมพันธ์พื้นฐานในทฤษฎีสัมพัทธภาพพิเศษ}
+\label{tab:relativity_summary}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item โปรตอนถูกเร่งในเครื่องเร่งอนุภาคจนมีพลังงานจลน์เท่ากับ 3 เท่าของพลังงานนิ่งของมัน จงคำนวณ:
+    \begin{enumerate}
+        \item ตัวคูณลอเรนซ์ $\gamma$ ของโปรตอน
+        \item อัตราเร็วของโปรตอนในรูปสัดส่วนของ $c$
+        \item โมเมนตัมสัมพัทธภาพของโปรตอนในหน่วย $\text{MeV}/c$ (กำหนด $m_p c^2 \approx 938.27\text{ MeV}$)
+    \end{enumerate}
+    \item ยานอวกาศยาว $100\text{ m}$ เคลื่อนที่ผ่านสถานีอวกาศด้วยความเร็ว $0.6c$ ผู้สังเกตบนสถานีจะวัดความยาวของยานลำนี้ได้เท่าใด?
+    \item จงพิสูจน์ว่าช่วงปริภูมิเวลา $\Delta s^2 = c^2 \Delta t^2 - \Delta x^2$ มีค่าเท่าเดิมภายใต้การแปลงลอเรนซ์ ($c^2 \Delta t'^2 - \Delta x'^2 = c^2 \Delta t^2 - \Delta x^2$)
+\end{enumerate}

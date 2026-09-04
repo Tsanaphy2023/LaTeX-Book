@@ -1,6 +1,230 @@
-\chapter{ดาราศาสตร์ฟิสิกส์และจักรวาลวิทยา (Astrophysics)}
+\chapter{ฟิสิกส์ดาราศาสตร์และจักรวาลวิทยา (Astrophysics and Cosmology)}
+\label{chap:astrophysics}
+\index{ฟิสิกส์ดาราศาสตร์}
+\index{จักรวาลวิทยา}
+\index{หลุมดำ}
+\index{สมการฟรีดมันน์}
 
-\section{สมการสนามของไอน์สไตน์และหลุมดำ}
+\begin{chapterobjectives}
+เมื่อศึกษาบทที่ 7 จบแล้ว นิสิตและผู้ศึกษาสามารถ:
+\begin{enumerate}
+    \item อธิบายสมดุลไฮโดรสแตติก (Hydrostatic Equilibrium) ในโครงสร้างภายในของดาวฤกษ์
+    \item วิเคราะห์สถานะสุดท้ายของดาวฤกษ์ ได้แก่ ดาวแคระขาว ดาวนิวตรอน และขีดจำกัดจันทรเศขร (Chandrasekhar Limit)
+    \item คำนวณรัศมีชวาร์ซชิลด์ (Schwarzschild Radius) และการยืดของเวลาเนื่องจากแรงโน้มถ่วง (Gravitational Time Dilation) ใกล้หลุมดำ
+    \item อธิบายหลักการตรวจวัดคลื่นความโน้มถ่วง (Gravitational Waves) จากการรวมตัวของหลุมดำคู่
+    \item ประยุกต์ใช้กฎของฮับเบิล-เลอแมทร์และสมการฟรีดมันน์ (Friedmann Equations) ในการอธิบายการขยายตัวของเอกภพ
+    \item เขียนสคริปต์ Python จำลองการเปลี่ยนแปลงของสเกลแฟกเตอร์ $a(t)$ ในแบบจำลอง $\Lambda\text{CDM}$
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{สมดุลไฮโดรสแตติกและวิวัฒนาการของดาวฤกษ์}
+\index{สมดุลไฮโดรสแตติก}
+\index{ความดันดีเจเนอเรซี}
+
+ดาวฤกษ์ดำรงสถานะเสถียรอยู่ได้ด้วยความสมดุลระหว่างแรงโน้มถ่วงที่พยายามดึงดูดมวลสารเข้าสู่ศูนย์กลาง กับแรงดันจากความร้อนและรังสีนิวเคลียร์ฟิวชันจากแกนกลาง เรียกว่า \textbf{สมดุลไฮโดรสแตติก (Hydrostatic Equilibrium)}:
 \begin{equation}
-R_{\mu\nu} - \frac{1}{2}R g_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}
+\frac{dP}{dr} = -\frac{G M(r) \rho(r)}{r^2}
 \end{equation}
+โดยที่ $M(r) = \int_0^r 4\pi {r'}^2 \rho(r') dr'$ คือมวลสะสมภายในรัศมี $r$
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Stellar Core
+    \draw[line width=1.5pt, darkNavy, fill=quantumGold!30] (0, 0) circle (2.2cm);
+    \filldraw[red!80!black] (0, 0) circle (0.6cm);
+    \node at (0, 0) [font=\tiny\bfseries\color{white}, align=center] {แกนฟิวชัน};
+    
+    % Gravity arrows (Inward)
+    \foreach \angle in {30, 75, 120, 165, 210, 255, 300, 345} {
+        \draw[-{Stealth[scale=1.2]}, blue!80!black, line width=1.4pt] 
+            (\angle:3.2) -- (\angle:2.3);
+    }
+    \node at (2.6, 2.6) [font=\footnotesize\bfseries\color{blue!80!black}] {แรงโน้มถ่วงดึงดูด ($F_g$)};
+    
+    % Thermal Pressure arrows (Outward)
+    \foreach \angle in {10, 55, 100, 145, 190, 235, 280, 325} {
+        \draw[-{Stealth[scale=1.2]}, red!80!black, line width=1.4pt] 
+            (\angle:0.8) -- (\angle:1.7);
+    }
+    \node at (-2.3, -2.4) [font=\footnotesize\bfseries\color{red!80!black}] {แรงดันความร้อน ($P$)};
+\end{tikzpicture}
+\caption{สภาวะสมดุลไฮโดรสแตติก (Hydrostatic Equilibrium) ของดาวฤกษ์}
+\label{fig:hydrostatic_equilibrium}
+\end{figure}
+
+เมื่อดาวฤกษ์เผาผลาญเชื้อเพลิงนิวเคลียร์ที่แกนกลางจนหมด แรงดันความร้อนจะหยุดลง ดาวฤกษ์จะยุบตัวลงตามมวลตั้งต้น:
+\begin{enumerate}
+    \item \textbf{ดาวแคระขาว (White Dwarf):} พยุงตัวด้วย \textbf{ความดันดีเจเนอเรซีของอิเล็กตรอน (Electron Degeneracy Pressure)} ตามหลักการกีดกันของเพาลี มวลสูงสุดที่เป็นไปได้คือ \textbf{ขีดจำกัดจันทรเศขร (Chandrasekhar Limit)}:
+    \begin{equation}
+    M_{\text{Ch}} \approx 1.44 M_\odot
+    \end{equation}
+    \item \textbf{ดาวนิวตรอน (Neutron Star):} หากมวลเกิน $1.44 M_\odot$ อิเล็กตรอนจะรวมตัวกับโปรตอนกลายเป็นนิวตรอน พยุงตัวด้วยความดันดีเจเนอเรซีของนิวตรอน มวลสูงสุดอยู่ที่ขีดจำกัด TOV (Tolman-Oppenheimer-Volkoff Limit) $\approx 2.1 - 2.3 M_\odot$
+    \item \textbf{หลุมดำ (Black Hole):} หากมวลสารตกค้างมากกว่าขีดจำกัด TOV ไม่มีแรงใดในเอกภพสามารถต้านทานแรงโน้มถ่วงได้ ดาวจะยุบตัวลงสู่ภาวะเอกฐาน (Singularity)
+\end{enumerate}
+
+\section{หลุมดำและเรขาคณิตชวาร์ซชิลด์ (Schwarzschild Black Holes)}
+\index{หลุมดำ}
+\index{รัศมีชวาร์ซชิลด์}
+\index{ขอบฟ้าเหตุการณ์}
+
+ตามทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์ คาร์ล ชวาร์ซชิลด์ (Karl Schwarzschild) ได้หาผลเฉลยแม่นตรงสำหรับปริภูมิ-เวลารอบมวลทรงกลมสถิตที่ไม่มีประจุและไม่หมุน:
+\begin{equation}
+ds^2 = -\left(1 - \frac{R_s}{r}\right) c^2 dt^2 + \left(1 - \frac{R_s}{r}\right)^{-1} dr^2 + r^2 (d\theta^2 + \sin^2\theta d\phi^2)
+\end{equation}
+โดยที่ $R_s$ คือ \textbf{รัศมีชวาร์ซชิลด์ (Schwarzschild Radius)} ซึ่งเป็นตำแหน่งของ \textbf{ขอบฟ้าเหตุการณ์ (Event Horizon)}:
+\begin{equation}
+R_s = \frac{2GM}{c^2}
+\end{equation}
+ไม่มีสิ่งใดแม้กระทั่งแสงสามารถหลุดรอดออกจากภายในขอบฟ้าเหตุการณ์ได้
+
+การยืดของเวลาเนื่องจากแรงโน้มถ่วงสำหรับผู้สังเกตที่ระยะห่าง $r$ สัมพันธ์กับเวลาเฉพาะที่ระยะอนันต์คือ:
+\begin{equation}
+\Delta t(r) = \frac{\Delta t_\infty}{\sqrt{1 - \frac{R_s}{r}}}
+\end{equation}
+เมื่อ $r \to R_s$ เวลาจะหยุดเดินในสายตาของผู้สังเกตภายนอก ($\Delta t \to \infty$)
+
+\section{จักรวาลวิทยาและสมการฟรีดมันน์ (Friedmann Cosmology)}
+\index{กฎของฮับเบิล}
+\index{สมการฟรีดมันน์}
+\index{สสารมืด}
+\index{พลังงานมืด}
+
+เอ็ดวิน ฮับเบิล (Edwin Hubble) และจอร์จ เลอแมทร์ (Georges Lemaître) ค้นพบว่าดาราจักรส่วนใหญ่กำลังเคลื่อนที่ถอยห่างออกจากเราด้วยความเร็วแปรผันตรงกับระยะทาง:
+\begin{equation}
+v = H_0 d
+\end{equation}
+โดยที่ $H_0 \approx 70\text{ km}\cdot\text{s}^{-1}\cdot\text{Mpc}^{-1}$ คือค่าคงตัวของฮับเบิล (Hubble Constant)
+
+ตามแบบจำลอง FLRW (Friedmann-Lemaître-Robertson-Walker Metric) พลวัตการขยายตัวของเอกภพถูกกำหนดด้วย \textbf{สเกลแฟกเตอร์ $a(t)$} ผ่านสมการฟรีดมันน์:
+\begin{equation}
+H^2(t) = \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3} \rho - \frac{k c^2}{a^2} + \frac{\Lambda c^2}{3}
+\end{equation}
+และสมการความเร่ง:
+\begin{equation}
+\frac{\ddot{a}}{a} = -\frac{4\pi G}{3}\left(\rho + \frac{3P}{c^2}\right) + \frac{\Lambda c^2}{3}
+\end{equation}
+การสังเกตการณ์ซูเปอร์โนวา Type Ia ในปี ค.ศ. 1998 ยืนยันว่าเอกภพกำลังขยายตัวด้วยความเร่ง ($\ddot{a} > 0$) ขับเคลื่อนโดย \textbf{พลังงานมืด (Dark Energy / Cosmological Constant $\Lambda$)} ซึ่งครองสัดส่วนประมาณ 68\% ของพลังงานทั้งหมดในเอกภพ
+
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: Spacetime Curvature \& Lensing}
+\index{WebXR}
+\index{Black Hole AR}
+
+\begin{arbox}[การจำลองการบิดโค้งของปริภูมิเวลาและเลนส์โน้มถ่วงรอบหลุมดำ 3 มิติ]
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\begin{enumerate}
+    \item แสดงหลุมดำมวลยิ่งยวดพร้อมจานสะสมมวล (Accretion Disk) เรืองแสงและปรากฏการณ์เงาหลุมดำ (Black Hole Shadow)
+    \item ใช้ GLSL Custom Shader จำลองการหักเหของเส้นทางแสง (Gravitational Lensing) จากดวงดาวพื้นหลังรอบขอบฟ้าเหตุการณ์
+    \item ผู้เรียนสามารถโยนดาวเคราะห์หรืออนุภาคเสมือนเข้าสู่วงโคจร เพื่อสังเกตปรากฏการณ์เลื่อนไปข้างหน้าของจุดใกล้ศูนย์กลางที่สุด (Perihelion Precession) และการถูกฉีกขาดจากแรงไทดัล (Spaghettification)
+\end{enumerate}
+\end{arbox}
+
+\section{การคำนวณเชิงตัวเลขด้วย Python: Friedmann Universe Expansion}
+\index{Python}
+\index{Cosmology Solver}
+
+\begin{pythonbox}[friedmann\_cosmology.py: การจำลองการขยายตัวของเอกภพ Lambda-CDM]
+import numpy as np
+from scipy.integrate import solve_ivp
+
+# พารามิเตอร์จักรวาลวิทยาปัจจุบัน (Planck Collaboration 2018)
+H0 = 67.4       # km/s/Mpc
+H0_per_s = H0 * 1000.0 / (3.08567758e22)  # แปลงเป็น 1/s
+H0_per_Gyr = H0_per_s * (3.15576e16)       # แปลงเป็น 1/Gyr (~0.0689 Gyr^-1)
+
+Omega_m = 0.315   # สสาร (สสารปกติ + สสารมืด)
+Omega_r = 9.0e-5  # รังสี (โฟตอน + นิวทริโน)
+Omega_L = 0.685   # พลังงานมืด (ค่าคงตัวจักรวาลวิทยา)
+
+def friedmann_ode(t, a):
+    """
+    da/dt = H0 * sqrt( Omega_r/a^2 + Omega_m/a + Omega_L * a^2 )
+    สำหรับเอกภพที่แบนราบทางเรขาคณิต (k = 0)
+    """
+    if a <= 0:
+        return 0
+    term = (Omega_r / a**2) + (Omega_m / a) + (Omega_L * a**2)
+    return H0_per_Gyr * np.sqrt(max(term, 0))
+
+# คำนวณย้อนหลังจากปัจจุบัน a=1 (t=13.8 Gyr)
+t_span = (0.01, 25.0)  # เวลาตั้งแต่ 10 ล้านปี ถึง 25 พันล้านปี
+a0 = [0.001]
+t_eval = np.linspace(0.01, 25.0, 300)
+
+sol = solve_ivp(friedmann_ode, t_span, a0, t_eval=t_eval)
+
+# หาอายุเอกภพเมื่อ a = 1.0 (ปัจจุบัน)
+curr_idx = np.argmin(np.abs(sol.y[0] - 1.0))
+t_age = sol.t[curr_idx]
+
+print("=== Friedmann Cosmological Simulation ===")
+print(f"Current Hubble Constant H0: {H0} km/s/Mpc")
+print(f"Calculated Age of Universe (a=1): {t_age:.2f} Billion Years (Gyr)")
+\end{pythonbox}
+
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+
+\begin{psctexample}[รัศมีชวาร์ซชิลด์และการยืดของเวลาใกล้หลุมดำใจกลางทางช้างเผือก]
+\textbf{โจทย์ (Problem):} \\
+หลุมดำมวลยิ่งยวด ซาจิททาเรียส เอ สตาร์ ($\text{Sgr A}^*$) ณ ใจกลางดาราจักรทางช้างเผือก มีมวลประมาณ $M = 4.15 \times 10^6 M_\odot$ (โดยมวลดวงอาทิตย์ $M_\odot \approx 1.989 \times 10^{30}\text{ kg}$)
+\begin{enumerate}
+    \item จงคำนวณรัศมีชวาร์ซชิลด์ $R_s$ ของหลุมดำนี้ในหน่วยกิโลเมตร
+    \item หากยานสำรวจอวกาศลอยนิ่งอยู่ที่ระยะห่าง $r = 1.20 R_s$ เวลาที่ผ่านไป $1.0\text{ ชั่วโมง}$ บนยาน จะเทียบเท่ากับเวลากี่ชั่วโมงสำหรับผู้สังเกตที่อยู่ห่างไกลบนโลก?
+\end{enumerate}
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item รัศมีชวาร์ซชิลด์: $R_s = \frac{2GM}{c^2}$
+    \item การยืดของเวลาเนื่องจากแรงโน้มถ่วง: $\Delta t_\infty = \Delta t(r) \sqrt{1 - \frac{R_s}{r}}$ หรือ $\Delta t(r) = \frac{\Delta t_\infty}{\sqrt{1 - R_s/r}}$ \\
+    (ระวัง: เวลาเฉพาะ $\Delta \tau = \Delta t(r)$ บนยานเดินช้ากว่าเวลาของผู้สังเกตไกลโพ้น $\Delta t_\infty = \frac{\Delta \tau}{\sqrt{1 - R_s/r}}$)
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. คำนวณรัศมีชวาร์ซชิลด์:}
+\begin{align}
+M &= (4.15 \times 10^6) \times (1.989 \times 10^{30}\text{ kg}) \approx 8.254 \times 10^{36}\text{ kg} \\
+R_s &= \frac{2 (6.674 \times 10^{-11}\text{ m}^3\text{kg}^{-1}\text{s}^{-2}) (8.254 \times 10^{36}\text{ kg})}{(2.998 \times 10^8\text{ m/s})^2} \\
+&\approx \frac{1.1018 \times 10^{27}}{8.988 \times 10^{16}} \approx 1.226 \times 10^{10}\text{ m} \approx 1.226 \times 10^7\text{ km} \approx 12.26\text{ ล้านกิโลเมตร}
+\end{align}
+(สังเกต: รัศมีชวาร์ซชิลด์นี้มีขนาดประมาณ $0.082\text{ AU}$ ซึ่งเล็กกว่าวงโคจรของดาวพุธรอบดวงอาทิตย์!)
+
+\textit{2. คำนวณการยืดของเวลา:}
+ที่ระยะ $r = 1.20 R_s$:
+\begin{equation}
+\sqrt{1 - \frac{R_s}{r}} = \sqrt{1 - \frac{1}{1.20}} = \sqrt{1 - 0.8333} = \sqrt{0.1667} \approx 0.4082
+\end{equation}
+เวลาบนยาน $\Delta \tau = 1.0\text{ ชั่วโมง}$:
+\begin{equation}
+\Delta t_\infty = \frac{\Delta \tau}{\sqrt{1 - R_s/r}} = \frac{1.0\text{ hr}}{0.4082} \approx 2.45\text{ ชั่วโมง} \approx 2\text{ ชั่วโมง } 27\text{ นาที}
+\end{equation}
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+สนามโน้มถ่วงมหาศาลทำให้โครงข่ายปริภูมิเวลาบิดโค้งอย่างรุนแรง เวลาบนยานที่อยู่ใกล้ขอบฟ้าเหตุการณ์เพียง $1.2 R_s$ จะเดินช้ากว่าเวลาของผู้สังเกตภายนอกมากกว่า 2.4 เท่า และหากยานขยับเข้าใกล้ขอบฟ้าเหตุการณ์ $r \to R_s$ เวลาภายนอกจะผ่านไปอย่างรวดเร็วจนเข้าสู่อนันต์
+\qedexam
+\end{psctexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{l Z Y}
+\toprule
+\textbf{หัวข้อ} & \textbf{สมการหลัก} & \textbf{ความหมายทางกายภาพ} \\
+\midrule
+สมดุลไฮโดรสแตติก & $\frac{dP}{dr} = -\frac{GM\rho}{r^2}$ & เสถียรภาพโครงสร้างของดาวฤกษ์ \\
+ขีดจำกัดจันทรเศขร & $M_{\text{Ch}} \approx 1.44 M_\odot$ & มวลสูงสุดของดาวแคระขาว \\
+รัศมีชวาร์ซชิลด์ & $R_s = \frac{2GM}{c^2}$ & ขอบเขตขอบฟ้าเหตุการณ์ของหลุมดำ \\
+กฎของฮับเบิล & $v = H_0 d$ & เอกภพกำลังขยายตัวอย่างเป็นเอกรูป \\
+สมการฟรีดมันน์ & $H^2 = \frac{8\pi G}{3}\rho - \frac{kc^2}{a^2} + \frac{\Lambda c^2}{3}$ & สมการพลวัตการขยายตัวของเอกภพ \\
+\bottomrule
+\end{tabularx}
+\caption{สรุปความสัมพันธ์พื้นฐานในฟิสิกส์ดาราศาสตร์และจักรวาลวิทยา}
+\label{tab:astrophysics_summary}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item หากโลกถูกบีบอัดจนกลายเป็นหลุมดำ จงคำนวณรัศมีชวาร์ซชิลด์ของโลก กำหนดมวลโลก $M_E \approx 5.972 \times 10^{24}\text{ kg}$
+    \item ดาราจักรแห่งหนึ่งอยู่ห่างจากโลก $100\text{ Mpc}$ จะมีความเร็วในการถอยห่างจากโลกเท่าใดตามกฎของฮับเบิล กำหนด $H_0 = 70\text{ km/s/Mpc}$
+    \item จงอธิบายว่าเหตุใดความดันดีเจเนอเรซีของอิเล็กตรอนจึงไม่สามารถพยุงดาวที่มีมวลมากกว่า $1.44 M_\odot$ ได้ (เชื่อมโยงกับทฤษฎีสัมพัทธภาพพิเศษเมื่อความเร็วอิเล็กตรอนเข้าใกล้ $c$)
+\end{enumerate}

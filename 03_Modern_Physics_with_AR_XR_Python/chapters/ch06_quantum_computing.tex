@@ -1,4 +1,248 @@
-\chapter{การคำนวณเชิงควอนตัม (Quantum Computing)}
+\chapter{การคำนวณเชิงควอนตัมและสารสนเทศควอนตัม (Quantum Computing and Information)}
+\label{chap:quantum_computing}
+\index{การคำนวณควอนตัม}
+\index{คิวบิต}
+\index{ทรงกลมบล็อค}
+\index{ความพัวพันควอนตัม}
 
-\section{คิวบิตและทรงกลมโบลช (Bloch Sphere)}
-สถานะควอนตัม $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ โดยที่ $|\alpha|^2 + |\beta|^2 = 1$
+\begin{chapterobjectives}
+เมื่อศึกษาบทที่ 6 จบแล้ว นิสิตและผู้ศึกษาสามารถ:
+\begin{enumerate}
+    \item อธิบายความแตกต่างพื้นฐานระหว่างบิตดั้งเดิม (Classical Bit) และคิวบิต (Quantum Bit: Qubit)
+    \item เขียนและวิเคราะห์สถานะควอนตัมบนทรงกลมบล็อค (Bloch Sphere Representation)
+    \item คำนวณการดำเนินการของเกตควอนตัมเดี่ยว (Pauli Matrices, Hadamard Gate) ด้วยเมทริกซ์เอกภาพ (Unitary Matrices)
+    \item อธิบายความพัวพันเชิงควอนตัม (Quantum Entanglement) และการสร้างสถานะเบลล์ (Bell States) ด้วยเกต CNOT
+    \item วิเคราะห์วงจรการเคลื่อนย้ายควอนตัมทางไกล (Quantum Teleportation Protocol)
+    \item เขียนโค้ด Python เพื่อจำลองวงจรควอนตัมและการวัดค่าความน่าจะเป็นของ Statevector
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{จากบิตคลาสสิกสู่คิวบิต (Classical Bits vs. Qubits)}
+\index{คิวบิต}
+\index{การซ้อนทับควอนตัม}
+
+ในระบบคอมพิวเตอร์แบบดั้งเดิม หน่วยย่อยของสารสนเทศคือ \textbf{บิต (Bit)} ซึ่งมีค่าได้เพียงสองสถานะคือ $0$ หรือ $1$ เท่านั้น ทว่าในกลศาสตร์ควอนตัม หน่วยย่อยของข้อมูลเรียกว่า \textbf{คิวบิต (Qubit: Quantum Bit)} ซึ่งเป็นระบบควอนตัมสองระดับ (Two-Level Quantum System) ที่สามารถอยู่ในสภาวะ \textbf{การซ้อนทับเชิงเส้น (Superposition)}:
+\begin{equation}
+\ket{\psi} = \alpha \ket{0} + \beta \ket{1}
+\end{equation}
+โดยที่ $\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ และ $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$ คือสถานะฐานเชิงคำนวณ (Computational Basis States) ส่วน $\alpha, \beta \in \mathbb{C}$ คือแอมพลิจูดความน่าจะเป็น ซึ่งสอดคล้องกับเงื่อนไขนอร์แมลไลเซชัน:
+\begin{equation}
+|\alpha|^2 + |\beta|^2 = 1
+\end{equation}
+เมื่อทำการวัดค่าคิวบิต ฟังก์ชันคลื่นจะยุบตัวลง (Wavefunction Collapse) โดยจะวัดได้ผลลัพธ์เป็น $0$ ด้วยความน่าจะเป็น $|\alpha|^2$ หรือได้ $1$ ด้วยความน่าจะเป็น $|\beta|^2$
+
+\section{ทรงกลมบล็อค (The Bloch Sphere)}
+\index{ทรงกลมบล็อค}
+
+เนื่องจากเงื่อนไข $|\alpha|^2 + |\beta|^2 = 1$ และเฟสรวมภายนอกไม่มีผลต่อการวัด เราจึงสามารถเขียนสถานะของ 1 คิวบิตให้อยู่ในรูปพิกัดเชิงขั้วบนพื้นผิวทรงกลมหน่วยหนึ่งมิติ เรียกว่า \textbf{ทรงกลมบล็อค (Bloch Sphere)}:
+\begin{equation}
+\ket{\psi} = \cos\left(\frac{\theta}{2}\right) \ket{0} + e^{i\phi} \sin\left(\frac{\theta}{2}\right) \ket{1}
+\end{equation}
+โดยที่ $0 \le \theta \le \pi$ และ $0 \le \phi < 2\pi$
+\begin{itemize}
+    \item ขั้วเหนือ ($\theta = 0$) แทนสถานะ $\ket{0}$
+    \item ขั้วใต้ ($\theta = \pi$) แทนสถานะ $\ket{1}$
+    \item เส้นศูนย์สูตร ($\theta = \pi/2$) แทนสถานะซ้อนทับที่มีความน่าจะเป็นเท่ากัน เช่น $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$ เมื่อ $\phi = 0$
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Sphere outline
+    \draw[darkNavy, line width=1.2pt] (0, 0) circle (2.2cm);
+    \draw[dashed, slateGrey] (0, 0) ellipse (2.2cm and 0.7cm);
+    
+    % Axes
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0, -2.6) -- (0, 2.8) node[above, font=\footnotesize\bfseries] {$|0\rangle$ ($+z$)};
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (-2.5, -0.4) -- (2.6, 0.4) node[right, font=\footnotesize\bfseries] {$+y$};
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (1.8, 1.2) -- (-1.8, -1.2) node[below left, font=\footnotesize\bfseries] {$+x$};
+    \node at (0, -2.9) [font=\footnotesize\bfseries] {$|1\rangle$ ($-z$)};
+    
+    % State Vector |psi>
+    \draw[-{Stealth[scale=1.3]}, line width=2.0pt, color=cyberBlue] (0, 0) -- (1.2, 1.6);
+    \node at (1.5, 1.8) [font=\footnotesize\bfseries\color{cyberBlue}] {$|\psi\rangle$};
+    
+    % Angles theta and phi
+    \draw[->, slateGrey, thick] (0, 0.8) arc (90:53:0.8);
+    \node at (0.3, 1.1) [font=\scriptsize] {$\theta$};
+    
+    % Projection on xy plane
+    \draw[dashed, red!80!black] (1.2, 1.6) -- (1.2, -0.2);
+    \draw[-{Stealth[scale=1.1]}, dashed, red!80!black] (0, 0) -- (1.2, -0.2);
+    \draw[->, slateGrey, thick] (-0.4, -0.25) arc (-150:-10:0.5);
+    \node at (0.4, -0.4) [font=\scriptsize] {$\phi$};
+\end{tikzpicture}
+\caption{การแทนสถานะของคิวบิตบนทรงกลมบล็อค (Bloch Sphere Representation)}
+\label{fig:bloch_sphere}
+\end{figure}
+
+\section{เกตควอนตัม 1 คิวบิต (Single-Qubit Quantum Gates)}
+\index{เกตควอนตัม}
+\index{เกตฮาดามาร์ด}
+\index{เพาลีเมทริกซ์}
+
+การเปลี่ยนแปลงสถานะของคิวบิตต้องรักษาขนาดความน่าจะเป็นรวมเป็น 1 เสมอ การดำเนินการจึงต้องเป็นไปตาม \textbf{เมทริกซ์เอกภาพ (Unitary Matrix, $U$)} โดยที่ $U^\dagger U = I$
+
+เกตเดี่ยวพื้นฐานที่สำคัญประกอบด้วย:
+\begin{enumerate}
+    \item \textbf{เกตเพาลี (Pauli Gates):}
+    \begin{equation}
+    X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad 
+    Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad 
+    Z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
+    \end{equation}
+    โดยที่เกต $X$ ทำหน้าที่เสมือนเกต NOT ทางควอนตัม ($X\ket{0} = \ket{1}, X\ket{1} = \ket{0}$)
+    \item \textbf{เกตฮาดามาร์ด (Hadamard Gate, $H$):} ทำหน้าที่สร้างสถานะซ้อนทับเท่ากัน:
+    \begin{equation}
+    H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \implies H\ket{0} = \frac{\ket{0} + \ket{1}}{\sqrt{2}} = \ket{+}, \quad H\ket{1} = \frac{\ket{0} - \ket{1}}{\sqrt{2}} = \ket{-}
+    \end{equation}
+\end{enumerate}
+
+\section{ระบบหลายคิวบิตและความพัวพันควอนตัม (Quantum Entanglement)}
+\index{ความพัวพันควอนตัม}
+\index{เกต CNOT}
+\index{สถานะเบลล์}
+
+สถานะของระบบ 2 คิวบิตแสดงด้วยผลคูณเทนเซอร์ (Tensor Product):
+\begin{equation}
+\ket{\Psi} = c_{00} \ket{00} + c_{01} \ket{01} + c_{10} \ket{10} + c_{11} \ket{11}
+\end{equation}
+
+\textbf{เกตควบคุม NOT (Controlled-NOT: CNOT):} มี 2 อินพุตคือ คิวบิตควบคุม (Control) และคิวบิตเป้าหมาย (Target) หากคิวบิตควบคุมเป็น 1 จะทำการกลับค่าคิวบิตเป้าหมาย:
+\begin{equation}
+\text{CNOT} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{pmatrix}
+\end{equation}
+
+เมื่อนำเกต $H$ มากระทำกับคิวบิตแรก แล้วส่งต่อเข้าเกต CNOT จะสร้าง \textbf{สถานะพัวพันสมบูรณ์ (Maximally Entangled Bell State)}:
+\begin{equation}
+\ket{\Phi^+} = \text{CNOT} (H \otimes I) \ket{00} = \frac{\ket{00} + \ket{11}}{\sqrt{2}}
+\end{equation}
+สถานะนี้ไม่สามารถแยกตัวประกอบออกเป็นสถานะของคิวบิตเดี่ยวได้ ($\ket{\Phi^+} \neq \ket{\psi_A} \otimes \ket{\psi_B}$) การวัดค่าที่คิวบิตตัวแรกจะกำหนดผลลัพธ์ของคิวบิตตัวที่สองในทันที แม้ทั้งคู่จะอยู่ห่างกันคนละฟากของเอกภพ!
+
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Interactive Bloch Sphere}
+\index{WebXR}
+\index{Bloch Sphere AR}
+
+\begin{arbox}[การจำลองทรงกลมบล็อคและเกตควอนตัม 3 มิติ ผ่าน WebXR]
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\begin{enumerate}
+    \item แสดงภาพทรงกลมบล็อคโปร่งใสลอยอยู่เหนือโต๊ะเรียนจริง พร้อมเวกเตอร์สถานะ $\ket{\psi}$ สีทอง
+    \item ผู้เรียนใช้มือแตะเลือกเกต $X, Y, Z, H$ เพื่อดูการหมุน (Unitary Rotation) ของเวกเตอร์สถานะรอบแกนต่างๆ แบบเรียลไทม์
+    \item จำลองการวัดผล (Measurement Button) โดยเวกเตอร์สถานะจะยุบตัวกระโดดขึ้นขั้วเหนือ $\ket{0}$ หรือขั้วใต้ $\ket{1}$ ตามสัดส่วนความน่าจะเป็นจริง
+\end{enumerate}
+\end{arbox}
+
+\section{การคำนวณเชิงตัวเลขด้วย Python: Quantum Statevector Simulator}
+\index{Python}
+\index{Statevector}
+
+\begin{pythonbox}[quantum\_gate\_simulator.py: ตัวจำลองเกตควอนตัมและสถานะเบลล์]
+import numpy as np
+
+# กำหนดสถานะฐาน
+ket0 = np.array([[1.0], [0.0]], dtype=complex)
+ket1 = np.array([[0.0], [1.0]], dtype=complex)
+
+# กำหนดเมทริกซ์เกตพื้นฐาน
+I = np.eye(2, dtype=complex)
+X = np.array([[0, 1], [1, 0]], dtype=complex)
+Z = np.array([[1, 0], [0, -1]], dtype=complex)
+H = (1.0 / np.sqrt(2.0)) * np.array([[1, 1], [1, -1]], dtype=complex)
+
+# เกต CNOT 4x4
+CNOT = np.array([
+    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 0, 1],
+    [0, 0, 1, 0]
+], dtype=complex)
+
+# สร้างสถานะเริ่มต้น |00> = |0> (x) |0>
+psi00 = np.kron(ket0, ket0)
+
+# ขั้นที่ 1: ใส่เกต H ให้คิวบิตที่ 1 -> (H (x) I) |00>
+H_kron_I = np.kron(H, I)
+step1 = np.dot(H_kron_I, psi00)
+
+# ขั้นที่ 2: ใส่เกต CNOT -> Bell State |Phi+>
+bell_phi_plus = np.dot(CNOT, step1)
+
+print("=== Quantum Bell State Preparation ===")
+print("Reconstructed Statevector |Phi+>:")
+labels = ["|00>", "|01>", "|10>", "|11>"]
+for i in range(4):
+    prob = np.abs(bell_phi_plus[i, 0])**2
+    print(f"{labels[i]}: Amp = {bell_phi_plus[i, 0]:.4f} | Prob = {prob:.4f}")
+\end{pythonbox}
+
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+
+\begin{psctexample}[การคำนวณความน่าจะเป็นของการวัดค่าคิวบิตหลังผ่านเกตฮาดามาร์ด]
+\textbf{โจทย์ (Problem):} \\
+คิวบิตตั้งต้นอยู่ในสถานะ $\ket{\psi_i} = \sqrt{\frac{3}{4}}\ket{0} + \frac{1}{2}\ket{1}$ 
+\begin{enumerate}
+    \item จงตรวจสอบว่าสถานะนี้ผ่านการนอร์แมลไลซ์หรือไม่ และหาพิกัดมุม $\theta$ และ $\phi$ บนทรงกลมบล็อค
+    \item หากส่งคิวบิตนี้เข้าสู่เกตฮาดามาร์ด $H$ จงหาสถานะสุดท้าย $\ket{\psi_f} = H\ket{\psi_i}$
+    \item จงคำนวณความน่าจะเป็นที่จะวัดได้ผลลัพธ์เป็น $\ket{0}$ และ $\ket{1}$ ตามลำดับ
+\end{enumerate}
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item นอร์แมลไลเซชัน: $|\alpha|^2 + |\beta|^2 = 1$
+    \item พิกัดบล็อค: $\cos(\theta/2) = \alpha$, $\sin(\theta/2) = \beta$
+    \item การคูณเมทริกซ์: $\ket{\psi_f} = H \ket{\psi_i}$
+    \item ความน่าจะเป็น: $P(0) = |\braket{0}{\psi_f}|^2$, $P(1) = |\braket{1}{\psi_f}|^2$
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. ตรวจสอบเงื่อนไขนอร์แมลไลซ์และหามุมบล็อค:}
+\begin{equation}
+|\alpha|^2 + |\beta|^2 = \left(\sqrt{\frac{3}{4}}\right)^2 + \left(\frac{1}{2}\right)^2 = \frac{3}{4} + \frac{1}{4} = 1.0 \quad \text{(ถูกต้อง)}
+\end{equation}
+เนื่องจากแอมพลิจูดเป็นจำนวนจริงบวกทั้งคู่ ดังนั้น $\phi = 0$ และ:
+\begin{equation}
+\cos\left(\frac{\theta}{2}\right) = \frac{\sqrt{3}}{2} \implies \frac{\theta}{2} = 30^\circ \implies \theta = 60^\circ \text{ (หรือ } \pi/3 \text{ rad)}
+\end{equation}
+
+\textit{2. คำนวณการดำเนินการของเกตฮาดามาร์ด:}
+\begin{equation}
+\ket{\psi_f} = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} \frac{\sqrt{3}}{2} \\ \frac{1}{2} \end{pmatrix} = \frac{1}{\sqrt{2}} \begin{pmatrix} \frac{\sqrt{3}+1}{2} \\ \frac{\sqrt{3}-1}{2} \end{pmatrix} = \begin{pmatrix} \frac{\sqrt{3}+1}{2\sqrt{2}} \\ \frac{\sqrt{3}-1}{2\sqrt{2}} \end{pmatrix}
+\end{equation}
+
+\textit{3. คำนวณความน่าจะเป็นในการวัดค่า:}
+\begin{align}
+P(0) &= \left| \frac{\sqrt{3}+1}{2\sqrt{2}} \right|^2 = \frac{4 + 2\sqrt{3}}{8} = \frac{1}{2} + \frac{\sqrt{3}}{4} \approx 0.933 = 93.3\% \\
+P(1) &= \left| \frac{\sqrt{3}-1}{2\sqrt{2}} \right|^2 = \frac{4 - 2\sqrt{3}}{8} = \frac{1}{2} - \frac{\sqrt{3}}{4} \approx 0.067 = 6.7\%
+\end{align}
+ตรวจสอบผลรวมความน่าจะเป็น: $P(0) + P(1) = 0.933 + 0.067 = 1.00$ สมบูรณ์
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+เกตฮาดามาร์ดทำหน้าที่หมุนเวกเตอร์สถานะบนทรงกลมบล็อค โดยเกิดการแทรกสอดเชิงสร้างสรรค์ในแอมพลิจูดของ $\ket{0}$ ทำให้ความน่าจะเป็นเพิ่มขึ้นจากเดิม $75\%$ กลายเป็น $93.3\%$ นี่คือกลไกพื้นฐานที่อัลกอริทึมควอนตัมใช้เพื่อขยายคำตอบที่ถูกต้อง (Quantum Interference Amplification)
+\qedexam
+\end{psctexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{l Z Y}
+\toprule
+\textbf{มโนทัศน์} & \textbf{สัญลักษณ์ / สูตร} & \textbf{ความสำคัญ} \\
+\midrule
+คิวบิต (Qubit) & $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ & หน่วยข้อมูลควอนตัมที่รองรับการซ้อนทับ \\
+ทรงกลมบล็อค & $\ket{\psi} = \cos\frac{\theta}{2}\ket{0} + e^{i\phi}\sin\frac{\theta}{2}\ket{1}$ & การแสดงสถานะ 1 คิวบิตเชิงเรขาคณิตสามมิติ \\
+เกตฮาดามาร์ด & $H = \frac{1}{\sqrt{2}}\begin{pmatrix}1&1\\1&-1\end{pmatrix}$ & สร้างการซ้อนทับเท่ากันและก่อให้เกิดการแทรกสอดควอนตัม \\
+เกต CNOT & $\ket{c, t} \to \ket{c, c \oplus t}$ & เกตสองคิวบิตที่จำเป็นสำหรับการสร้างความพัวพัน \\
+สถานะเบลล์ & $\ket{\Phi^+} = \frac{\ket{00} + \ket{11}}{\sqrt{2}}$ & ความสัมพันธ์ควอนตัมที่ไม่สามารถแยกส่วนได้ \\
+\bottomrule
+\end{tabularx}
+\caption{สรุปพื้นฐานการคำนวณและสารสนเทศเชิงควอนตัม}
+\label{tab:quantum_computing_summary}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item จงคำนวณผลลัพธ์ของ $H \cdot X \cdot H$ และอธิบายความหมายในรูปของเกตเพาลีอื่น
+    \item จงพิสูจน์ว่าสถานะ $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{01} - \ket{10})$ เป็นสถานะพัวพันสมบูรณ์ (Singlet State)
+    \item จงร่างวงจรควอนตัมสำหรับการส่งสถานะทางไกล (Quantum Teleportation) พร้อมอธิบายบทบาทของการส่งข้อมูลคลาสสิก 2 บิต
+\end{enumerate}
