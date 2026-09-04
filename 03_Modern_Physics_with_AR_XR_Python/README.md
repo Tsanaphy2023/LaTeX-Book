@@ -7,17 +7,17 @@
 
 ---
 
-## สารบัญและโครงสร้างตำรา (บทนำ + 6 บทเรียนหลัก)
+## สารบัญและโครงสร้างตำรา (7 บทเรียนหลัก)
 
 | บทที่ | ชื่อบท | ไฟล์ LaTeX |
 | :---: | :--- | :--- |
-| **บทนำ** | สถาปัตยกรรมการจำลองเสมือนจริง AR/XR และการคำนวณด้วย Python | `chapters/ch00_introduction.tex` |
-| 1 | ทฤษฎีสัมพัทธภาพพิเศษ (Special Relativity) | `chapters/ch01_special_relativity.tex` |
-| 2 | กลศาสตร์ควอนตัม (Quantum Mechanics) | `chapters/ch02_quantum_mechanics.tex` |
-| 3 | ฟิสิกส์ของอนุภาค (Particle Physics) | `chapters/ch03_particle_physics.tex` |
-| 4 | ฟิสิกส์นิวเคลียร์และรังสี (Nuclear Physics) [เดิมบทที่ 5] | `chapters/ch04_nuclear_physics.tex` |
-| 5 | การคำนวณเชิงควอนตัมและสารสนเทศควอนตัม (Quantum Computing) [เดิมบทที่ 6] | `chapters/ch05_quantum_computing.tex` |
-| 6 | ดาราศาสตร์ฟิสิกส์และจักรวาลวิทยา (Astrophysics & Cosmology) [เดิมบทที่ 7] | `chapters/ch06_astrophysics.tex` |
+| 1 | บทนำ: สถาปัตยกรรมการจำลองเสมือนจริง AR/XR และการคำนวณด้วย Python | `chapters/ch01_introduction.tex` |
+| 2 | ทฤษฎีสัมพัทธภาพพิเศษ (Special Relativity) | `chapters/ch02_special_relativity.tex` |
+| 3 | กลศาสตร์ควอนตัม (Quantum Mechanics) | `chapters/ch03_quantum_mechanics.tex` |
+| 4 | ฟิสิกส์ของอนุภาค (Particle Physics) | `chapters/ch04_particle_physics.tex` |
+| 5 | ฟิสิกส์นิวเคลียร์และปฏิกิริยานิวเคลียร์ (Nuclear Physics) | `chapters/ch05_nuclear_physics.tex` |
+| 6 | การคำนวณเชิงควอนตัมและสารสนเทศควอนตัม (Quantum Computing) | `chapters/ch06_quantum_computing.tex` |
+| 7 | ดาราศาสตร์ฟิสิกส์และจักรวาลวิทยา (Astrophysics & Cosmology) | `chapters/ch07_astrophysics.tex` |
 
 ---
 
