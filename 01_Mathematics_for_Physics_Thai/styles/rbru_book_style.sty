@@ -16,7 +16,10 @@
 
 % 1.1 Thai Linebreak & Hyphenation for XeLaTeX
 \XeTeXlinebreaklocale "th"
-\XeTeXlinebreakskip = 0pt plus 1pt minus 0.5pt
+\XeTeXlinebreakskip = 0pt plus 2pt minus 0.5pt
+
+% ป้องกัน overfull hbox และ orphan word ในตำราฟิสิกส์คณิตศาสตร์
+\setlength{\emergencystretch}{2.5em}
 
 % 1.2 Thai Academic Terminology (มาตรฐานระเบียบวิชาการ มรภ.รำไพพรรณี)
 \renewcommand{\chaptername}{บทที่}
@@ -31,6 +34,7 @@
 
 % 2. Math & Science Packages (Physics Textbook Architect)
 \RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\allowdisplaybreaks  % อนุญาตให้ equation ยาวข้ามหน้าได้
 \RequirePackage{bm}
 \RequirePackage{siunitx}
 \RequirePackage{physics}
