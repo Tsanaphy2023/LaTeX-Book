@@ -1,0 +1,340 @@
+\chapter{ระบบพิกัดและการแปลงพิกัด}
+\index{ระบบพิกัด (Coordinate system)}
+\index{พิกัดคาร์ทีเซียน (Cartesian coordinates)}
+\index{พิกัดทรงกระบอก (Cylindrical coordinates)}
+\index{พิกัดทรงกลม (Spherical coordinates)}
+\index{ตัวประกอบสเกล (Scale factors)}
+\index{Cartesian coordinates}
+\index{Cylindrical coordinates}
+\index{Spherical coordinates}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item อธิบายความหมาย นิยามเรขาคณิต และความสัมพันธ์ระหว่างระบบพิกัดคาร์ทีเซียน พิกัดทรงกระบอก และพิกัดทรงกลมได้อย่างลึกซึ้ง
+    \item คำนวณตัวประกอบสเกล (Scale Factors) สัมประสิทธิ์เมตริก การกระจัดเชิงอนุพันธ์ พื้นที่ และปริมาตรเชิงอนุพันธ์ในแต่ละระบบพิกัดได้
+    \item แปลงเวกเตอร์บอกตำแหน่ง เวกเตอร์ความเร็ว และเวกเตอร์แรงข้ามระบบพิกัดได้อย่างถูกต้อง
+    \item ประยุกต์ใช้เรขาคณิตพิกัดทรงกลมในการคำนวณตำแหน่งพิกัดภูมิศาสตร์และระบบกำหนดตำแหน่งบนโลกผ่านดาวเทียม (GPS) ได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{บทนำและระบบพิกัดคาร์ทีเซียน}
+ในวิชาฟิสิกส์ การวิเคราะห์การเคลื่อนที่ แรง และสนามทางกายภาพจำเป็นต้องอาศัยกรอบอ้างอิงเฉื่อย (Inertial Reference Frame) และระบบพิกัดที่เหมาะสม การเลือกพิกัดที่สอดคล้องกับสมมาตร (Symmetry) ของระบบจะช่วยลดความซับซ้อนของสมการเชิงอนุพันธ์ลงได้อย่างมหาศาล
+
+ระบบพิกัดคาร์ทีเซียน (Cartesian Coordinate System) หรือพิกัดฉาก $(x, y, z)$ เป็นระบบพิกัดพื้นฐานที่สุด ประกอบด้วยแกน 3 แกนที่ตั้งฉากซึ่งกันและกันตามกฎมือขวา โดยมีเวกเตอร์หนึ่งหน่วยประจำแกนคือ $\hat{i}, \hat{j}, \hat{k}$ ซึ่งมีสมบัติตั้งฉากปรกติ (Orthonormal Property):
+\begin{equation}
+\hat{e}_i \cdot \hat{e}_j = \delta_{ij} = \begin{cases} 1 & \text{เมื่อ } i = j \\ 0 & \text{เมื่อ } i \neq j \end{cases}
+\end{equation}
+
+เวกเตอร์บอกตำแหน่ง (Position Vector) $\vec{r}$ ชี้จากจุดกำเนิด $O(0,0,0)$ ไปยังจุดใด ๆ $P(x, y, z)$:
+\begin{equation}
+\vec{r} = x\hat{i} + y\hat{j} + z\hat{k}
+\end{equation}
+เวกเตอร์การกระจัดเชิงอนุพันธ์ (Differential Displacement):
+\begin{equation}
+d\vec{r} = dx\,\hat{i} + dy\,\hat{j} + dz\,\hat{k}
+\end{equation}
+และกำลังสองของระยะทางเชิงอนุพันธ์ (Line Element Squared):
+\begin{equation}
+ds^2 = |d\vec{r}|^2 = dx^2 + dy^2 + dz^2
+\end{equation}
+ปริมาตรเชิงอนุพันธ์ (Differential Volume Element) ในพิกัดคาร์ทีเซียน:
+\begin{equation}
+dV = dx\,dy\,dz
+\end{equation}
+
+\begin{mathdefinition}[ตัวประกอบสเกลและพิกัดโค้งเชิงตั้งฉาก]
+ในระบบพิกัดโค้งเชิงตั้งฉากใด ๆ $(u_1, u_2, u_3)$ ระยะทางเชิงอนุพันธ์กำหนดโดย:
+\begin{equation}
+ds^2 = h_1^2 du_1^2 + h_2^2 du_2^2 + h_3^2 du_3^2
+\end{equation}
+โดยที่ปริมาณ $h_i = \left|\frac{\partial \vec{r}}{\partial u_i}\right|$ เรียกว่า \textbf{ตัวประกอบสเกล (Scale Factors)} หรือ Lame Coefficients และปริมาตรเชิงอนุพันธ์คือ:
+\begin{equation}
+dV = h_1 h_2 h_3 \, du_1 du_2 du_3
+\end{equation}
+สำหรับพิกัดคาร์ทีเซียน ตัวประกอบสเกลคือ $h_x = h_y = h_z = 1$
+\end{mathdefinition}
+
+\section{ระบบพิกัดทรงกระบอก}
+สำหรับปัญหาที่มีสมมาตรรอบแกน (Axial Symmetry) เช่น สนามแม่เหล็กเหนี่ยวนำรอบเส้นลวดตรงยาว กระแสการไหลของของไหลในท่อทรงกระบอก หรือการหมุนรอบแกนของวัตถุแข็งเกร็ง การใช้พิกัดทรงกระบอก $(\rho, \phi, z)$ ช่วยให้การแก้สมการมีความสะดวกอย่างยิ่ง
+
+พิกัดทรงกระบอกประกอบด้วย:
+\begin{itemize}
+    \item $\rho$ คือ ระยะทางตั้งฉากจากแกน $z$ ถึงจุดสังเกต ($\rho \ge 0$)
+    \item $\phi$ คือ มุมทิศราบ (Azimuthal Angle) วัดจากแกน $+x$ ในระนาบ $xy$ ($0 \le \phi < 2\pi$)
+    \item $z$ คือ ความสูงตามแนวแกนดิ่ง ($-\infty < z < \infty$)
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=1.2, >=Stealth]
+        % Axes
+        \draw[->, thick, color=physGeneric] (0,0,0) -- (4,0,0) node[anchor=north east]{$x$};
+        \draw[->, thick, color=physGeneric] (0,0,0) -- (0,4,0) node[anchor=north west]{$y$};
+        \draw[->, thick, color=physGeneric] (0,0,0) -- (0,0,3.5) node[anchor=south]{$z$};
+        
+        % Point P
+        \coordinate (P) at (2.5, 3, 2.5);
+        \coordinate (Pxy) at (2.5, 3, 0);
+        
+        % Projections
+        \draw[dashed, gray] (P) -- (Pxy);
+        \draw[dashed, gray] (0,0,0) -- (Pxy) node[midway, below]{$\rho$};
+        \draw[dashed, gray] (Pxy) -- (2.5,0,0);
+        \draw[dashed, gray] (Pxy) -- (0,3,0);
+        \draw[dashed, gray] (P) -- (0,0,2.5) node[anchor=east]{$z$};
+        
+        % Vector r
+        \draw[->, ultra thick, color=physVelocity] (0,0,0) -- (P) node[anchor=south west]{$P(\rho, \phi, z)$};
+        
+        % Angle phi
+        \draw[->, thick, color=physDisplace] (1.2,0,0) arc (0:50:1.2);
+        \node[color=physDisplace] at (1.4, 0.45, 0) {$\phi$};
+        
+        % Unit vectors at P
+        \draw[->, line width=1.2pt, color=physForce] (P) -- ++(0.8, 0.96, 0) node[anchor=south west]{$\hat{\rho}$};
+        \draw[->, line width=1.2pt, color=physAccel] (P) -- ++(-0.6, 0.5, 0) node[anchor=south east]{$\hat{\phi}$};
+        \draw[->, line width=1.2pt, color=physGeneric] (P) -- ++(0, 0, 1) node[anchor=west]{$\hat{k}$};
+    \end{tikzpicture}
+    \caption{ระบบพิกัดทรงกระบอก $(\rho, \phi, z)$ และเวกเตอร์ฐานหนึ่งหน่วย}
+    \label{fig:cylindrical_coords_detailed}
+\end{figure}
+
+สมการแปลงพิกัดระหว่างคาร์ทีเซียนและทรงกระบอก:
+\begin{align}
+x &= \rho \cos\phi \\
+y &= \rho \sin\phi \\
+z &= z
+\end{align}
+ในทางกลับกัน:
+\begin{equation}
+\rho = \sqrt{x^2 + y^2}, \quad \phi = \arctan\left(\frac{y}{x}\right), \quad z = z
+\end{equation}
+
+เวกเตอร์หนึ่งหน่วยในพิกัดทรงกระบอกสัมพันธ์กับพิกัดคาร์ทีเซียนดังนี้:
+\begin{align}
+\hat{\rho} &= \cos\phi\,\hat{i} + \sin\phi\,\hat{j} \\
+\hat{\phi} &= -\sin\phi\,\hat{i} + \cos\phi\,\hat{j} \\
+\hat{k} &= \hat{k}
+\end{align}
+ตัวประกอบสเกลคำนวณได้เป็น:
+\begin{equation}
+h_\rho = 1, \quad h_\phi = \rho, \quad h_z = 1
+\end{equation}
+ระยะทางเชิงอนุพันธ์และปริมาตรเชิงอนุพันธ์ในพิกัดทรงกระบอก:
+\begin{align}
+ds^2 &= d\rho^2 + \rho^2 d\phi^2 + dz^2 \\
+dV &= \rho \, d\rho \, d\phi \, dz
+\end{align}
+
+\section{ระบบพิกัดทรงกลมและการประยุกต์ในเทคโนโลยี GPS}
+ปัญหาทางฟิสิกส์ที่มีสมมาตรเชิงทรงกลม (Spherical Symmetry) เช่น แรงดึงดูดระหว่างมวลของนิวตัน แรงทางไฟฟ้าสถิตของคูลอมบ์ อะตอมไฮโดรเจน หรือการแผ่คลื่นแม่เหล็กไฟฟ้าจากสายอากาศรอบทิศทาง ล้วนอธิบายได้กระชับที่สุดในพิกัดทรงกลม $(r, \theta, \phi)$
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=1.3, >=Stealth]
+        % Axes
+        \draw[->, thick, color=physGeneric] (0,0,0) -- (4,0,0) node[anchor=north east]{$x$};
+        \draw[->, thick, color=physGeneric] (0,0,0) -- (0,4,0) node[anchor=north west]{$y$};
+        \draw[->, thick, color=physGeneric] (0,0,0) -- (0,0,3.8) node[anchor=south]{$z$};
+        
+        % Coordinates
+        \coordinate (P) at (2.2, 2.5, 2.8);
+        \coordinate (Pxy) at (2.2, 2.5, 0);
+        
+        % Projections
+        \draw[dashed, gray] (P) -- (Pxy);
+        \draw[dashed, gray] (0,0,0) -- (Pxy);
+        \draw[dashed, gray] (Pxy) -- (2.2,0,0);
+        \draw[dashed, gray] (Pxy) -- (0,2.5,0);
+        
+        % Vector r
+        \draw[->, ultra thick, color=physVelocity] (0,0,0) -- (P) node[anchor=south west]{$P(r, \theta, \phi)$};
+        \node[color=physVelocity, midway, above left] at (1.1, 1.25, 1.4) {$r$};
+        
+        % Angles
+        \draw[->, thick, color=physForce] (0,0,1.5) arc (90:48:1.5);
+        \node[color=physForce] at (0.3, 0.4, 1.8) {$\theta$};
+        
+        \draw[->, thick, color=physDisplace] (1.2,0,0) arc (0:48:1.2);
+        \node[color=physDisplace] at (1.4, 0.4, 0) {$\phi$};
+        
+        % Sphere sketch
+        \draw[color=gray!40, dashed] (3,0,0) arc (0:90:3 and 3);
+    \end{tikzpicture}
+    \caption{ระบบพิกัดทรงกลม $(r, \theta, \phi)$ แสดงมุมเชิงขั้ว $\theta$ และมุมทิศราบ $\phi$}
+    \label{fig:spherical_coords_detailed}
+\end{figure}
+
+ความสัมพันธ์กับพิกัดคาร์ทีเซียน:
+\begin{align}
+x &= r \sin\theta \cos\phi \\
+y &= r \sin\theta \sin\phi \\
+z &= r \cos\theta
+\end{align}
+โดยที่ $r \ge 0$, $0 \le \theta \le \pi$, และ $0 \le \phi < 2\pi$
+ตัวประกอบสเกลในพิกัดทรงกลม:
+\begin{equation}
+h_r = 1, \quad h_\theta = r, \quad h_\phi = r\sin\theta
+\end{equation}
+ทำให้ได้องค์ประกอบระยะทางเชิงอนุพันธ์และปริมาตรเชิงอนุพันธ์:
+\begin{align}
+ds^2 &= dr^2 + r^2 d\theta^2 + r^2 \sin^2\theta \, d\phi^2 \\
+dV &= r^2 \sin\theta \, dr \, d\theta \, d\phi
+\end{align}
+
+\begin{table}[htbp]
+    \centering
+    \caption{ความสัมพันธ์และสูตรการแปลงพิกัดระหว่างระบบพิกัดคาร์ทีเซียน ทรงกระบอก และทรงกลม}
+    \label{tab:coord_transforms}
+    \begin{tabularx}{\textwidth}{p{3.2cm}YY}
+        \toprule
+        \textbf{ระบบพิกัดเป้าหมาย} & \textbf{สูตรการแปลงจากพิกัดคาร์ทีเซียน} & \textbf{สูตรการแปลงกลับสู่พิกัดคาร์ทีเซียน} \\
+        \midrule
+        \textbf{พิกัดทรงกระบอก} & $\rho = \sqrt{x^2 + y^2}$ & $x = \rho \cos\phi$ \\
+        $(\rho, \phi, z)$ & $\phi = \arctan(y/x)$ & $y = \rho \sin\phi$ \\
+        & $z = z$ & $z = z$ \\
+        \midrule
+        \textbf{พิกัดทรงกลม} & $r = \sqrt{x^2 + y^2 + z^2}$ & $x = r \sin\theta \cos\phi$ \\
+        $(r, \theta, \phi)$ & $\theta = \arccos(z / \sqrt{x^2 + y^2 + z^2})$ & $y = r \sin\theta \sin\phi$ \\
+        & $\phi = \arctan(y/x)$ & $z = r \cos\theta$ \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{การประยุกต์ใช้ในชีวิตประจำวัน: ระบบพิกัดภูมิศาสตร์และดาวเทียม GPS}
+ระบบพิกัดบนพื้นผิวโลกที่มนุษย์ใช้งานในชีวิตประจำวัน (ผ่าน Google Maps หรือนาฬิกา Smartwatch) อาศัยระบบพิกัดทรงกลมดัดแปลง:
+\begin{itemize}
+    \item \textbf{ละติจูด (Latitude, $\lambda$):} วัดจากระนาบศูนย์สูตรขึ้นเหนือ ($+$) หรือลงใต้ ($-$) โดยสัมพันธ์กับมุมเชิงขั้ว $\theta$ ตามสมการ:
+    \begin{equation}
+    \theta = 90^\circ - \lambda = \frac{\pi}{2} - \lambda
+    \end{equation}
+    \item \textbf{ลองจิจูด (Longitude, $\Phi$):} วัดจากเส้นเมริเดียนปฐม (กรีนิช) ไปทางทิศตะวันออก ($0^\circ$ ถึง $360^\circ$ หรือ $-180^\circ$ ถึง $+180^\circ$) ซึ่งตรงกับมุมทิศราบ $\phi$ โดยตรง
+\end{itemize}
+
+ระบบนำทางด้วยดาวเทียม GPS (Global Positioning System) ทำงานโดยการรับสัญญาณเวลาจากดาวเทียมอย่างน้อย 4 ดวงเพื่อระบุตำแหน่งของผู้ใช้ในระบบพิกัดคาร์ทีเซียนยึดตามโลก (Earth-Centered, Earth-Fixed: ECEF) แล้วแปลงกลับมาเป็น ละติจูด, ลองจิจูด และระดับความสูง (WGS84 Ellipsoid)
+
+\begin{mathexample}[การคำนวณระยะทางวงกลมใหญ่ระหว่างสองเมืองบนโลก (Great Circle Distance)]
+\textbf{โจทย์:} จงหาระยะทางที่สั้นที่สุดตามแนวผิวโลก (Great Circle Distance) ระหว่างกรุงเทพมหานคร (ละติจูด $13.75^\circ\,\text{N}$, ลองจิจูด $100.50^\circ\,\text{E}$) กับกรุงลอนดอน (ละติจูด $51.50^\circ\,\text{N}$, ลองจิจูด $0.12^\circ\,\text{W}$) กำหนดรัศมีเฉลี่ยของโลก $R = 6,371\,\si{km}$
+
+\vspace{0.2cm}
+\textbf{PICTURE (การจำลองแบบกายภาพ):}
+กำหนดจุดศูนย์กลางโลกอยู่ที่จุดกำเนิด เมืองทั้งสองอยู่บนผิวทรงกลมรัศมี $R$ มีเวกเตอร์ตำแหน่งหนึ่งหน่วย $\hat{n}_1$ และ $\hat{n}_2$ มุมระหว่างเวกเตอร์ทั้งสอง $\Delta\sigma$ จะเป็นตัวกำหนดระยะทางบนผิวโค้งตามสูตร $d = R \Delta\sigma$
+
+\vspace{0.2cm}
+\textbf{SOLVE (การคำนวณเชิงสัญลักษณ์และตัวเลข):}
+1. แปลงละติจูดเป็นมุมเชิงขั้ว $\theta$:
+\begin{align}
+\theta_1 &= 90^\circ - 13.75^\circ = 76.25^\circ, \quad \phi_1 = 100.50^\circ \\
+\theta_2 &= 90^\circ - 51.50^\circ = 38.50^\circ, \quad \phi_2 = -0.12^\circ
+\end{align}
+2. เวกเตอร์หนึ่งหน่วยระบุตำแหน่งของแต่ละเมืองในพิกัดคาร์ทีเซียน:
+\begin{equation}
+\hat{n} = \sin\theta\cos\phi\,\hat{i} + \sin\theta\sin\phi\,\hat{j} + \cos\theta\,\hat{k}
+\end{equation}
+3. หามุมระหว่างเวกเตอร์จากผลคูณจุด $\hat{n}_1 \cdot \hat{n}_2 = \cos(\Delta\sigma)$:
+\begin{equation}
+\cos(\Delta\sigma) = \cos\theta_1\cos\theta_2 + \sin\theta_1\sin\theta_2\cos(\phi_1 - \phi_2)
+\end{equation}
+แทนค่าเชิงตัวเลข:
+\begin{align}
+\cos(\Delta\sigma) &= \cos(76.25^\circ)\cos(38.50^\circ) + \sin(76.25^\circ)\sin(38.50^\circ)\cos(100.62^\circ) \\
+&= (0.2377)(0.7826) + (0.9713)(0.6225)(-0.1843) \\
+&= 0.1860 - 0.1114 = 0.0746 \\
+\Delta\sigma &= \arccos(0.0746) \approx 1.496\,\si{rad} \quad (85.72^\circ)
+\end{align}
+4. คำนวณระยะทางจริงบนผิวโลก:
+\begin{equation}
+d = R \Delta\sigma = (6,371\,\si{km}) \times (1.496\,\si{rad}) \approx 9,531\,\si{km}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK (การตรวจสอบความสมเหตุสมผล):}
+ระยะทางเส้นทางบินตรงกรุงเทพฯ-ลอนดอน ในความเป็นจริงอยู่ที่ประมาณ $9,530 - 9,550\,\si{km}$ ผลการคำนวณด้วยเรขาคณิตพิกัดทรงกลมมีความแม่นยำสูงมาก\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  คำนวณระยะทางวงกลมใหญ่บนทรงกลมโลก]
+import numpy as np
+
+R_earth = 6371.0  # รัศมีเฉลี่ยของโลก (km)
+# พิกัดละติจูด-ลองจิจูด: กรุงเทพฯ (13.75N, 100.50E), ลอนดอน (51.50N, 0.12W)
+lat1, lon1 = 13.75, 100.50
+lat2, lon2 = 51.50, -0.12
+
+# แปลงเป็นมุมเชิงขั้ว theta (Colatitude) และมุมทิศราบ phi (Azimuth) ในหน่วยเรเดียน
+th1, ph1 = np.radians(90.0 - lat1), np.radians(lon1)
+th2, ph2 = np.radians(90.0 - lat2), np.radians(lon2)
+
+# คำนวณมุมรองรับส่วนโค้ง delta_sigma จากผลคูณจุดเวกเตอร์หนึ่งหน่วย
+cos_sigma = np.cos(th1)*np.cos(th2) + np.sin(th1)*np.sin(th2)*np.cos(ph1 - ph2)
+delta_sigma = np.arccos(cos_sigma)
+dist_km = R_earth * delta_sigma
+
+print(f"มุมรองรับจุดศูนย์กลาง: {np.degrees(delta_sigma):.2f} องศา")
+print(f"ระยะทางวงกลมใหญ่ (Great-Circle Distance): {dist_km:.2f} กิโลเมตร")
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การคำนวณโมเมนต์ความเฉื่อยของทรงกระบอกตันหมุนรอบแกน]
+\textbf{โจทย์:} ทรงกระบอกตันมวล $M$ รัศมี $R$ ความยาว $L$ มีความหนาแน่นสม่ำเสมอ จงหาโมเมนต์ความเฉื่อยรอบแกนสมมาตร $z$
+
+\vspace{0.2cm}
+\textbf{SOLVE:} ในพิกัดทรงกระบอก ระยะห่างจากแกนหมุนคือ $\rho$ ปริมาตรเชิงอนุพันธ์คือ $dV = \rho\,d\rho\,d\phi\,dz$ และความหนาแน่นเชิงปริมาตร $\sigma = M/(\pi R^2 L)$:
+\begin{align}
+I_z &= \iiint \rho^2 dm = \sigma \int_{-L/2}^{L/2} dz \int_{0}^{2\pi} d\phi \int_{0}^{R} \rho^3 \, d\rho \\
+&= \sigma \cdot [z]_{-L/2}^{L/2} \cdot [\phi]_0^{2\pi} \cdot \left[\frac{\rho^4}{4}\right]_0^R = \sigma \cdot L \cdot 2\pi \cdot \frac{R^4}{4} \\
+&= \left(\frac{M}{\pi R^2 L}\right) \cdot \left(\frac{\pi L R^4}{2}\right) = \frac{1}{2} M R^2
+\end{align}
+
+\vspace{0.2cm}
+\textbf{CHECK:} หน่วยของโมเมนต์ความเฉื่อยคือ $[M R^2] = \si{kg.m^2}$ สอดคล้องกับค่ามาตรฐานในตารางกลศาสตร์ของแข็ง\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  อินทิเกรตเชิงตัวเลขโมเมนต์ความเฉื่อยพิกัดทรงกระบอก]
+import numpy as np
+from scipy.integrate import tplquad
+
+M, R, L = 5.0, 0.4, 1.2  # มวล (kg), รัศมี (m), ความยาว (m)
+density = M / (np.pi * R**2 * L)
+
+# ปริพันธ์สามชั้น: \int dz \int dphi \int (rho_density * rho^3) drho
+num_I, _ = tplquad(
+    lambda rho, phi, z: density * (rho**3),
+    -L/2, L/2, 0, 2*np.pi, 0, R
+)
+exact_I = 0.5 * M * R**2
+print(f"ผลเชิงตัวเลข (Numerical):  {num_I:.5f} kg*m^2")
+print(f"ผลแม่นตรง (Analytical):  {exact_I:.5f} kg*m^2")
+\end{pythonbox}
+\end{mathexample}
+
+\section{บทสรุปประจำบท}
+\begin{table}[htbp]
+    \centering
+    \caption{ตารางสรุปเปรียบเทียบคุณลักษณะของระบบพิกัดเชิงตั้งฉากทั้ง 3 ระบบ}
+    \label{tab:coords_master_summary}
+    \begin{tabularx}{\textwidth}{p{3.2cm}YYY}
+        \toprule
+        \textbf{คุณลักษณะ} & \textbf{คาร์ทีเซียน} & \textbf{ทรงกระบอก} & \textbf{ทรงกลม} \\
+        \midrule
+        พิกัดตำแหน่ง & $(x, y, z)$ & $(\rho, \phi, z)$ & $(r, \theta, \phi)$ \\
+        ขอบเขตตัวแปร & $-\infty < x,y,z < \infty$ & $\rho \ge 0, \phi \in [0, 2\pi)$ & $r \ge 0, \theta \in [0, \pi], \phi \in [0, 2\pi)$ \\
+        ตัวประกอบสเกล $(h_1, h_2, h_3)$ & $(1, 1, 1)$ & $(1, \rho, 1)$ & $(1, r, r\sin\theta)$ \\
+        ระยะทางเชิงอนุพันธ์ $ds^2$ & $dx^2 + dy^2 + dz^2$ & $d\rho^2 + \rho^2 d\phi^2 + dz^2$ & $dr^2 + r^2 d\theta^2 + r^2\sin^2\theta d\phi^2$ \\
+        ปริมาตรเชิงอนุพันธ์ $dV$ & $dx\,dy\,dz$ & $\rho\,d\rho\,d\phi\,dz$ & $r^2\sin\theta\,dr\,d\theta\,d\phi$ \\
+        สมมาตรที่เหมาะสม & ระนาบ กล่อง ลูกบาศก์ & ทรงกระบอก เส้นลวด ท่อ & ทรงกลม จุดประจุ ดาราศาสตร์ \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\subsection{คำถามเชิงแนวคิด (Conceptual Questions)}
+\begin{enumerate}
+    \item เหตุใดเวกเตอร์หนึ่งหน่วย $\hat{\rho}$ และ $\hat{\phi}$ ในพิกัดทรงกระบอก จึงไม่เป็นเวกเตอร์คงที่เมื่อเทียบกับเวลาและตำแหน่ง ต่างจาก $\hat{i}, \hat{j}$ ในพิกัดคาร์ทีเซียน
+    \item ในระบบนำทาง GPS หากโลกเป็นทรงรี (Oblate Spheroid) ที่แป้นตรงขั้ว จะส่งผลกระทบต่อการแปลงพิกัดอย่างไรเมื่อเทียบกับแบบจำลองทรงกลมสมบูรณ์
+\end{enumerate}
+
+\subsection{โจทย์การคำนวณเชิงวิเคราะห์ (Analytical Problems)}
+\begin{enumerate}
+    \item จงแปลงเวกเตอร์บอกตำแหน่ง $\vec{r} = 3\hat{i} - 4\hat{j} + 12\hat{k}$ ให้อยู่ในรูปพิกัดทรงกระบอก $(\rho, \phi, z)$ และพิกัดทรงกลม $(r, \theta, \phi)$
+    \item จงคำนวณหาปริมาตรของรูปทรงกรวยตัน (Cone) ที่มีความสูง $H$ และรัศมีฐาน $R$ โดยการอินทิเกรตในระบบพิกัดทรงกระบอก
+    \item กำหนดความหนาแน่นประจุของก้อนเมฆรูปทรงกลมรัศมี $R$ มีค่าแปรผันตามระยะทาง $\rho_e(r) = \rho_0 (1 - r^2/R^2)$ จงคำนวณประจุไฟฟ้าสุทธิทั้งหมด $Q_{\text{total}}$ ภายในก้อนเมฆ
+\end{enumerate}

@@ -1,0 +1,306 @@
+\chapter{เวกเตอร์และการวิเคราะห์เวกเตอร์}
+\index{เวกเตอร์ (Vector)}
+\index{พีชคณิตเวกเตอร์ (Vector algebra)}
+\index{ผลคูณจุด (Dot product)}
+\index{ผลคูณไขว้ (Cross product)}
+\index{ผลคูณเชิงสเกลาร์สามชั้น (Scalar triple product)}
+\index{เกรเดียนต์ (Gradient)}
+\index{ไดเวอร์เจนซ์ (Divergence)}
+\index{เคิร์ล (Curl)}
+\index{แรงลอเรนซ์ (Lorentz force)}
+\index{สนามอนุรักษ์ (Conservative field)}
+\index{Vector}
+\index{Dot product}
+\index{Cross product}
+\index{Gradient}
+\index{Divergence}
+\index{Curl}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item ดำเนินการทางพีชคณิตเวกเตอร์ขั้นสูง รวมถึงผลคูณเชิงสเกลาร์สามชั้นและผลคูณเชิงเวกเตอร์สามชั้นได้อย่างถูกต้อง
+    \item อธิบายความหมายทางกายภาพของเกรเดียนต์ ไดเวอร์เจนซ์ และเคิร์ล ในรูปของอัตราการเปลี่ยนแปลง ฟลักซ์ และสภาพการหมุนวนได้
+    \item ประยุกต์ใช้เอกลักษณ์เวกเตอร์เพื่อจัดรูปและแก้สมการทางแม่เหล็กไฟฟ้าและกลศาสตร์ได้
+    \item อธิบายหลักการทำงานของเซนเซอร์วัดความเร่งและเข็มทิศดิจิทัลในสมาร์ตโฟน (IMU) และแรงลอเรนซ์ในเครื่องเร่งอนุภาคได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{พีชคณิตเวกเตอร์และผลคูณหลายชั้น}
+ปริมาณทางฟิสิกส์ส่วนใหญ่จัดเป็นปริมาณเวกเตอร์ เช่น การกระจัด ความเร็ว ความเร่ง แรง โมเมนตัม สนามไฟฟ้า และสนามแม่เหล็ก การเข้าใจการดำเนินการคูณเวกเตอร์หลายชั้นจึงเป็นหัวใจสำคัญของการศึกษากลศาสตร์และแม่เหล็กไฟฟ้า
+
+\subsection{ผลคูณจุดและผลคูณไขว้}
+กำหนดเวกเตอร์ $\vec{A} = A_x\hat{i} + A_y\hat{j} + A_z\hat{k}$ และ $\vec{B} = B_x\hat{i} + B_y\hat{j} + B_z\hat{k}$:
+\begin{align}
+\vec{A} \cdot \vec{B} &= |\vec{A}||\vec{B}|\cos\theta = A_x B_x + A_y B_y + A_z B_z \\
+\vec{A} \times \vec{B} &= |\vec{A}||\vec{B}|\sin\theta \,\hat{n} = \begin{vmatrix}
+\hat{i} & \hat{j} & \hat{k} \\
+A_x & A_y & A_z \\
+B_x & B_y & B_z
+\end{vmatrix}
+\end{align}
+
+\subsection{ผลคูณเชิงสเกลาร์สามชั้น (Scalar Triple Product)}
+ผลคูณ $\vec{A} \cdot (\vec{B} \times \vec{C})$ มีความหมายทางเรขาคณิตคือ \textbf{ปริมาตรของรูปทรงสี่เหลี่ยมด้านขนาน (Parallelepiped)} ที่มีด้านทั้งสามสร้างขึ้นโดยเวกเตอร์ $\vec{A}, \vec{B}, \vec{C}$:
+\begin{equation}
+\vec{A} \cdot (\vec{B} \times \vec{C}) = \begin{vmatrix}
+A_x & A_y & A_z \\
+B_x & B_y & B_z \\
+C_x & C_y & C_z
+\end{vmatrix}
+\end{equation}
+สมบัติการสลับหมุนเวียน (Cyclic Permutation):
+\begin{equation}
+\vec{A} \cdot (\vec{B} \times \vec{C}) = \vec{B} \cdot (\vec{C} \times \vec{A}) = \vec{C} \cdot (\vec{A} \times \vec{B})
+\end{equation}
+
+\subsection{ผลคูณเชิงเวกเตอร์สามชั้นและกฎ BAC-CAB}
+ผลคูณ $\vec{A} \times (\vec{B} \times \vec{C})$ ให้ผลลัพธ์เป็นเวกเตอร์ที่อยู่ในระนาบของ $\vec{B}$ และ $\vec{C}$ เสมอ สอดคล้องกับเอกลักษณ์:
+\begin{equation}
+\vec{A} \times (\vec{B} \times \vec{C}) = \vec{B}(\vec{A} \cdot \vec{C}) - \vec{C}(\vec{A} \cdot \vec{B})
+\end{equation}
+เอกลักษณ์นี้มีบทบาทอย่างยิ่งในการพิสูจน์การเคลื่อนที่ของอนุภาคประจุในสนามแม่เหล็กและการกระจายตัวของคลื่นแม่เหล็กไฟฟ้า
+
+\begin{table}[htbp]
+    \centering
+    \caption{การดำเนินการคูณเวกเตอร์ ความหมายเชิงเรขาคณิต และการประยุกต์ใช้ในฟิสิกส์}
+    \label{tab:vector_products}
+    \begin{tabularx}{\textwidth}{p{3.8cm}p{4.2cm}Y}
+        \toprule
+        \textbf{การดำเนินการ} & \textbf{ความหมายเชิงเรขาคณิต} & \textbf{ตัวอย่างการประยุกต์ในฟิสิกส์} \\
+        \midrule
+        $\vec{A} \cdot \vec{B}$ (Dot Product) & การฉายเวกเตอร์ / วัดความขนาน & งาน $W = \int \vec{F} \cdot d\vec{r}$, ฟลักซ์ $\Phi = \vec{E} \cdot \vec{A}$ \\
+        $\vec{A} \times \vec{B}$ (Cross Product) & พื้นที่สี่เหลี่ยมด้านขนาน / เวกเตอร์ตั้งฉาก & ทอร์ก $\vec{\tau} = \vec{r} \times \vec{F}$, แรงลอเรนซ์ $\vec{F}_B = q(\vec{v} \times \vec{B})$ \\
+        $\vec{A} \cdot (\vec{B} \times \vec{C})$ & ปริมาตรทรงสี่เหลี่ยมด้านขนาน & การเลี้ยวเบนของผลึก (Reciprocal Lattice) \\
+        $\vec{A} \times (\vec{B} \times \vec{C})$ & เวกเตอร์บนระนาบ $(\vec{B}, \vec{C})$ (BAC-CAB) & เวกเตอร์พอยน์ติง $\vec{S} = \frac{1}{\mu_0}(\vec{E} \times \vec{B})$ \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=1.2, >=Stealth]
+        % Magnetic Field (pointing into page or along z)
+        \draw[->, ultra thick, color=physGeneric] (0,0) -- (0,3.5) node[anchor=south]{$\vec{B}$ (สนามแม่เหล็ก)};
+        
+        % Velocity vector
+        \draw[->, ultra thick, color=physVelocity] (0,0) -- (3,0) node[anchor=west]{$\vec{v}$ (ความเร็วประจุ)};
+        
+        % Lorentz Force vector (out of page / 3D perpendicular)
+        \draw[->, ultra thick, color=physForce] (0,0) -- (2.2, 1.8) node[anchor=south west]{$\vec{F}_B = q(\vec{v} \times \vec{B})$ (แรงลอเรนซ์)};
+        
+        % Charge particle
+        \filldraw[color=rbruGold, fill=rbruGold!30] (0,0) circle (0.2) node[color=black]{\textbf{+q}};
+        
+        % Right angle indicators
+        \draw[dashed, gray] (0.5,0) -- (0.5,0.5) -- (0,0.5);
+    \end{tikzpicture}
+    \caption{ทิศทางของแรงแม่เหล็กลอเรนซ์ตามกฎผลคูณไขว้และกฎมือขวา}
+    \label{fig:lorentz_force_diagram}
+\end{figure}
+
+\section{ตัวดำเนินการเชิงอนุพันธ์เวกเตอร์}
+ตัวดำเนินการแนบลา $\nabla$ (Del Operator) เป็นตัวดำเนินการอนุพันธ์เวกเตอร์เชิงเส้น ในพิกัดคาร์ทีเซียน:
+\begin{equation}
+\nabla \equiv \hat{i}\frac{\partial}{\partial x} + \hat{j}\frac{\partial}{\partial y} + \hat{k}\frac{\partial}{\partial z}
+\end{equation}
+
+\subsection{เกรเดียนต์ (Gradient)}
+เมื่อ $\nabla$ กระทำกับสนามสเกลาร์ $\psi(x,y,z)$ จะได้สนามเวกเตอร์:
+\begin{equation}
+\nabla \psi = \frac{\partial \psi}{\partial x}\hat{i} + \frac{\partial \psi}{\partial y}\hat{j} + \frac{\partial \psi}{\partial z}\hat{k}
+\end{equation}
+\textbf{ความหมายทางกายภาพ:} เวกเตอร์เกรเดียนต์จะชี้ไปในทิศทางที่ค่าของ $\psi$ มีอัตราการเพิ่มขึ้นเร็วที่สุด และขนาดของมัน $|\nabla \psi|$ แสดงถึงอัตราการเปลี่ยนแปลงสูงสุดต่อหน่วยระยะทาง ตัวอย่างเช่น แรงในสนามอนุรักษ์ $\vec{F} = -\nabla U$ โดยที่แรงจะชี้ไปยังทิศทางที่พลังงานศักย์ลดลงเร็วที่สุด
+
+\subsection{ไดเวอร์เจนซ์ (Divergence)}
+เมื่อ $\nabla$ ดอทกับสนามเวกเตอร์ $\vec{A}$:
+\begin{equation}
+\nabla \cdot \vec{A} = \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z}
+\end{equation}
+\textbf{ความหมายทางกายภาพ:} ไดเวอร์เจนซ์วัดอัตราการไหลออกสุทธิของสนามต่อหนึ่งหน่วยปริมาตร:
+\begin{itemize}
+    \item $\nabla \cdot \vec{A} > 0$: จุดนั้นเป็น \textbf{แหล่งกำเนิด (Source)} เช่น ประจุบวกในสนามไฟฟ้า
+    \item $\nabla \cdot \vec{A} < 0$: จุดนั้นเป็น \textbf{หลุมดูด (Sink)} เช่น ประจุลบในสนามไฟฟ้า
+    \item $\nabla \cdot \vec{A} = 0$: สนามมีสภาพ \textbf{โซลีนอยดัล (Solenoidal)} ไม่มีการสะสม เช่น สนามแม่เหล็ก $\nabla \cdot \vec{B} = 0$ (ไม่มีขั้วแม่เหล็กเดี่ยว)
+\end{itemize}
+
+\subsection{เคิร์ล (Curl)}
+เมื่อ $\nabla$ ครอสกับสนามเวกเตอร์ $\vec{A}$:
+\begin{equation}
+\nabla \times \vec{A} = \begin{vmatrix}
+\hat{i} & \hat{j} & \hat{k} \\
+\frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+A_x & A_y & A_z
+\end{vmatrix}
+\end{equation}
+\textbf{ความหมายทางกายภาพ:} เคิร์ลวัดแนวโน้มในการหมุนวน (Circulation / Vorticity) ของสนามรอบจุดหนึ่ง ๆ หากสนามเวกเตอร์ใดมี $\nabla \times \vec{A} = \vec{0}$ เรียกว่า \textbf{สนามไร้การหมุน (Irrotational)} หรือสนามอนุรักษ์
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=1.1]
+        % Divergence positive (source)
+        \begin{scope}[shift={(0,0)}]
+            \draw[thick, fill=gray!10] (0,0) circle (1.5);
+            \filldraw[color=physForce] (0,0) circle (0.1);
+            \foreach \angle in {0, 45, 90, 135, 180, 225, 270, 315} {
+                \draw[->, thick, color=physForce] (\angle:0.3) -- (\angle:1.3);
+            }
+            \node at (0, -1.8) {(ก) ไดเวอร์เจนซ์บวก ($\nabla \cdot \vec{A} > 0$)};
+        \end{scope}
+        
+        % Curl non-zero (vorticity)
+        \begin{scope}[shift={(5,0)}]
+            \draw[thick, fill=gray!10] (0,0) circle (1.5);
+            \draw[->, thick, color=physVelocity] (1,0) arc (0:80:1);
+            \draw[->, thick, color=physVelocity] (0,1) arc (90:170:1);
+            \draw[->, thick, color=physVelocity] (-1,0) arc (180:260:1);
+            \draw[->, thick, color=physVelocity] (0,-1) arc (270:350:1);
+            \draw[->, thick, color=physVelocity] (1.4,0) arc (0:80:1.4);
+            \draw[->, thick, color=physVelocity] (0,1.4) arc (90:170:1.4);
+            \node at (0, -1.8) {(ข) เคิร์ลไม่เป็นศูนย์ ($\nabla \times \vec{A} \neq \vec{0}$)};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{การแสดงภาพเชิงกายภาพของไดเวอร์เจนซ์ (แหล่งกำเนิด) และเคิร์ล (การหมุนวน)}
+    \label{fig:div_curl_visualization}
+\end{figure}
+
+\section{การประยุกต์ใช้ในวิทยาศาสตร์และชีวิตประจำวัน}
+\subsection{เซนเซอร์วัดความเร่งและเข็มทิศดิจิทัลในสมาร์ตโฟน (IMU)}
+สมาร์ตโฟนในยุคปัจจุบันบรรจุหน่วยวัดความเฉื่อย (Inertial Measurement Unit: IMU) ซึ่งประกอบด้วยเซนเซอร์ความเร่ง 3 แกน (Accelerometer) และเซนเซอร์สนามแม่เหล็ก 3 แกน (Magnetometer):
+\begin{equation}
+\vec{a}_{\text{measured}} = a_x \hat{i} + a_y \hat{j} + a_z \hat{k}, \quad \vec{B}_{\text{earth}} = B_x \hat{i} + B_y \hat{j} + B_z \hat{k}
+\end{equation}
+ระบบปฏิบัติการใช้ผลคูณไขว้ $\vec{a} \times \vec{B}$ เพื่อสร้างเวกเตอร์ชี้ไปทางทิศตะวันออก จากนั้นใช้ผลคูณไขว้ซ้ำอีกครั้งเพื่อสร้างเวกเตอร์ชี้ทิศเหนือทางภูมิศาสตร์ ทำให้หน้าจอสมาร์ตโฟนสามารถปรับทิศทางของแผนที่และการแสดงผลได้อย่างแม่นยำ
+
+\begin{mathexample}[การคำนวณการเคลื่อนที่ของอิเล็กตรอนในสนามแม่เหล็กสม่ำเสมอ]
+\textbf{โจทย์:} อิเล็กตรอนประจุ $q = -e$ มวล $m$ ถูกยิงด้วยความเร็ว $\vec{v} = v_0 \hat{i}$ เข้าไปในบริเวณที่มีสนามแม่เหล็กสม่ำเสมอ $\vec{B} = B_0 \hat{k}$ จงหาสมการการเคลื่อนที่ รัศมีความโค้ง และคาบการโคจร (Cyclotron Period)
+
+\vspace{0.2cm}
+\textbf{PICTURE:} ความเร็วอยู่ในระนาบ $xy$ ส่วนสนามแม่เหล็กชี้ตามแกน $+z$ แรงลอเรนซ์ $\vec{F} = q(\vec{v} \times \vec{B})$ จะตั้งฉากกับความเร็วตลอดเวลา ทำให้อนุภาคเคลื่อนที่เป็นวงกลมในระนาบ $xy$
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. คำนวณแรงแม่เหล็ก:
+\begin{equation}
+\vec{F}_B = -e (v_x \hat{i} + v_y \hat{j}) \times (B_0 \hat{k}) = -e \left(-v_x B_0 \hat{j} + v_y B_0 \hat{i}\right) = -e B_0 v_y \hat{i} + e B_0 v_x \hat{j}
+\end{equation}
+2. ใช้กฎข้อที่สองของนิวตัน $m\frac{d\vec{v}}{dt} = \vec{F}_B$:
+\begin{align}
+m\frac{dv_x}{dt} &= -e B_0 v_y \\
+m\frac{dv_y}{dt} &= e B_0 v_x
+\end{align}
+3. นิยามความถี่ไซโคลตรอน $\omega_c = \frac{e B_0}{m}$ จะได้สมการตัวแกว่งกวัดฮาร์มอนิก:
+\begin{equation}
+\frac{d^2 v_x}{dt^2} + \omega_c^2 v_x = 0
+\end{equation}
+4. แรงแม่เหล็กทำหน้าที่เป็นแรงสู่ศูนย์กลาง $F_c = \frac{m v^2}{R} = e v B_0$:
+\begin{equation}
+R = \frac{m v}{e B_0}
+\end{equation}
+และคาบการโคจรคือ:
+\begin{equation}
+T = \frac{2\pi R}{v} = \frac{2\pi m}{e B_0}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} คาบการโคจร $T$ ไม่ขึ้นกับความเร็ว $v$ หรือรัศมี $R$ ซึ่งเป็นหลักการทำงานสำคัญของเครื่องเร่งอนุภาคไซโคลตรอน (Cyclotron Accelerator)\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  หาผลเฉลยวิติการเคลื่อนที่ของอนุภาคประจุในสนามแม่เหล็ก]
+import numpy as np
+from scipy.integrate import solve_ivp
+
+q, m, B0 = 1.6e-19, 9.11e-31, 0.05  # อิเล็กตรอนในสนามแม่เหล็ก 0.05 T
+v0 = 2.0e6  # ความเร็วต้น 2 x 10^6 m/s ตามแนวแกน x
+
+# ระบบสมการเชิงอนุพันธ์อันดับหนึ่ง: dx/dt = vx, dy/dt = vy, dv/dt = (q/m)(v x B)
+def lorentz_ode(t, state):
+    x, y, vx, vy = state
+    ax = (q / m) * (vy * B0)
+    ay = (q / m) * (-vx * B0)
+    return [vx, vy, ax, ay]
+
+T_exact = 2 * np.pi * m / (q * B0)
+sol = solve_ivp(lorentz_ode, [0, T_exact], [0, 0, v0, 0], t_eval=np.linspace(0, T_exact, 100))
+
+R_exact = m * v0 / (q * B0)
+R_sim = np.max(sol.y[1]) / 2.0
+print(f"คาบการโคจร T: {T_exact*1e9:.3f} ns | รัศมีไซโคลตรอน: {R_exact*1e3:.3f} mm")
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การพิสูจน์สนามไฟฟ้าเป็นสนามอนุรักษ์]
+\textbf{โจทย์:} กำหนดสนามไฟฟ้าของจุดประจุ $Q$ ณ จุดกำเนิดคือ $\vec{E}(\vec{r}) = \frac{k Q}{r^2}\hat{r}$ จงพิสูจน์ว่า $\nabla \times \vec{E} = \vec{0}$
+
+\vspace{0.2cm}
+\textbf{SOLVE:} สังเกตว่า $\hat{r} = \vec{r}/r$ ดังนั้น $\vec{E} = \frac{kQ}{r^3}(x\hat{i} + y\hat{j} + z\hat{k})$
+หาเคิร์ลตามแนวแกน $z$:
+\begin{equation}
+(\nabla \times \vec{E})_z = \frac{\partial E_y}{\partial x} - \frac{\partial E_x}{\partial y} = \frac{\partial}{\partial x}\left(\frac{kQy}{r^3}\right) - \frac{\partial}{\partial y}\left(\frac{kQx}{r^3}\right)
+\end{equation}
+ใช้กฎลูกโซ่โดยที่ $\frac{\partial r}{\partial x} = \frac{x}{r}$ และ $\frac{\partial r}{\partial y} = \frac{y}{r}$:
+\begin{align}
+\frac{\partial}{\partial x}\left(\frac{kQy}{r^3}\right) &= kQy\left(-\frac{3}{r^4}\frac{x}{r}\right) = -\frac{3kQxy}{r^5} \\
+\frac{\partial}{\partial y}\left(\frac{kQx}{r^3}\right) &= kQx\left(-\frac{3}{r^4}\frac{y}{r}\right) = -\frac{3kQxy}{r^5}
+\end{align}
+เมื่อนำมาลบกันจะได้ $(\nabla \times \vec{E})_z = 0$ และในทำนองเดียวกันสำหรับแกน $x$ และ $y$:
+\begin{equation}
+\nabla \times \vec{E} = \vec{0}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} เนื่องจาก $\nabla \times \vec{E} = \vec{0}$ ทุกจุด (ยกเว้นที่ $r=0$) สนามไฟฟ้าสถิตจึงเป็นสนามอนุรักษ์ และสามารถนิยามฟังก์ชันศักย์ไฟฟ้าสเกลาร์ $V = kQ/r$ ที่ทำให้ $\vec{E} = -\nabla V$ ได้เสมอ\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  ตรวจสอบเคิร์ลของสนามไฟฟ้าสถิตด้วย SymPy]
+import sympy as sp
+
+x, y, z, k, Q = sp.symbols('x y z k Q', real=True)
+r = sp.sqrt(x**2 + y**2 + z**2)
+
+# นิยามองค์ประกอบสนามไฟฟ้า E = kQ/r^3 * (x, y, z)
+Ex = k * Q * x / r**3
+Ey = k * Q * y / r**3
+Ez = k * Q * z / r**3
+
+# คำนวณองค์ประกอบของ Curl(E)
+curl_x = sp.diff(Ez, y) - sp.diff(Ey, z)
+curl_y = sp.diff(Ex, z) - sp.diff(Ez, x)
+curl_z = sp.diff(Ey, x) - sp.diff(Ex, y)
+
+print("Curl E_x =", sp.simplify(curl_x))
+print("Curl E_y =", sp.simplify(curl_y))
+print("Curl E_z =", sp.simplify(curl_z))
+print("ยืนยันสนามไฟฟ้าสถิตเป็นสนามอนุรักษ์: Curl = 0 ทุกแกน")
+\end{pythonbox}
+\end{mathexample}
+
+\section{บทสรุปประจำบท}
+\begin{table}[htbp]
+    \centering
+    \caption{สรุปตัวดำเนินการเชิงอนุพันธ์เวกเตอร์หลักและเอกลักษณ์สำคัญ}
+    \label{tab:vector_ops_summary}
+    \begin{tabularx}{\textwidth}{p{2.6cm}p{5.5cm}Y}
+        \toprule
+        \textbf{การดำเนินการ} & \textbf{รูปแบบคณิตศาสตร์} & \textbf{ความหมายทางฟิสิกส์} \\
+        \midrule
+        เกรเดียนต์ & $\nabla \psi = \frac{\partial \psi}{\partial x_i}\hat{e}_i$ & ทิศทางและอัตราการเพิ่มขึ้นสูงสุดของสเกลาร์ \\
+        ไดเวอร์เจนซ์ & $\nabla \cdot \vec{A} = \sum \frac{\partial A_i}{\partial x_i}$ & อัตราการไหลออกสุทธิ / ความหนาแน่นของแหล่งกำเนิด \\
+        เคิร์ล & $\nabla \times \vec{A} = \det[\hat{e}_i, \partial_j, A_k]$ & ความหนาแน่นของการหมุนวนรอบจุด \\
+        เอกลักษณ์ 1 & $\nabla \times (\nabla \psi) = \vec{0}$ & เกรเดียนต์ไม่มีการหมุนวน (สนามอนุรักษ์) \\
+        เอกลักษณ์ 2 & $\nabla \cdot (\nabla \times \vec{A}) = 0$ & เส้นสนามของเคิร์ลเป็นวงปิดต่อเนื่องเสมอ \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\subsection{คำถามเชิงแนวคิด (Conceptual Questions)}
+\begin{enumerate}
+    \item หากสนามแม่เหล็กมีไดเวอร์เจนซ์เป็นศูนย์เสมอ ($\nabla \cdot \vec{B} = 0$) สิ่งนี้บอกอะไรเกี่ยวกับเส้นแรงแม่เหล็กและการมีอยู่ของขั้วแม่เหล็กเดี่ยว (Magnetic Monopole)
+    \item ในพายุไซโคลน เหตุใดลมจึงหมุนวนทวนเข็มนาฬิกาในซีกโลกเหนือ จงอธิบายด้วยความสัมพันธ์ของแรงโคริออลิสและเคิร์ลของสนามความเร็ว
+\end{enumerate}
+
+\subsection{โจทย์การคำนวณเชิงวิเคราะห์ (Analytical Problems)}
+\begin{enumerate}
+    \item จงพิสูจน์เอกลักษณ์เวกเตอร์ $\nabla \cdot (\vec{A} \times \vec{B}) = \vec{B} \cdot (\nabla \times \vec{A}) - \vec{A} \cdot (\nabla \times \vec{B})$
+    \item กำหนดสนามเวกเตอร์ $\vec{v} = (y^2)\hat{i} + (2xy + z^2)\hat{j} + (2yz)\hat{k}$ จงตรวจสอบว่าสนามนี้เป็นสนามอนุรักษ์หรือไม่ หากเป็น จงหาฟังก์ชันศักย์สเกลาร์ $\phi$ ที่สอดคล้องกับ $\vec{v} = \nabla \phi$
+    \item อนุภาคประจุ $q = 2\,\si{\micro C}$ เคลื่อนที่ด้วยความเร็ว $\vec{v} = (3\hat{i} + 4\hat{j})\times 10^5\,\si{m/s}$ ในบริเวณที่มีทั้งสนามไฟฟ้า $\vec{E} = 5\times 10^3\,\hat{k}\,\si{V/m}$ และสนามแม่เหล็ก $\vec{B} = 0.2\,\hat{i}\,\si{T}$ จงหาขนาดและทิศทางของแรงลอเรนซ์รวมสุทธิ
+\end{enumerate}

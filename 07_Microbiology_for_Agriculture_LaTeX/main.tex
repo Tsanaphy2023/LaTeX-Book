@@ -1,0 +1,59 @@
+\documentclass[a4paper,16pt]{book}
+\input{preamble/preamble.tex}
+%\title{จุลชีววิทยาสำหรับการเกษตร}
+%\author{จิรภัทร  จันทมาลี}
+%\date{\thaidate}
+\begin{document}
+\input{coverpage}
+\clearpage
+\thispagestyle{empty} % ไม่แสดงเลขหน้าหรือส่วนหัว
+\mbox{Microbiology for Agriculture } \\
+
+ \mbox{ผศ.ดร.จิรภัทร  จันทมาลี }
+\clearpage
+\pagenumbering{Roman}
+\input{prefaces/preface.tex}
+\input{prefaces/acknowledgements.tex}% กิตติกรรมประกาศ
+
+% สารบัญ
+\tableofcontents
+\clearpage
+
+\setstretch{1} %
+% สารบัญภาพ
+\listoffigures
+\addcontentsline{toc}{chapter}{สารบัญภาพ} % เพิ่มสารบัญภาพในสารบัญ
+\clearpage
+\setstretch{1} %
+% สารบัญตาราง
+\listoftables
+\addcontentsline{toc}{chapter}{สารบัญตาราง} % เพิ่มสารบัญตารางในสารบัญ
+\clearpage
+
+% เริ่มนับเลขหน้าจาก 1 ในบทที่ 1
+\setcounter{page}{1}
+%% บทนำ
+%\input{chapters/introduction}
+
+%% บทต่างๆ
+\input{chapters/chapter1}
+\input{chapters/chapter2}
+\input{chapters/chapter3}
+\input{chapters/chapter4}
+\input{chapters/chapter5}
+\input{chapters/chapter6}
+\input{chapters/chapter7}
+\input{chapters/chapter8}
+\input{chapters/chapter9}
+
+%% ภาคผนวก
+\appendix
+\input{appendices/appendixA}
+\input{appendices/appendixB}
+\input{appendices/appendixC}
+\input{appendices/appendixD}
+
+%% บรรณานุกรม
+\bibliography{bibliography/references}
+
+\end{document}

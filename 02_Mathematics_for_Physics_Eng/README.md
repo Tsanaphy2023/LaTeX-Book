@@ -1,0 +1,17 @@
+# Mathematics for Physics (English Edition)
+
+- **Author:** Dr. Chewa Thassana (chewa.t@rbru.ac.th)
+- **Affiliation:** Department of Physics, Faculty of Science and Technology, Rambhai Barni Rajabhat University (RBRU)
+- **Google Drive Folder:** [](https://drive.google.com/drive/folders/1bKv91GbbTWlGHvhZVLAEmnheycCxSEpV)
+- **Inner Drive Folder:** [](https://drive.google.com/drive/folders/1Ahoy-w-9F_5OZU9ndZcJfYkNzEVzDMxw)
+
+## Course Breakdown (9 Chapters)
+1. Chapter 1: Coordinate Systems ()
+2. Chapter 2: Vectors ()
+3. Chapter 3: Basic Series ()
+4. Chapter 4: Complex Numbers ()
+5. Chapter 5: Matrices ()
+6. Chapter 6: Derivatives ()
+7. Chapter 7: Integrals ()
+8. Chapter 8: Ordinary Differential Equations ()
+9. Chapter 9: Second-Order ODEs ()

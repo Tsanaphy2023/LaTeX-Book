@@ -1,0 +1,388 @@
+\chapter{สมการเชิงอนุพันธ์สามัญอันดับสองและการสั่นพ้อง}
+\index{สมการเชิงอนุพันธ์อันดับสอง (Second-order ODE)}
+\index{รอนสเกียน (Wronskian)}
+\index{การสั่นแบบฮาร์มอนิกหน่วง (Damped harmonic oscillator)}
+\index{หน่วงยิ่งยวด (Overdamped)}
+\index{หน่วงวิกฤต (Critically damped)}
+\index{หน่วงน้อย (Underdamped)}
+\index{การสั่นพ้อง (Resonance)}
+\index{ความถี่ธรรมชาติ (Natural frequency)}
+\index{แฟกเตอร์คุณภาพ (Quality factor)}
+\index{โช้กอัพรถยนต์ (Shock absorber)}
+\index{Damped oscillation}
+\index{Resonance}
+\index{Quality factor}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item แก้สมการเชิงอนุพันธ์เชิงเส้นอันดับสองที่มีสัมประสิทธิ์คงที่ทั้งกรณีเอกพันธ์และไม่เป็นเอกพันธ์ได้
+    \item วิเคราะห์และจำแนกพฤติกรรมการแกว่งแบบหน่วงทั้ง 3 สภาวะ (Overdamped, Critically Damped, Underdamped) ได้อย่างถูกต้อง
+    \item คำนวณแอมพลิจูด เฟส และความถี่สั่นพ้อง (Resonance Frequency) ของระบบการสั่นที่ถูกกระตุ้นด้วยแรงขับภายนอกได้
+    \item ประยุกต์ใช้แบบจำลองการสั่นในการออกแบบโช้กอัพยานยนต์ ลูกตุ้มลดแรงสั่นสะเทือนในอาคารระฟ้า (Tuned Mass Damper) และปรากฏการณ์เรโซแนนซ์ในวงจร $RLC$/MRI ได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{สมการเชิงเส้นอันดับสองสัมประสิทธิ์คงที่}
+สมการเชิงอนุพันธ์อันดับสองมีความสำคัญอย่างยิ่งต่อวิชาฟิสิกส์ เนื่องจากกฎข้อที่สองของนิวตัน $\vec{F} = m\frac{d^2\vec{r}}{dt^2}$ เชื่อมโยงแรงเข้ากับอนุพันธ์อันดับสองของตำแหน่งตามเวลา สมการเชิงอนุพันธ์เชิงเส้นอันดับสองที่มีสัมประสิทธิ์เป็นค่าคงที่เขียนในรูปทั่วไปได้เป็น:
+\begin{equation}
+a\frac{d^2y}{dt^2} + b\frac{dy}{dt} + cy = f(t) \quad (a \neq 0)
+\end{equation}
+หาก $f(t) = 0$ เรียกว่า \textbf{สมการเอกพันธ์ (Homogeneous Equation)} และหาก $f(t) \neq 0$ เรียกว่า \textbf{สมการไม่เป็นเอกพันธ์ (Non-homogeneous Equation)}
+
+\subsection{หลักการซ้อนทับและรอนสเกียน}
+สำหรับสมการเอกพันธ์ ถ้า $y_1(t)$ และ $y_2(t)$ เป็นผลเฉลยสองผลเฉลยที่เป็นอิสระเชิงเส้นต่อกัน การรวมกันเชิงเส้น $y(t) = C_1 y_1(t) + C_2 y_2(t)$ จะเป็นผลเฉลยทั่วไปของระบบเสมอ การทดสอบความเป็นอิสระเชิงเส้นทำได้โดยคำนวณ \textbf{ดีเทอร์มิแนนต์รอนสเกียน (Wronskian)}:
+\begin{equation}
+W(y_1, y_2)(t) = \begin{vmatrix}
+y_1 & y_2 \\
+y_1' & y_2'
+\end{vmatrix} = y_1 y_2' - y_2 y_1' \neq 0
+\end{equation}
+
+\subsection{สมการลักษณะเฉพาะและรูปแบบผลเฉลย}
+สมมติผลเฉลยในรูปเอกซ์โพเนนเชียล $y(t) = e^{rt}$ แทนลงในสมการเอกพันธ์จะได้ \textbf{สมการลักษณะเฉพาะ (Characteristic Equation)}:
+\begin{equation}
+ar^2 + br + c = 0 \implies r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{equation}
+พิจารณาค่าดิสคริมิแนนต์ $\Delta = b^2 - 4ac$:
+\begin{enumerate}
+    \item \textbf{รากจริงแตกต่างกัน ($\Delta > 0$):} มีรากจริงสองค่า $r_1 \neq r_2$
+    \begin{equation}
+    y(t) = C_1 e^{r_1 t} + C_2 e^{r_2 t}
+    \end{equation}
+    \item \textbf{รากจริงซ้ำกัน ($\Delta = 0$):} มีรากจริงค่าเดียว $r = -b/(2a)$
+    \begin{equation}
+    y(t) = (C_1 + C_2 t) e^{rt}
+    \end{equation}
+    \item \textbf{รากเชิงซ้อนสังยุค ($\Delta < 0$):} $r = \alpha \pm i\beta$ โดยที่ $\alpha = -b/(2a)$ และ $\beta = \frac{\sqrt{4ac - b^2}}{2a}$ จากสูตรของออยเลอร์ ผลเฉลยจริงเขียนได้เป็น:
+    \begin{equation}
+    y(t) = e^{\alpha t}\left(C_1 \cos\beta t + C_2 \sin\beta t\right) = A e^{\alpha t}\cos(\beta t - \phi)
+    \end{equation}
+\end{enumerate}
+
+\section{การสั่นแบบฮาร์มอนิกหน่วงในกลศาสตร์และวงจรไฟฟ้า}
+พิจารณาระบบมวล $m$ ติดปลายสปริงค่าคงที่ $k$ เคลื่อนที่บนพื้นผิวที่มีแรงเสียดทานหน่วงเป็นสัดส่วนกับความเร็ว $F_{\text{damp}} = -\gamma \frac{dx}{dt}$ สมการการเคลื่อนที่คือ:
+\begin{equation}
+m\frac{d^2x}{dt^2} + \gamma\frac{dx}{dt} + kx = 0 \iff \frac{d^2x}{dt^2} + 2\beta\frac{dx}{dt} + \omega_0^2 x = 0
+\end{equation}
+โดยที่:
+\begin{itemize}
+    \item $\omega_0 = \sqrt{k/m}$ คือ \textbf{ความถี่ธรรมชาติ (Natural Angular Frequency)}
+    \item $\beta = \frac{\gamma}{2m}$ คือ \textbf{พารามิเตอร์การหน่วง (Damping Parameter)}
+\end{itemize}
+
+\begin{table}[htbp]
+    \centering
+    \caption{การเปรียบเทียบสภาวะการแกว่งแบบหน่วง 3 สภาวะ และการประยุกต์ใช้}
+    \label{tab:damping_regimes_summary}
+    \begin{tabularx}{\textwidth}{p{3.2cm}p{3.0cm}p{4.4cm}Y}
+        \toprule
+        \textbf{สภาวะการหน่วง} & \textbf{เงื่อนไขพารามิเตอร์} & \textbf{พฤติกรรมการเคลื่อนที่} & \textbf{การประยุกต์ใช้งาน} \\
+        \midrule
+        \textbf{หน่วงยิ่งยวด (Overdamped)} & $\beta > \omega_0$ & ลู่เข้าสู่สมดุลช้า ๆ โดยไม่เกิดการแกว่ง & ประตูปิดอัตโนมัติ (Door closer) \\
+        \textbf{หน่วงวิกฤต (Critically Damped)} & $\beta = \omega_0$ & คืนสู่สมดุลเร็วที่สุดโดยไม่แกว่งข้ามศูนย์ & โช้กอัพรถยนต์, แกลวาโนมิเตอร์ \\
+        \textbf{หน่วงน้อย (Underdamped)} & $\beta < \omega_0$ & แกว่งลดทอนด้วยความถี่ $\omega_d = \sqrt{\omega_0^2 - \beta^2}$ & สายกีตาร์, ลูกตุ้ม, วงจร RLC \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Axes
+    \draw[-{Stealth[scale=1.1]}, thick] (0,0) -- (7.5,0) node[right, font=\small] {เวลา $t$};
+    \draw[-{Stealth[scale=1.1]}, thick] (0,-2.2) -- (0,2.6) node[above, font=\small] {การกระจัด $x(t)$};
+    
+    % Initial position
+    \fill[black] (0,2.0) circle (2pt) node[left, font=\small] {$x_0$};
+    
+    % Underdamped curve: x(t) = 2.0 * exp(-0.5*t) * cos(3*t)
+    \draw[very thick, physVelocity, domain=0:7.0, samples=200, smooth] plot (\x, {2.0*exp(-0.55*\x)*cos(3.2*\x r)});
+    \draw[dashed, thin, slateGrey, domain=0:7.0, samples=100] plot (\x, {2.0*exp(-0.55*\x)});
+    \draw[dashed, thin, slateGrey, domain=0:7.0, samples=100] plot (\x, {-2.0*exp(-0.55*\x)});
+    
+    % Critically damped curve: x(t) = 2.0 * (1 + 1.5*t) * exp(-1.5*t)
+    \draw[ultra thick, physForce, domain=0:7.0, samples=150, smooth] plot (\x, {2.0*(1 + 1.5*\x)*exp(-1.5*\x)});
+    
+    % Overdamped curve: x(t) = 2.2*exp(-0.35*t) - 0.2*exp(-2.5*t)
+    \draw[very thick, physAccel, domain=0:7.0, samples=150, smooth] plot (\x, {2.2*exp(-0.35*\x) - 0.2*exp(-2.5*\x)});
+    
+    % Labels
+    \node[fill=white, inner sep=1.5pt, text=physVelocity, font=\footnotesize\bfseries] at (5.5, -0.6) {หน่วงน้อย (Underdamped)};
+    \node[fill=white, inner sep=1.5pt, text=physForce, font=\footnotesize\bfseries] at (2.2, 0.95) {หน่วงวิกฤต (Critically Damped)};
+    \node[fill=white, inner sep=1.5pt, text=physAccel, font=\footnotesize\bfseries] at (5.5, 1.3) {หน่วงยิ่งยวด (Overdamped)};
+\end{tikzpicture}
+\caption{เปรียบเทียบพฤติกรรมการเคลื่อนที่ของระบบการสั่นหน่วง 3 รูปแบบ: หน่วงยิ่งยวด (Overdamped), หน่วงวิกฤต (Critically Damped) และหน่วงน้อย (Underdamped)}
+\label{fig:damping_regimes}
+\end{figure}
+
+\begin{mathdefinition}[สภาวะการหน่วง 3 รูปแบบ]
+การตอบสนองของระบบจำแนกตามความสัมพันธ์ระหว่าง $\beta$ กับ $\omega_0$:
+\begin{enumerate}
+    \item \textbf{การหน่วงยิ่งยวด (Overdamped, $\beta > \omega_0$):} แรงหน่วงมีค่าสูงมาก ระบบจะเคลื่อนที่กลับสู่จุดสมดุลอย่างช้า ๆ ในลักษณะลดทอนแบบเอกซ์โพเนนเชียลโดยไม่มีการแกว่งข้ามตำแหน่งสมดุล
+    \item \textbf{การหน่วงวิกฤต (Critically Damped, $\beta = \omega_0$):} ระบบกลับคืนสู่ตำแหน่งสมดุลได้เร็วที่สุดโดยไม่เกิดการแกว่งเลย นิยมใช้อย่างกว้างขวางในระบบรองรับน้ำหนักรถยนต์ (โช้กอัพ) ประตูปิดอัตโนมัติ และมาตรวัดความเร็ว
+    \item \textbf{การหน่วงน้อย (Underdamped, $\beta < \omega_0$):} ระบบแกว่งไปมารอบตำแหน่งสมดุลด้วยแอมพลิจูดที่ลดลงตามเอกซ์โพเนนเชียล:
+    \begin{equation}
+    x(t) = A_0 e^{-\beta t}\cos(\omega_d t + \phi)
+    \end{equation}
+    โดยมีความถี่การสั่นหน่วง $\omega_d = \sqrt{\omega_0^2 - \beta^2} < \omega_0$
+\end{enumerate}
+\end{mathdefinition}
+
+\subsection{ความสมนัยกับวงจรไฟฟ้า \texorpdfstring{$RLC$}{RLC} แบบอนุกรม}
+ระบบการสั่นทางกลมีความสมนัยทางคณิตศาสตร์ (Mathematical Analogy) แบบหนึ่งต่อหนึ่งกับวงจรไฟฟ้า $RLC$ อนุกรม:
+\begin{equation}
+L\frac{d^2q}{dt^2} + R\frac{dq}{dt} + \frac{1}{C}q = 0
+\end{equation}
+โดยที่ประจุ $q$ สมนัยกับการกระจัด $x$, ความเหนี่ยวนำ $L$ สมนัยกับมวล $m$, ความต้านทาน $R$ สมนัยกับสัมประสิทธิ์ความหน่วง $\gamma$, และส่วนกลับของความจุ $1/C$ สมนัยกับค่าคงที่สปริง $k$ คุณภาพการแกว่งของระบบแสดงด้วย \textbf{แฟกเตอร์คุณภาพ (Quality Factor: $Q$)}:
+\begin{equation}
+Q = \frac{\omega_0}{2\beta} = \frac{\sqrt{mk}}{\gamma} = \frac{1}{R}\sqrt{\frac{L}{C}}
+\end{equation}
+ระบบที่มีค่า $Q$ สูงมากจะสูญเสียพลังงานน้อยและสามารถแกว่งได้ต่อเนื่องยาวนาน
+
+\section{การสั่นถูกบังคับและปรากฏการณ์การสั่นพ้อง}
+เมื่อระบบการสั่นถูกกระตุ้นด้วยแรงภายนอกเป็นคาบตามเวลา $F(t) = F_0 \cos(\omega t)$ สมการการเคลื่อนที่จะเป็นสมการไม่เป็นเอกพันธ์:
+\begin{equation}
+\frac{d^2x}{dt^2} + 2\beta\frac{dx}{dt} + \omega_0^2 x = \frac{F_0}{m}\cos(\omega t)
+\end{equation}
+ผลเฉลยทั่วไปประกอบด้วยสองส่วน: $x(t) = x_h(t) + x_p(t)$
+เมื่อเวลาผ่านไปนาน ผลเฉลยเอกพันธ์ $x_h(t)$ (Transient Response) จะสลายตัวหมดไปด้วยความหน่วง เหลือเพียงผลเฉลยเฉพาะ $x_p(t)$ (Steady-State Response) ซึ่งแกว่งด้วยความถี่ของแรงขับ $\omega$:
+\begin{equation}
+x_p(t) = A(\omega)\cos(\omega t - \delta)
+\end{equation}
+โดยมีแอมพลิจูด $A(\omega)$ และมุมเฟสตามหลัง $\delta$ คือ:
+\begin{align}
+A(\omega) &= \frac{F_0 / m}{\sqrt{(\omega_0^2 - \omega^2)^2 + (2\beta\omega)^2}} \\
+\tan\delta &= \frac{2\beta\omega}{\omega_0^2 - \omega^2}
+\end{align}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Axes
+    \draw[-{Stealth[scale=1.1]}, thick] (0,0) -- (6.5,0) node[right, font=\small] {ความถี่แรงขับ $\omega/\omega_0$};
+    \draw[-{Stealth[scale=1.1]}, thick] (0,0) -- (0,4.5) node[above, font=\small] {แอมพลิจูด $A(\omega)$};
+    
+    % Peak line at omega = 1
+    \draw[dotted, thick, gray] (3.0,0) node[below, font=\small] {$1.0$} -- (3.0,4.2);
+    
+    % High Q curve (sharp peak): beta = 0.1
+    \draw[ultra thick, physForce, domain=0.5:5.5, samples=150, smooth] plot (\x, {1.0 / sqrt((1.0 - (\x/3.0)^2)^2 + 4*(0.1^2)*(\x/3.0)^2)});
+    
+    % Medium Q curve: beta = 0.25
+    \draw[very thick, physVelocity, domain=0.5:5.5, samples=150, smooth] plot (\x, {1.0 / sqrt((1.0 - (\x/3.0)^2)^2 + 4*(0.25^2)*(\x/3.0)^2)});
+    
+    % Low Q curve: beta = 0.5
+    \draw[thick, physAccel, domain=0.5:5.5, samples=150, smooth] plot (\x, {1.0 / sqrt((1.0 - (\x/3.0)^2)^2 + 4*(0.5^2)*(\x/3.0)^2)});
+    
+    % Labels
+    \node[fill=white, inner sep=1.5pt, text=physForce, font=\footnotesize\bfseries] at (4.0, 3.8) {ความหน่วงต่ำ ($Q$ สูง)};
+    \node[fill=white, inner sep=1.5pt, text=physVelocity, font=\footnotesize\bfseries] at (4.2, 2.2) {ความหน่วงปานกลาง};
+    \node[fill=white, inner sep=1.5pt, text=physAccel, font=\footnotesize\bfseries] at (4.5, 1.1) {ความหน่วงสูง ($Q$ ต่ำ)};
+\end{tikzpicture}
+\caption{เส้นโค้งการสั่นพ้อง (Resonance Curves) แสดงแอมพลิจูดของการสั่นเทียบกับความถี่แรงขับ $\omega$ สำหรับค่าความหน่วงต่าง ๆ ยิ่งความหน่วงน้อย ยอดกราฟจะยิ่งสูงและแคบลง}
+\label{fig:resonance_curves}
+\end{figure}
+
+\begin{maththeorem}[สภาวะการสั่นพ้อง]
+แอมพลิจูด $A(\omega)$ จะมีค่าสูงสุดเมื่อพจน์ใต้กรณฑ์ในตัวหารมีค่าน้อยที่สุด ซึ่งเกิดขึ้นที่ \textbf{ความถี่สั่นพ้อง (Resonance Frequency)}:
+\begin{equation}
+\omega_R = \sqrt{\omega_0^2 - 2\beta^2}
+\end{equation}
+หากความหน่วงมีค่าน้อยมาก ($\beta \ll \omega_0$) ความถี่สั่นพ้องจะเข้าใกล้ความถี่ธรรมชาติ $\omega_R \approx \omega_0$ และแอมพลิจูดที่จุดสั่นพ้องจะพุ่งสูงขึ้นอย่างมหาศาล:
+\begin{equation}
+A_{\text{max}} \approx \frac{F_0}{2m\beta\omega_0} = \frac{F_0 Q}{k}
+\end{equation}
+\end{maththeorem}
+
+\section{การประยุกต์ใช้ในฟิสิกส์ วิทยาศาสตร์ และวิศวกรรมศาสตร์}
+\subsection{ลูกตุ้มปรับจูนมวลในอาคารระฟ้าไทเป 101}
+อาคารสูงระฟ้า เช่น อาคารไทเป 101 (Taipei 101) ในไต้หวัน เผชิญกับแรงกระทำเป็นคาบจากพายุไต้ฝุ่นและแผ่นดินไหว ซึ่งอาจก่อให้เกิดการสั่นพ้องจนอาคารพังทลาย วิศวกรได้ติดตั้ง \textbf{ลูกตุ้มปรับจูนมวล (Tuned Mass Damper: TMD)} น้ำหนัก 660 ตัน แขวนไว้ระหว่างชั้นที่ 87 ถึง 92 ระบบลูกตุ้มนี้ถูกคำนวณความถี่ธรรมชาติ $\omega_{\text{TMD}}$ ให้เท่ากับความถี่การแกว่งโหมดพื้นฐานของอาคาร เมื่ออาคารแกว่งไปทางขวา ลูกตุ้มจะแกว่งต้านไปทางซ้ายด้วยมุมเฟสต่างกัน $90^\circ$ ถึง $180^\circ$ และส่งถ่ายพลังงานจลน์ของอาคารไปสลายทิ้งผ่านกระบอกสูบไฮดรอลิกหน่วงความเร็วได้อย่างมีประสิทธิภาพ
+
+\subsection{การสร้างภาพด้วยเรโซแนนซ์แม่เหล็กนิวเคลียร์}
+ในทางการแพทย์ เครื่องตรวจคลื่นแม่เหล็กไฟฟ้า (Magnetic Resonance Imaging: MRI) ทำงานโดยการอาศัยปรากฏการณ์การสั่นพ้องของโมเมนต์แม่เหล็กนิวเคลียสไฮโดรเจน (โปรตอน) ในร่างกาย เมื่ออยู่ภายใต้สนามแม่เหล็กคงที่ความเข้มสูง $B_0$ นิวเคลียสจะเกิดการควง (Larmor Precession) ด้วยความถี่ธรรมชาติ:
+\begin{equation}
+\omega_L = \gamma_{\text{gyro}} B_0
+\end{equation}
+เมื่อส่งคลื่นวิทยุความถี่ภายนอก $\omega_{\text{RF}}$ ที่ตรงกับความถี่ลาร์มอร์ $\omega_L$ พอดี นิวเคลียสจะดูดกลืนพลังงานอย่างรุนแรงเนื่องจากการสั่นพ้อง และเมื่อปิดคลื่นวิทยุ นิวเคลียสจะคลายพลังงานกลับสู่สภาพเดิม ส่งสัญญาณที่สามารถนำมาประมวลผลเป็นภาพถ่ายอวัยวะภายใน 3 มิติความละเอียดสูง
+
+\section{ตัวอย่างโจทย์และการแก้ปัญหาอย่างเป็นระบบ}
+
+\begin{mathexample}[การออกแบบโช้กอัพรถยนต์ในสภาวะหน่วงวิกฤตเพื่อความปลอดภัย]
+\textbf{โจทย์:} รถยนต์คันหนึ่งมีมวลตัวถังกระจายลงสู่ระบบช่วงล่างล้อละ $m = 250\text{ kg}$ สปริงของล้อมีค่าคงที่สปริง $k = 40,000\text{ N/m}$
+\begin{enumerate}
+    \item จงหาความถี่ธรรมชาติของการสั่นในแนวดิ่ง $\omega_0$
+    \item จงหาสัมประสิทธิ์ความหน่วง $\gamma_{\text{crit}}$ ของโช้กอัพที่ทำให้ระบบอยู่ในสภาวะหน่วงวิกฤต (Critically Damped) พอดี
+    \item หากรถคันนี้วิ่งตกหลุมถนนทำให้เกิดการกระจัดเริ่มต้น $x(0) = 0.10\text{ m}$ โดยมีความเร็วต้นเป็นศูนย์ ($v(0) = 0$) จงหาสมการการกระจัด $x(t)$ และคำนวณตำแหน่งของตัวถังหลังจากผ่านไป $0.2\text{ วินาที}$
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{PICTURE:} แบบจำลองหนึ่งในสี่ของรถยนต์ (Quarter-car model) มวล $m$ รองรับด้วยสปริง $k$ และตัวหน่วง $\gamma$ ขนานกัน
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. ความถี่ธรรมชาติ $\omega_0$:
+\begin{equation}
+\omega_0 = \sqrt{\frac{k}{m}} = \sqrt{\frac{40,000\text{ N/m}}{250\text{ kg}}} = \sqrt{160} \approx 12.649\text{ rad/s} \quad (f_0 = \frac{\omega_0}{2\pi} \approx 2.01\text{ Hz})
+\end{equation}
+
+2. สภาวะหน่วงวิกฤตเกิดขึ้นเมื่อ $\beta = \omega_0$:
+\begin{equation}
+\beta = \frac{\gamma_{\text{crit}}}{2m} = \omega_0 \implies \gamma_{\text{crit}} = 2m\omega_0 = 2(250\text{ kg})(12.649\text{ rad/s}) \approx 6,324.5\text{ N}\cdot\text{s/m}
+\end{equation}
+
+3. ผลเฉลยทั่วไปของสภาวะหน่วงวิกฤต ($\Delta = 0$):
+\begin{equation}
+x(t) = (C_1 + C_2 t)e^{-\omega_0 t}
+\end{equation}
+หาอนุพันธ์เพื่อหาความเร็ว:
+\begin{equation}
+v(t) = \frac{dx}{dt} = C_2 e^{-\omega_0 t} - \omega_0 (C_1 + C_2 t)e^{-\omega_0 t} = [C_2 - \omega_0 C_1 - \omega_0 C_2 t]e^{-\omega_0 t}
+\end{equation}
+แทนเงื่อนไขเริ่มต้น $x(0) = 0.10\text{ m}$ และ $v(0) = 0$:
+\begin{align}
+x(0) &= C_1 = 0.10\text{ m} \\
+v(0) &= C_2 - \omega_0 C_1 = 0 \implies C_2 = \omega_0 C_1 = (12.649)(0.10) = 1.2649\text{ m/s}
+\end{align}
+ดังนั้น ฟังก์ชันการเคลื่อนที่คือ:
+\begin{equation}
+x(t) = (0.10 + 1.2649 t)e^{-12.649 t}\text{ m}
+\end{equation}
+ที่เวลา $t = 0.2\text{ s}$:
+\begin{align}
+x(0.2) &= (0.10 + 1.2649(0.2)) e^{-12.649(0.2)} = (0.10 + 0.25298) e^{-2.5298} \\
+&= (0.35298)(0.07967) \approx 0.0281\text{ m} = 2.81\text{ cm}
+\end{align}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ภายในเวลาเพียง $0.2\text{ วินาที}$ การกระจัดลดลงจาก $10\text{ cm}$ เหลือเพียง $2.81\text{ cm}$ (ลดลงมากกว่า $70\%$) โดยไม่มีการแกว่งข้ามจุดสมดุลไปยังฝั่งลบเลย ซึ่งยืนยันว่าการตั้งค่าความหน่วงแบบวิกฤตช่วยให้รถยนต์ทรงตัวนิ่งได้อย่างรวดเร็วและปลอดภัยที่สุดสำหรับผู้โดยสาร\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  พฤติกรรมระบบกันสะเทือนรถยนต์สภาวะหน่วงวิกฤต (Critical Damping)]
+import numpy as np
+
+# พารามิเตอร์ระบบรองรับน้ำหนักหนึ่งในสี่ของรถยนต์ (Quarter-Car)
+m = 250.0      # มวลต่อหนึ่งล้อ (kg)
+k = 40000.0    # ค่าคงที่สปริง (N/m)
+
+# ความถี่ธรรมชาติและสัมประสิทธิ์หน่วงวิกฤต
+omega0 = np.sqrt(k / m)
+gamma_crit = 2.0 * m * omega0
+freq_hz = omega0 / (2.0 * np.pi)
+
+print(f"ความถี่ธรรมชาติ omega_0: {omega0:.3f} rad/s ({freq_hz:.2f} Hz)")
+print(f"สัมประสิทธิ์หน่วงวิกฤต gamma_crit: {gamma_crit:.1f} N*s/m")
+
+# การกระจายตัวของการกระจัด x(t) = (C1 + C2*t)*exp(-omega0*t)
+x0 = 0.10  # ระยะยุบเริ่มต้น 10 cm
+C1 = x0
+C2 = omega0 * x0
+
+time_steps = np.array([0.0, 0.1, 0.2, 0.4, 0.6])
+for t in time_steps:
+    xt = (C1 + C2 * t) * np.exp(-omega0 * t)
+    print(f"ที่เวลา t = {t:.2f} s: x(t) = {xt*100:.2f} cm ({xt/x0*100:.1f}%)")
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การวิเคราะห์การสั่นพ้องในเซนเซอร์วัดความเร่งไมโครระบบเครื่องกลไฟฟ้า]
+\textbf{โจทย์:} เซนเซอร์วัดความเร่งชนิดไมโครระบบเครื่องกลไฟฟ้า (MEMS Accelerometer) มวล $m = 2.0 \times 10^{-9}\text{ kg}$ มีความถี่ธรรมชาติ $f_0 = 10\text{ kHz}$ ($\omega_0 = 2\pi \times 10^4\text{ rad/s}$) และมีแฟกเตอร์คุณภาพ $Q = 50$ หากมีแรงสั่นสะเทือนภายนอกขนาด $F_0 = 1.0 \times 10^{-7}\text{ N}$ มากระตุ้นที่ความถี่ตรงกับความถี่ธรรมชาติพอดี ($\omega = \omega_0$)
+\begin{enumerate}
+    \item จงหาสัมประสิทธิ์ความหน่วง $\gamma$
+    \item จงหาแอมพลิจูดการสั่นขณะสั่นพ้อง $A_{\text{res}}$
+    \item เปรียบเทียบแอมพลิจูดขณะสั่นพ้องกับแอมพลิจูดในสภาวะสถิต $A_{\text{static}} = F_0/k$
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{PICTURE:} ไมโครแคนติลิเวอร์ (Microcantilever) ทำจากซิลิคอน แกว่งสั่นในห้องสุญญากาศภายใต้แรงขับเป็นคาบ
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. ค่าคงที่สปริงสมมูล $k$:
+\begin{equation}
+k = m\omega_0^2 = (2.0 \times 10^{-9}\text{ kg})(2\pi \times 10^4\text{ rad/s})^2 = 2.0 \times 10^{-9} \times 3.9478 \times 10^9 \approx 7.896\text{ N/m}
+\end{equation}
+จากนิยาม $Q = \frac{\omega_0}{2\beta} = \frac{m\omega_0}{\gamma}$:
+\begin{equation}
+\gamma = \frac{m\omega_0}{Q} = \frac{(2.0 \times 10^{-9})(2\pi \times 10^4)}{50} = \frac{1.2566 \times 10^{-4}}{50} \approx 2.513 \times 10^{-6}\text{ N}\cdot\text{s/m}
+\end{equation}
+
+2. แอมพลิจูดขณะสั่นพ้องที่ $\omega = \omega_0$:
+\begin{equation}
+A_{\text{res}} = \frac{F_0 / m}{2\beta\omega_0} = \frac{F_0}{\gamma\omega_0} = \frac{F_0 Q}{m\omega_0^2} = \frac{F_0 Q}{k}
+\end{equation}
+แทนค่าตัวเลข:
+\begin{equation}
+A_{\text{res}} = \frac{(1.0 \times 10^{-7}\text{ N})(50)}{7.896\text{ N/m}} = \frac{5.0 \times 10^{-6}}{7.896} \approx 6.332 \times 10^{-7}\text{ m} = 633.2\text{ nm}
+\end{equation}
+
+3. แอมพลิจูดในสภาวะสถิต:
+\begin{equation}
+A_{\text{static}} = \frac{F_0}{k} = \frac{1.0 \times 10^{-7}}{7.896} \approx 1.266 \times 10^{-8}\text{ m} = 12.66\text{ nm}
+\end{equation}
+อัตราส่วนการขยายแอมพลิจูดคือ:
+\begin{equation}
+\frac{A_{\text{res}}}{A_{\text{static}}} = Q = 50\text{ เท่า}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ปรากฏการณ์การสั่นพ้องช่วยขยายสัญญาณการสั่นขนาดเล็กมากจากระดับสถิต $12.66\text{ nm}$ ให้เด่นชัดขึ้นเป็น $633.2\text{ nm}$ ได้ถึง 50 เท่าตามค่าของ $Q$ พอดี ทำให้เซนเซอร์ตรวจวัดคลื่นความเร่งและการสั่นสะเทือนในสมาร์ตโฟนและระบบถุงลมนิรภัยรถยนต์ได้อย่างแม่นยำยิ่ง\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การตอบสนองสั่นพ้อง (Resonance Amplification) ของ MEMS]
+import numpy as np
+
+# พารามิเตอร์โครงสร้าง MEMS Accelerometer
+mass = 2.0e-9       # มวลของแผ่นสั่น (kg)
+f0 = 10.0e3         # ความถี่ธรรมชาติ 10 kHz (Hz)
+omega0 = 2.0 * np.pi * f0
+Q = 50.0            # Quality Factor
+F0 = 1.0e-7         # แอมพลิจูดแรงขับภายนอก (N)
+
+# คำนวณคุณสมบัติเชิงกล
+k_spring = mass * (omega0**2)
+gamma_damp = (mass * omega0) / Q
+
+# เปรียบเทียบแอมพลิจูดสถิตและแอมพลิจูดเรโซแนนซ์
+A_static = F0 / k_spring
+A_res = (F0 * Q) / k_spring
+
+print(f"ค่าสติฟเนสสมมูล k: {k_spring:.3f} N/m")
+print(f"สัมประสิทธิ์ความหน่วง gamma: {gamma_damp:.4e} N*s/m")
+print(f"แอมพลิจูดการตอบสนองสถิต A_static: {A_static * 1e9:.2f} nm")
+print(f"แอมพลิจูดที่ยอดสั่นพ้อง A_res: {A_res * 1e9:.2f} nm")
+print(f"อัตราการขยายสัญญาณแอมพลิจูด (Gain): {A_res / A_static:.1f} เท่า")
+\end{pythonbox}
+\end{mathexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+\begin{table}[H]
+\centering
+\caption{สรุปพารามิเตอร์และสภาวะต่าง ๆ ของสมการการสั่นอันดับสอง}
+\label{tab:ch09_summary}
+\begin{tabularx}{\textwidth}{p{3.0cm}p{4.2cm}Y}
+\toprule
+\textbf{สภาวะการสั่น} & \textbf{เงื่อนไขพารามิเตอร์} & \textbf{รูปแบบผลเฉลยและการประยุกต์} \\
+\midrule
+หน่วงยิ่งยวด (Overdamped) & $\beta > \omega_0 \iff \Delta > 0$ & $x(t) = C_1 e^{r_1 t} + C_2 e^{r_2 t}$ (ไม่มีการแกว่ง คืนสู่สมดุลช้า) \\
+หน่วงวิกฤต (Critical) & $\beta = \omega_0 \iff \Delta = 0$ & $x(t) = (C_1 + C_2 t)e^{-\omega_0 t}$ (คืนสู่สมดุลเร็วสุด โช้กอัพรถ) \\
+หน่วงน้อย (Underdamped) & $\beta < \omega_0 \iff \Delta < 0$ & $x(t) = A_0 e^{-\beta t}\cos(\omega_d t + \phi)$ (แกว่งลดทอน $Q$ สูง) \\
+การสั่นพ้อง (Resonance) & $\omega = \omega_R \approx \omega_0$ & $A_{\text{max}} \approx \frac{F_0 Q}{k}$ (แอมพลิจูดขยายตัวสูงสุด ไทเป 101/MRI) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item \textbf{ระดับพื้นฐาน:} จงหาผลเฉลยทั่วไปของสมการต่อไปนี้:
+    \begin{enumerate}
+        \item $\frac{d^2y}{dt^2} + 6\frac{dy}{dt} + 9y = 0$
+        \item $\frac{d^2y}{dt^2} + 4\frac{dy}{dt} + 20y = 0$
+    \end{enumerate}
+
+    \item \textbf{ระดับประยุกต์:} วงจรไฟฟ้า $RLC$ อนุกรมประกอบด้วย $L = 0.5\text{ H}$, $R = 20\,\Omega$ และ $C = 100\,\mu\text{F}$
+    \begin{enumerate}
+        \item วงจรนี้จัดอยู่ในสภาวะการหน่วงรูปแบบใด (Overdamped, Critically Damped หรือ Underdamped)
+        \item จงหาความถี่การแกว่ง $\omega_d$ และแฟกเตอร์คุณภาพ $Q$ ของวงจร
+    \end{enumerate}
+
+    \item \textbf{ระดับก้าวหน้า:} พิจารณาระบบมวล-สปริงที่มีความหน่วงถูกขับด้วยแรง $F(t) = F_0 \cos(\omega t)$ จงพิสูจน์อย่างละเอียดว่าความถี่ที่ทำให้แอมพลิจูดของการสั่นมีค่าสูงสุดคือ $\omega_R = \sqrt{\omega_0^2 - 2\beta^2}$ และแสดงว่าหาก $\beta \ge \omega_0/\sqrt{2}$ แอมพลิจูดจะมีค่าลดลงอย่างต่อเนื่องเมื่อความถี่ $\omega$ เพิ่มขึ้นโดยไม่เกิดยอดการสั่นพ้อง
+\end{enumerate}

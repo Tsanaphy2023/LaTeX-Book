@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+._*
+
+# LaTeX Auxiliary and Log Files
+*.aux
+*.log
+*.toc
+*.out
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.listing
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+texput.log
+:memory:.ses
+*.ses
+
+# Scratch and intermediate preview renders
+**/scratch/
+
+# Standalone repositories
+my_skill2026/

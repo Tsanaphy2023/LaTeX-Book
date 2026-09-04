@@ -1,0 +1,371 @@
+\chapter{แคลคูลัสเชิงปริพันธ์และทฤษฎีบทการแปลง}
+\index{แคลคูลัสเชิงปริพันธ์ (Integral calculus)}
+\index{ปริพันธ์ตามเส้น (Line integral)}
+\index{ปริพันธ์ตามพื้นผิว (Surface integral)}
+\index{ปริพันธ์ตามปริมาตร (Volume integral)}
+\index{จาโคเบียน (Jacobian determinant)}
+\index{ทฤษฎีบทของเกาส์ (Gauss's theorem)}
+\index{ทฤษฎีบทของสโตกส์ (Stokes's theorem)}
+\index{ฟลักซ์ไฟฟ้า (Electric flux)}
+\index{Line integral}
+\index{Surface integral}
+\index{Gauss's theorem}
+\index{Stokes's theorem}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item คำนวณปริพันธ์ตามเส้น ปริพันธ์ตามพื้นผิว และปริพันธ์ตามปริมาตรในระบบพิกัดต่าง ๆ ได้
+    \item แปลงตัวแปรในปริพันธ์หลายชั้นโดยใช้จาโคเบียน (Jacobian Determinant) ได้อย่างถูกต้อง
+    \item ประยุกต์ใช้ทฤษฎีบทการลู่ออกของเกาส์ (Gauss's Divergence Theorem) ในการคำนวณฟลักซ์และประจุไฟฟ้าได้
+    \item ประยุกต์ใช้ทฤษฎีบทของสโตกส์ (Stokes' Theorem) เชื่อมโยงสนามแม่เหล็กไฟฟ้าและการไหลวนในพลศาสตร์ของไหลได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{ปริพันธ์ตามเส้นและงานในกลศาสตร์}
+ในวิชาฟิสิกส์ การเคลื่อนที่ของอนุภาคภายใต้อิทธิพลของแรง $\vec{F}(\vec{r})$ ไปตามเส้นทางโค้ง $C$ ก่อให้เกิดปริมาณทางกายภาพที่สำคัญยิ่งคือ \textbf{งาน (Work)} ซึ่งคำนวณได้จากปริพันธ์ตามเส้น (Line Integral) ของสนามเวกเตอร์
+
+\subsection{นิยามของปริพันธ์ตามเส้น}
+ให้เส้นทางเดิน $C$ ในปริภูมิสามมิติกำหนดโดยเวกเตอร์ตำแหน่งตามพารามิเตอร์เวลา $\vec{r}(t) = x(t)\hat{i} + y(t)\hat{j} + z(t)\hat{k}$ เมื่อ $t_1 \le t \le t_2$ ปริพันธ์ตามเส้นของแรง $\vec{F}$ นิยามโดย:
+\begin{equation}
+W = \int_C \vec{F} \cdot d\vec{r} = \int_{t_1}^{t_2} \vec{F}(\vec{r}(t)) \cdot \frac{d\vec{r}}{dt} \, dt
+\end{equation}
+โดยที่ $d\vec{r} = dx\hat{i} + dy\hat{j} + dz\hat{k}$ จากกฎข้อที่สองของนิวตัน $\vec{F} = m\frac{d\vec{v}}{dt}$ จะได้ทฤษฎีบทงาน-พลังงานจลน์ (Work-Energy Theorem):
+\begin{equation}
+W = \int_{t_1}^{t_2} m\frac{d\vec{v}}{dt} \cdot \vec{v} \, dt = \frac{1}{2}m \int_{t_1}^{t_2} \frac{d}{dt}(v^2) \, dt = \frac{1}{2}mv_2^2 - \frac{1}{2}mv_1^2 = \Delta K
+\end{equation}
+
+\subsection{ทฤษฎีบทมูลฐานของปริพันธ์ตามเส้นและสนามอนุรักษ์}
+หากแรง $\vec{F}$ เป็นสนามอนุรักษ์ (Conservative Field) จะมีฟังก์ชันพลังงานศักย์สเกลาร์ $U(\vec{r})$ ซึ่ง $\vec{F} = -\nabla U$ ส่งผลให้ปริพันธ์ตามเส้นไม่ขึ้นกับเส้นทางเดิน แต่ขึ้นอยู่กับตำแหน่งเริ่มต้นและจุดสิ้นสุดเท่านั้น:
+\begin{equation}
+W = \int_A^B \vec{F} \cdot d\vec{r} = -\int_A^B \nabla U \cdot d\vec{r} = -\int_A^B dU = -(U(B) - U(A)) = -\Delta U
+\end{equation}
+นำไปสู่กฎการอนุรักษ์พลังงานกลรวม $\Delta K + \Delta U = 0 \iff E_{\text{mech}} = \text{คงที่}$
+
+\begin{maththeorem}[เงื่อนไขความเท่าเทียมกันของสนามอนุรักษ์]
+สำหรับสนามเวกเตอร์ $\vec{F}$ ที่นิยามบนโดเมนที่เชื่อมโยงแบบเชิงเดี่ยว (Simply Connected Domain) ข้อความต่อไปนี้สมมูลกันทุกประการ:
+\begin{enumerate}
+    \item $\vec{F}$ เป็นสนามอนุรักษ์ ($\vec{F} = -\nabla U$)
+    \item ปริพันธ์ตามเส้นจากจุด $A$ ไปยังจุด $B$ เป็นอิสระจากเส้นทางเดิน
+    \item ปริพันธ์ตามเส้นรอบวงปิดใด ๆ มีค่าเป็นศูนย์เสมอ:
+    \begin{equation}
+    \oint_C \vec{F} \cdot d\vec{r} = 0
+    \end{equation}
+    \item เคิร์ลของสนามเวกเตอร์เป็นศูนย์ทุกจุดในบริเวณนั้น: $\nabla \times \vec{F} = \vec{0}$
+\end{enumerate}
+\end{maththeorem}
+
+\section{ปริพันธ์หลายชั้นและการแปลงตัวแปรด้วยจาโคเบียน}
+การคำนวณมวลรวมของวัตถุที่มีความหนาแน่นไม่สม่ำเสมอ $\rho(\vec{r})$ จุดศูนย์กลางมวล หรือโมเมนต์ความเฉื่อย จำเป็นต้องหาปริพันธ์ตามปริมาตร:
+\begin{equation}
+M = \iiint_V \rho(x, y, z) \, dx\,dy\,dz
+\end{equation}
+เมื่อทำการเปลี่ยนตัวแปรจากพิกัดฉาก $(x, y, z)$ ไปสู่ระบบพิกัดเส้นโค้งเชิงตั้งฉาก $(u_1, u_2, u_3)$ ชิ้นส่วนปริมาตรจะถูกขยายหรือหดตัวด้วย \textbf{ดีเทอร์มิแนนต์ของจาโคเบียน (Jacobian Determinant)}:
+\begin{equation}
+dV = dx\,dy\,dz = |J| \, du_1\,du_2\,du_3
+\end{equation}
+โดยที่ดีเทอร์มิแนนต์จาโคเบียนนิยามเป็น:
+\begin{equation}
+J = \frac{\partial(x, y, z)}{\partial(u_1, u_2, u_3)} = \begin{vmatrix}
+\frac{\partial x}{\partial u_1} & \frac{\partial x}{\partial u_2} & \frac{\partial x}{\partial u_3} \\
+\frac{\partial y}{\partial u_1} & \frac{\partial y}{\partial u_2} & \frac{\partial y}{\partial u_3} \\
+\frac{\partial z}{\partial u_1} & \frac{\partial z}{\partial u_2} & \frac{\partial z}{\partial u_3}
+\end{vmatrix} = h_1 h_2 h_3
+\end{equation}
+\begin{itemize}
+    \item ในระบบพิกัดทรงกระบอก $(\rho, \phi, z)$: $J = \rho \implies dV = \rho \, d\rho \, d\phi \, dz$
+    \item ในระบบพิกัดทรงกลม $(r, \theta, \phi)$: $J = r^2\sin\theta \implies dV = r^2\sin\theta \, dr \, d\theta \, d\phi$
+\end{itemize}
+
+\begin{table}[htbp]
+    \centering
+    \caption{การเปรียบเทียบประเภทของปริพันธ์ในฟิสิกส์ ชิ้นส่วนเชิงอนุพันธ์ และตัวอย่างการประยุกต์}
+    \label{tab:integral_types_physics}
+    \begin{tabularx}{\textwidth}{p{3.0cm}p{2.2cm}p{3.8cm}Y}
+        \toprule
+        \textbf{ประเภทปริพันธ์} & \textbf{สัญลักษณ์} & \textbf{ชิ้นส่วนอนุพันธ์} & \textbf{ตัวอย่างการประยุกต์ในฟิสิกส์} \\
+        \midrule
+        \textbf{ปริพันธ์ตามเส้น} & $\int_C \vec{F} \cdot d\vec{r}$ & $d\vec{r} = dx\hat{i}+dy\hat{j}+dz\hat{k}$ & งานกลศาสตร์ $W$, ความต่างศักย์ $V$ \\
+        \textbf{ปริพันธ์วงปิด} & $\oint_C \vec{B} \cdot d\vec{r}$ & $d\vec{r} = \hat{t} ds$ & กฎของแอมแปร์ $\oint \vec{B}\cdot d\vec{r} = \mu_0 I_{\text{enc}}$ \\
+        \textbf{ปริพันธ์ตามพื้นผิว} & $\iint_S \vec{E} \cdot d\vec{a}$ & $d\vec{a} = \hat{n} da$ & ฟลักซ์ไฟฟ้า $\Phi_E$, ฟลักซ์แม่เหล็ก $\Phi_B$ \\
+        \textbf{ปริพันธ์ผิวปิด} & $\oiint_{\partial V} \vec{D} \cdot d\vec{a}$ & $d\vec{a} = \hat{n}_{\text{out}} da$ & กฎของเกาส์ $\oiint \vec{E}\cdot d\vec{a} = Q_{\text{enc}}/\epsilon_0$ \\
+        \textbf{ปริพันธ์ตามปริมาตร} & $\iiint_V \rho \, dV$ & $dV = |J|du_1 du_2 du_3$ & มวลรวม, ประจุรวม, โมเมนต์ความเฉื่อย \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{ปริพันธ์ตามพื้นผิวและฟลักซ์ทางฟิสิกส์}
+ฟลักซ์ (Flux) หมายถึงปริมาณการไหลของสนามเวกเตอร์ทะลุผ่านพื้นที่ผิวหนึ่งหน่วย ฟลักซ์สุทธิ $\Phi$ ของสนามเวกเตอร์ $\vec{A}$ ผ่านพื้นผิว $S$ นิยามโดย:
+\begin{equation}
+\Phi = \iint_S \vec{A} \cdot d\vec{a} = \iint_S \vec{A} \cdot \hat{n} \, da
+\end{equation}
+โดยที่ $\hat{n}$ คือเวกเตอร์หนึ่งหน่วยที่ตั้งฉากกับพื้นผิว สำหรับพื้นผิวปิด (Closed Surface) จะกำหนดให้ $\hat{n}$ มีทิศพุ่งออกจากปริมาตรภายในเสมอ
+
+\section{ทฤษฎีบทการลู่ออกของเกาส์}
+ทฤษฎีบทการลู่ออกของเกาส์ (Gauss's Divergence Theorem) เป็นหนึ่งในเสาหลักทางคณิตศาสตร์ฟิสิกส์ เชื่อมโยงพฤติกรรมเฉพาะที่ (ไดเวอร์เจนซ์ภายในเนื้อปริมาตร) เข้ากับพฤติกรรมโดยรวมที่ขอบเขต (ฟลักซ์สุทธิบนผิวปิด)
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Draw 3D Volume
+    \draw[very thick, fill=gray!10] (-2.5,0) to[out=90, in=180] (0,2.2) to[out=0, in=90] (2.8,0.5) to[out=-90, in=0] (0.5,-2.0) to[out=180, in=-90] (-2.5,0);
+    
+    % Volume label
+    \node[font=\large\bfseries] at (0, 0.2) {$V$};
+    \node[font=\small, slateGrey] at (0, -0.4) {$\iiint_V (\nabla \cdot \vec{F}) \, dV$};
+    
+    % Surface label
+    \node[font=\bfseries, physGeneric] at (2.2, 1.8) {$\partial V = S$};
+    
+    % Outward flux vectors with surface normal
+    \coordinate (S1) at (2.5, 0.8);
+    \draw[-{Stealth[scale=1.2]}, very thick, physForce] (S1) -- ($(S1)+(1.2, 0.4)$) node[right, font=\small] {$\vec{F}$};
+    \draw[-{Stealth[scale=1.1]}, thick, black] (S1) -- ($(S1)+(1.0, 0.7)$) node[above, font=\small] {$\hat{n}$};
+    \fill[black] (S1) circle (2pt);
+    
+    \coordinate (S2) at (-1.5, 1.8);
+    \draw[-{Stealth[scale=1.2]}, very thick, physForce] (S2) -- ($(S2)+(-0.8, 1.0)$) node[above left, font=\small] {$\vec{F}$};
+    \draw[-{Stealth[scale=1.1]}, thick, black] (S2) -- ($(S2)+(-0.6, 1.1)$) node[left, font=\small] {$\hat{n}$};
+    \fill[black] (S2) circle (2pt);
+    
+    \coordinate (S3) at (-0.2, -1.9);
+    \draw[-{Stealth[scale=1.2]}, very thick, physForce] (S3) -- ($(S3)+(0.2, -1.2)$) node[below, font=\small] {$\vec{F} \cdot d\vec{a}$};
+    \fill[black] (S3) circle (2pt);
+\end{tikzpicture}
+\caption{ทฤษฎีบทการลู่ออกของเกาส์: ผลรวมของแหล่งกำเนิดภายในปริมาตร $V$ ($\nabla \cdot \vec{F}$) เท่ากับฟลักซ์สุทธิที่พุ่งข้ามพื้นผิวปิด $\partial V$}
+\label{fig:gauss_divergence}
+\end{figure}
+
+\begin{maththeorem}[ทฤษฎีบทการลู่ออกของเกาส์]
+ถ้า $V$ เป็นปริมาตรในสามมิติที่ล้อมรอบด้วยพื้นผิวปิดเรียบเป็นช่วง ๆ $S = \partial V$ และ $\vec{F}$ เป็นสนามเวกเตอร์ที่มีอนุพันธ์ต่อเนื่อง:
+\begin{equation}
+\iiint_V (\nabla \cdot \vec{F}) \, dV = \oiint_{\partial V} \vec{F} \cdot d\vec{a}
+\end{equation}
+\end{maththeorem}
+
+ในวิชาแม่เหล็กไฟฟ้า ทฤษฎีบทนี้ใช้แปลงกฎของเกาส์ระหว่างรูปอนุพันธ์และรูปปริพันธ์:
+\begin{equation}
+\nabla \cdot \vec{E} = \frac{\rho}{\varepsilon_0} \iff \oiint_{\partial V} \vec{E} \cdot d\vec{a} = \iiint_V \frac{\rho}{\varepsilon_0} \, dV = \frac{Q_{\text{enc}}}{\varepsilon_0}
+\end{equation}
+และกฎของเกาส์สำหรับสนามแม่เหล็ก:
+\begin{equation}
+\nabla \cdot \vec{B} = 0 \iff \oiint_{\partial V} \vec{B} \cdot d\vec{a} = 0
+\end{equation}
+ซึ่งยืนยันว่าในธรรมชาติไม่มีขั้วแม่เหล็กเดี่ยว (Magnetic Monopole) เส้นแรงแม่เหล็กจึงเป็นวงปิดเสมอ
+
+\section{ทฤษฎีบทของสโตกส์และทฤษฎีบทของกรีน}
+ทฤษฎีบทของสโตกส์ (Stokes' Theorem) เชื่อมโยงการไหลเวียนตามแนวเส้นรอบวงปิด เข้ากับเคิร์ลของสนามที่ทะลุผ่านแผ่นพื้นผิวใด ๆ ที่มีวงปิดนั้นเป็นขอบเขต
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Curved 3D surface
+    \draw[thick, fill=blue!10, fill opacity=0.6] (-3,0) to[out=30, in=150] (3,0) to[out=-30, in=0] (0,-1.5) to[out=180, in=-150] (-3,0);
+    
+    % Surface S
+    \node[font=\bfseries\large, physVelocity] at (0, -0.3) {$S$};
+    
+    % Boundary curve C
+    \draw[ultra thick, physForce, -{Stealth[scale=1.3]}] (1.5, -1.2) -- (2.0, -0.8);
+    \draw[ultra thick, physForce, -{Stealth[scale=1.3]}] (-1.0, 0.45) -- (-0.2, 0.5);
+    \node[font=\bfseries, physForce] at (2.8, -1.0) {$C = \partial S$};
+    
+    % Surface normal and Curl
+    \coordinate (P) at (0.5, 0.1);
+    \fill[black] (P) circle (2pt);
+    \draw[-{Stealth[scale=1.2]}, very thick, physAccel] (P) -- ($(P)+(0, 1.8)$) node[above, font=\small\bfseries] {$\nabla \times \vec{F}$};
+    \draw[-{Stealth[scale=1.1]}, thick, black] (P) -- ($(P)+(0.4, 1.6)$) node[right, font=\small] {$\hat{n}$};
+    
+    % Micro circulation loop
+    \draw[thick, slateGrey, -{Stealth[scale=1.0]}] ($(P)+(0.3, -0.2)$) arc (0:330:0.35cm and 0.2cm);
+\end{tikzpicture}
+\caption{ทฤษฎีบทของสโตกส์: การไหลเวียนตามแนววงปิด $\oint_C \vec{F} \cdot d\vec{r}$ เท่ากับฟลักซ์ของเคิร์ล $(\nabla \times \vec{F}) \cdot d\vec{a}$ ที่ทะลุผ่านพื้นผิวเปิด $S$ ใด ๆ ที่มีขอบเขตเป็น $C$}
+\label{fig:stokes_theorem}
+\end{figure}
+
+\begin{maththeorem}[ทฤษฎีบทของสโตกส์]
+ถ้า $S$ เป็นพื้นผิวเปิดในปริภูมิสามมิติที่มีขอบเขตเป็นเส้นโค้งปิดเรียบเป็นช่วง ๆ $C = \partial S$ ทิศทางการเดินรอบ $C$ สัมพันธ์กับเวกเตอร์แนวฉาก $\hat{n}$ ตามกฎมือขวา:
+\begin{equation}
+\oint_{\partial S} \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{a}
+\end{equation}
+\end{maththeorem}
+
+หากพิจารณาในระนาบสองมิติ $xy$ โดย $d\vec{a} = dx\,dy\,\hat{k}$ และ $\vec{F} = P(x, y)\hat{i} + Q(x, y)\hat{j}$ ทฤษฎีบทของสโตกส์จะลดรูปกลายเป็น \textbf{ทฤษฎีบทของกรีนในระนาบ (Green's Theorem in the Plane)}:
+\begin{equation}
+\oint_C (P\,dx + Q\,dy) = \iint_R \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dx\,dy
+\end{equation}
+
+ในวิชาแม่เหล็กไฟฟ้า ทฤษฎีบทของสโตกส์ใช้แปลงกฎการเหนี่ยวนำของฟาราเดย์:
+\begin{equation}
+\nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t} \iff \oint_{\partial S} \vec{E} \cdot d\vec{r} = -\frac{d}{dt}\iint_S \vec{B} \cdot d\vec{a} = -\frac{d\Phi_B}{dt} = \mathcal{E}
+\end{equation}
+ซึ่งอธิบายการทำงานของเครื่องกำเนิดไฟฟ้า ไดนาโม และหม้อแปลงไฟฟ้ากำลังสูง
+
+\section{การประยุกต์ใช้ในฟิสิกส์ วิทยาศาสตร์ และวิศวกรรมศาสตร์}
+\subsection{การคำนวณฟลักซ์รังสีอาทิตย์บนแผงโซลาร์เซลล์}
+ฟลักซ์พลังงานแสงอาทิตย์ที่ตกกระทบบนแผงเซลล์แสงอาทิตย์พื้นที่ $A$ ขึ้นอยู่กับมุมตกกระทบระหว่างเวกเตอร์หนึ่งหน่วยแนวฉากของแผง $\hat{n}$ และเวกเตอร์รังสีอาทิตย์ (Poynting Vector $\vec{S}_{\text{solar}}$):
+\begin{equation}
+P_{\text{solar}} = \iint_A \vec{S}_{\text{solar}} \cdot d\vec{a} = |\vec{S}_{\text{solar}}| A \cos\theta
+\end{equation}
+โดยที่ $\theta$ คือมุมระหว่างแสงอาทิตย์กับแนวฉากของแผง วิศวกรพลังงานทดแทนจึงออกแบบระบบติดตามดวงอาทิตย์ (Solar Tracking System) ที่ปรับหมุนเวกเตอร์ $\hat{n}$ ให้ขนานกับ $\vec{S}$ ตลอดทั้งวัน ($\theta = 0, \cos\theta = 1$) เพื่อให้เกิดพลังงานไฟฟ้าสูงสุด
+
+\subsection{แรงยกอากาศพลศาสตร์และทฤษฎีบทคัตตา-จูคอฟสกี}
+ในวิศวกรรมการบินและพลศาสตร์ของไหล แรงยกต่อหนึ่งหน่วยความยาวปีกเครื่องบิน $L'$ คำนวณได้จากปริพันธ์การไหลเวียน (Circulation) ของความเร็วลมรอบปีกเครื่องบิน:
+\begin{equation}
+\Gamma = \oint_C \vec{v} \cdot d\vec{r}
+\end{equation}
+ตาม \textbf{ทฤษฎีบทคัตตา-จูคอฟสกี (Kutta-Joukowski Theorem)}:
+\begin{equation}
+L' = \rho_\infty v_\infty \Gamma
+\end{equation}
+เมื่อ $\rho_\infty$ คือความหนาแน่นอากาศ และ $v_\infty$ คือความเร็วการบินสัมพัทธ์ การออกแบบปีกเครื่องบินแอร์ฟอยล์ (Airfoil) จึงเป็นการควบคุมปริพันธ์ตามเส้น $\Gamma$ ให้มีค่าเพียงพอที่จะยกลำเครื่องบินขึ้นสู่อากาศได้
+
+\section{ตัวอย่างโจทย์และการแก้ปัญหาอย่างเป็นระบบ}
+
+\begin{mathexample}[การคำนวณประจุไฟฟ้าสะสมในกลุ่มเมฆพายุฟ้าคะนองด้วยทฤษฎีบทเกาส์]
+\textbf{โจทย์:} ในการศึกษาปรากฏการณ์ฟ้าผ่า นักอุตุนิยมวิทยาตรวจวัดสนามไฟฟ้าภายในก้อนเมฆพายุฟ้าคะนองทรงกลมรัศมี $R = 2\text{ km}$ พบว่าการกระจายตัวของสนามไฟฟ้าในระบบพิกัดทรงกลมเป็น:
+\begin{equation}
+\vec{E}(r) = E_0 \left(\frac{r}{R}\right)^2 \hat{r}
+\end{equation}
+เมื่อ $E_0 = 1.0 \times 10^5\text{ V/m}$ และ $\varepsilon_0 \approx 8.854 \times 10^{-12}\text{ C}^2/(\text{N}\cdot\text{m}^2)$
+\begin{enumerate}
+    \item จงคำนวณฟลักซ์ไฟฟ้าสุทธิที่พุ่งออกจากพื้นผิวทรงกลมของก้อนเมฆ
+    \item จงหาประจุไฟฟ้ารวม $Q_{\text{enc}}$ ภายในก้อนเมฆพายุ
+    \item จงหาความหนาแน่นประจุเชิงปริมาตร $\rho(r)$ ภายในก้อนเมฆโดยใช้รูปอนุพันธ์
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{PICTURE:} ก้อนเมฆพายุจำลองเป็นทรงกลมรัศมี $R$ มีศูนย์กลางอยู่ที่จุดกำเนิด สนามไฟฟ้าพุ่งออกตามแนวรัศมี $\hat{r}$ โดยมีความเข้มเพิ่มขึ้นเป็นสัดส่วนกับ $r^2$ บนผิวทรงกลม $r=R$ เวกเตอร์แนวฉาก $\hat{n} = \hat{r}$
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. คำนวณฟลักซ์ไฟฟ้าสุทธิผ่านพื้นผิวทรงกลม $r = R$:
+บนผิวทรงกลม $r = R$ สนามไฟฟ้ามีค่าสม่ำเสมอเท่ากับ $\vec{E}(R) = E_0\hat{r}$ ชิ้นส่วนพื้นที่คือ $d\vec{a} = R^2\sin\theta\,d\theta\,d\phi\,\hat{r}$:
+\begin{equation}
+\Phi_E = \oiint_{r=R} \vec{E} \cdot d\vec{a} = E_0 \oiint_{r=R} da = E_0 (4\pi R^2) = 4\pi E_0 R^2
+\end{equation}
+แทนค่าตัวเลข ($R = 2000\text{ m}$):
+\begin{equation}
+\Phi_E = 4\pi (1.0 \times 10^5)(2000)^2 = 4\pi (10^5)(4 \times 10^6) = 1.6\pi \times 10^{12} \approx 5.027 \times 10^{12}\text{ V}\cdot\text{m}
+\end{equation}
+
+2. หาประจุไฟฟ้ารวมภายในก้อนเมฆจากกฎของเกาส์ $\Phi_E = \frac{Q_{\text{enc}}}{\varepsilon_0}$:
+\begin{equation}
+Q_{\text{enc}} = \varepsilon_0 \Phi_E = (8.854 \times 10^{-12})(1.6\pi \times 10^{12}) = 14.17\pi \approx 44.51\text{ คูลอมบ์ (C)}
+\end{equation}
+
+3. หาความหนาแน่นประจุ $\rho(r)$ จากไดเวอร์เจนซ์ของสนามไฟฟ้าในพิกัดทรงกลม:
+\begin{equation}
+\nabla \cdot \vec{E} = \frac{1}{r^2}\frac{\partial}{\partial r}(r^2 E_r) = \frac{1}{r^2}\frac{\partial}{\partial r}\left[ r^2 \cdot E_0 \frac{r^2}{R^2} \right] = \frac{E_0}{R^2 r^2}\frac{\partial}{\partial r}(r^4) = \frac{E_0}{R^2 r^2}(4r^3) = \frac{4E_0 r}{R^2}
+\end{equation}
+จากสมการของแมกซ์เวลล์ $\nabla \cdot \vec{E} = \frac{\rho}{\varepsilon_0}$ จะได้:
+\begin{equation}
+\rho(r) = \varepsilon_0 (\nabla \cdot \vec{E}) = \frac{4\varepsilon_0 E_0 r}{R^2} \quad (\text{C/m}^3)
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ทำการอินทิเกรตความหนาแน่นประจุ $\rho(r)$ ทั่วทั้งปริมาตรเพื่อตรวจสอบความสอดคล้องกับทฤษฎีบทการลู่ออก:
+\begin{align}
+Q_{\text{enc}} &= \iiint_V \rho(r) \, dV = \int_0^R \frac{4\varepsilon_0 E_0 r}{R^2} (4\pi r^2 dr) = \frac{16\pi \varepsilon_0 E_0}{R^2} \int_0^R r^3 dr \\
+&= \frac{16\pi \varepsilon_0 E_0}{R^2} \left(\frac{R^4}{4}\right) = 4\pi \varepsilon_0 E_0 R^2
+\end{align}
+ซึ่งตรงกับ $Q_{\text{enc}} = \varepsilon_0 \Phi_E$ ที่คำนวณจากปริพันธ์ผิวอย่างสมบูรณ์แบบ\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การคำนวณฟลักซ์ไฟฟ้าและปริพันธ์ปริมาตรความหนาแน่นประจุ]
+import numpy as np
+from scipy.integrate import quad
+
+# กำหนดพารามิเตอร์ทางฟิสิกส์
+R = 2000.0            # รัศมีก้อนเมฆพายุ (m)
+E0 = 1.0e5            # ขนาดสนามไฟฟ้าที่ผิวเมฆ (V/m)
+eps0 = 8.8541878e-12  # ค่าสภาพยอมสุญญากาศ (C^2/(N*m^2))
+
+# 1. ฟลักซ์ไฟฟ้าสุทธิผ่านผิวทรงกลมและประจุจากกฎของเกาส์
+Phi_E = 4 * np.pi * E0 * (R**2)
+Q_enc_gauss = eps0 * Phi_E
+
+# 2. ปริพันธ์เชิงปริมาตรของความหนาแน่นประจุ rho(r) * 4*pi*r^2 dr
+def charge_integrand(r):
+    rho = (4.0 * eps0 * E0 * r) / (R**2)
+    return rho * 4.0 * np.pi * (r**2)
+
+Q_enc_integral, _ = quad(charge_integrand, 0, R)
+
+print(f"ฟลักซ์ไฟฟ้าสุทธิ Phi_E: {Phi_E:.4e} V*m")
+print(f"ประจุไฟฟ้ารวมจากกฎของเกาส์: {Q_enc_gauss:.4f} C")
+print(f"ประจุรวมจากการอินทิเกรตปริมาตร: {Q_enc_integral:.4f} C")
+print(f"ความสอดคล้องของผลลัพธ์: ผลต่าง = {abs(Q_enc_gauss - Q_enc_integral):.2e} C")
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การคำนวณการเหนี่ยวนำแม่เหล็กไฟฟ้าในวงลวดหมุนด้วยทฤษฎีบทของสโตกส์]
+\textbf{โจทย์:} ขดลวดวงกลมระนาบรัศมี $b$ วางอยู่ในบริเวณที่มีสนามแม่เหล็กแปรผันตามเวลา $\vec{B}(t) = B_0 \cos(\omega t) \hat{k}$ จงคำนวณแรงเคลื่อนไฟฟ้าเหนี่ยวนำ $\mathcal{E}$ รอบวงลวดขอบเขต $C$ โดยใช้ทฤษฎีบทของสโตกส์
+
+\vspace{0.2cm}
+\textbf{PICTURE:} วงลวดวงกลมวางในระนาบ $xy$ มีเวกเตอร์แนวฉาก $\hat{n} = \hat{k}$ เส้นทางเดิน $C$ ทวนเข็มนาฬิกา พื้นที่หน้าตัดคือแผ่นวงกลม $S$ รัศมี $b$
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+จากกฎการเหนี่ยวนำของฟาราเดย์ในรูปอนุพันธ์ $\nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t}$
+ใช้ทฤษฎีบทของสโตกส์แปลงปริพันธ์ของเคิร์ลเป็นแรงเคลื่อนไฟฟ้าเหนี่ยวนำ $\mathcal{E} = \oint_C \vec{E} \cdot d\vec{r}$:
+\begin{align}
+\mathcal{E} &= \oint_C \vec{E} \cdot d\vec{r} = \iint_S (\nabla \times \vec{E}) \cdot d\vec{a} = \iint_S \left(-\frac{\partial \vec{B}}{\partial t}\right) \cdot (\hat{k} \, da) \\
+&= -\iint_S \left( -B_0 \omega \sin(\omega t) \hat{k} \right) \cdot \hat{k} \, da = B_0 \omega \sin(\omega t) \iint_S da \\
+&= B_0 \omega \sin(\omega t) (\pi b^2) = \pi b^2 B_0 \omega \sin(\omega t) \quad (\text{โวลต์})
+\end{align}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ฟลักซ์แม่เหล็ก $\Phi_B = \iint \vec{B} \cdot d\vec{a} = B_0 \cos(\omega t) (\pi b^2)$ เมื่อหาอนุพันธ์เทียบกับเวลา $\mathcal{E} = -\frac{d\Phi_B}{dt} = -(-B_0 \omega \sin(\omega t)\pi b^2) = \pi b^2 B_0 \omega \sin(\omega t)$ ได้ผลลัพธ์ตรงกันอย่างแท้จริง\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  แรงเคลื่อนไฟฟ้าเหนี่ยวนำฟาราเดย์และฟลักซ์แม่เหล็ก]
+import numpy as np
+
+# พารามิเตอร์ขดลวดและสนามแม่เหล็ก
+b = 0.10        # รัศมีขดลวด 10 cm (0.10 m)
+B0 = 0.50       # ความเข้มสนามแม่เหล็กสูงสุด (Tesla)
+freq = 50.0     # ความถี่ไฟฟ้า 50 Hz
+omega = 2.0 * np.pi * freq
+area = np.pi * (b**2)
+
+# คำนวณแรงเคลื่อนไฟฟ้าเหนี่ยวนำสูงสุด (Peak EMF)
+emf_peak = area * B0 * omega
+print(f"พื้นที่หน้าตัดขดลวด A = {area * 1e4:.2f} cm^2")
+print(f"ความถี่เชิงมุม omega = {omega:.2f} rad/s")
+print(f"แรงเคลื่อนไฟฟ้าเหนี่ยวนำสูงสุด: {emf_peak:.4f} โวลต์ (V)")
+
+# คำนวณค่า RMS
+emf_rms = emf_peak / np.sqrt(2)
+print(f"แรงเคลื่อนไฟฟ้าเหนี่ยวนำยังผล (RMS EMF): {emf_rms:.4f} โวลต์ (V)")
+\end{pythonbox}
+\end{mathexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+\begin{table}[H]
+\centering
+\caption{สรุปทฤษฎีบทการแปลงเชิงปริพันธ์และบทบาทในฟิสิกส์}
+\label{tab:ch07_summary}
+\begin{tabularx}{\textwidth}{p{3.2cm}p{5.8cm}Y}
+\toprule
+\textbf{ทฤษฎีบท} & \textbf{รูปสมการทางคณิตศาสตร์} & \textbf{กฎฟิสิกส์ที่เกี่ยวข้อง} \\
+\midrule
+มูลฐานปริพันธ์ตามเส้น & $\int_A^B \nabla f \cdot d\vec{r} = f(B) - f(A)$ & ทฤษฎีบทงาน-พลังงาน ศักย์อนุรักษ์ \\
+ทฤษฎีบทกรีน & $\oint_C (Pdx + Qdy) = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)dA$ & การคำนวณพื้นที่และงานใน 2 มิติ \\
+ทฤษฎีบทเกาส์ & $\iiint_V (\nabla \cdot \vec{F}) \, dV = \oiint_{\partial V} \vec{F} \cdot d\vec{a}$ & กฎของเกาส์ไฟฟ้า กฎความต่อเนื่องของไหล \\
+ทฤษฎีบทสโตกส์ & $\iint_S (\nabla \times \vec{F}) \cdot d\vec{a} = \oint_{\partial S} \vec{F} \cdot d\vec{r}$ & กฎฟาราเดย์ กฎแอมแปร์-แมกซ์เวลล์ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item \textbf{ระดับพื้นฐาน:} กำหนดสนามเวกเตอร์ $\vec{F} = 3x^2 y \hat{i} + x^3 \hat{j}$
+    \begin{enumerate}
+        \item จงตรวจสอบว่าสนามนี้เป็นสนามอนุรักษ์หรือไม่โดยการคำนวณ $\nabla \times \vec{F}$
+        \item จงหาฟังก์ชันพลังงานศักย์สเกลาร์ $U(x, y)$ ที่สอดคล้องกับ $\vec{F} = -\nabla U$
+        \item จงคำนวณงานในการเคลื่อนที่อนุภาคจาก $(0,0)$ ไปยัง $(2,3)$
+    \end{enumerate}
+
+    \item \textbf{ระดับประยุกต์:} กำหนดสนามเวกเตอร์ $\vec{A} = 2xy\hat{i} + yz^2\hat{j} + xz\hat{k}$ และ $V$ คือทรงลูกบาศก์หนึ่งหน่วย $0 \le x \le 1, 0 \le y \le 1, 0 \le z \le 1$ จงคำนวณฟลักซ์สุทธิ $\oiint_{\partial V} \vec{A} \cdot d\vec{a}$ โดยใช้ทฤษฎีบทการลู่ออกของเกาส์
+
+    \item \textbf{ระดับก้าวหน้า:} จงใช้ทฤษฎีบทของสโตกส์ในการคำนวณงานรอบวงปิด $\oint_C \vec{F} \cdot d\vec{r}$ เมื่อ $\vec{F} = (y - z)\hat{i} + (z - x)\hat{j} + (x - y)\hat{k}$ และ $C$ คือวงรีที่เกิดจากการตัดกันของทรงกระบอก $x^2 + y^2 = 1$ กับระนาบ $x + z = 1$ ในทิศทวนเข็มนาฬิกาเมื่อมองจากด้านบนแกน $z$
+\end{enumerate}

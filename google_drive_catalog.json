@@ -1,0 +1,423 @@
+{
+  "project_title": "Latex-2025 Project",
+  "workspace_target": "Latex2026",
+  "owner": {
+    "name": "chewa.t",
+    "email": "chewa.t@rbru.ac.th",
+    "institution": "มหาวิทยาลัยราชภัฏรำไพพรรณี (Rambhai Barni Rajabhat University)",
+    "domain": "rbru.ac.th"
+  },
+  "root_google_drive": {
+    "folder_id": "1KoQFuMCyeBISNVKdenKzrIlFbLbTI1Ko",
+    "url": "https://drive.google.com/drive/folders/1KoQFuMCyeBISNVKdenKzrIlFbLbTI1Ko?usp=sharing"
+  },
+  "modules": [
+    {
+      "name": "Mathematics_for_Physics_Thai",
+      "type": "Textbook",
+      "language": "Thai",
+      "folder_id": "19tnEqexZXVO4hEyt1EZ3-8Q61dknuZNF",
+      "inner_folder_id": "1ZRCATM7yEeYqYzJ0czUKBVJm9G_8J_-8",
+      "url": "https://drive.google.com/drive/folders/19tnEqexZXVO4hEyt1EZ3-8Q61dknuZNF",
+      "compiled_pdf": {
+        "file_name": "main.pdf",
+        "file_id": "1bA8fNWuZHcsrnTG8MwqanXB-AR-jyKog",
+        "view_url": "https://drive.google.com/file/d/1bA8fNWuZHcsrnTG8MwqanXB-AR-jyKog/view"
+      },
+      "subfolders": {
+        "assets": "1KMoqfaOtKZgM49msIEP2sQ63OWI1EFak",
+        "frontmatter": "1b_eLt4danV9X2o4alNofGoxJaT2M-jHm",
+        "styles": "1W-z2caYGIPTRnAdHzLhMg4X7DjhJBnOP",
+        "chapters": "1zPTWHACimH7kv4AGaRyQ7hhcKiKjBqFZ"
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "name": "chapter1_coordinate_systems",
+          "title_th": "ระบบพิกัด (Coordinate Systems)",
+          "folder_id": "12VsZzRL75kkGMQYBYB-JQAlHRKN8N62m"
+        },
+        {
+          "chapter": 2,
+          "name": "chapter2_vectors",
+          "title_th": "เวกเตอร์และการวิเคราะห์เวกเตอร์ (Vectors)",
+          "folder_id": "1HzBkgE1UiZkZ3FWc9hV0tHJFj6pXuNFJ"
+        },
+        {
+          "chapter": 3,
+          "name": "chapter3_basic_series",
+          "title_th": "อนุกรมพื้นฐาน (Basic Series)",
+          "folder_id": "1wL6MyAEoCB3eKsIJ8_9o2_JThnIVFLQM"
+        },
+        {
+          "chapter": 4,
+          "name": "chapter4_complex_numbers",
+          "title_th": "จำนวนเชิงซ้อน (Complex Numbers)",
+          "folder_id": "1qFGSkOQJNwInsiBGgmGrYiy27v0sMEmi"
+        },
+        {
+          "chapter": 5,
+          "name": "chapter5_matrices",
+          "title_th": "เมทริกซ์และพีชคณิตเชิงเส้น (Matrices)",
+          "folder_id": "1to9Cw2-FFhqW0slpA3IK4O_A8ZCp2PZn"
+        },
+        {
+          "chapter": 6,
+          "name": "chapter6_derivatives",
+          "title_th": "แคลคูลัสเชิงอนุพันธ์ (Derivatives)",
+          "folder_id": "1gDaiUrnCn2x-9qw1yFy77SvUlZ9Xv-xw"
+        },
+        {
+          "chapter": 7,
+          "name": "chapter7_integrals",
+          "title_th": "แคลคูลัสเชิงปริพันธ์ (Integrals)",
+          "folder_id": "1sFHCTmeBpQqOqa9-UW2SKq3ZGxJ5552F"
+        },
+        {
+          "chapter": 8,
+          "name": "chapter8_ode",
+          "title_th": "สมการเชิงอนุพันธ์สามัญอันดับหนึ่ง (ODEs)",
+          "folder_id": "1KpEGhzhOLFkAjUozkVw9LRU0tiXkYXoV"
+        },
+        {
+          "chapter": 9,
+          "name": "chapter9_second_order_odes",
+          "title_th": "สมการเชิงอนุพันธ์สามัญอันดับสอง (Second-Order ODEs)",
+          "folder_id": "17J3C_II2cJoPMf04ivpIt2kctVapqK9J"
+        }
+      ]
+    },
+    {
+      "name": "Mathematics_for_Physics_Eng",
+      "type": "Textbook",
+      "language": "English",
+      "folder_id": "1bKv91GbbTWlGHvhZVLAEmnheycCxSEpV",
+      "inner_folder_id": "1Ahoy-w-9F_5OZU9ndZcJfYkNzEVzDMxw",
+      "url": "https://drive.google.com/drive/folders/1bKv91GbbTWlGHvhZVLAEmnheycCxSEpV",
+      "subfolders": {
+        "assets": "11ODy5geH7KmIqaNy9xweaBYarhkD3Nac",
+        "styles": "1OiqH1XvkYEPVZmTq01-asrwysMeo4n-4",
+        "chapters": "1tQkLMTGHROZM-Ez0vlJQUImgTyYWKRN6"
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "name": "chapter1_coordinate_systems",
+          "title_en": "Coordinate Systems",
+          "folder_id": "1rRpOdGlS9UEleu0gJBvFtRjAnRygiEPP"
+        },
+        {
+          "chapter": 2,
+          "name": "chapter2_vectors",
+          "title_en": "Vectors and Vector Analysis",
+          "folder_id": "16nBOgx_9bijZKuTZ5D47W9vYf7wbfa-t"
+        },
+        {
+          "chapter": 3,
+          "name": "chapter3_basic_series",
+          "title_en": "Basic Series",
+          "folder_id": "1PcHFFg1b6dktiEi2XIN491CGCURYAnZR"
+        },
+        {
+          "chapter": 4,
+          "name": "chapter4_complex_numbers",
+          "title_en": "Complex Numbers",
+          "folder_id": "1BCTye_xOv2flFChRQ7vlvrSptaqJPS_j"
+        },
+        {
+          "chapter": 5,
+          "name": "chapter5_matrices",
+          "title_en": "Matrices and Linear Algebra",
+          "folder_id": "1YVfqzaSeXq3LCSfzYLwrJAXlweLmjz3C"
+        },
+        {
+          "chapter": 6,
+          "name": "chapter6_derivatives",
+          "title_en": "Differential Calculus",
+          "folder_id": "1nc1fSwjHX7OByZUlAn9QIdXISxY_U1IU"
+        },
+        {
+          "chapter": 7,
+          "name": "chapter7_integrals",
+          "title_en": "Integral Calculus",
+          "folder_id": "1wM4OTQa4I3AUtgkEWNmLhRiLKxQ1LNjz"
+        },
+        {
+          "chapter": 8,
+          "name": "chapter8_ode",
+          "title_en": "First-Order Ordinary Differential Equations",
+          "folder_id": "1kqhqk5pAwTdU1jJxfCyCoTwrrgFA31WT"
+        },
+        {
+          "chapter": 9,
+          "name": "chapter9_second_order_odes",
+          "title_en": "Second-Order Ordinary Differential Equations",
+          "folder_id": "1f17uYqBOWypDPPkycRbhvP1xjOJfV3nA"
+        }
+      ]
+    },
+    {
+      "name": "Modern_Physics_with_AR_XR_Python",
+      "type": "Textbook / Interactive Manual",
+      "language": "Thai / English Hybrid",
+      "folder_id": "1jPF1wvO4uaJXWzl4lCXUqriYE5BAj6by",
+      "inner_folder_id": "1TrQywCz5OPsjGzic3vbEEjNxj91rWvJK",
+      "url": "https://drive.google.com/drive/folders/1jPF1wvO4uaJXWzl4lCXUqriYE5BAj6by",
+      "compiled_pdf": {
+        "file_name": "main.pdf",
+        "file_id": "13KlncT5qHyjMThhkJsVNii5TEuSr8mfT",
+        "view_url": "https://drive.google.com/file/d/13KlncT5qHyjMThhkJsVNii5TEuSr8mfT/view"
+      },
+      "subfolders": {
+        "assets": "1cQe6ktnAYeFHI3T-v_JhMfrbHaCJexPb",
+        "frontmatter": "1Hg_fvAQak_33jx5Xin2oALyQg0y94QUH",
+        "styles": "1ihMICMnUpo4EN05YnRAryEND06itznYP",
+        "chapters": "1pk9W_htuJ0U1liaqFYXyUPKlktjYu2v1"
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "name": "chapter1_special_relativity",
+          "title_th": "ทฤษฎีสัมพัทธภาพพิเศษ (Special Relativity)",
+          "folder_id": "14v6_U4h1_pqPr7qzV6OFQAxeF6oPkSnj"
+        },
+        {
+          "chapter": 2,
+          "name": "chapter2_quantum_mechanics",
+          "title_th": "กลศาสตร์ควอนตัม (Quantum Mechanics)",
+          "folder_id": "15CTmdO7W3XQpk2xIz6XQhzFPgufd8SOi"
+        },
+        {
+          "chapter": 3,
+          "name": "chapter3_particle_physics",
+          "title_th": "ฟิสิกส์ของอนุภาค (Particle Physics)",
+          "folder_id": "1c6B-6DfRaQjAaAyofmlnyDgKSiF-WzsE"
+        },
+        {
+          "chapter": 4,
+          "name": "chapter4_ar_xr_frameworks",
+          "title_th": "สถาปัตยกรรม AR/XR เพื่อการศึกษาฟิสิกส์ (AR/XR Frameworks)",
+          "folder_id": "14pf67ENv0UUvUcVlISVr7v_AqpsDp_mN"
+        },
+        {
+          "chapter": 5,
+          "name": "chapter5_nuclear_physics",
+          "title_th": "ฟิสิกส์นิวเคลียร์ (Nuclear Physics)",
+          "folder_id": "1G2iFjBWh76Si7yymyU2Tz8S7KbJMCfSt"
+        },
+        {
+          "chapter": 6,
+          "name": "chapter6_quantum_computing",
+          "title_th": "การคำนวณควอนตัม (Quantum Computing)",
+          "folder_id": "185tsgMaWHUtuhGxdhvlfgOINFQPAMd_u"
+        },
+        {
+          "chapter": 7,
+          "name": "chapter7_astrophysics",
+          "title_th": "ดาราศาสตร์ฟิสิกส์ (Astrophysics)",
+          "folder_id": "1k4aJrkACWu8OqNVkmEMtQGo454HMTfvF"
+        }
+      ]
+    },
+    {
+      "name": "OpenXR_STEM_Book",
+      "type": "Monograph / Educational Framework",
+      "folder_id": "1bsATvQ8KMg5Z6Gr3cmFHwfQ02JUle6sI",
+      "url": "https://drive.google.com/drive/folders/1bsATvQ8KMg5Z6Gr3cmFHwfQ02JUle6sI",
+      "subfolders": {
+        "assets": "1YRF694AslpR1YucbOzRToCCMgBypdPze",
+        "chapters": "1xVBVGkM8RLMIvHy8cSgv0Ie3uoVRpio6",
+        "frontmatter": "1qiX68Ipg7M6Hn07XsjOVuZTwP9ykzxy0",
+        "images": "1D_Pqf2R6wJ5Vf5Hx9J2cObxNRnh8BA7t",
+        "python_code": "19Uv3EjRjIlm3NscBuqJHF_F27j2IatL_"
+      }
+    },
+    {
+      "name": "ARwithAI_manual",
+      "type": "Technical Manual",
+      "folder_id": "16JC_gWrid2L_ziUUyuLy1FtH23DsVn-9",
+      "url": "https://drive.google.com/drive/folders/16JC_gWrid2L_ziUUyuLy1FtH23DsVn-9",
+      "subfolders": {
+        "assets": "1m-bBL39W2E63RguLLJYWlZ__6PsfExvD",
+        "chapters": "13mOFf1fjvfJbdsQg9VoRmBJXcH9D1DlU",
+        "frontmatter": "1i0IG_SeBf7DISSWgbMmM-jz9XjoSv24q",
+        "images": "1-V0DoWaQBCjb_27x2c1b9MGzU1O465Ma",
+        "python_code": "1M1Zs2_0sOmvDkt7YO2gtGbRn82PNsUmL"
+      }
+    },
+    {
+      "name": "Mathematics_for_Physics_III",
+      "type": "Advanced Course Book",
+      "folder_id": "1aASZVL-47TJHZ0r9mO807Sukp1b35icr",
+      "url": "https://drive.google.com/drive/folders/1aASZVL-47TJHZ0r9mO807Sukp1b35icr",
+      "subfolders": {
+        "assets": "1v9f4vJhauZmdusGkhjNSRSLj996aV8r0",
+        "chapters": "1-NLk3iVWnLufv7yfpTcndgwSJkZXf0Xo",
+        "frontmatter": "1ScSWIlN11SriPZB3cGErH6cz_-CkhP6r",
+        "images": "1EHC87MpaX4Fq6u9FUws6h-oiPJ-y5u3f",
+        "python_code": "1Iv9UH-eHALqLutH6C5rKmDrp2Uz46Djd"
+      }
+    },
+    {
+      "name": "physics",
+      "type": "University Monograph",
+      "folder_id": "12mnxgEPV4W3PtxEyTyXt8jVoPcx3bPi7",
+      "url": "https://drive.google.com/drive/folders/12mnxgEPV4W3PtxEyTyXt8jVoPcx3bPi7",
+      "subfolders": {
+        "appendices": "1OF5YN0OeF7qSCXCvU_Nfm2l0fi5-6qWt",
+        "bibliography": "1qXAIgWCZcQZKsRgd4IxmIQrWm_WIDf76",
+        "chapters": "1F96vy646jJB8hXGDKRtsDDbQYAo3pQM8",
+        "cover": "1gxC75SiIAwxcpfQp833DJIrbiKhOt2fA",
+        "figures": "1DusPzE25dnUWchcDdhIPjE_BKNeF5K5n",
+        "preamble": "1XKDVMBCfPfE4HmSLiuTTwcLCu2dNE-eR"
+      }
+    },
+    {
+      "name": "images",
+      "type": "Artwork & Shared Assets",
+      "folder_id": "1TA-zxlcHbOODa7grrAc4IODO3TpZi1k6",
+      "url": "https://drive.google.com/drive/folders/1TA-zxlcHbOODa7grrAc4IODO3TpZi1k6",
+      "files": [
+        {
+          "file_name": "cover_background_0.png",
+          "file_id": "1WP-zwU4YgfloBlQKA-TKhlGaEB_6Ey4G",
+          "view_url": "https://drive.google.com/file/d/1WP-zwU4YgfloBlQKA-TKhlGaEB_6Ey4G/view"
+        },
+        {
+          "file_name": "cover_background4.png",
+          "file_id": "1BXECNT1xPgBlOGezHXyNjkANj1FyQzph",
+          "view_url": "https://drive.google.com/file/d/1BXECNT1xPgBlOGezHXyNjkANj1FyQzph/view"
+        }
+      ]
+    },
+    {
+      "name": "doc-pdf",
+      "type": "Compiled PDF Distribution Output",
+      "folder_id": "1r0IyIvJvOhBsQ77KF6hNyBRBhIrJ6LLI",
+      "url": "https://drive.google.com/drive/folders/1r0IyIvJvOhBsQ77KF6hNyBRBhIrJ6LLI"
+    },
+    {
+      "name": "jason",
+      "type": "Data / JSON Metadata Store",
+      "folder_id": "1dyHl4rOivHSi3gTBmiNEMvsGNO0LRuIv",
+      "url": "https://drive.google.com/drive/folders/1dyHl4rOivHSi3gTBmiNEMvsGNO0LRuIv"
+    },
+    {
+      "name": "Microbiology_for_Agriculture",
+      "title_th": "จุลชีววิทยาสำหรับการเกษตร",
+      "authors": [
+        "ผศ.ดร.จิรภัทร จันทมาลี",
+        "ดร.ชีวะ ทัศนา"
+      ],
+      "institution": "มหาวิทยาลัยราชภัฏรำไพพรรณี (RBRU)",
+      "folder_id": "1IVzxkHogt7yoNrVD44y9wD3FpPctJbFn",
+      "url": "https://drive.google.com/drive/folders/1IVzxkHogt7yoNrVD44y9wD3FpPctJbFn",
+      "compiled_pdf": {
+        "file_name": "main.pdf",
+        "file_id": "1MO0Gzf7xjlLn-KKJeydU4P9tvbXmfVCh",
+        "url": "https://drive.google.com/file/d/1MO0Gzf7xjlLn-KKJeydU4P9tvbXmfVCh/view"
+      },
+      "latex_files": {
+        "main_tex": {
+          "id": "1rAazBZDx95icVBCkX7j3VYlutmJPb0yY",
+          "local_path": "07_Microbiology_for_Agriculture_LaTeX/main.tex"
+        },
+        "coverpage_tex": {
+          "id": "1gXtoF54gO5tFrtFAm633ojWzAX_tSFKa",
+          "local_path": "07_Microbiology_for_Agriculture_LaTeX/coverpage.tex"
+        },
+        "preamble_tex": {
+          "id": "1K2hbCPBVJ_qO8G3-T8gk7erT4CGKLSt0",
+          "local_path": "07_Microbiology_for_Agriculture_LaTeX/preamble/preamble.tex"
+        },
+        "preface_tex": {
+          "id": "1B-kT3TZP85GtvrkMwbMPd-a3L5VRpWL6",
+          "local_path": "07_Microbiology_for_Agriculture_LaTeX/prefaces/preface.tex"
+        },
+        "acknowledgements_tex": {
+          "id": "1uMphpf3LxT1LxMtT4Qk1SH6sgFIa8a_M",
+          "local_path": "07_Microbiology_for_Agriculture_LaTeX/prefaces/acknowledgements.tex"
+        },
+        "references_bib": {
+          "id": "127JTttVqjXZpOwGHBNvwGpIDgoZgLf06",
+          "local_path": "07_Microbiology_for_Agriculture_LaTeX/bibliography/references.bib"
+        }
+      },
+      "chapters": [
+        {
+          "chapter": 0,
+          "file_name": "introduction.tex",
+          "id": "1piUVaKVvdfGmnmMyo73v_GwkWofOhMUk"
+        },
+        {
+          "chapter": 1,
+          "file_name": "chapter1.tex",
+          "id": "1VZbFWEe0_47ELc3-_W0uPq1KfOHDed5g"
+        },
+        {
+          "chapter": 2,
+          "file_name": "chapter2.tex",
+          "id": "1X7yxm1a9CoN5c0k-Li5I3wPo8_pFJ5TZ"
+        },
+        {
+          "chapter": 3,
+          "file_name": "chapter3.tex",
+          "id": "1MrZvwOHGlzPbpy5UlINfCd6gPRADODmn"
+        },
+        {
+          "chapter": 4,
+          "file_name": "chapter4.tex",
+          "id": "1ZTAGQ5Wby-QQ_sOd591kw7YdZ-c28XLp"
+        },
+        {
+          "chapter": 5,
+          "file_name": "chapter5.tex",
+          "id": "1jhF786kY4xAUOLkiT-HQ0gNvrhodJZZv"
+        },
+        {
+          "chapter": 6,
+          "file_name": "chapter6.tex",
+          "id": "1lq6UMLhiUXpIY2Rv0mAFBSOZMFWIB9md"
+        },
+        {
+          "chapter": 7,
+          "file_name": "chapter7.tex",
+          "id": "11WAaFBJ6-zA0Pcll0ozrDgSY8EIT7HZZ"
+        },
+        {
+          "chapter": 8,
+          "file_name": "chapter8.tex",
+          "id": "1dY3Hk_4gqPlcDyu_RCMFU_GYJ93yC2Xz"
+        },
+        {
+          "chapter": 9,
+          "file_name": "chapter9.tex",
+          "id": "1FnfQUgXpl9K0SmmgaBKoJUUDIOuRZn2b"
+        }
+      ],
+      "appendices": [
+        {
+          "name": "appendixA.tex",
+          "id": "159G8BjtQMHlQHPOCTtox4pt_pge7d6pj"
+        },
+        {
+          "name": "appendixB.tex",
+          "id": "1cyxw0CjMIRHzoQM6EwSBRAul3zDVN4m9"
+        },
+        {
+          "name": "appendixC.tex",
+          "id": "1a0y1UORwItL51rXfIddgilCju5leHwtE"
+        },
+        {
+          "name": "appendixD.tex",
+          "id": "1aOSjRdZALmFWEGvwfThVaaRb2NeAwxUS"
+        }
+      ]
+    }
+  ],
+  "secondary_google_drive": {
+    "folder_name": "My_MacM1",
+    "folder_id": "1aR04FXSNaXPNCGCfipA6mioPvcLwism8",
+    "url": "https://drive.google.com/drive/folders/1aR04FXSNaXPNCGCfipA6mioPvcLwism8?usp=sharing"
+  }
+}

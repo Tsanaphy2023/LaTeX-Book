@@ -1,0 +1,368 @@
+\chapter{สมการเชิงอนุพันธ์สามัญอันดับหนึ่ง}
+\index{สมการเชิงอนุพันธ์สามัญ (ODE)}
+\index{สมการเชิงเส้นอันดับหนึ่ง (First-order linear ODE)}
+\index{ตัวประกอบปริพันธ์ (Integrating factor)}
+\index{สมการแยกตัวแปรได้ (Separable ODE)}
+\index{กฎการเย็นตัวของนิวตัน (Newton's cooling law)}
+\index{แรงต้านอากาศ (Air resistance)}
+\index{ความเร็วปลาย (Terminal velocity)}
+\index{วงจร RC (RC circuit)}
+\index{ค่าคงที่เวลา (Time constant)}
+\index{Ordinary differential equations}
+\index{Integrating factor}
+\index{Terminal velocity}
+\index{Time constant}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item จำแนกประเภท อันดับ ความเป็นเชิงเส้น และสภาวะเริ่มต้นของสมการเชิงอนุพันธ์ได้
+    \item แก้สมการเชิงอนุพันธ์แบบแยกตัวแปรได้ สมการเชิงเส้นโดยใช้ตัวประกอบปริพันธ์ (Integrating Factor) และสมการแม่นตรง (Exact ODEs) ได้
+    \item แปลงสมการไม่เป็นเชิงเส้นแบบแบร์นูลลี (Bernoulli Equation) ให้เป็นสมการเชิงเส้นได้
+    \item สร้างแบบจำลองทางฟิสิกส์ของการเคลื่อนที่ตกอิสระภายใต้แรงต้านอากาศ การชาร์จแบตเตอรี่รถยนต์ไฟฟ้า และการเย็นตัวของวัตถุได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{ธรรมชาติของสมการเชิงอนุพันธ์ในฟิสิกส์}
+กฎเกณฑ์พื้นฐานทางฟิสิกส์เกือบทั้งหมด ตั้งแต่กฎการเคลื่อนที่ของนิวตัน กฎการเหนี่ยวนำแม่เหล็กไฟฟ้า จนถึงกลศาสตร์ควอนตัม ล้วนแสดงความสัมพันธ์ระหว่างปริมาณทางกายภาพกับอัตราการเปลี่ยนแปลงของปริมาณนั้น สมการที่บรรจุอนุพันธ์ของฟังก์ชันที่ไม่ทราบค่าจึงเรียกว่า \textbf{สมการเชิงอนุพันธ์ (Differential Equation)}
+
+สมการเชิงอนุพันธ์สามัญ (Ordinary Differential Equation: ODE) คือสมการที่มีตัวแปรอิสระเพียงตัวเดียว (เช่น เวลา $t$ หรือตำแหน่ง $x$) อันดับ (Order) ของสมการถูกกำหนดโดยอันดับสูงสุดของอนุพันธ์ที่ปรากฏในสมการ ในบทนี้จะมุ่งเน้นสมการอันดับหนึ่ง ซึ่งเขียนในรูปทั่วไปได้เป็น:
+\begin{equation}
+\frac{dy}{dt} = f(t, y)
+\end{equation}
+พร้อมด้วยเงื่อนไขเริ่มต้น (Initial Condition) $y(t_0) = y_0$ ซึ่งเรียกว่า \textbf{ปัญหาค่าเริ่มต้น (Initial Value Problem: IVP)}
+
+\section{สมการแบบแยกตัวแปรได้}
+สมการเชิงอนุพันธ์อันดับหนึ่งที่สามารถจัดให้อยู่ในรูปผลคูณของฟังก์ชันของตัวแปรแต่ละตัวแยกจากกัน:
+\begin{equation}
+\frac{dy}{dx} = g(x)h(y) \implies \frac{1}{h(y)}dy = g(x)dx
+\end{equation}
+สามารถหาผลเฉลยทั่วไปได้โดยการหาปริพันธ์ทั้งสองข้างโดยตรง:
+\begin{equation}
+\int \frac{1}{h(y)}dy = \int g(x)dx + C
+\end{equation}
+
+\subsection{กฎการเย็นตัวของนิวตัน}
+อัตราการเปลี่ยนแปลงอุณหภูมิของวัตถุ $T(t)$ ที่สัมผัสกับสิ่งแวดล้อมที่มีอุณหภูมิคงที่ $T_{\text{env}}$ จะเป็นสัดส่วนโดยตรงกับผลต่างอุณหภูมิระหว่างวัตถุกับสิ่งแวดล้อม:
+\begin{equation}
+\frac{dT}{dt} = -k(T - T_{\text{env}}) \quad (k > 0)
+\end{equation}
+แยกตัวแปรและหาปริพันธ์:
+\begin{equation}
+\int \frac{dT}{T - T_{\text{env}}} = -\int k \, dt \implies \ln|T - T_{\text{env}}| = -kt + C_1
+\end{equation}
+ปลดลอการิทึมจะได้ผลเฉลย:
+\begin{equation}
+T(t) = T_{\text{env}} + (T_0 - T_{\text{env}})e^{-kt}
+\end{equation}
+โดยที่ $T_0 = T(0)$ คืออุณหภูมิเริ่มต้น สมการนี้เป็นรากฐานของการตรวจชันสูตรเวลาเสียชีวิตทางนิติวิทยาศาสตร์และการออกแบบระบบระบายความร้อนของเครื่องยนต์
+
+\begin{table}[htbp]
+    \centering
+    \caption{แบบจำลองระบบฟิสิกส์ด้วยสมการเชิงอนุพันธ์อันดับหนึ่งและค่าคงที่เวลา}
+    \label{tab:ode_physics_models}
+    \begin{tabularx}{\textwidth}{p{3.2cm}p{3.4cm}p{4.2cm}Y}
+        \toprule
+        \textbf{ระบบกายภาพ} & \textbf{สมการเชิงอนุพันธ์} & \textbf{ผลเฉลยตามเวลา} & \textbf{ค่าคงที่เวลา ($\tau$)} \\
+        \midrule
+        \textbf{การเย็นตัวของนิวตัน} & $\frac{dT}{dt} = -k(T - T_{\text{env}})$ & $T(t) = T_{\text{env}} + \Delta T_0 e^{-t/\tau}$ & $\tau = 1/k$ \\
+        \textbf{แรงต้านอากาศเชิงเส้น} & $m\frac{dv}{dt} = mg - kv$ & $v(t) = v_{\text{term}}(1 - e^{-t/\tau})$ & $\tau = m/k$ \\
+        \textbf{การชาร์จตัวเก็บประจุ RC} & $R\frac{dq}{dt} + \frac{q}{C} = \mathcal{E}$ & $q(t) = C\mathcal{E}(1 - e^{-t/\tau})$ & $\tau = RC$ \\
+        \textbf{การสลายตัวกัมมันตรังสี} & $\frac{dN}{dt} = -\lambda N$ & $N(t) = N_0 e^{-t/\tau}$ & $\tau = 1/\lambda$ ($t_{1/2} = \tau\ln 2$) \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{สมการเชิงเส้นอันดับหนึ่งและตัวประกอบปริพันธ์}
+สมการเชิงอนุพันธ์เชิงเส้นอันดับหนึ่ง (First-Order Linear ODE) ในรูปมาตรฐานคือ:
+\begin{equation}
+\frac{dy}{dx} + P(x)y = Q(x)
+\end{equation}
+หาก $Q(x) = 0$ สมการจะเป็นเอกพันธ์ (Homogeneous) ซึ่งแก้ได้โดยการแยกตัวแปร แต่ในกรณีทั่วไปที่ $Q(x) \neq 0$ (Non-homogeneous) จะแก้โดยการคูณด้วย \textbf{ตัวประกอบปริพันธ์ (Integrating Factor)} $\mu(x)$:
+\begin{equation}
+\mu(x) = \exp\left(\int P(x)\,dx\right)
+\end{equation}
+เมื่อคูณ $\mu(x)$ ตลอดทั้งสมการ:
+\begin{equation}
+\mu(x)\frac{dy}{dx} + \mu(x)P(x)y = \mu(x)Q(x)
+\end{equation}
+เนื่องจาก $\frac{d\mu}{dx} = \mu(x)P(x)$ ด้านซ้ายของสมการจะยุบรวมเป็นอนุพันธ์ของผลคูณ:
+\begin{equation}
+\frac{d}{dx}\left[\mu(x)y\right] = \mu(x)Q(x)
+\end{equation}
+หาปริพันธ์ทั้งสองข้างจะได้ผลเฉลยทั่วไป:
+\begin{equation}
+y(x) = \frac{1}{\mu(x)}\left[\int \mu(x)Q(x)\,dx + C\right]
+\end{equation}
+
+\section{สมการเชิงอนุพันธ์แม่นตรงและฟังก์ชันศักย์}
+สมการเชิงอนุพันธ์ที่เขียนในรูปผลต่างอนุพันธ์:
+\begin{equation}
+M(x, y)dx + N(x, y)dy = 0
+\end{equation}
+จะเป็น \textbf{สมการแม่นตรง (Exact ODE)} ก็ต่อเมื่อมีฟังก์ชันศักย์สเกลาร์ $\Psi(x, y)$ ที่ทำให้ $d\Psi = M dx + N dy = 0$ ซึ่งเงื่อนไขที่จำเป็นและเพียงพอตามทฤษฎีบทชวาร์ซคือ:
+\begin{equation}
+\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}
+\end{equation}
+เมื่อเงื่อนไขนี้เป็นจริง ผลเฉลยทั่วไปของระบบจะอยู่ในรูปเส้นโค้งระดับ:
+\begin{equation}
+\Psi(x, y) = C
+\end{equation}
+ซึ่งในทางฟิสิกส์ $\Psi$ สื่อถึงเส้นทางเดินของกระแสอนุภาค (Streamlines) ในการไหลแบบศักย์ หรือพื้นผิวพลังงานศักย์เท่ากัน
+
+\section{สมการไม่เป็นเชิงเส้นแบบแบร์นูลลี}
+สมการเชิงอนุพันธ์ไม่เป็นเชิงเส้นที่มีรูปพิเศษ:
+\begin{equation}
+\frac{dy}{dx} + P(x)y = Q(x)y^n \quad (n \neq 0, 1)
+\end{equation}
+เรียกว่า \textbf{สมการแบร์นูลลี (Bernoulli Equation)} สามารถทำให้กลายเป็นสมการเชิงเส้นได้โดยการเปลี่ยนตัวแปร:
+\begin{equation}
+u = y^{1-n} \implies \frac{du}{dx} = (1-n)y^{-n}\frac{dy}{dx}
+\end{equation}
+เมื่อแทนค่าลงไป สมการจะแปลงเป็นสมการเชิงเส้นอันดับหนึ่งของตัวแปร $u(x)$:
+\begin{equation}
+\frac{du}{dx} + (1-n)P(x)u = (1-n)Q(x)
+\end{equation}
+สมการรูปแบบนี้ใช้ในแบบจำลองการเจริญเติบโตของประชากรและแบคทีเรียที่มีทรัพยากรจำกัด (Logistic Equation) และกลศาสตร์การเคลื่อนที่ของจรวด
+
+\section{การประยุกต์ใช้ในฟิสิกส์ วิทยาศาสตร์ และวิศวกรรมศาสตร์}
+\subsection{การตกภายใต้แรงต้านอากาศและความเร็วปลาย}
+วัตถุมวล $m$ ตกในแนวดิ่งภายใต้สนามโน้มถ่วง $g$ และแรงต้านอากาศที่มีขนาดแปรผันตรงกับความเร็ว $F_d = -kv$ (สำหรับความเร็วต่ำ เช่น หยดน้ำฝนหรือการเคลื่อนที่ของละอองเกสร) กฎข้อที่สองของนิวตันเขียนเป็น:
+\begin{equation}
+m\frac{dv}{dt} = mg - kv \implies \frac{dv}{dt} + \frac{k}{m}v = g
+\end{equation}
+เมื่อเวลาผ่านไป ความเร่งจะลดลงจนเป็นศูนย์ วัตถุจะเคลื่อนที่ด้วยความเร็วคงที่เรียกว่า \textbf{ความเร็วปลาย (Terminal Velocity)}:
+\begin{equation}
+v_{\text{term}} = \frac{mg}{k}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Axes
+    \draw[-{Stealth[scale=1.1]}, thick] (0,0) -- (6.5,0) node[right, font=\small] {เวลา $t$ (s)};
+    \draw[-{Stealth[scale=1.1]}, thick] (0,0) -- (0,4.2) node[above, font=\small] {ความเร็ว $v(t)$ (m/s)};
+    
+    % Asymptote line (v_term)
+    \draw[dashed, very thick, gray] (0,3.5) -- (6.2,3.5) node[above right, font=\bfseries\small, physForce] {$v_{\text{term}} = \frac{mg}{k}$};
+    
+    % Velocity curve: v(t) = v_term * (1 - e^(-t/tau))
+    \draw[ultra thick, physVelocity, domain=0:6, samples=100, smooth] plot (\x, {3.5*(1 - exp(-\x/1.2))});
+    
+    % Time constant tau
+    \draw[dotted, thick, slateGrey] (1.2,0) node[below, font=\small] {$\tau = \frac{m}{k}$} -- (1.2, {3.5*(1 - exp(-1))});
+    \draw[dotted, thick, slateGrey] (0,{3.5*(1 - exp(-1))}) node[left, font=\small] {$0.632 v_{\text{term}}$} -- (1.2, {3.5*(1 - exp(-1))});
+    \fill[black] (1.2, {3.5*(1 - exp(-1))}) circle (2pt);
+    
+    % Label
+    \node[font=\small\bfseries, physVelocity] at (3.5, 2.5) {$v(t) = v_{\text{term}}\left(1 - e^{-t/\tau}\right)$};
+\end{tikzpicture}
+\caption{กราฟความเร็วตามเวลาของวัตถุที่ตกภายใต้แรงต้านอากาศ ลู่เข้าสู่ความเร็วปลาย $v_{\text{term}}$ โดยมีค่าคงที่เวลา $\tau = m/k$}
+\label{fig:terminal_velocity}
+\end{figure}
+
+\subsection{การชาร์จแบตเตอรี่รถยนต์ไฟฟ้าและวงจร \texorpdfstring{$RC$}{RC}}
+ในการชาร์จเซลล์แบตเตอรี่หรือตัวเก็บประจุความจุ $C$ ผ่านความต้านทาน $R$ ด้วยแหล่งจ่ายแรงดันคงที่ $V_0$ กฎแรงดันของเคอร์ชอฟฟ์ (Kirchhoff's Voltage Law) กำหนดว่า:
+\begin{equation}
+R\frac{dq}{dt} + \frac{1}{C}q = V_0
+\end{equation}
+โดยที่ประจุไฟฟ้า $q(t)$ เป็นฟังก์ชันของเวลา มีค่าคงที่เวลาของวงจร (Time Constant) คือ $\tau = RC$ กระแสไฟฟ้าชาร์จจะเริ่มต้นที่ค่าสูงสุด $I_0 = V_0/R$ และลดลงแบบเอ็กซ์โพเนนเชียลตามเวลา
+
+\section{ตัวอย่างโจทย์และการแก้ปัญหาอย่างเป็นระบบ}
+
+\begin{mathexample}[การคำนวณความเร็วและระยะทางในการกระโดดร่มชูชีพ]
+\textbf{โจทย์:} นักกระโดดร่มมวลรวมร่ม $m = 80\text{ kg}$ กระโดดลงมาจากเครื่องบินที่ระดับความสูงมาก ขณะเริ่มต้นปล่อยตัวมีความเร็วต้นเป็นศูนย์ ($v(0) = 0$) กำหนดให้แรงต้านอากาศเป็นปฏิภาคเชิงเส้นกับความเร็ว $F_d = -kv$ โดยที่สัมประสิทธิ์แรงต้านมีค่า $k = 16\text{ kg/s}$ และความเร่งโน้มถ่วง $g = 9.8\text{ m/s}^2$
+\begin{enumerate}
+    \item จงหาสมการความเร็ว $v(t)$ ในฐานะฟังก์ชันของเวลา
+    \item จงหาความเร็วปลาย $v_{\text{term}}$
+    \item นักกระโดดร่มต้องใช้เวลานานเท่าใดจึงจะมีความเร็วถึง $95\%$ ของความเร็วปลาย
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{PICTURE:} วัตถุมวล $m$ ตกลงตามแนวดิ่ง กำหนดให้ทิศลงเป็นบวก แรงโน้มถ่วง $mg$ ดึงลง แรงต้านอากาศ $kv$ ต้านขึ้นด้านบน
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. เขียนสมการการเคลื่อนที่จากกฎข้อที่สองของนิวตัน:
+\begin{equation}
+m\frac{dv}{dt} = mg - kv \implies \frac{dv}{dt} + \frac{k}{m}v = g
+\end{equation}
+นี่คือสมการเชิงอนุพันธ์เชิงเส้นอันดับหนึ่ง โดยมี $P(t) = \frac{k}{m}$ และ $Q(t) = g$
+หาตัวประกอบปริพันธ์:
+\begin{equation}
+\mu(t) = \exp\left(\int \frac{k}{m} dt\right) = e^{(k/m)t}
+\end{equation}
+คูณตลอดสมการแล้วหาปริพันธ์:
+\begin{equation}
+\frac{d}{dt}\left[ e^{(k/m)t} v \right] = g e^{(k/m)t} \implies e^{(k/m)t} v = \int g e^{(k/m)t} dt + C = g \left(\frac{m}{k}\right)e^{(k/m)t} + C
+\end{equation}
+หารด้วย $e^{(k/m)t}$:
+\begin{equation}
+v(t) = \frac{mg}{k} + C e^{-(k/m)t}
+\end{equation}
+แทนเงื่อนไขเริ่มต้น $v(0) = 0$:
+\begin{equation}
+0 = \frac{mg}{k} + C \implies C = -\frac{mg}{k}
+\end{equation}
+ดังนั้น ฟังก์ชันความเร็วคือ:
+\begin{equation}
+v(t) = \frac{mg}{k}\left(1 - e^{-(k/m)t}\right)
+\end{equation}
+
+2. ความเร็วปลายเมื่อ $t \to \infty$:
+\begin{equation}
+v_{\text{term}} = \lim_{t \to \infty} v(t) = \frac{mg}{k} = \frac{(80\text{ kg})(9.8\text{ m/s}^2)}{16\text{ kg/s}} = \frac{784}{16} = 49\text{ m/s} \quad (\approx 176.4\text{ km/h})
+\end{equation}
+
+3. เวลา $t_{95}$ ที่ความเร็วถึง $0.95 v_{\text{term}}$:
+\begin{equation}
+0.95 v_{\text{term}} = v_{\text{term}}\left(1 - e^{-(k/m)t_{95}}\right) \implies 0.95 = 1 - e^{-(k/m)t_{95}}
+\end{equation}
+\begin{equation}
+e^{-(k/m)t_{95}} = 0.05 \implies -(k/m)t_{95} = \ln(0.05) \approx -2.9957
+\end{equation}
+แทนค่า $k/m = 16/80 = 0.2\text{ s}^{-1}$:
+\begin{equation}
+t_{95} = \frac{2.9957}{0.2} \approx 14.98\text{ วินาที}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} หน่วยของ $mg/k$ คือ $(\text{kg}\cdot\text{m/s}^2)/(\text{kg/s}) = \text{m/s}$ ถูกต้องตามมิติของความเร็ว ค่าคงที่เวลา $\tau = m/k = 5\text{ s}$ ดังนั้น $t_{95} \approx 3\tau = 15\text{ s}$ สอดคล้องกับพฤติกรรมเอ็กซ์โพเนนเชียล ($1 - e^{-3} = 1 - 0.0498 = 0.9502$)\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การเคลื่อนที่ตกแบบมีแรงต้านอากาศด้วย solve\_ivp]
+import numpy as np
+from scipy.integrate import solve_ivp
+
+# พารามิเตอร์ทางฟิสิกส์
+m = 80.0    # มวล (kg)
+k = 16.0    # สัมประสิทธิ์แรงต้านอากาศ (kg/s)
+g = 9.8     # ความเร่งโน้มถ่วง (m/s^2)
+
+v_term = (m * g) / k
+tau = m / k
+print(f"ความเร็วปลาย v_term: {v_term:.2f} m/s ({v_term * 3.6:.1f} km/h)")
+print(f"ค่าคงที่เวลาผ่อนคลาย tau: {tau:.2f} s")
+
+# สมการเชิงอนุพันธ์ dv/dt = g - (k/m)*v
+def parachute_ode(t, y):
+    v = y[0]
+    return [g - (k / m) * v]
+
+# คำนวณผลเฉลยเชิงตัวเลข (Runge-Kutta 45)
+t_eval = np.linspace(0, 25, 200)
+sol = solve_ivp(parachute_ode, (0, 25), [0.0], t_eval=t_eval)
+
+# ตรวจสอบเวลาที่ความเร็วถึง 95% ของความเร็วปลาย
+t_95_theory = -tau * np.log(0.05)
+idx_95 = np.argmin(np.abs(sol.y[0] - 0.95 * v_term))
+print(f"เวลาที่ถึง 95% v_term (วิเคราะห์): {t_95_theory:.2f} s")
+print(f"เวลาที่ได้จากการจำลอง ODE: {sol.t[idx_95]:.2f} s")
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การวิเคราะห์กระแสทรานเชียนต์ในการชาร์จแบตเตอรี่ตัวเก็บประจุ $RC$]
+\textbf{โจทย์:} วงจรชาร์จระบบกักเก็บพลังงานประกอบด้วยตัวต้านทาน $R = 100\,\Omega$ และตัวเก็บประจุซูเปอร์คาพาซิเตอร์ $C = 50\,\mu\text{F}$ ต่ออนุกรมกับแหล่งจ่ายแรงดันตรง $V_0 = 12\text{ V}$ เมื่อสับสวิตช์ที่เวลา $t = 0$ ขณะเริ่มต้นไม่มีประจุสะสม ($q(0) = 0$) จงหา:
+\begin{enumerate}
+    \item ฟังก์ชันประจุไฟฟ้า $q(t)$ และแรงดันตกคร่อมตัวเก็บประจุ $V_C(t)$
+    \item กระแสไฟฟ้าชาร์จ $I(t)$ ในฐานะฟังก์ชันของเวลา
+    \item พลังงานไฟฟ้าสะสมในตัวเก็บประจุเมื่อชาร์จเต็ม
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{PICTURE:} วงจรลูปเดี่ยวประกอบด้วยแหล่งจ่าย $V_0$ ตัวต้านทาน $R$ และตัวเก็บประจุ $C$ ต่ออนุกรมกัน
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. สมการเคอร์ชอฟฟ์ของวงจร:
+\begin{equation}
+R\frac{dq}{dt} + \frac{q}{C} = V_0 \implies \frac{dq}{dt} + \frac{1}{RC}q = \frac{V_0}{R}
+\end{equation}
+มีค่าคงที่เวลา $\tau = RC = (100\,\Omega)(50 \times 10^{-6}\text{ F}) = 5 \times 10^{-3}\text{ s} = 5\text{ ms}$
+ตัวประกอบปริพันธ์ $\mu(t) = e^{t/\tau}$:
+\begin{equation}
+\frac{d}{dt}\left[ e^{t/\tau} q \right] = \frac{V_0}{R} e^{t/\tau} \implies e^{t/\tau} q = \frac{V_0}{R}(\tau e^{t/\tau}) + K = C V_0 e^{t/\tau} + K
+\end{equation}
+\begin{equation}
+q(t) = C V_0 + K e^{-t/\tau}
+\end{equation}
+จากเงื่อนไขเริ่มต้น $q(0) = 0 \implies K = -C V_0$:
+\begin{equation}
+q(t) = C V_0 \left(1 - e^{-t/\tau}\right)
+\end{equation}
+แรงดันตกคร่อมตัวเก็บประจุคือ:
+\begin{equation}
+V_C(t) = \frac{q(t)}{C} = V_0 \left(1 - e^{-t/\tau}\right) = 12\left(1 - e^{-t/0.005}\right)\text{ V}
+\end{equation}
+
+2. กระแสไฟฟ้าชาร์จ $I(t) = \frac{dq}{dt}$:
+\begin{equation}
+I(t) = \frac{d}{dt}\left[ C V_0 (1 - e^{-t/\tau}) \right] = \frac{C V_0}{\tau} e^{-t/\tau} = \frac{V_0}{R} e^{-t/\tau} = 0.12 e^{-200t}\text{ A}
+\end{equation}
+
+3. พลังงานสะสมสูงสุดเมื่อประจุเต็ม $q_{\text{max}} = C V_0$:
+\begin{equation}
+U_E = \frac{1}{2} C V_0^2 = \frac{1}{2}(50 \times 10^{-6}\text{ F})(12\text{ V})^2 = 25 \times 10^{-6} \times 144 = 3.6 \times 10^{-3}\text{ J} = 3.6\text{ mJ}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ที่เวลา $t = 0$, $I(0) = V_0/R = 12/100 = 0.12\text{ A}$ และ $V_C(0) = 0$ สอดคล้องกับกฎของโอห์ม เมื่อเวลาผ่านไปยาวนาน $t \to \infty$, $I \to 0$ และ $V_C \to 12\text{ V}$ ตัวเก็บประจุทำหน้าที่เสมือนวงจรเปิดอย่างถูกต้องสมบูรณ์\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การวิเคราะห์ผลตอบสนองทรานเชียนต์ของวงจรชาร์จ RC]
+import numpy as np
+
+# พารามิเตอร์ของอุปกรณ์
+R = 100.0      # ความต้านทาน (Ohm)
+C = 50.0e-6    # ความจุไฟฟ้า (Farad)
+V0 = 12.0      # แรงดันแหล่งจ่าย (Volt)
+
+tau = R * C
+I_peak = V0 / R
+U_total = 0.5 * C * (V0**2)
+
+print(f"ค่าคงที่เวลาวงจร tau = {tau * 1e3:.2f} ms")
+print(f"กระแสเริ่มต้นสูงสุด I_0 = {I_peak * 1e3:.2f} mA")
+print(f"พลังงานไฟฟ้าสะสมสูงสุด = {U_total * 1e3:.2f} mJ")
+
+# ประเมินแรงดันและกระแสที่ 1 tau, 3 tau และ 5 tau
+for mult in [1, 3, 5]:
+    t_val = mult * tau
+    vc = V0 * (1.0 - np.exp(-mult))
+    ic = I_peak * np.exp(-mult)
+    pct = (vc / V0) * 100.0
+    print(f"ที่ t = {mult} tau ({t_val*1e3:.1f} ms): V_C = {vc:.2f} V ({pct:.1f}%), I = {ic*1e3:.2f} mA")
+\end{pythonbox}
+\end{mathexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+\begin{table}[H]
+\centering
+\caption{สรุปรูปแบบสมการเชิงอนุพันธ์อันดับหนึ่งและวิธีหาผลเฉลย}
+\label{tab:ch08_summary}
+\begin{tabularx}{\textwidth}{p{2.8cm}p{4.6cm}Y}
+\toprule
+\textbf{ประเภทสมการ} & \textbf{รูปมาตรฐาน} & \textbf{วิธีหาผลเฉลย} \\
+\midrule
+แยกตัวแปรได้ & $\frac{dy}{dx} = g(x)h(y)$ & $\int \frac{dy}{h(y)} = \int g(x)dx + C$ \\
+เชิงเส้นอันดับหนึ่ง & $\frac{dy}{dx} + P(x)y = Q(x)$ & $\mu(x) = e^{\int P dx}, \quad y = \frac{1}{\mu}[\int \mu Q dx + C]$ \\
+แม่นตรง & $M dx + N dy = 0$ & ตรวจ $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x} \implies \Psi(x, y) = C$ \\
+แบร์นูลลี & $\frac{dy}{dx} + Py = Qy^n$ & เปลี่ยนตัวแปร $u = y^{1-n} \implies$ สมการเชิงเส้น \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item \textbf{ระดับพื้นฐาน:} จงหาผลเฉลยของสมการเชิงอนุพันธ์ต่อไปนี้:
+    \begin{enumerate}
+        \item $\frac{dy}{dx} = \frac{x^2}{y}$, กำหนดเงื่อนไขเริ่มต้น $y(0) = 2$
+        \item $\frac{dy}{dx} + 3y = e^{-x}$, กำหนดเงื่อนไขเริ่มต้น $y(0) = 1$
+    \end{enumerate}
+
+    \item \textbf{ระดับประยุกต์:} น้ำชาร้อนอุณหภูมิเริ่มต้น $90^\circ\text{C}$ ตั้งอยู่ในห้องปรับอากาศที่มีอุณหภูมิคงที่ $25^\circ\text{C}$ เมื่อเวลาผ่านไป $5$ นาที อุณหภูมิของน้ำชาลดลงเหลือ $70^\circ\text{C}$
+    \begin{enumerate}
+        \item จงหาค่าคงที่การเย็นตัว $k$ ตามกฎของนิวตัน
+        \item ต้องใช้เวลากี่นาทีนับจากเริ่มต้น อุณหภูมิของน้ำชาจึงจะลดลงเหลือ $40^\circ\text{C}$
+    \end{enumerate}
+
+    \item \textbf{ระดับก้าวหน้า:} การเคลื่อนที่ของอนุภาคความเร็วสูงในอากาศได้รับแรงต้านที่เป็นปฏิภาคกับกำลังสองของความเร็ว $m\frac{dv}{dt} = -c v^2$ จงหาผลเฉลย $v(t)$ และแสดงว่าระยะทาง $x(t)$ ที่อนุภาคเคลื่อนที่ได้จะเพิ่มขึ้นเป็นฟังก์ชันลอการิทึมของเวลา
+\end{enumerate}

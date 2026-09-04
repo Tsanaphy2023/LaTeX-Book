@@ -1,0 +1,284 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/rbru_book_style}[2026/09/04 RBRU Academic Textbook & Physics Layout Standard Style]
+
+% 1. Page Geometry (มาตรฐาน มรภ.รำไพพรรณี: ซ้าย 1.5 นิ้ว, บน 1.5 นิ้ว, ขวา 1 นิ้ว, ล่าง 1 นิ้ว)
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=1.5in,
+    bottom=1.0in,
+    left=1.5in,
+    right=1.0in,
+    headheight=36pt,
+    headsep=12pt,
+    footskip=0.5in
+}
+
+% 1.1 Thai Linebreak & Hyphenation for XeLaTeX
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.5pt
+
+% 1.2 Thai Academic Terminology (มาตรฐานระเบียบวิชาการ มรภ.รำไพพรรณี)
+\renewcommand{\chaptername}{บทที่}
+\renewcommand{\figurename}{ภาพที่}
+\renewcommand{\tablename}{ตารางที่}
+\renewcommand{\contentsname}{สารบัญ}
+\renewcommand{\listfigurename}{สารบัญภาพ}
+\renewcommand{\listtablename}{สารบัญตาราง}
+\renewcommand{\appendixname}{ภาคผนวก}
+\renewcommand{\bibname}{บรรณานุกรม}
+\renewcommand{\indexname}{ดัชนีสืบค้นคำสำคัญ}
+
+% 2. Math & Science Packages (Physics Textbook Architect)
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\RequirePackage{physics}
+\RequirePackage{esint}
+
+% 3. Graphics, TikZ, Tables & Floats
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{thaisep}{\quad}
+\captionsetup{labelsep=thaisep}
+\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=rbruNavy}, textfont={bf}, labelsep=thaisep}
+\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=rbruNavy}, textfont={bf}, labelsep=thaisep}
+
+% 3.1 Indexing System (ดัชนีสืบค้น 2 ภาษา)
+\RequirePackage{imakeidx}
+\makeindex[columns=2, title=ดัชนีสืบค้นคำสำคัญ, intoc]
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,patterns,decorations.pathmorphing}
+
+% 4. Color Palette (RBRU Identity & Physics Vector Color Coding)
+\RequirePackage{xcolor}
+\definecolor{rbruGreen}{HTML}{0D5C3A}
+\definecolor{rbruNavy}{HTML}{1A365D}
+\definecolor{rbruGold}{HTML}{D97706}
+\definecolor{rbruSlate}{HTML}{334155}
+\definecolor{slateGrey}{HTML}{4A5568}
+\definecolor{rbruLightBg}{HTML}{F8FAFC}
+\definecolor{rbruCodeBg}{HTML}{F1F5F9}
+
+% Standard Physics Vector Color Palette
+\definecolor{physForce}{HTML}{E53E3E}        % Red: แรง (Force)
+\definecolor{physVelocity}{HTML}{3182CE}     % Blue: ความเร็ว (Velocity)
+\definecolor{physAccel}{HTML}{DD6B20}        % Orange: ความเร่ง (Acceleration)
+\definecolor{physDisplace}{HTML}{38A169}     % Green: การกระจัด/ตำแหน่ง (Displacement)
+\definecolor{physGeneric}{HTML}{2D3748}      % Dark Slate: เวกเตอร์ทั่วไป/แกน
+
+% 5. Section & Chapter Formatting (RBRU Standards: ตัดคำว่าหัวข้อ, ตัด colon, เคาะ 1 เคาะ, หัวบทกล่องวิชาการ)
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{titlesec}
+
+% กล่องหัวบทวิชาการพร้อมภาพประกอบเวกเตอร์ฟิสิกส์ (Chapter Banner Box with Vector Illustration)
+\newtcolorbox{chapterbannerbox}{
+    enhanced,
+    width=\textwidth,
+    arc=6pt,
+    boxrule=1pt,
+    colframe=rbruNavy!85!black,
+    interior style={left color=rbruNavy!98!black, right color=rbruNavy!85!rbruSlate},
+    colback=rbruNavy,
+    borderline east={4pt}{0pt}{rbruGold},
+    top=16pt, bottom=16pt, left=16pt, right=20pt,
+    drop shadow=black!10,
+    underlay={
+        \begin{tcbclipinterior}
+            \begin{scope}[opacity=0.22]
+                % ตารางพิกัดจำลอง (Coordinate Grid)
+                \draw[cyan!50!white, line width=0.5pt, step=0.7cm] (0.2, 0.2) grid (6.5, 5.5);
+                % แกนพิกัด 3 มิติ (3D Axes)
+                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.1, 0.8) -- (4.6, 0.8) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.1, 0.8) -- (1.1, 3.8) node[above, font=\scriptsize\bfseries\color{white}] {$z$};
+                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.1, 0.8) -- (0.2, 0.2) node[below left, font=\scriptsize\bfseries\color{white}] {$y$};
+                % เวกเตอร์ฟิสิกส์ (Force, Velocity, Position Vectors)
+                \draw[-{Stealth[scale=1.2]}, physForce, line width=1.7pt] (1.1, 0.8) -- (3.8, 2.9) node[above left, font=\small\bfseries\color{physForce}] {$\vec{F}$};
+                \draw[-{Stealth[scale=1.0]}, physVelocity, line width=1.3pt] (1.1, 0.8) -- (3.0, 1.2) node[below right, font=\footnotesize\bfseries\color{physVelocity}] {$\vec{v}$};
+                \draw[-{Stealth[scale=1.0]}, physDisplace, line width=1.3pt] (1.1, 0.8) -- (1.9, 3.2) node[above right, font=\footnotesize\bfseries\color{physDisplace}] {$\vec{r}$};
+                % คลื่นกล / การแกว่งกวัด (Wave packet oscillation)
+                \draw[rbruGold, line width=1.4pt, domain=0.4:6.8, samples=80] 
+                    plot (\x, {1.9 + 0.7*sin(3.0*\x r) * exp(-0.10*(\x-3.4)*(\x-3.4))});
+                % วงโคจรทรงรี (Orbital Trajectory)
+                \draw[rotate around={22:(3.4,1.9)}, white, line width=0.8pt, dashdotdotted] 
+                    (3.4,1.9) ellipse (2.6cm and 0.95cm);
+            \end{scope}
+        \end{tcbclipinterior}
+    }
+}
+
+\newcommand{\rbruchapterbanner}[1]{%
+    \begin{chapterbannerbox}
+        \raggedleft
+        {\fontsize{44}{50}\selectfont\bfseries\color{white} \chaptertitlename\ \thechapter\par}
+        \vspace{6pt}
+        {\color{rbruGold}\rule{0.50\textwidth}{2pt}\par}
+        \vspace{6pt}
+        {\fontsize{25}{31}\selectfont\bfseries\color{white} #1\par}
+    \end{chapterbannerbox}
+}
+
+\newcommand{\rbruunnumberedchapterbanner}[1]{%
+    \begin{chapterbannerbox}
+        \raggedleft
+        \vspace{4pt}
+        {\fontsize{29}{35}\selectfont\bfseries\color{white} #1\par}
+        \vspace{4pt}
+    \end{chapterbannerbox}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {\rbruchapterbanner}
+
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {\rbruunnumberedchapterbanner}
+
+\titlespacing*{\chapter}{0pt}{0pt}{22pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{16}{20}\bfseries\color{rbruNavy}}
+  {\thesection}
+  {1em}
+  {}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{14}{18}\bfseries\color{rbruGreen}}
+  {\thesubsection}
+  {0.8em}
+  {}
+
+% 6. Academic Boxes (tcolorbox)
+
+% กล่องวัตถุประสงค์เชิงพฤติกรรมประจำบท (OBE Learning Outcomes)
+\newtcolorbox{chapterobjectives}[1][วัตถุประสงค์เชิงพฤติกรรมประจำบท]{
+    enhanced,
+    colback=rbruLightBg,
+    colframe=rbruNavy,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=2.5mm,
+    boxrule=1pt,
+    leftrule=4.5mm,
+    drop shadow=black!8
+}
+
+% กล่องนิยาม (Definition Box)
+\newtcolorbox[auto counter, number within=chapter]{mathdefinition}[1][]{
+    enhanced,
+    colback=rbruLightBg,
+    colframe=rbruGreen,
+    fonttitle=\bfseries,
+    title=นิยามที่~\thetcbcounter\ #1,
+    arc=3mm,
+    boxrule=1.2pt,
+    leftrule=5mm,
+    drop shadow=black!10
+}
+
+% กล่องทฤษฎีบท (Theorem Box)
+\newtcolorbox[auto counter, number within=chapter]{maththeorem}[1][]{
+    enhanced,
+    colback=white,
+    colframe=rbruNavy,
+    fonttitle=\bfseries,
+    title=ทฤษฎีบทที่~\thetcbcounter\ #1,
+    arc=2mm,
+    boxrule=1pt,
+    leftrule=4mm,
+    drop shadow=black!10
+}
+
+% กล่องตัวอย่างพร้อมเฉลยอย่างเป็นระบบ P-S-C-T / C-C-A-F
+\newtcolorbox[auto counter, number within=chapter]{mathexample}[1][]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=rbruGold,
+    fonttitle=\bfseries,
+    title=ตัวอย่างที่~\thetcbcounter\ #1,
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm,
+    pad at break=2mm
+}
+
+% สัญลักษณ์จบการพิสูจน์/เฉลยตัวอย่าง (QED Mark ชิดขวา)
+\newcommand{\qedexam}{\hfill\textcolor{rbruGold}{$\blacksquare$}}
+
+% 7. Code Simulation Listings & Python Box
+\RequirePackage{listings}
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{rbruCodeBg},
+    commentstyle=\color{green!50!black}\itshape,
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{purple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{gray!30}
+}
+\lstset{style=pythonstyle}
+
+% กล่องโค้ดภาษา Python สำหรับการจำลองเชิงตัวเลขในแต่ละตัวอย่าง
+\newtcblisting{pythonbox}[1][การจำลองเชิงตัวเลขด้วย Python (Python Simulation)]{
+    enhanced,
+    breakable,
+    colback=rbruCodeBg,
+    colframe=rbruNavy!85!black,
+    coltitle=white,
+    fonttitle=\bfseries\small,
+    title={#1},
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=3.5mm,
+    pad at break=2mm,
+    listing only,
+    listing options={
+        language=Python,
+        basicstyle=\ttfamily\footnotesize,
+        keywordstyle=\color{blue!80!black}\bfseries,
+        commentstyle=\color{green!50!black}\itshape,
+        stringstyle=\color{red!70!black},
+        numbers=left,
+        numberstyle=\tiny\color{gray},
+        stepnumber=1,
+        numbersep=6pt,
+        breaklines=true,
+        showstringspaces=false,
+        tabsize=4
+    }
+}
+
+% 8. Header and Footer (fancyhdr)
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\fancyhead[L]{\slshape \nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\endinput

@@ -1,0 +1,394 @@
+\chapter{แคลคูลัสเชิงอนุพันธ์หลายตัวแปร}
+\index{อนุพันธ์ย่อย (Partial derivative)}
+\index{ผลต่างรวม (Total differential)}
+\index{อนุพันธ์ระบุทิศทาง (Directional derivative)}
+\index{เกรเดียนต์ (Gradient)}
+\index{ทฤษฎีบทชวาร์ซ (Schwarz's theorem)}
+\index{ความสัมพันธ์ของแมกซ์เวลล์ (Maxwell relations)}
+\index{ตัวคูณลากรองจ์ (Lagrange multipliers)}
+\index{เมทริกซ์เฮสเซียน (Hessian matrix)}
+\index{ฟลักซ์ความร้อน (Heat flux)}
+\index{Partial derivative}
+\index{Directional derivative}
+\index{Lagrange multipliers}
+\index{Hessian matrix}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item อธิบายความหมายเชิงเรขาคณิตและกายภาพของอนุพันธ์ย่อย อนุพันธ์ระบุทิศทาง และผลต่างรวมได้
+    \item คำนวณอัตราการเปลี่ยนแปลงตามเวลาในกรอบอ้างอิงเคลื่อนที่ด้วยกฎลูกโซ่และอนุพันธ์สสาร (Material Derivative) ได้
+    \item จำแนกจุดวิกฤตของฟังก์ชันศักย์พลังงานโดยใช้เมทริกซ์เฮสเซียน (Hessian Matrix) ได้
+    \item แก้ปัญหาค่าขีดสุดภายใต้เงื่อนไขบังคับทางฟิสิกส์และวิศวกรรมศาสตร์ด้วยวิธีตัวคูณลากรองจ์ (Lagrange Multipliers) ได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{อนุพันธ์ย่อยและผลต่างรวม}
+ในระบบกายภาพส่วนใหญ่ ปริมาณที่สนใจมักขึ้นอยู่กับตัวแปรอิสระหลายตัวแปรพร้อมกัน เช่น การกระจายตัวของอุณหภูมิในห้อง $T(x, y, z, t)$ ความดันของก๊าซอุดมคติ $P(V, T)$ หรือพลังงานศักย์โน้มถ่วงและไฟฟ้าสถิต $V(x, y, z)$ การทำความเข้าใจพฤติกรรมของระบบจึงจำเป็นต้องอาศัยแคลคูลัสหลายตัวแปร (Multivariable Calculus)
+
+\subsection{นิยามของอนุพันธ์ย่อย}
+อนุพันธ์ย่อย (Partial Derivative) แสดงอัตราการเปลี่ยนแปลงของฟังก์ชันเทียบกับตัวแปรอิสระตัวใดตัวหนึ่ง โดยสมมติให้ตัวแปรอิสระที่เหลือทั้งหมดมีค่าคงที่ สำหรับฟังก์ชันสองตัวแปร $f(x, y)$ อนุพันธ์ย่อยเทียบกับ $x$ และ $y$ นิยามโดย:
+\begin{align}
+\frac{\partial f}{\partial x} &= \lim_{\Delta x \to 0} \frac{f(x + \Delta x, y) - f(x, y)}{\Delta x} \\
+\frac{\partial f}{\partial y} &= \lim_{\Delta y \to 0} \frac{f(x, y + \Delta y) - f(x, y)}{\Delta y}
+\end{align}
+ในเชิงเรขาคณิต $\frac{\partial f}{\partial x}$ คือความชันของเส้นสัมผัสพื้นผิว $z = f(x, y)$ บนระนาบที่ขนานกับแกน $x$ ($y = \text{คงที่}$)
+
+\subsection{อนุพันธ์ย่อยอันดับสูงและทฤษฎีบทชวาร์ซ}
+อนุพันธ์ย่อยอันดับสองสามารถหาได้จากการดำเนินการซ้ำ โดยมีทฤษฎีบทสำคัญคือ \textbf{ทฤษฎีบทชวาร์ซ (Schwarz's Theorem / Clairaut's Theorem)} ซึ่งระบุว่า หากอนุพันธ์ย่อยผสมมีความต่อเนื่อง ลำดับการหาอนุพันธ์จะสลับที่กันได้เสมอ:
+\begin{equation}
+\frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x}
+\end{equation}
+
+\begin{maththeorem}[ความสัมพันธ์ของแมกซ์เวลล์ในอุณหพลศาสตร์]
+ในอุณหพลศาสตร์ พลังงานภายใน $U$ เอนโทรปี $S$ ปริมาตร $V$ อุณหภูมิ $T$ และความดัน $P$ สัมพันธ์กันตามกฎข้อที่หนึ่ง:
+\begin{equation}
+dU = T dS - P dV
+\end{equation}
+เนื่องจาก $U$ เป็นฟังก์ชันสภาวะ (State Function) ผลต่าง $dU$ จึงเป็นผลต่างแท้จริง (Exact Differential) จากทฤษฎีบทชวาร์ซ:
+\begin{equation}
+\frac{\partial^2 U}{\partial V \partial S} = \frac{\partial}{\partial V}\left(\frac{\partial U}{\partial S}\right)_V = \left(\frac{\partial T}{\partial V}\right)_S \quad \text{และ} \quad \frac{\partial^2 U}{\partial S \partial V} = \frac{\partial}{\partial S}\left(\frac{\partial U}{\partial V}\right)_S = -\left(\frac{\partial P}{\partial S}\right)_V
+\end{equation}
+ทำให้ได้หนึ่งใน \textbf{ความสัมพันธ์ของแมกซ์เวลล์ (Maxwell Relations)}:
+\begin{equation}
+\left(\frac{\partial T}{\partial V}\right)_S = -\left(\frac{\partial P}{\partial S}\right)_V
+\end{equation}
+ซึ่งเป็นเครื่องมือหลักในการคำนวณคุณสมบัติทางความร้อนของสสารที่ไม่สามารถวัดได้โดยตรงในห้องปฏิบัติการ
+\end{maththeorem}
+
+\subsection{ผลต่างรวม}
+เมื่อตัวแปรอิสระทุกตัวแปรเกิดการเปลี่ยนแปลงไปพร้อมกัน การเปลี่ยนแปลงสุทธิของฟังก์ชันจะอธิบายด้วย \textbf{ผลต่างรวม (Total Differential)}:
+\begin{equation}
+df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy + \frac{\partial f}{\partial z}dz = \nabla f \cdot d\vec{r}
+\end{equation}
+หากนิพจน์ $P(x,y)dx + Q(x,y)dy$ สามารถเขียนในรูป $df$ ของฟังก์ชันสเกลาร์ $f$ ได้ จะเรียกว่าเป็นผลต่างแม่นตรง (Exact Differential) ซึ่งเกิดขึ้นเมื่อ $\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}$ เท่านั้น (เทียบเท่ากับเงื่อนไขที่สนามเวกเตอร์เป็นสนามอนุรักษ์ $\nabla \times \vec{F} = \vec{0}$)
+
+\section{อนุพันธ์ระบุทิศทางและเกรเดียนต์}
+อัตราการเปลี่ยนแปลงของฟังก์ชัน $f(x, y, z)$ ไม่จำเป็นต้องเกิดขึ้นตามแนวแกนพิกัดหลักเสมอไป การวัดอัตราการเปลี่ยนแปลงในทิศทางของเวกเตอร์หนึ่งหน่วย $\hat{u} = (u_x, u_y, u_z)$ ใด ๆ นิยามผ่าน \textbf{อนุพันธ์ระบุทิศทาง (Directional Derivative)}:
+\begin{equation}
+D_{\hat{u}}f = \lim_{s \to 0} \frac{f(\vec{r} + s\hat{u}) - f(\vec{r})}{s} = \nabla f \cdot \hat{u} = |\nabla f|\cos\theta
+\end{equation}
+โดยที่ $\theta$ คือมุมระหว่างเวกเตอร์เกรเดียนต์ $\nabla f$ กับเวกเตอร์ทิศทาง $\hat{u}$
+
+\begin{table}[htbp]
+    \centering
+    \caption{แนวคิดอนุพันธ์หลายตัวแปร นิยามคณิตศาสตร์ และความหมายเชิงกายภาพ}
+    \label{tab:multivar_diff_concepts}
+    \begin{tabularx}{\textwidth}{p{3.0cm}p{5.0cm}Y}
+        \toprule
+        \textbf{แนวคิด} & \textbf{นิยามทางคณิตศาสตร์} & \textbf{ความหมายและบทบาททางฟิสิกส์} \\
+        \midrule
+        อนุพันธ์ย่อย $\frac{\partial f}{\partial x_i}$ & $\lim_{\Delta x_i \to 0} \frac{\Delta f}{\Delta x_i}$ ($x_j$ คงที่) & ความชันตามแนวแกน, ความจุความร้อน $C_V = (\frac{\partial U}{\partial T})_V$ \\
+        ผลต่างรวม $df$ & $\sum_{i} \frac{\partial f}{\partial x_i} dx_i = \nabla f \cdot d\vec{r}$ & การเปลี่ยนแปลงสุทธิ, กฎข้อที่ 1 อุณหพลศาสตร์ \\
+        อนุพันธ์ระบุทิศทาง $D_{\hat{u}}f$ & $\nabla f \cdot \hat{u} = |\nabla f|\cos\theta$ & อัตราการเปลี่ยนในทิศทาง $\hat{u}$ ใด ๆ \\
+        เกรเดียนต์ $\nabla f$ & $\sum_i \hat{e}_i \frac{\partial f}{\partial x_i}$ & ทิศทางเพิ่มขึ้นเร็วสุด, แรงอนุรักษ์ $\vec{F} = -\nabla V$ \\
+        อนุพันธ์สสาร $\frac{D\rho}{Dt}$ & $\frac{\partial \rho}{\partial t} + (\vec{v} \cdot \nabla)\rho$ & อัตราการเปลี่ยนแปลงตามการไหลของของไหล \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Level curves
+    \draw[thick, gray!50] (0,0) circle (1.0cm);
+    \draw[thick, gray!65] (0,0) circle (2.0cm);
+    \draw[thick, gray!80] (0,0) circle (3.0cm);
+    \draw[thick, gray] (0,0) circle (4.0cm);
+    
+    \node[fill=white, inner sep=1.5pt, text=slateGrey, font=\scriptsize] at (0, 1.0) {$80^\circ\text{C}$};
+    \node[fill=white, inner sep=1.5pt, text=slateGrey, font=\scriptsize] at (0, 2.0) {$60^\circ\text{C}$};
+    \node[fill=white, inner sep=1.5pt, text=slateGrey, font=\scriptsize] at (0, 3.0) {$40^\circ\text{C}$};
+    \node[fill=white, inner sep=1.5pt, text=slateGrey, font=\scriptsize] at (0, 4.0) {$20^\circ\text{C}$};
+    
+    % Point P
+    \coordinate (P) at (1.414, 1.414);
+    \fill[black] (P) circle (2pt) node[above right=2pt, font=\small] {$P(x_0, y_0)$};
+    
+    % Tangent line at P
+    \draw[dashed, thick, black!60] ($(P)+(-1.5, 1.5)$) -- ($(P)+(1.5, -1.5)$) node[right, font=\footnotesize] {เส้นสัมผัสเส้นระดับ (Level Curve)};
+    
+    % Gradient vector (perpendicular to level curve, points inward to higher T)
+    \draw[-{Stealth[scale=1.2]}, very thick, physForce] (P) -- ($(P)+(-1.2, -1.2)$) node[below left, font=\bfseries\small] {$\nabla T$ (เพิ่มขึ้นเร็วสุด)};
+    
+    % Heat flux vector (opposite to gradient: q = -k grad T)
+    \draw[-{Stealth[scale=1.2]}, very thick, physVelocity] (P) -- ($(P)+(1.4, 1.4)$) node[above right, font=\bfseries\small] {$\vec{q} = -k\nabla T$ (ฟลักซ์ความร้อน)};
+    
+    % Directional vector u
+    \draw[-{Stealth[scale=1.1]}, thick, physAccel] (P) -- ($(P)+(1.6, 0.3)$) node[right, font=\small] {$\hat{u}$};
+    
+    % Right angle symbol
+    \draw[thick] ($(P)+(-0.2, 0.2)$) -- ($(P)+(-0.35, 0.05)$) -- ($(P)+(-0.15, -0.15)$);
+\end{tikzpicture}
+\caption{เส้นระดับอุณหภูมิ (Isotherms) แสดงเวกเตอร์เกรเดียนต์ $\nabla T$ ที่ตั้งฉากกับเส้นระดับเสมอ และฟลักซ์ความร้อน $\vec{q} = -k\nabla T$ ไหลในทิศทางลดลงของอุณหภูมิ}
+\label{fig:directional_gradient}
+\end{figure}
+
+จากสมการ $D_{\hat{u}}f = |\nabla f|\cos\theta$ นำไปสู่ข้อสรุปสำคัญทางกายภาพ 3 ประการ:
+\begin{enumerate}
+    \item \textbf{อัตราการเปลี่ยนแปลงสูงสุด:} เกิดขึ้นเมื่อ $\hat{u}$ ชี้ในทิศทางเดียวกับ $\nabla f$ ($\theta = 0, \cos\theta = 1$) โดยมีอัตราการเพิ่มขึ้นสูงสุดเท่ากับขนาด $|\nabla f|$
+    \item \textbf{อัตราการเปลี่ยนแปลงลดลงเร็วที่สุด:} เกิดขึ้นเมื่อ $\hat{u}$ ชี้ในทิศตรงข้ามกับ $\nabla f$ ($\theta = \pi$) อัตราการเปลี่ยนแปลงคือ $-|\nabla f|$
+    \item \textbf{ทิศทางที่ฟังก์ชันมีค่าคงที่:} เกิดขึ้นเมื่อ $\hat{u}$ ตั้งฉากกับ $\nabla f$ ($\theta = \pi/2, \cos\theta = 0$) นั่นคือ เวกเตอร์เกรเดียนต์ $\nabla f$ จะตั้งฉากกับเส้นระดับ (Level Curve) หรือพื้นผิวระดับ (Equipotential Surface) $f(x, y, z) = C$ เสมอ
+\end{enumerate}
+
+\section{กฎลูกโซ่และอนุพันธ์สสารในฟิสิกส์}
+หากตัวแปร $x, y, z$ เปลี่ยนแปลงไปตามพารามิเตอร์อื่น เช่น ตำแหน่งของอนุภาคของไหลที่เคลื่อนที่ไปตามเวลา $\vec{r}(t) = (x(t), y(t), z(t))$ อัตราการเปลี่ยนแปลงของปริมาณทางกายภาพ $f(x, y, z, t)$ ที่สังเกตได้จากตัวอนุภาคจะขึ้นอยู่กับทั้งการเปลี่ยนแปลงตามเวลาในตัวเอง (Local change) และการเปลี่ยนแปลงอันเนื่องมาจากการเคลื่อนที่ไปยังตำแหน่งใหม่ (Convective change)
+
+\begin{maththeorem}[อนุพันธ์สสารหรืออนุพันธ์คอนเวกทีฟ]
+ในกลศาสตร์ของไหลและฟิสิกส์ความต่อเนื่อง อัตราการเปลี่ยนแปลงของปริมาณ $f$ ตามการเคลื่อนที่ของกลุ่มอนุภาคของไหล เรียกว่า \textbf{อนุพันธ์สสาร (Material / Substantial Derivative)} เขียนแทนด้วยสัญลักษณ์ $\frac{Df}{Dt}$:
+\begin{equation}
+\frac{Df}{Dt} = \frac{\partial f}{\partial t} + \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt} + \frac{\partial f}{\partial z}\frac{dz}{dt} = \frac{\partial f}{\partial t} + (\vec{v} \cdot \nabla)f
+\end{equation}
+โดยที่ $\vec{v} = \frac{d\vec{r}}{dt}$ คือความเร็วของของไหล ตัวอย่างเช่น หาก $f$ คือเวกเตอร์ความเร็วของไหล $\vec{v}$ ความเร่งของกลุ่มอนุภาคคือ:
+\begin{equation}
+\vec{a} = \frac{D\vec{v}}{Dt} = \frac{\partial \vec{v}}{\partial t} + (\vec{v} \cdot \nabla)\vec{v}
+\end{equation}
+ซึ่งเป็นพจน์สำคัญทางด้านซ้ายของสมการนาเวียร์-สโตกส์ (Navier-Stokes Equation)
+\end{maththeorem}
+
+\section{การทดสอบอนุพันธ์อันดับสองและเมทริกซ์เฮสเซียน}
+การจำแนกจุดวิกฤต (Critical Points) ของฟังก์ชันหลายตัวแปรว่าจุดใดเป็นจุดต่ำสุดเฉพาะที่ (Local Minimum) จุดสูงสุดเฉพาะที่ (Local Maximum) หรือจุดอานม้า (Saddle Point) มีความสำคัญอย่างยิ่งในการวิเคราะห์เสถียรภาพของระบบกลศาสตร์และเคมีเชิงฟิสิกส์
+
+จุดวิกฤต $\vec{r}_0$ ของฟังก์ชัน $f(x, y)$ เกิดขึ้นเมื่อ:
+\begin{equation}
+\nabla f(\vec{r}_0) = \vec{0} \iff \frac{\partial f}{\partial x} = 0 \quad \text{และ} \quad \frac{\partial f}{\partial y} = 0
+\end{equation}
+จากการกระจายอนุกรมเทย์เลอร์รอบจุดวิกฤต:
+\begin{equation}
+f(\vec{r}_0 + \Delta \vec{r}) \approx f(\vec{r}_0) + \frac{1}{2} \begin{pmatrix} \Delta x & \Delta y \end{pmatrix} \mathbf{H} \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix}
+\end{equation}
+โดยที่ $\mathbf{H}$ คือ \textbf{เมทริกซ์เฮสเซียน (Hessian Matrix)}:
+\begin{equation}
+\mathbf{H} = \begin{pmatrix}
+f_{xx} & f_{xy} \\
+f_{yx} & f_{yy}
+\end{pmatrix}
+\end{equation}
+พิจารณาดีเทอร์มิแนนต์ $D = \det(\mathbf{H}) = f_{xx}f_{yy} - (f_{xy})^2$:
+\begin{enumerate}
+    \item หาก $D > 0$ และ $f_{xx} > 0$: จุดวิกฤตเป็น \textbf{จุดต่ำสุดสัมพัทธ์ (Local Minimum)} ระบบอยู่ในสมดุลเสถียร (Stable Equilibrium) เช่น ก้นหลุมพลังงานศักย์
+    \item หาก $D > 0$ และ $f_{xx} < 0$: จุดวิกฤตเป็น \textbf{จุดสูงสุดสัมพัทธ์ (Local Maximum)} ระบบอยู่ในสมดุลไม่เสถียร (Unstable Equilibrium)
+    \item หาก $D < 0$: จุดวิกฤตเป็น \textbf{จุดอานม้า (Saddle Point)} ซึ่งเป็นตัวแทนของสถานะเปลี่ยนผ่าน (Transition State) และแนวกั้นพลังงานกระตุ้นในปฏิกิริยาเคมี
+    \item หาก $D = 0$: การทดสอบสรุปผลไม่ได้ ต้องพิจารณาอนุพันธ์อันดับสูงกว่า
+\end{enumerate}
+
+\section{การหาค่าขีดสุดภายใต้เงื่อนไขบังคับด้วยตัวคูณลากรองจ์}
+ในทางวิศวกรรมและฟิสิกส์ ปัญหาการหาค่าเหมาะที่สุด (Optimization) มักมีเงื่อนไขบังคับ (Constraints) เสมอ เช่น การเคลื่อนที่ของวัตถุที่ถูกบังคับให้อยู่บนพื้นผิวทรงกลม หรือการหาการกระจายอนุภาคที่ทำให้เอนโทรปีสูงสุดภายใต้เงื่อนไขว่าพลังงานรวมและจำนวนอนุภาคต้องคงที่
+
+\subsection{หลักการตัวคูณลากรองจ์}
+ต้องการหาค่าขีดสุดของฟังก์ชันเป้าหมาย $f(x, y, z)$ ภายใต้สมการเงื่อนไข $g(x, y, z) = 0$ 
+ที่จุดขีดสุด เส้นระดับของ $f$ จะต้องสัมผัสกับพื้นผิวเงื่อนไข $g = 0$ ส่งผลให้เวกเตอร์เกรเดียนต์ของฟังก์ชันทั้งสองต้องขนานกัน:
+\begin{equation}
+\nabla f = \lambda \nabla g
+\end{equation}
+โดยที่ $\lambda$ คือ \textbf{ตัวคูณลากรองจ์ (Lagrange Multiplier)} ระบบสมการนี้ประกอบด้วย 4 ตัวแปร $(x, y, z, \lambda)$ และ 4 สมการ:
+\begin{equation}
+\frac{\partial f}{\partial x} = \lambda \frac{\partial g}{\partial x}, \quad \frac{\partial f}{\partial y} = \lambda \frac{\partial g}{\partial y}, \quad \frac{\partial f}{\partial z} = \lambda \frac{\partial g}{\partial z}, \quad g(x, y, z) = 0
+\end{equation}
+
+หากมีหลายเงื่อนไขบังคับ เช่น $g_1(\vec{r}) = 0$ และ $g_2(\vec{r}) = 0$ สมการจะขยายเป็น:
+\begin{equation}
+\nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2
+\end{equation}
+
+\section{การประยุกต์ใช้ในฟิสิกส์ วิทยาศาสตร์ และวิศวกรรมศาสตร์}
+\subsection{การจัดการความร้อนในอาคารอัจฉริยะและไมโครชิป}
+ตามกฎการนำความร้อนของฟูริเยร์ (Fourier's Law of Heat Conduction) ฟลักซ์ความร้อนต่อหนึ่งหน่วยพื้นที่ $\vec{q}$ ($\text{W/m}^2$) สัมพันธ์โดยตรงกับเกรเดียนต์ของอุณหภูมิ:
+\begin{equation}
+\vec{q} = -k \nabla T
+\end{equation}
+โดยที่ $k$ คือสภาพนำความร้อนของวัสดุ เครื่องหมายลบแสดงว่าความร้อนจะไหลจากบริเวณอุณหภูมิสูงไปยังบริเวณอุณหภูมิต่ำเสมอ การออกแบบระบบระบายความร้อนของโปรเซสเซอร์คอมพิวเตอร์และอาคารประหยัดพลังงานจะใช้การคำนวณ $\nabla T$ เพื่อหาตำแหน่งที่มีความร้อนสะสมสูงสุด (Thermal Hotspots) และออกแบบฮีตซิงก์หรือฉนวนกันความร้อนให้ตรงจุด
+
+\subsection{การกระจายตัวแบบโบลต์ซมันน์ในกลศาสตร์สถิติ}
+ในระบบก๊าซที่มี $N$ อนุภาคและพลังงานรวม $E$ การจัดเรียงตัวของอนุภาคที่มีความน่าจะเป็นสูงสุดคือสภาวะที่เอนโทรปีของข้อมูล $S = -k_B \sum p_i \ln p_i$ มีค่าสูงสุด ภายใต้เงื่อนไขบังคับ 2 ประการ:
+\begin{equation}
+g_1 = \sum_{i} p_i - 1 = 0 \quad \text{และ} \quad g_2 = \sum_{i} p_i \epsilon_i - E = 0
+\end{equation}
+การใช้ตัวคูณลากรองจ์สองตัว $(\alpha, \beta)$ สำหรับฟังก์ชัน $S$:
+\begin{equation}
+\frac{\partial}{\partial p_i} \left[ -k_B \sum p_i \ln p_i - \alpha\left(\sum p_i - 1\right) - \beta\left(\sum p_i \epsilon_i - E\right) \right] = 0
+\end{equation}
+นำไปสู่กฎการกระจายตัวแบบแมกซ์เวลล์-โบลต์ซมันน์ (Maxwell-Boltzmann Distribution) อันโด่งดัง:
+\begin{equation}
+p_i = \frac{1}{Z} e^{-\beta \epsilon_i} \quad \left(\beta = \frac{1}{k_B T}\right)
+\end{equation}
+ซึ่งเป็นรากฐานของฟิสิกส์เชิงความร้อนยุคใหม่
+
+\section{ตัวอย่างโจทย์และการแก้ปัญหาอย่างเป็นระบบ}
+
+\begin{mathexample}[การคำนวณฟลักซ์ความร้อนและการกระจายอุณหภูมิบนแผ่นวงจรอิเล็กทรอนิกส์]
+\textbf{โจทย์:} การกระจายตัวของอุณหภูมิบนแผ่นวงจรพิมพ์ไมโครคอนโทรลเลอร์ขนาด 2 มิติ อธิบายด้วยฟังก์ชัน:
+\begin{equation}
+T(x, y) = 30 + 50 e^{-(x^2 + 2y^2)} \quad (^\circ\text{C})
+\end{equation}
+เมื่อ $x, y$ มีหน่วยเป็นเซนติเมตร ($\text{cm}$) กำหนดให้สภาพนำความร้อนของแผ่นวงจรคือ $k = 1.5\text{ W}/(\text{m}\cdot\text{K})$
+\begin{enumerate}
+    \item จงหาเกรเดียนต์ของอุณหภูมิ $\nabla T$ ที่ตำแหน่ง $P(1, 1)\text{ cm}$
+    \item อุณหภูมิจะเพิ่มขึ้นเร็วที่สุดในทิศทางใด และมีอัตราการเพิ่มขึ้นเท่าใด
+    \item จงคำนวณหาเวกเตอร์ฟลักซ์ความร้อน $\vec{q}$ ณ จุด $P(1, 1)$
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{PICTURE:} จุดกำเนิด $(0,0)$ คือตำแหน่งของชิปประมวลผลซึ่งมีอุณหภูมิสูงสุด $80^\circ\text{C}$ เส้นระดับอุณหภูมิมีลักษณะเป็นวงรีตามสมการ $x^2 + 2y^2 = C$ เวกเตอร์เกรเดียนต์ชี้พุ่งเข้าสู่จุดกำเนิด ในขณะที่ฟลักซ์ความร้อนไหลพุ่งออกจากชิปไปสู่ขอบวงจร
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. แปลงหน่วยและหาอนุพันธ์ย่อยของฟังก์ชัน $T(x, y)$:
+\begin{align}
+\frac{\partial T}{\partial x} &= 50 e^{-(x^2 + 2y^2)} (-2x) = -100x e^{-(x^2 + 2y^2)} \\
+\frac{\partial T}{\partial y} &= 50 e^{-(x^2 + 2y^2)} (-4y) = -200y e^{-(x^2 + 2y^2)}
+\end{align}
+ที่จุด $P(1, 1)\text{ cm}$ ค่าพจน์เอ็กซ์โพเนนเชียลคือ $e^{-(1 + 2)} = e^{-3} \approx 0.049787$:
+\begin{align}
+\left.\frac{\partial T}{\partial x}\right|_{(1,1)} &= -100(1) e^{-3} \approx -4.98^\circ\text{C/cm} = -498^\circ\text{C/m} \\
+\left.\frac{\partial T}{\partial y}\right|_{(1,1)} &= -200(1) e^{-3} \approx -9.96^\circ\text{C/cm} = -996^\circ\text{C/m}
+\end{align}
+ดังนั้น เวกเตอร์เกรเดียนต์คือ:
+\begin{equation}
+\nabla T = -498 \hat{i} - 996 \hat{j} \quad (\text{K/m})
+\end{equation}
+
+2. ทิศทางที่อุณหภูมิเพิ่มขึ้นเร็วที่สุดคือทิศของ $\nabla T$:
+\begin{equation}
+\hat{u}_{\text{max}} = \frac{\nabla T}{|\nabla T|} = \frac{-498\hat{i} - 996\hat{j}}{\sqrt{(-498)^2 + (-996)^2}} = \frac{-1\hat{i} - 2\hat{j}}{\sqrt{5}} \approx -0.447\hat{i} - 0.894\hat{j}
+\end{equation}
+(ชี้เข้าหาชิปประมวลผลที่จุดศูนย์กลาง) และอัตราการเพิ่มขึ้นสูงสุดคือ:
+\begin{equation}
+|\nabla T| = \sqrt{(-498)^2 + (-996)^2} = 498\sqrt{5} \approx 1113.6\text{ K/m}
+\end{equation}
+
+3. ฟลักซ์ความร้อนตามกฎของฟูริเยร์ $\vec{q} = -k \nabla T$:
+\begin{equation}
+\vec{q} = -1.5 (-498\hat{i} - 996\hat{j}) = 747\hat{i} + 1494\hat{j} \quad (\text{W/m}^2)
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} หน่วยของ $\nabla T$ คือ $\text{K/m}$ เมื่อคูณกับ $k$ ($\text{W}/(\text{m}\cdot\text{K})$) ได้หน่วยเป็น $\text{W/m}^2$ ซึ่งถูกต้องสำหรับฟลักซ์พลังงาน ทิศทางของฟลักซ์ความร้อนเป็นบวก ($\vec{q}$ ชี้ออกจากจุดกำเนิด) สอดคล้องกับหลักการทางฟิสิกส์ที่ความร้อนต้องไหลออกจากบริเวณร้อนไปสู่บริเวณเย็น\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การคำนวณเกรเดียนต์อุณหภูมิและฟลักซ์ความร้อนฟูริเยร์ 2 มิติ]
+import numpy as np
+
+# กำหนดพิกัดและค่าสภาพนำความร้อน
+x, y = 1.0, 1.0  # cm
+k = 1.5          # W/(m*K)
+
+# คำนวณอนุพันธ์ย่อยเชิงวิเคราะห์
+exp_factor = np.exp(-(x**2 + 2 * y**2))
+dT_dx_cm = -100.0 * x * exp_factor  # C/cm
+dT_dy_cm = -200.0 * y * exp_factor  # C/cm
+
+# แปลงเป็นหน่วยมาตรฐาน SI (K/m โดยการคูณ 100)
+grad_T = np.array([dT_dx_cm, dT_dy_cm]) * 100.0
+grad_mag = np.linalg.norm(grad_T)
+u_max = grad_T / grad_mag
+
+# ฟลักซ์ความร้อนตามกฎฟูริเยร์ q = -k * grad(T)
+q_flux = -k * grad_T
+
+print(f"เกรเดียนต์อุณหภูมิ grad(T): [{grad_T[0]:.2f}, {grad_T[1]:.2f}] K/m")
+print(f"อัตราการเพิ่มอุณหภูมิสูงสุด: {grad_mag:.2f} K/m ในทิศทาง [{u_max[0]:.3f}, {u_max[1]:.3f}]")
+print(f"เวกเตอร์ฟลักซ์ความร้อน q: [{q_flux[0]:.2f}, {q_flux[1]:.2f}] W/m^2")
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การหาขนาดถังบรรจุสารเคมีความดันสูงที่ประหยัดต้นทุนที่สุดด้วยตัวคูณลากรองจ์]
+\textbf{โจทย์:} ถังบรรจุของเหลวทรงกระบอกปิดหัวท้ายด้วยแผ่นโลหะเรียบ ต้องมีปริมาตรบรรจุภายในคงที่ $V_0 = 2\pi\text{ m}^3$ หากต้นทุนแผ่นโลหะทำผิวข้างเท่ากับ $C_1 = 100\text{ บาท/m}^2$ และต้นทุนแผ่นโลหะปิดหัวท้ายหนาพิเศษเท่ากับ $C_2 = 200\text{ บาท/m}^2$ จงหารัศมี $r$ และความสูง $h$ ของถังที่ทำให้ต้นทุนวัสดุรวมต่ำที่สุด
+
+\vspace{0.2cm}
+\textbf{PICTURE:} ถังทรงกระบอกรัศมี $r$ สูง $h$ มีปริมาตร $V = \pi r^2 h$ พื้นที่ผิวข้างคือ $A_{\text{side}} = 2\pi r h$ และพื้นที่ฝาหัวท้าย 2 ด้านคือ $A_{\text{ends}} = 2\pi r^2$
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+กำหนดฟังก์ชันต้นทุนรวม $C(r, h)$:
+\begin{equation}
+C(r, h) = C_1(2\pi r h) + C_2(2\pi r^2) = 100(2\pi r h) + 200(2\pi r^2) = 200\pi r h + 400\pi r^2
+\end{equation}
+ภายใต้เงื่อนไขบังคับปริมาตร $g(r, h) = \pi r^2 h - 2\pi = 0$ หรือเขียนย่อเป็น $r^2 h - 2 = 0$
+ใช้สมการตัวคูณลากรองจ์ $\nabla C = \lambda \nabla g$:
+\begin{align}
+\frac{\partial C}{\partial r} &= \lambda \frac{\partial g}{\partial r} \implies 200\pi h + 800\pi r = \lambda (2r h) \label{eq:lagrange_r} \\
+\frac{\partial C}{\partial h} &= \lambda \frac{\partial g}{\partial h} \implies 200\pi r = \lambda (r^2) \label{eq:lagrange_h}
+\end{align}
+จากสมการที่ (\ref{eq:lagrange_h}) เนื่องจาก $r \neq 0$ จะได้ $\lambda$:
+\begin{equation}
+\lambda = \frac{200\pi r}{r^2} = \frac{200\pi}{r}
+\end{equation}
+นำ $\lambda$ ไปแทนในสมการที่ (\ref{eq:lagrange_r}):
+\begin{equation}
+200\pi h + 800\pi r = \left(\frac{200\pi}{r}\right)(2r h) = 400\pi h
+\end{equation}
+จัดรูปสมการ:
+\begin{equation}
+800\pi r = 200\pi h \implies h = 4r
+\end{equation}
+แทนความสัมพันธ์ $h = 4r$ ลงในเงื่อนไขปริมาตร $r^2 h = 2$:
+\begin{equation}
+r^2(4r) = 2 \implies 4r^3 = 2 \implies r^3 = \frac{1}{2} \implies r = \left(\frac{1}{2}\right)^{1/3} = \frac{1}{\sqrt[3]{2}} \approx 0.7937\text{ m}
+\end{equation}
+จะได้ความสูงที่เหมาะสมที่สุด:
+\begin{equation}
+h = 4r = 4\left(\frac{1}{2}\right)^{1/3} = 2^{5/3} \approx 3.1748\text{ m}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ปริมาตรรวม: $V = \pi r^2 h = \pi (2^{-2/3})(2^{5/3}\cdot 1) = \pi 2^1 = 2\pi\text{ m}^3$ ตรงตามเงื่อนไขบังคับอย่างแม่นยำ และสัดส่วน $h = 4r$ แสดงให้เห็นว่าเนื่องจากฝาหัวท้ายมีราคาแพงเป็น 2 เท่า ระบบจึงปรับสัดส่วนให้ถังมีความสูงมากขึ้นเพื่อลดพื้นที่หน้าตัดหัวท้ายลง\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การหาค่าเหมาะสมที่สุด (Optimization) ของรูปทรงถังบรรจุด้วย SciPy]
+import numpy as np
+from scipy.optimize import minimize
+
+# นิยามฟังก์ชันต้นทุนรวม C(r, h)
+def cost_func(x):
+    r, h = x[0], x[1]
+    return 200 * np.pi * r * h + 400 * np.pi * r**2
+
+# เงื่อนไขบังคับปริมาตร: pi * r^2 * h - 2*pi = 0
+constraint = {'type': 'eq', 'fun': lambda x: np.pi * x[0]**2 * x[1] - 2 * np.pi}
+bounds = [(0.1, 10.0), (0.1, 10.0)]
+
+# แก้ปัญหาด้วย Numerical Optimization
+res = minimize(cost_func, x0=[1.0, 2.0], bounds=bounds, constraints=constraint)
+r_opt, h_opt = res.x
+
+print(f"ผลลัพธ์เชิงตัวเลข: r = {r_opt:.4f} m, h = {h_opt:.4f} m")
+print(f"ผลลัพธ์เชิงวิเคราะห์: r = {2**(-1/3):.4f} m, h = {4 * 2**(-1/3):.4f} m")
+print(f"สัดส่วนความสูงต่อรัศมี h/r: {h_opt/r_opt:.4f} (ทฤษฎี = 4.0000)")
+print(f"ต้นทุนวัสดุต่ำสุด: {res.fun:.2f} บาท")
+\end{pythonbox}
+\end{mathexample}
+
+\section{สรุปสาระสำคัญประจำบท}
+\begin{table}[H]
+\centering
+\caption{สรุปสูตรและแนวคิดสำคัญในแคลคูลัสเชิงอนุพันธ์หลายตัวแปร}
+\label{tab:ch06_summary}
+\begin{tabularx}{\textwidth}{p{3.0cm}p{5.5cm}Y}
+\toprule
+\textbf{หัวข้อ / แนวคิด} & \textbf{สูตร / ความสัมพันธ์ทางคณิตศาสตร์} & \textbf{การประยุกต์ใช้ในฟิสิกส์} \\
+\midrule
+ผลต่างรวม & $df = \frac{\partial f}{\partial x}dx + \frac{\partial f}{\partial y}dy + \frac{\partial f}{\partial z}dz$ & งาน พลังงาน ฟังก์ชันสภาวะอุณหพลศาสตร์ \\
+อนุพันธ์ระบุทิศทาง & $D_{\hat{u}}f = \nabla f \cdot \hat{u} = |\nabla f|\cos\theta$ & อัตราการเปลี่ยนความดันและสนามความเร็ว \\
+อนุพันธ์สสาร & $\frac{Df}{Dt} = \frac{\partial f}{\partial t} + (\vec{v}\cdot\nabla)f$ & ความเร่งของไหล สมการนาเวียร์-สโตกส์ \\
+เมทริกซ์เฮสเซียน & $\mathbf{H}_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}$ & การจำแนกเสถียรภาพสมดุลและจุดอานม้า \\
+ตัวคูณลากรองจ์ & $\nabla f = \sum_k \lambda_k \nabla g_k$ & กลศาสตร์ลากรางจ์ การกระจายตัวสถิติ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\begin{enumerate}
+    \item \textbf{ระดับพื้นฐาน:} กำหนดสนามศักย์ไฟฟ้าสถิต $V(x, y, z) = 2x^2 y - 3y^2 z + x z^2$ (โวลต์)
+    \begin{enumerate}
+        \item จงหาอนุพันธ์ย่อยอันดับหนึ่งและอันดับสองผสม $\frac{\partial^2 V}{\partial x \partial y}$ และ $\frac{\partial^2 V}{\partial y \partial x}$ เพื่อยืนยันความถูกต้องของทฤษฎีบทชวาร์ซ
+        \item จงหาสนามไฟฟ้า $\vec{E} = -\nabla V$ ที่ตำแหน่ง $(1, 2, -1)\text{ m}$
+        \item จงหาอัตราการเปลี่ยนแปลงของศักย์ไฟฟ้าที่จุดดังกล่าวในทิศทางของเวกเตอร์ $\vec{A} = 2\hat{i} - \hat{j} + 2\hat{k}$
+    \end{enumerate}
+    
+    \item \textbf{ระดับประยุกต์:} พลังงานศักย์ของโมเลกุลในสองมิติอธิบายโดย $U(x, y) = x^3 + y^3 - 3xy$ (อิเล็กตรอนโวลต์, $\text{eV}$)
+    \begin{enumerate}
+        \item จงหาจุดวิกฤตทั้งหมดของระบบ
+        \item ใช้เมทริกซ์เฮสเซียนในการจำแนกประเภทของจุดวิกฤตแต่ละจุด (จุดต่ำสุด สมดุลไม่เสถียร หรือสถานะเปลี่ยนผ่าน)
+    \end{enumerate}
+
+    \item \textbf{ระดับก้าวหน้า:} อนุภาคกำลังเคลื่อนที่บนพื้นผิวทรงรี $x^2 + 2y^2 + 3z^2 = 12$ ภายใต้อิทธิพลของแรงโน้มถ่วงซึ่งมีฟังก์ชันพลังงานศักย์ $V(x, y, z) = mgz$ จงใช้ระเบียบวิธีตัวคูณลากรองจ์เพื่อหาตำแหน่งจุดสูงสุดและต่ำสุดที่อนุภาคสามารถเคลื่อนที่ไปถึงได้
+\end{enumerate}

@@ -1,0 +1,115 @@
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{tikz}
+\setmainfont{TH Sarabun New}
+\newfontfamily\thaifont{TH Sarabun New}
+\newfontfamily\thaifonttt{Courier New}
+\usepackage{eso-pic}
+\usepackage{graphicx}
+\setdefaultlanguage{thai}
+\setotherlanguages{english}
+\usepackage{setspace} 
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{ragged2e}
+\usepackage{svg}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{eso-pic}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{sectsty}
+\usepackage{fancyhdr}
+\usepackage{titling}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{framed}
+
+\geometry{
+    top=1in,
+    bottom=1in,
+    left=1.5in,
+    right=1in
+}
+
+% การปรับแต่งสารบัญ
+\renewcommand{\contentsname}{\centering สารบัญ}
+\renewcommand{\listfigurename}{\centering สารบัญภาพ}
+\renewcommand{\listtablename}{\centering สารบัญตาราง}
+\renewcommand{\chaptername}{\hfill บทที่}
+\renewcommand{\figurename}{\textcolor{red}{\textbf{ภาพที่}}}
+\renewcommand{\tablename}{\textcolor{red}{\textbf{ตารางที่}}}
+
+% การปรับแต่งชื่อบท Chapter ด้วยกรอบ TikZ
+\titleformat{\chapter}[display]
+   {\fontsize{28}{28}\color{blue}\bfseries\centering}
+   {\begin{tikzpicture}
+    \node[rectangle, draw=blue, fill=orange!10, rounded corners, minimum width=15cm, minimum height=1.5cm]
+    {\color{blue}\chaptertitlename  \hspace{0.3em}  \thechapter};
+    \end{tikzpicture}}{24pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{16pt}{0pt}
+
+% หัวข้อย่อย Section ด้วยกรอบ TikZ
+\titleformat{\section}
+   {\fontsize{16}{18}\color{teal}\bfseries}
+   {\begin{tikzpicture}
+    \node[rectangle, draw=teal, fill=teal!10, rounded corners, minimum width=8cm, minimum height=1cm]
+    {\thesection};
+    \end{tikzpicture}}{1em}{}
+\titlespacing*{\section}{0pt}{12pt}{8pt}
+
+% การตั้งค่ารูปแบบเนื้อหา
+\renewcommand{\normalsize}{\fontsize{16}{16}\selectfont}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.5\baselineskip}
+
+% กรอบสำหรับเนื้อหาด้วย framed
+\newenvironment{contentbox}{
+    \begin{framed}
+    \setlength{\parskip}{0.5\baselineskip}
+}{
+    \end{framed}
+}
+
+% ฟังก์ชันวันที่ภาษาไทย
+\newcommand{\thaimonthname}[1]{%
+  \ifcase#1
+    \or มกราคม\or กุมภาพันธ์\or มีนาคม\or เมษายน\or พฤษภาคม\or มิถุนายน%
+    \or กรกฎาคม\or สิงหาคม\or กันยายน\or ตุลาคม\or พฤศจิกายน\or ธันวาคม%
+  \fi
+}
+\newcommand{\thaidate}{%
+ \the\day\ \thaimonthname{\month}\ \number\numexpr\year+543\relax
+}
+
+% ปรับรูปแบบหน้ากระดาษ
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+
+% การตั้งค่า Listings
+\usepackage{listings}
+\lstset{
+    basicstyle=\fontsize{12}{14}\ttfamily,
+    columns=fullflexible,
+    frame=single,
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    language=Python,
+}
+
+% การตั้งค่า Hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={จุลชีววิทยาสำหรับการเกษตร},
+    pdfpagemode=FullScreen,
+}
+
+% คำสั่งกำหนดเอง
+\newcommand{\degree}{\ensuremath{^\circ}}

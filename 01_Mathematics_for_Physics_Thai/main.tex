@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% นำเข้าแพ็กเกจสไตล์มาตรฐาน มรภ.รำไพพรรณี และ Physics Textbook Layout
+\usepackage{styles/rbru_book_style}
+
+% การตั้งค่าภาษาและฟอนต์ไทยสำหรับ XeLaTeX
+\usepackage{fontspec}
+\setmainfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=rbruNavy,
+    filecolor=rbruGreen,      
+    urlcolor=rbruNavy,
+    pdftitle={คณิตศาสตร์สำหรับฟิสิกส์ - ดร.ชีวะ ทัศนา},
+    pdfauthor={ดร.ชีวะ ทัศนา}
+}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/cover}
+\include{frontmatter/title}
+\include{frontmatter/preface}
+\include{frontmatter/syllabus}
+
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+\mainmatter
+
+% รวม 9 บทเรียนหลักตามโครงสร้างคลังข้อมูลวิชาการ
+\include{chapters/ch01_coordinate_systems}
+\include{chapters/ch02_vectors}
+\include{chapters/ch03_basic_series}
+\include{chapters/ch04_complex_numbers}
+\include{chapters/ch05_matrices}
+\include{chapters/ch06_derivatives}
+\include{chapters/ch07_integrals}
+\include{chapters/ch08_ode}
+\include{chapters/ch09_second_order_odes}
+
+% ภาคผนวก (Appendices: สูตรคณิตศาสตร์และเอกลักษณ์เวกเตอร์พื้นฐาน)
+\appendix
+\renewcommand{\thechapter}{ก}
+\include{backmatter/appendix}
+
+\backmatter
+% บรรณานุกรม ดัชนีสืบค้น และประวัติผู้เขียน
+\include{backmatter/references}
+\clearpage
+\printindex
+\include{backmatter/biography}
+
+\end{document}

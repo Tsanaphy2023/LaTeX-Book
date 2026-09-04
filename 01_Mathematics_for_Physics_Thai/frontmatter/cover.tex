@@ -1,0 +1,118 @@
+% Measure exact rendered width of Thai title before titlepage
+\newsavebox{\thaititlebox}
+\sbox{\thaititlebox}{\fontsize{36}{42}\selectfont\bfseries คณิตศาสตร์สำหรับฟิสิกส์}
+
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\noindent%
+\begin{tikzpicture}[remember picture, overlay]
+    % 1. Background: Deep Cosmic Midnight Navy
+    \definecolor{coverBgDark}{HTML}{070F1E}
+    \definecolor{coverBgMid}{HTML}{0D1B36}
+    \definecolor{coverCyan}{HTML}{00E5FF}
+    \definecolor{coverEmerald}{HTML}{10B981}
+    \definecolor{coverGold}{HTML}{FBBF24}
+    \definecolor{coverOrange}{HTML}{F97316}
+    \definecolor{coverCoral}{HTML}{EF4444}
+    \definecolor{coverPurple}{HTML}{A855F7}
+    
+    % Gradient background simulation with canvas bleed
+    \fill[coverBgDark] ($(current page.south west)+(-1.5,-1.5)$) rectangle ($(current page.north east)+(1.5,1.5)$);
+    
+    % Subtle ambient glow patches
+    \shade[inner color=coverBgMid!90!coverCyan, outer color=coverBgDark, opacity=0.35] 
+        ($(current page.north east)+(-3, -6)$) circle (9cm);
+    \shade[inner color=coverBgMid!90!coverPurple, outer color=coverBgDark, opacity=0.3] 
+        ($(current page.south west)+(4, 8)$) circle (10cm);
+    \shade[inner color=coverBgMid!80!coverGold, outer color=coverBgDark, opacity=0.25] 
+        ($(current page.center)+(1, -1.5)$) circle (7cm);
+
+    % 2. Mathematical Grid & Spacetime Coordinate Mesh (Subtle Lines)
+    \begin{scope}[opacity=0.12]
+        \foreach \x in {-10,-8,...,10} {
+            \draw[coverCyan, thin] ($(current page.center)+(\x, -15)$) -- ($(current page.center)+(\x*0.4, 15)$);
+        }
+        \foreach \y in {-14,-11,...,14} {
+            \draw[coverCyan, thin] ($(current page.center)+(-11, \y)$) to[out=10, in=190] ($(current page.center)+(11, \y+0.8)$);
+        }
+    \end{scope}
+
+    % 3. Central Scientific Art: Dynamic Resonant Manifold & Vector Waves
+    \begin{scope}[shift={($(current page.center)+(0.5, -1.2)$)}]
+        % Concentric Geodesic Ellipses (Relativistic Orbits & Coordinate Rings)
+        \draw[very thick, coverCyan, opacity=0.42, rotate=25] (0,0) ellipse (7.0cm and 2.5cm);
+        \draw[thick, coverEmerald, opacity=0.5, rotate=-35] (0,0) ellipse (6.2cm and 2.2cm);
+        \draw[very thick, coverGold, opacity=0.6, rotate=65] (0,0) ellipse (5.5cm and 2.0cm);
+        \draw[thick, coverCoral, opacity=0.45, rotate=-75] (0,0) ellipse (5.0cm and 1.7cm);
+        
+        % Vector Field Spiral & Wave Packets
+        \foreach \ang in {0, 18, ..., 342} {
+            \draw[-{Stealth[scale=0.9]}, coverCyan!90, thick, opacity=0.6] 
+                (\ang:2.9cm) -- ++(\ang+65:1.1cm);
+        }
+        \foreach \ang in {9, 27, ..., 351} {
+            \draw[-{Stealth[scale=0.8]}, coverGold!90, thick, opacity=0.5] 
+                (\ang:4.3cm) -- ++(\ang+110:0.9cm);
+        }
+
+        % Glowing Harmonic Waveform
+        \draw[ultra thick, coverCyan, domain=-5.4:5.4, samples=200, smooth, opacity=0.85] 
+            plot (\x, {0.85*cos(3.2*\x r)*exp(-0.08*\x*\x) + 0.3*sin(1.5*\x r)});
+        \draw[very thick, coverGold, domain=-5.2:5.2, samples=150, smooth, opacity=0.7] 
+            plot (\x, {-0.65*cos(2.8*\x r)*exp(-0.07*\x*\x)});
+            
+        % Central Core Light: Quantum State Node
+        \fill[white] (0,0) circle (3.5pt);
+        \draw[coverCyan, ultra thick] (0,0) circle (6.5pt);
+        \draw[coverGold, thick, dashed] (0,0) circle (11pt);
+        
+        % Floating Quantum / Math symbols in geometric alignment
+        \node[coverCyan!80, font=\large\bfseries] at (-3.8, 1.8) {$\nabla \times \vec{B}$};
+        \node[coverGold!80, font=\large\bfseries] at (3.6, 2.0) {$e^{i\pi} + 1 = 0$};
+        \node[coverEmerald!80, font=\large\bfseries] at (-4.0, -2.1) {$\oiint \vec{E} \cdot d\vec{a}$};
+        \node[coverCoral!80, font=\large\bfseries] at (3.8, -1.9) {$\mathbf{H}\vec{v} = \lambda\vec{v}$};
+    \end{scope}
+
+    % 4. Main Title & Typography
+    \node[anchor=north, align=center, text=white] at ($(current page.north)+(0, -4.2)$) {
+        {\fontsize{36}{42}\selectfont\bfseries\color{white} คณิตศาสตร์สำหรับฟิสิกส์} \\[3.8mm]
+        {\resizebox{\wd\thaititlebox}{!}{\bfseries\color{coverCyan} MATHEMATICS FOR PHYSICS}} \\[4.5mm]
+        {\fontsize{13.5}{17}\selectfont\color{coverGold} ฉบับมาตรฐานวิชาการและแบบจำลองการคำนวณเชิงตัวเลข}
+    };
+    
+    % Minimalist Decorative Divider
+    \draw[ultra thick, coverGold] ($(current page.north)+(-4.5, -7.8)$) -- ($(current page.north)+(4.5, -7.8)$);
+    \fill[coverCyan] ($(current page.north)+(0, -7.8)$) circle (3.5pt);
+
+    % 5. Core Highlights / Key Focus Chips
+    \node[anchor=north, align=center] at ($(current page.north)+(0, -8.6)$) {
+        \textcolor{white!85}{\fontsize{10.5}{14}\selectfont 
+        $\bullet$ ระบบพิกัดและเวกเตอร์ \quad 
+        $\bullet$ อนุกรมและจำนวนเชิงซ้อน \quad 
+        $\bullet$ เมทริกซ์และค่าเจาะจง \quad 
+        $\bullet$ แคลคูลัสและสมการเชิงอนุพันธ์} \\[1.8mm]
+        \textcolor{coverCyan!90}{\fontsize{9.5}{13}\selectfont 
+        พร้อมภาพเวกเตอร์ TikZ คมชัด 100\% และการจำลองระบบกายภาพด้วยภาษา Python}
+    };
+
+    % 6. Author Portrait & Name: Bottom Left Placement
+    \coordinate (authorPhoto) at ($(current page.south west)+(3.8, 3.8)$);
+    
+    % Glowing ambient rings
+    \shade[inner color=coverCyan!35, outer color=coverBgDark, opacity=0.45] (authorPhoto) circle (2.5cm);
+    \draw[coverGold, thick, dashed, opacity=0.75] (authorPhoto) circle (2.22cm);
+    \draw[coverCyan, ultra thick, opacity=0.95] (authorPhoto) circle (2.05cm);
+    
+    % Centered circular portrait
+    \node at (authorPhoto) {\includegraphics[width=4.0cm]{images/author_chewa_circle_final}};
+
+    % Author Name (ชีวะ ทัศนา)
+    \node[anchor=west, align=left] at ($(authorPhoto)+(2.6, 0)$) {
+        {\fontsize{28}{34}\bfseries\color{white} ชีวะ ทัศนา}
+    };
+
+\end{tikzpicture}
+\clearpage
+\restoregeometry
+\end{titlepage}

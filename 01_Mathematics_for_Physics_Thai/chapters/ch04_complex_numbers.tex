@@ -1,0 +1,302 @@
+\chapter{จำนวนเชิงซ้อนและการประยุกต์ในฟิสิกส์}
+\index{จำนวนเชิงซ้อน (Complex numbers)}
+\index{หน่วยจินตภาพ (Imaginary unit)}
+\index{สูตรของออยเลอร์ (Euler's formula)}
+\index{ทฤษฎีบทของเดอมัวฟวร์ (De Moivre's theorem)}
+\index{เฟสเซอร์ (Phasor)}
+\index{อิมพีแดนซ์เชิงซ้อน (Complex impedance)}
+\index{วงจรกรองความถี่ต่ำ (Low-pass filter)}
+\index{Complex numbers}
+\index{Euler's formula}
+\index{Phasor}
+\index{Complex impedance}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item ดำเนินการทางพีชคณิตเชิงซ้อน การแปลงรูปเชิงขั้ว และการหารากของจำนวนเชิงซ้อนโดยใช้สูตรของออยเลอร์และเดอมัวฟวร์ได้
+    \item อธิบายสมบัติของฟังก์ชันวิเคราะห์และสมการโคชี-รีมันน์ในระนาบเชิงซ้อนได้
+    \item ใช้ระเบียบวิธีเฟสเซอร์ (Phasor Method) ในการแก้ปัญหาวงจรไฟฟ้ากระแสสลับและคลื่นได้อย่างมีประสิทธิภาพ
+    \item ประยุกต์ใช้อิมพีแดนซ์เชิงซ้อนในการออกแบบวงจรกรองความถี่เสียง (Audio Filters) และการเคลือบผิวเลนส์ลดแสงสะท้อนได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{พีชคณิตเชิงซ้อนและสูตรของออยเลอร์}
+จำนวนเชิงซ้อน $z$ นิยามในรูปส่วนจริงและส่วนจินตภาพ:
+\begin{equation}
+z = x + iy \quad (x, y \in \mathbb{R})
+\end{equation}
+โดยที่หน่วยจินตภาพ $i = \sqrt{-1}$ สอดคล้องกับ $i^2 = -1, i^3 = -i, i^4 = 1$
+สังยุคเชิงซ้อน (Complex Conjugate) ของ $z$ คือ $z^* = x - iy$ ซึ่งส่งผลให้:
+\begin{equation}
+z z^* = (x + iy)(x - iy) = x^2 + y^2 = |z|^2
+\end{equation}
+
+\subsection{รูปเชิงขั้วและสูตรของออยเลอร์ (Euler's Formula)}
+ผ่านการกระจายอนุกรมแมคลอรินของ $e^u, \cos\theta, \sin\theta$ เลออนฮาร์ด ออยเลอร์ ได้ค้นพบสูตรที่งดงามและทรงพลังที่สุดสูตรหนึ่งในคณิตศาสตร์:
+\begin{equation}
+e^{i\theta} = \cos\theta + i\sin\theta
+\end{equation}
+ทำให้จำนวนเชิงซ้อนใด ๆ สามารถเขียนในรูปเลขชี้กำลังเชิงขั้ว (Polar Exponential Form):
+\begin{equation}
+z = r e^{i\theta}
+\end{equation}
+โดยที่:
+\begin{itemize}
+    \item ขนาด (Modulus): $r = |z| = \sqrt{x^2 + y^2}$
+    \item อาร์กิวเมนต์ (Argument): $\theta = \arg(z) = \arctan(y/x)$
+\end{itemize}
+
+\subsection{ทฤษฎีบทของเดอมัวฟวร์และการหาราก}
+สำหรับจำนวนเต็ม $n$ ใด ๆ:
+\begin{equation}
+(\cos\theta + i\sin\theta)^n = \cos(n\theta) + i\sin(n\theta) \iff (e^{i\theta})^n = e^{in\theta}
+\end{equation}
+การหารากที่ $n$ ของจำนวนเชิงซ้อน $z = r e^{i\theta}$:
+\begin{equation}
+z^{1/n} = r^{1/n} \exp\left[i\left(\frac{\theta + 2k\pi}{n}\right)\right], \quad k = 0, 1, 2, \dots, n-1
+\end{equation}
+รากทั้ง $n$ รากจะกระจายตัวอย่างสมมาตรเป็นจุดยอดของรูป $n$ เหลี่ยมด้านเท่าบนวงกลมรัศมี $r^{1/n}$ ในระนาบเชิงซ้อน (Argand Plane)
+
+\begin{table}[htbp]
+    \centering
+    \caption{รูปแบบการแทนจำนวนเชิงซ้อนและการดำเนินการทางพีชคณิต}
+    \label{tab:complex_representations}
+    \begin{tabularx}{\textwidth}{p{3.2cm}p{4.5cm}Y}
+        \toprule
+        \textbf{รูปแบบการแทน} & \textbf{สัญลักษณ์และโครงสร้าง} & \textbf{จุดเด่นและการประยุกต์} \\
+        \midrule
+        \textbf{รูปแบบคาร์ทีเซียน} & $z = x + iy$ & สะดวกสำหรับการบวกและการลบ ($z_1 \pm z_2$) \\
+        \textbf{รูปแบบเชิงขั้ว} & $z = r(\cos\theta + i\sin\theta)$ & แสดงความสัมพันธ์ตรีโกณมิติชัดเจน \\
+        \textbf{รูปแบบเลขชี้กำลังออยเลอร์} & $z = r e^{i\theta}$ & สะดวกสำหรับการคูณ หาร ยกกำลัง และเฟสเซอร์ \\
+        \midrule
+        \textbf{การดำเนินการสำคัญ} & \textbf{สูตรการคำนวณ} & \textbf{พฤติกรรมทางเรขาคณิต} \\
+        \midrule
+        การคูณ & $z_1 z_2 = r_1 r_2 e^{i(\theta_1 + \theta_2)}$ & ขยายขนาดด้วย $r_2$ และหมุนมุมทวนเข็มด้วย $\theta_2$ \\
+        สังยุคเชิงซ้อน & $z^* = x - iy = r e^{-i\theta}$ & การสะท้อนข้ามแกนจริง \\
+        ขนาดและมอดุลัส & $|z| = \sqrt{z z^*} = \sqrt{x^2 + y^2}$ & ระยะทางจากจุดกำเนิดถึงจุด $z$ ในระนาบเชิงซ้อน \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=1.3]
+        % Axes
+        \draw[->, thick, color=physGeneric] (-0.5,0) -- (3.5,0) node[anchor=west]{$\text{Re}(z)$};
+        \draw[->, thick, color=physGeneric] (0,-0.5) -- (0,3) node[anchor=south]{$\text{Im}(z)$};
+        
+        % Phasor vector
+        \coordinate (P) at (2.4, 2.0);
+        \draw[->, line width=1.5pt, color=physVelocity] (0,0) -- (P) node[anchor=south west]{$z = r e^{i(\omega t + \phi)}$};
+        
+        % Angle arc
+        \draw[->, thick, color=physForce] (1,0) arc (0:40:1);
+        \node[color=physForce] at (1.3, 0.4) {$\omega t + \phi$};
+        
+        % Projections
+        \draw[dashed, color=gray] (P) -- (2.4,0) node[midway, right]{$y(t) = r\sin(\omega t+\phi)$};
+        \draw[dashed, color=gray] (P) -- (0,2.0) node[midway, above]{$x(t) = r\cos(\omega t+\phi)$};
+        
+        % Radius label
+        \node[color=physVelocity] at (1.1, 1.2) {$r$};
+    \end{tikzpicture}
+    \caption{แผนภาพอาร์กอนด์ (Argand Diagram) แสดงเวกเตอร์เฟสเซอร์หมุนด้วยความเร็วเชิงมุม $\omega$}
+    \label{fig:argand_phasor}
+\end{figure}
+
+\section{ฟังก์ชันวิเคราะห์และสมการโคชี-รีมันน์}
+ฟังก์ชันของตัวแปรเชิงซ้อน $f(z) = u(x,y) + i v(x,y)$ จะเรียกว่าเป็น \textbf{ฟังก์ชันวิเคราะห์ (Analytic Function)} ณ จุด $z_0$ ก็ต่อเมื่ออนุพันธ์ $f'(z)$ มีค่าและไม่ขึ้นกับทิศทางการเข้าสู่จุดนั้น:
+\begin{equation}
+f'(z) = \lim_{\Delta z \to 0} \frac{f(z + \Delta z) - f(z)}{\Delta z}
+\end{equation}
+
+\begin{maththeorem}[สมการโคชี-รีมันน์ (Cauchy-Riemann Equations)]
+เงื่อนไขจำเป็นและเพียงพอที่ทำให้ $f(z) = u + iv$ เป็นฟังก์ชันวิเคราะห์คือ อนุพันธ์ย่อยอันดับหนึ่งของ $u$ และ $v$ ต้องมีความต่อเนื่องและสอดคล้องกับ:
+\begin{equation}
+\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}, \quad \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}
+\end{equation}
+ผลลัพธ์สำคัญตามมาคือ ทั้ง $u$ และ $v$ จะต้องสอดคล้องกับสมการลาปลาซ (Laplace's Equation):
+\begin{equation}
+\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0, \quad \nabla^2 v = \frac{\partial^2 v}{\partial x^2} + \frac{\partial^2 v}{\partial y^2} = 0
+\end{equation}
+นั่นคือ $u$ และ $v$ เป็นฟังก์ชันฮาร์มอนิก (Harmonic Functions) ซึ่งใช้แก้ปัญหาการกระจายศักย์ไฟฟ้าสถิตและการไหลของของไหลอุดมคติใน 2 มิติได้อย่างแม่นยำ
+\end{maththeorem}
+
+\section{การประยุกต์ใช้ในวิทยาศาสตร์และวิศวกรรมศาสตร์}
+\subsection{ระเบียบวิธีเฟสเซอร์และวงจรกรองความถี่เสียง (Audio Filters)}
+ในระบบเสียงระดับมืออาชีพ เช่น ลำโพง 2 ทาง หรือ 3 ทาง สัญญาณเสียงประกอบด้วยความถี่ผสม $20\,\si{Hz} - 20\,\si{kHz}$ วงจรตัดแบ่งความถี่ (Audio Crossover Filter) จะแยกความถี่ต่ำส่งไปยังวูฟเฟอร์ (Woofer) และความถี่สูงส่งไปยังทวีตเตอร์ (Tweeter)
+
+เมื่อแรงดันไฟฟ้ากระตุ้นด้วยรูปคลื่นไซน์ $v(t) = V_0 \cos(\omega t) = \text{Re}\{\tilde{V} e^{i\omega t}\}$ อิมพีแดนซ์เชิงซ้อนของตัวต้านทาน ตัวเหนี่ยวนำ และตัวเก็บประจุคือ:
+\begin{equation}
+Z_R = R, \quad Z_L = i\omega L, \quad Z_C = \frac{1}{i\omega C} = -\frac{i}{\omega C}
+\end{equation}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=1.1, >=Stealth]
+        % Terminals and Input Voltage
+        \draw[thick] (0,0) circle (2pt) node[below=2pt, font=\footnotesize] {$-$};
+        \draw[thick] (0,2.5) circle (2pt) node[above=2pt, font=\footnotesize] {$+$};
+        \draw[<->, thick, physForce] (0, 0.2) -- (0, 2.3) node[midway, left=2pt, font=\small\bfseries] {$\tilde{V}_{\text{in}}$};
+        
+        % Resistor
+        \draw[thick] (0.05,2.5) -- (1,2.5);
+        \draw[thick, fill=white] (1,2.2) rectangle (2.5,2.8) node[midway, font=\small\bfseries]{$R$};
+        
+        % Capacitor
+        \draw[thick] (2.5,2.5) -- (4,2.5);
+        \draw[ultra thick] (3.9,2.8) -- (3.9,2.2);
+        \draw[ultra thick] (4.1,2.8) -- (4.1,2.2);
+        \node[font=\small\bfseries] at (4.0, 3.1) {$C$};
+        
+        % Ground / bottom wire
+        \draw[thick] (4.0,2.2) -- (4.0,0);
+        \draw[thick] (4.0,0) -- (0.05,0);
+        
+        % Output terminals
+        \draw[thick] (4.0,2.5) -- (5.5,2.5);
+        \draw[thick] (4.0,0) -- (5.5,0);
+        \draw[thick] (5.5,0) circle (2pt) node[below=2pt, font=\footnotesize] {$-$};
+        \draw[thick] (5.5,2.5) circle (2pt) node[above=2pt, font=\footnotesize] {$+$};
+        \draw[<->, thick, physVelocity] (5.5, 0.2) -- (5.5, 2.3) node[midway, right=2pt, font=\small\bfseries] {$\tilde{V}_{\text{out}}$};
+    \end{tikzpicture}
+    \caption{วงจรกรองความถี่ต่ำผ่านอย่างง่าย (First-Order RC Low-Pass Filter)}
+    \label{fig:rc_lowpass_filter}
+\end{figure}
+
+ฟังก์ชันถ่ายโอน (Transfer Function) ของวงจร RC Low-Pass Filter:
+\begin{equation}
+H(\omega) = \frac{\tilde{V}_{\text{out}}}{\tilde{V}_{\text{in}}} = \frac{Z_C}{R + Z_C} = \frac{\frac{1}{i\omega C}}{R + \frac{1}{i\omega C}} = \frac{1}{1 + i\omega R C}
+\end{equation}
+ขนาดของอัตราขยาย (Magnitude Gain):
+\begin{equation}
+|H(\omega)| = \frac{1}{\sqrt{1 + (\omega R C)^2}} = \frac{1}{\sqrt{1 + (\omega/\omega_c)^2}}
+\end{equation}
+โดยที่ $\omega_c = \frac{1}{RC}$ คือ ความถี่คัตออฟ (Cutoff Frequency) ซึ่งที่ความถี่นี้กำลังของสัญญาณจะลดลงครึ่งหนึ่ง ($-3\,\si{dB}$)
+
+\begin{mathexample}[การคำนวณการแทรกสอดของคลื่นสองขบวนด้วยเฟสเซอร์]
+\textbf{โจทย์:} คลื่นเสียงสองขบวนมีความถี่เท่ากันเคลื่อนที่มาพบกัน ณ จุดหนึ่ง มีสมการ $y_1(t) = 3\cos(\omega t)$ และ $y_2(t) = 4\cos(\omega t + \pi/2)$ จงหาแอมพลิจูดสุทธิ $A_{\text{total}}$ และมุมเฟสเริ่มต้น $\delta$ ของคลื่นรวม
+
+\vspace{0.2cm}
+\textbf{PICTURE:} ใช้การแทนด้วยเวกเตอร์เฟสเซอร์ในระนาบเชิงซ้อน $\tilde{y}_1 = 3 e^{i(0)} = 3$ และ $\tilde{y}_2 = 4 e^{i\pi/2} = 4i$
+
+\vspace{0.2cm}
+\textbf{SOLVE:}
+1. รวมเฟสเซอร์ในระนาบเชิงซ้อน:
+\begin{equation}
+\tilde{y}_{\text{total}} = \tilde{y}_1 + \tilde{y}_2 = 3 + 4i
+\end{equation}
+2. แปลงกลับเป็นรูปเชิงขั้ว $A_{\text{total}} e^{i\delta}$:
+\begin{align}
+A_{\text{total}} &= |\tilde{y}_{\text{total}}| = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5 \\
+\delta &= \arctan\left(\frac{4}{3}\right) \approx 0.927\,\si{rad} \quad (53.13^\circ)
+\end{align}
+3. สัญญาณคลื่นรวมจริงตามเวลา:
+\begin{equation}
+y_{\text{total}}(t) = \text{Re}\{\tilde{y}_{\text{total}} e^{i\omega t}\} = 5\cos(\omega t + 0.927)
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ใช้ทฤษฎีบทพีทาโกรัสเนื่องจากคลื่นทั้งสองมีเฟสต่างกัน $\pi/2$ (ตั้งฉากกันในระนาบเชิงซ้อน): $A = \sqrt{3^2 + 4^2} = 5$ ตรงกันอย่างแม่นยำและรวดเร็วกว่าการใช้เอกลักษณ์ตรีโกณมิติทั่วไปมาก\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การรวมคลื่นด้วยเฟสเซอร์เชิงซ้อนและพล็อตสัญญาณเวลา]
+import numpy as np
+
+# นิยามพารามิเตอร์ของคลื่น
+omega = 2 * np.pi * 100  # ความถี่เชิงมุม 100 Hz
+t = np.linspace(0, 0.02, 500)  # เวลา 2 คาบ
+
+# เฟสเซอร์เชิงซ้อน: y1 = 3 + 0j, y2 = 0 + 4j
+z1 = 3.0 + 0.0j
+z2 = 0.0 + 4.0j
+z_total = z1 + z2
+
+# คำนวณแอมพลิจูดสุทธิและมุมเฟส
+A_total = np.abs(z_total)
+phi_deg = np.degrees(np.angle(z_total))
+print(f"แอมพลิจูดสุทธิ A_total: {A_total:.4f}")
+print(f"มุมเฟสเริ่มต้น: {phi_deg:.2f} องศา ({np.angle(z_total):.4f} rad)")
+
+# สัญญาณคลื่นรวมจริงตามเวลา Re{z_total * exp(i*omega*t)}
+y_total = np.real(z_total * np.exp(1j * omega * t))
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การออกแบบสารเคลือบเลนส์ลดแสงสะท้อน (Anti-Reflective Coating)]
+\textbf{โจทย์:} แสงความยาวคลื่น $\lambda_0 = 550\,\si{nm}$ (แสงสีเขียว-เหลืองที่ดวงตามนุษย์ไวที่สุด) ตกกระทบผิวเลนส์แก้วที่มีดัชนีหักเห $n_g = 1.50$ จงหาความหนาขั้นต่ำ $d$ ของสารเคลือบแมกนีเซียมฟลูออไรด์ ($n_c = 1.38$) ที่ทำให้แสงสะท้อนหักล้างกันหมดสิ้น
+
+\vspace{0.2cm}
+\textbf{SOLVE:} แสงสะท้อนเกิดขึ้นที่ 2 รอยต่อ:
+1. รอยต่ออากาศ-สารเคลือบ ($n_{\text{air}} = 1.0 < n_c$): เกิดการกลับเฟส $\pi$
+2. รอยต่อสารเคลือบ-แก้ว ($n_c = 1.38 < n_g = 1.50$): เกิดการกลับเฟส $\pi$
+เนื่องจากเกิดการกลับเฟสเท่ากันทั้งสองรอยต่อ เงื่อนไขการแทรกสอดแบบหักล้างกัน (Destructive Interference) จึงขึ้นกับผลต่างทางเดินเชิงแสง $2 n_c d$:
+\begin{equation}
+2 n_c d = \left(m + \frac{1}{2}\right)\lambda_0, \quad m = 0, 1, 2, \dots
+\end{equation}
+ความหนาขั้นต่ำสุดเลือกที่ $m = 0$:
+\begin{equation}
+d = \frac{\lambda_0}{4 n_c} = \frac{550\,\si{nm}}{4(1.38)} = \frac{550}{5.52} \approx 99.6\,\si{nm}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ความหนาของฟิล์มบางระดับ $\sim 100\,\si{nm}$ (หนึ่งในสี่ของความยาวคลื่นในตัวกลาง) เป็นสเปกมาตรฐานในการเคลือบเลนส์แว่นตาและเลนส์กล้องถ่ายรูปเพื่อกำจัดการสะท้อนแสง\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  การสะท้อนของสารเคลือบเลนส์บาง (Thin-Film Reflectance)]
+import numpy as np
+
+# ดัชนีหักเห
+n0 = 1.00  # อากาศ
+n1 = 1.38  # สารเคลือบ MgF2
+n2 = 1.50  # เนื้อแก้ว Substrate
+lambda_design = 550e-9  # ความยาวคลื่นเป้าหมาย (m)
+
+# คำนวณความหนาฟิล์มเคลือบควอเตอร์เวฟ (Quarter-Wave Coating)
+d = lambda_design / (4 * n1)
+print(f"ความหนาขั้นต่ำที่เหมาะสม d = {d * 1e9:.2f} nm")
+
+# จำลองการสะท้อนตลอดช่วงแสงขาว (400 - 700 nm)
+wavelengths = np.linspace(400e-9, 700e-9, 300)
+delta = 2 * np.pi * n1 * d / wavelengths
+r1 = (n0 - n1) / (n0 + n1)
+r2 = (n1 - n2) / (n1 + n2)
+
+# สัมประสิทธิ์การสะท้อนรวม (Reflectance)
+R = (r1**2 + r2**2 + 2*r1*r2*np.cos(2*delta)) / (1 + r1**2 * r2**2 + 2*r1*r2*np.cos(2*delta))
+idx_min = np.argmin(R)
+print(f"การสะท้อนขั้นต่ำ: {R[idx_min]*100:.3f}% ที่ lambda = {wavelengths[idx_min]*1e9:.1f} nm")
+\end{pythonbox}
+\end{mathexample}
+
+\section{บทสรุปประจำบท}
+\begin{table}[htbp]
+    \centering
+    \caption{ตารางสรุปการแทนปริมาณทางฟิสิกส์ด้วยจำนวนเชิงซ้อน}
+    \label{tab:complex_summary}
+    \begin{tabularx}{\textwidth}{p{3.6cm}p{4.8cm}Y}
+        \toprule
+        \textbf{ปริมาณทางกายภาพ} & \textbf{รูปฟังก์ชันจริง} & \textbf{รูปเชิงซ้อน (เฟสเซอร์)} \\
+        \midrule
+        การสั่นฮาร์มอนิก & $x(t) = A\cos(\omega t + \phi)$ & $\tilde{x}(t) = A e^{i(\omega t + \phi)}$ \\
+        อนุพันธ์อันดับหนึ่ง (ความเร็ว) & $v(t) = -A\omega\sin(\omega t + \phi)$ & $\tilde{v}(t) = i\omega \tilde{x}(t)$ \\
+        อนุพันธ์อันดับสอง (ความเร่ง) & $a(t) = -A\omega^2\cos(\omega t + \phi)$ & $\tilde{a}(t) = -\omega^2 \tilde{x}(t)$ \\
+        ตัวต้านทาน & $v = i R$ & $Z_R = R$ \\
+        ตัวเหนี่ยวนำ & $v = L \frac{di}{dt}$ & $Z_L = i\omega L$ (แรงดันนำหน้ากระแส $90^\circ$) \\
+        ตัวเก็บประจุ & $i = C \frac{dv}{dt}$ & $Z_C = \frac{1}{i\omega C}$ (แรงดันตามหลังกระแส $90^\circ$) \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\subsection{คำถามเชิงแนวคิด (Conceptual Questions)}
+\begin{enumerate}
+    \item เหตุใดการแปลงสมการเชิงอนุพันธ์ของการสั่นสะเทือนให้อยู่ในระนาบเชิงซ้อนจึงช่วยเปลี่ยนกระบวนการหาอนุพันธ์ให้เป็นการคูณด้วยพีชคณิตธรรมดา
+    \item อธิบายความหมายเชิงกายภาพของอิมพีแดนซ์ส่วนจินตภาพ (Reactance, $X$) เปรียบเทียบกับส่วนจริง (Resistance, $R$) ในแง่การถ่ายเทพลังงานและการสูญเสียพลังงานความร้อน
+\end{enumerate}
+
+\subsection{โจทย์การคำนวณเชิงวิเคราะห์ (Analytical Problems)}
+\begin{enumerate}
+    \item จงหารากที่ 4 ทั้งหมดของจำนวนเชิงซ้อน $z = -16$ และวาดแผนภาพแสดงตำแหน่งรากในระนาบเชิงซ้อน
+    \item วงจรไฟฟ้า $RL$ อนุกรมต่อกับแหล่งกำเนิด $v(t) = 100\cos(1000 t)\,\si{V}$ โดยที่ $R = 30\,\Omega$ และ $L = 40\,\si{mH}$ จงหากระแสไฟฟ้าในรูปเฟสเซอร์ $\tilde{I}$ และกระแสจริงตามเวลา $i(t)$
+    \item จงตรวจสอบว่าฟังก์ชัน $u(x, y) = x^2 - y^2 + 2x$ เป็นฟังก์ชันฮาร์มอนิกหรือไม่ หากเป็น จงหาฟังก์ชันคู่สังยุค $v(x, y)$ ที่ทำให้ $f(z) = u + iv$ เป็นฟังก์ชันวิเคราะห์
+\end{enumerate}

@@ -1,0 +1,51 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/modern_physics_style}[2026/09/04 Modern Physics AR/XR Style]
+
+\RequirePackage{geometry}
+\geometry{a4paper, top=1.5in, bottom=1.0in, left=1.5in, right=1.0in}
+\RequirePackage{amsmath,amssymb,mathtools,physics,siunitx}
+\RequirePackage{graphicx,xcolor,listings}
+\RequirePackage[most]{tcolorbox}
+
+\definecolor{cyberBlue}{HTML}{0284C7}
+\definecolor{darkNavy}{HTML}{0F172A}
+\definecolor{neonPurple}{HTML}{7C3AED}
+\definecolor{codeBackground}{HTML}{0F172A}
+
+\newtcolorbox{arbox}[1][]{
+    enhanced,
+    colback=white,
+    colframe=cyberBlue,
+    fonttitle=\bfseries,
+    title=AR/XR Simulation Frame: #1,
+    arc=3mm,
+    boxrule=1.2pt,
+    leftrule=5mm,
+    drop shadow=cyberBlue!20
+}
+
+\newtcolorbox{pythonbox}[1][]{
+    enhanced,
+    colback=white,
+    colframe=neonPurple,
+    fonttitle=\bfseries,
+    title=Python Computational Engine: #1,
+    arc=2mm,
+    boxrule=1pt,
+    leftrule=4mm
+}
+
+\lstdefinestyle{modernpython}{
+    language=Python,
+    backgroundcolor=\color{codeBackground},
+    basicstyle=\ttfamily\footnotesize\color{white},
+    keywordstyle=\color{cyan}\bfseries,
+    stringstyle=\color{yellow!80!white},
+    commentstyle=\color{green!60!white}\itshape,
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    stepnumber=1,
+    frame=single,
+    breaklines=true
+}
+\lstset{style=modernpython}

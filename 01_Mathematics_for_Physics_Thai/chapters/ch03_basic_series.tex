@@ -1,0 +1,253 @@
+\chapter{อนุกรมพื้นฐานและการประมาณค่า}
+\index{อนุกรมพื้นฐาน (Basic series)}
+\index{อนุกรมเทย์เลอร์ (Taylor series)}
+\index{อนุกรมแมคลอริน (Maclaurin series)}
+\index{การประมาณค่ามุมเล็ก (Small-angle approximation)}
+\index{การกระจายทวินาม (Binomial expansion)}
+\index{รัศมีการลู่เข้า (Radius of convergence)}
+\index{Taylor series}
+\index{Maclaurin series}
+\index{Binomial expansion}
+
+\begin{chapterobjectives}
+เมื่อศึกษาบทเรียนนี้แล้ว นักศึกษาสามารถ:
+\begin{enumerate}
+    \item อธิบายทฤษฎีบทการกระจายอนุกรมเทย์เลอร์ อนุกรมแมคลอริน และรัศมีการลู่เข้าของอนุกรมกำลังได้
+    \item เลือกใช้การประมาณค่ามุมเล็ก การกระจายทวินาม และอนุกรมกำลังเพื่อสร้างแบบจำลองทางฟิสิกส์ได้อย่างเหมาะสม
+    \item ประเมินขอบเขตความคลาดเคลื่อนของการประมาณค่าทางกายภาพโดยใช้พจน์เศษเหลือลากรองจ์ได้
+    \item เชื่อมโยงการประมาณค่าเข้ากับปรากฏการณ์จริง เช่น การแผ่รังสีของวัตถุดำ และการแกว่งของลูกตุ้มมุมกว้างได้
+\end{enumerate}
+\end{chapterobjectives}
+
+\section{อนุกรมเทย์เลอร์และอนุกรมแมคลอริน}
+ในวิชาฟิสิกส์ ปัญหาทางกายภาพจำนวนมากไม่สามารถหาผลเฉลยแม่นตรงในรูปปิด (Exact Analytical Closed Form) ได้ การประมาณค่าฟังก์ชันที่ซับซ้อนรอบจุดสมดุล (Equilibrium Point) ด้วยพหุนามจึงเป็นเครื่องมือที่มีพลังมหาศาล
+
+หากฟังก์ชัน $f(x)$ สามารถหาอนุพันธ์ได้ทุกอันดับในย่านใกล้เคียงของจุด $x = a$ ฟังก์ชันดังกล่าวสามารถกระจายในรูป \textbf{อนุกรมเทย์เลอร์ (Taylor Series)}:
+\begin{equation}
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x - a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots + R_n(x)
+\end{equation}
+โดยที่ $R_n(x)$ คือ พจน์เศษเหลือลากรองจ์ (Lagrange Remainder):
+\begin{equation}
+R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - a)^{n+1} \quad \text{สำหรับบางค่า } \xi \in [a, x]
+\end{equation}
+เมื่อจุดศูนย์กลางการกระจายอยู่ที่จุดกำเนิด $a = 0$ เราจะเรียกว่า \textbf{อนุกรมแมคลอริน (Maclaurin Series)}:
+\begin{equation}
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \frac{f'''(0)}{3!}x^3 + \cdots
+\end{equation}
+
+อนุกรมแมคลอรินของฟังก์ชันพื้นฐานสำคัญ:
+\begin{align}
+e^x &= 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots = \sum_{n=0}^{\infty} \frac{x^n}{n!} \quad (|x| < \infty) \\
+\sin x &= x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots \quad (|x| < \infty) \\
+\cos x &= 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots \quad (|x| < \infty) \\
+\ln(1 + x) &= x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots \quad (-1 < x \le 1) \\
+\frac{1}{1 - x} &= 1 + x + x^2 + x^3 + \cdots \quad (|x| < 1)
+\end{align}
+
+\begin{table}[htbp]
+    \centering
+    \caption{การกระจายอนุกรมกำลัง รัศมีการลู่เข้า และตัวอย่างการประยุกต์ใช้ในฟิสิกส์}
+    \label{tab:taylor_series_summary}
+    \begin{tabularx}{\textwidth}{p{2.0cm}p{5.0cm}p{2.0cm}Y}
+        \toprule
+        \textbf{ฟังก์ชัน} $f(x)$ & \textbf{พจน์แรกของการกระจาย} ($x \approx 0$) & \textbf{ช่วงลู่เข้า} & \textbf{การประยุกต์ใช้ในฟิสิกส์} \\
+        \midrule
+        $e^x$ & $1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \cdots$ & $|x| < \infty$ & การแจกแจงโบลต์ซมันน์, กฎของพลังค์ \\
+        $\sin x$ & $x - \frac{x^3}{6} + \frac{x^5}{120} - \cdots$ & $|x| < \infty$ & การสั่นแบบฮาร์มอนิก, ลูกตุ้มมุมกว้าง \\
+        $\cos x$ & $1 - \frac{x^2}{2} + \frac{x^4}{24} - \cdots$ & $|x| < \infty$ & พลังงานศักย์รอบจุดสมดุลเสถียร \\
+        $\ln(1+x)$ & $x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots$ & $-1 < x \le 1$ & เอนโทรปี, กระบวนการไอโซเทอร์มัล \\
+        $(1+x)^p$ & $1 + px + \frac{p(p-1)}{2}x^2 + \cdots$ & $|x| < 1$ & สัมพัทธภาพพิเศษ $\gamma = (1-v^2/c^2)^{-1/2}$ \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+        % Axes
+        \draw[->, thick, color=physGeneric] (-3.5,0) -- (3.5,0) node[anchor=west]{$x$};
+        \draw[->, thick, color=physGeneric] (0,-1.8) -- (0,1.8) node[anchor=south]{$y$};
+        
+        % Exact sin(x)
+        \draw[domain=-3.2:3.2, samples=100, ultra thick, color=physVelocity] plot (\x, {sin(\x r)}) node[anchor=west]{$y = \sin x$};
+        
+        % Order 1: y = x
+        \draw[domain=-1.5:1.5, thick, dashed, color=physForce] plot (\x, {\x}) node[anchor=south west]{$P_1(x) = x$};
+        
+        % Order 3: y = x - x^3/6
+        \draw[domain=-2.3:2.3, thick, dotted, color=physAccel] plot (\x, {\x - (\x)^3/6}) node[anchor=north west]{$P_3(x) = x - \frac{x^3}{6}$};
+        
+        % Order 5: y = x - x^3/6 + x^5/120
+        \draw[domain=-2.8:2.8, thick, dashdotted, color=physDisplace] plot (\x, {\x - (\x)^3/6 + (\x)^5/120}) node[anchor=south east]{$P_5(x)$};
+        
+        % Legend/labels
+        \node at (0, -2.1) {การลู่เข้าของพหุนามเทย์เลอร์อันดับ 1, 3, 5 สู่ฟังก์ชันจริง $\sin x$};
+    \end{tikzpicture}
+    \caption{การเปรียบเทียบฟังก์ชัน $\sin x$ กับพหุนามประมาณค่าเทย์เลอร์ที่อันดับต่าง ๆ}
+    \label{fig:taylor_sine_comparison}
+\end{figure}
+
+\section{เทคนิคการประมาณค่าทางฟิสิกส์}
+\subsection{การประมาณค่ามุมเล็ก (Small Angle Approximation)}
+สำหรับการเคลื่อนที่แบบแกว่งกวัด เช่น ลูกตุ้มนาฬิกา หรือการเลี้ยวเบนของแสง เมื่อมุมเบี่ยงเบน $\theta \ll 1\,\si{rad}$ (เช่น $\theta < 10^\circ \approx 0.17\,\si{rad}$):
+\begin{align}
+\sin\theta &\approx \theta - \frac{\theta^3}{6} \approx \theta \\
+\cos\theta &\approx 1 - \frac{\theta^2}{2} + \frac{\theta^4}{24} \approx 1 - \frac{\theta^2}{2} \\
+\tan\theta &\approx \theta + \frac{\theta^3}{3} \approx \theta
+\end{align}
+
+\subsection{การกระจายทวินาม (Binomial Expansion)}
+สำหรับการกระจายฟังก์ชันที่มีเลขชี้กำลัง $n$ ใด ๆ (ไม่จำเป็นต้องเป็นจำนวนเต็ม):
+\begin{equation}
+(1 + x)^n = 1 + nx + \frac{n(n-1)}{2!}x^2 + \frac{n(n-1)(n-2)}{3!}x^3 + \cdots \quad (|x| < 1)
+\end{equation}
+ในทางฟิสิกส์ เมื่อ $|x| \ll 1$ เราสามารถตัดพจน์อันดับสองขึ้นไปทิ้งได้:
+\begin{align}
+\sqrt{1 + x} &= (1 + x)^{1/2} \approx 1 + \frac{1}{2}x \\
+\frac{1}{\sqrt{1 + x}} &= (1 + x)^{-1/2} \approx 1 - \frac{1}{2}x \\
+\frac{1}{1 + x} &= (1 + x)^{-1} \approx 1 - x
+\end{align}
+
+\section{การประยุกต์ใช้ในฟิสิกส์และวิทยาศาสตร์}
+\subsection{การแผ่รังสีของวัตถุดำและกฎของเรย์ลี-ยีนส์}
+กฎการแผ่รังสีของมักซ์ พลังค์ (Planck's Radiation Law) อธิบายความหนาแน่นพลังงานเชิงสเปกตรัมของวัตถุดำ:
+\begin{equation}
+u(\lambda, T) = \frac{8\pi h c}{\lambda^5} \frac{1}{e^{\frac{hc}{\lambda k_B T}} - 1}
+\end{equation}
+ในย่านความยาวคลื่นยาว ($\lambda \gg hc/k_B T$) หรืออุณหภูมิสูง กำหนดให้ $x = \frac{hc}{\lambda k_B T} \ll 1$
+กระจายพจน์เอกซ์โพเนนเชียลในอนุกรมเทย์เลอร์: $e^x \approx 1 + x$:
+\begin{equation}
+e^{\frac{hc}{\lambda k_B T}} - 1 \approx \left(1 + \frac{hc}{\lambda k_B T}\right) - 1 = \frac{hc}{\lambda k_B T}
+\end{equation}
+แทนกลับลงในสมการของพลังค์:
+\begin{equation}
+u(\lambda, T) \approx \frac{8\pi h c}{\lambda^5} \frac{1}{\left(\frac{hc}{\lambda k_B T}\right)} = \frac{8\pi k_B T}{\lambda^4}
+\end{equation}
+ซึ่งก็คือ \textbf{กฎของเรย์ลี-ยีนส์ (Rayleigh-Jeans Law)} ตามฟิสิกส์ดั้งเดิม แสดงให้เห็นว่าทฤษฎีควอนตัมของพลังค์ลู่เข้าสู่ฟิสิกส์ดั้งเดิมได้อย่างสมบูรณ์แบบตามหลักความสอดคล้อง (Correspondence Principle)
+
+\begin{mathexample}[การคำนวณคาบของลูกตุ้มนาฬิกาที่มุมกว้าง]
+\textbf{โจทย์:} สมการไม่เชิงเส้นของลูกตุ้มความยาว $L$ คือ $\frac{d^2\theta}{dt^2} + \frac{g}{L}\sin\theta = 0$ จงประมาณค่าคาบการแกว่งเมื่อมุมเริ่มต้น $\theta_0$ มีค่าไม่เล็กมาก โดยประมาณ $\sin\theta \approx \theta - \frac{\theta^3}{6}$
+
+\vspace{0.2cm}
+\textbf{PICTURE:} สำหรับมุมเล็ก คาบคือ $T_0 = 2\pi\sqrt{L/g}$ แต่เมื่อมุมกว้างขึ้น การประมาณพจน์ถัดไปของอนุกรมจะทำให้คาบยาวขึ้น
+
+\vspace{0.2cm}
+\textbf{SOLVE:} จากการวิเคราะห์อินทิกรัลอิลลิปติก (Elliptic Integral) ของการอนุรักษ์พลังงาน:
+\begin{equation}
+T = 4\sqrt{\frac{L}{2g}}\int_0^{\theta_0} \frac{d\theta}{\sqrt{\cos\theta - \cos\theta_0}}
+\end{equation}
+การกระจายในอนุกรมกำลังของ $\sin(\theta_0/2)$:
+\begin{equation}
+T = 2\pi\sqrt{\frac{L}{g}}\left[1 + \frac{1}{4}\sin^2\left(\frac{\theta_0}{2}\right) + \frac{9}{64}\sin^4\left(\frac{\theta_0}{2}\right) + \cdots\right]
+\end{equation}
+เมื่อมุม $\theta_0$ อยู่ในหน่วยเรเดียน และประมาณ $\sin(\theta_0/2) \approx \theta_0/2$:
+\begin{equation}
+T \approx T_0 \left(1 + \frac{\theta_0^2}{16}\right)
+\end{equation}
+หากมุมกว้าง $\theta_0 = 30^\circ = \pi/6 \approx 0.5236\,\si{rad}$:
+\begin{equation}
+T \approx T_0 \left(1 + \frac{(0.5236)^2}{16}\right) = T_0 (1 + 0.0171) = 1.0171\,T_0
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} คาบเพิ่มขึ้นประมาณ 1.7\% เมื่อแกว่งที่มุม $30^\circ$ ซึ่งสอดคล้องกับการทดลองจริงว่าลูกตุ้มที่แกว่งมุมกว้างจะเดินช้าลงเล็กน้อย\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  เปรียบเทียบคาบลูกตุ้มมุมกว้างกับอินทิกรัลอิลลิปติก]
+import numpy as np
+from scipy.special import ellipk
+
+L, g = 1.0, 9.80665  # ความยาวลูกตุ้ม 1 m
+T0 = 2 * np.pi * np.sqrt(L / g)
+
+theta0_deg = np.array([5, 15, 30, 45, 60])
+theta0_rad = np.radians(theta0_deg)
+
+# 1. การประมาณด้วยอนุกรมเทย์เลอร์: T/T0 \approx 1 + (theta0^2)/16
+approx_ratio = 1 + (theta0_rad**2) / 16.0
+
+# 2. ผลเฉลยแม่นตรง: T/T0 = (2/pi) * K(sin^2(theta0/2))
+k_param = np.sin(theta0_rad / 2.0)**2
+exact_ratio = (2.0 / np.pi) * ellipk(k_param)
+
+print("มุม (องศา) | ผลประมาณเทย์เลอร์ | ผลเฉลยแม่นตรง (Elliptic) | ความคลาดเคลื่อน (%)")
+for deg, app, ex in zip(theta0_deg, approx_ratio, exact_ratio):
+    err = abs(app - ex) / ex * 100
+    print(f"   {deg:2d}     |      {app:.5f}     |         {ex:.5f}        |       {err:.3f}%")
+\end{pythonbox}
+\end{mathexample}
+
+\begin{mathexample}[การประมาณผลต่างพลังงานศักย์โน้มถ่วงที่ระดับความสูง $h$ เหนือผิวโลก]
+\textbf{โจทย์:} พลังงานศักย์โน้มถ่วงสัมบูรณ์คือ $U(r) = -G\frac{M m}{r}$ จงแสดงว่าที่ระดับความสูง $h \ll R_E$ เหนือผิวโลก ผลต่างพลังงานศักย์จะลดรูปลงเหลือ $\Delta U \approx mgh$
+
+\vspace{0.2cm}
+\textbf{SOLVE:} กำหนดรัศมีโลก $R_E$ และระยะห่างจากศูนย์กลางโลก $r = R_E + h$:
+\begin{equation}
+\Delta U = U(R_E + h) - U(R_E) = -GMm\left(\frac{1}{R_E + h} - \frac{1}{R_E}\right) = \frac{GMm}{R_E}\left(1 - \frac{1}{1 + h/R_E}\right)
+\end{equation}
+เนื่องจาก $h/R_E \ll 1$ ใช้การกระจายทวินาม $(1 + x)^{-1} \approx 1 - x + x^2$:
+\begin{equation}
+1 - \left(1 - \frac{h}{R_E}\right) = \frac{h}{R_E}
+\end{equation}
+แทนกลับลงในสมการ:
+\begin{equation}
+\Delta U \approx \frac{GMm}{R_E}\left(\frac{h}{R_E}\right) = \left(\frac{GM}{R_E^2}\right) m h
+\end{equation}
+จากนิยามความเร่งโน้มถ่วงที่ผิวโลก $g = \frac{GM}{R_E^2} \approx 9.8\,\si{m/s^2}$:
+\begin{equation}
+\Delta U \approx mgh
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{CHECK:} ผลลัพธ์กลับคืนสู่สูตรพลังงานศักย์พื้นฐานของนิวตันที่ใช้ในชีวิตประจำวันอย่างสมบูรณ์แบบ\qedexam
+
+\begin{pythonbox}[การจำลองด้วย Python  เปรียบเทียบการกระจายทวินามพลังงานศักย์โน้มถ่วง]
+import numpy as np
+
+G = 6.6743e-11   # ค่าคงที่โน้มถ่วงสากล (m^3 kg^-1 s^-2)
+M_E = 5.972e24   # มวลของโลก (kg)
+R_E = 6.371e6    # รัศมีของโลก (m)
+m = 100.0        # มวลวัตถุ 100 kg
+g = G * M_E / (R_E**2)
+
+altitudes_km = np.array([1, 10, 50, 100, 400])  # ระดับความสูง 1 km ถึงสถานีอวกาศ ISS
+
+for h_km in altitudes_km:
+    h = h_km * 1e3
+    exact_dU = G * M_E * m * (1.0/R_E - 1.0/(R_E + h))
+    approx_dU = m * g * h
+    diff_pct = (approx_dU - exact_dU) / exact_dU * 100
+    print(f"h = {h_km:3d} km | แม่นตรง: {exact_dU/1e6:7.2f} MJ | ประมาณ mgh: {approx_dU/1e6:7.2f} MJ | ค่าต่าง: {diff_pct:.2f}%")
+\end{pythonbox}
+\end{mathexample}
+
+\section{บทสรุปประจำบท}
+\begin{table}[htbp]
+    \centering
+    \caption{การกระจายอนุกรมที่ใช้บ่อยที่สุดในฟิสิกส์}
+    \label{tab:series_summary}
+    \begin{tabularx}{\textwidth}{p{2.2cm}p{4.5cm}Y}
+        \toprule
+        \textbf{ฟังก์ชัน} & \textbf{พหุนามประมาณค่า ($|x| \ll 1$)} & \textbf{การประยุกต์ในฟิสิกส์} \\
+        \midrule
+        $(1+x)^n$ & $1 + nx + \frac{n(n-1)}{2}x^2$ & พลังงานจลน์สัมพัทธภาพ, ศักย์โน้มถ่วง \\
+        $\sin x$ & $x - \frac{x^3}{6}$ & การแกว่งของลูกตุ้ม, การแทรกสอดเลี้ยวเบน \\
+        $\cos x$ & $1 - \frac{x^2}{2}$ & ทฤษฎีบทการกระจัดเล็ก, พลังงานศักย์สมดุล \\
+        $e^x$ & $1 + x + \frac{x^2}{2}$ & การแผ่รังสีวัตถุดำ, ทฤษฎีจลน์ของก๊าซ \\
+        $\ln(1+x)$ & $x - \frac{x^2}{2}$ & เอนโทรปี, การคำนวณงานในกระบวนการไอโซเทอร์มัล \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{แบบฝึกหัดท้ายบท}
+\subsection{คำถามเชิงแนวคิด (Conceptual Questions)}
+\begin{enumerate}
+    \item เหตุใดในวิชาฟิสิกส์ จุดสมดุลเสถียร (Stable Equilibrium) จึงสามารถประมาณพลังงานศักย์รอบจุดนั้นให้มีรูปพาราโบลา $U(x) \approx U_0 + \frac{1}{2}k(x-x_0)^2$ ได้เสมอ อธิบายด้วยอนุกรมเทย์เลอร์
+    \item ในการคำนวณการเลี้ยวเบนของแสงผ่านสลิตเดี่ยว มุม $\theta$ ต้องมีค่าประมาณเท่าใดจึงจะทำให้ความคลาดเคลื่อนของการประมาณ $\sin\theta \approx \theta$ ไม่เกิน 1\%
+\end{enumerate}
+
+\subsection{โจทย์การคำนวณเชิงวิเคราะห์ (Analytical Problems)}
+\begin{enumerate}
+    \item การหดตัวของความยาวเชิงสัมพัทธภาพคือ $L = L_0 \sqrt{1 - v^2/c^2}$ จงใช้การกระจายทวินามหาการเปลี่ยนแปลงความยาวเชิงสัมพัทธ์ $\Delta L / L_0$ ของเครื่องบินความเร็วเหนือเสียง $v = 1,000\,\si{m/s}$
+    \item จงหากระจายอนุกรมเทย์เลอร์ของศักย์ไฟฟ้าบนแกน $z$ จากไดโพลไฟฟ้า $V(z) = \frac{kq}{z - d/2} - \frac{kq}{z + d/2}$ เมื่อ $z \gg d$ โดยกระจายจนถึงพจน์ $1/z^3$
+    \item ฟังก์ชันความจุความร้อนตามแบบจำลองของไอน์สไตน์คือ $C_V = 3R \left(\frac{\theta_E}{T}\right)^2 \frac{e^{\theta_E/T}}{(e^{\theta_E/T}-1)^2}$ จงแสดงว่าที่อุณหภูมิสูง $T \gg \theta_E$ ความจุความร้อนจะลู่เข้าสู่กฎของดูลงและเปอตีต์ $C_V \approx 3R$
+\end{enumerate}

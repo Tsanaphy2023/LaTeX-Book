@@ -1,0 +1,29 @@
+\documentclass[12pt,a4paper,oneside]{book}
+\usepackage{styles/modern_physics_style}
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{TH Sarabun New}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyberBlue,
+    pdftitle={Modern Physics with AR/XR & Python - Dr. Chewa Thassana},
+    pdfauthor={Dr. Chewa Thassana}
+}
+
+\begin{document}
+\frontmatter
+\include{frontmatter/title}
+\tableofcontents
+
+\mainmatter
+\include{chapters/ch01_special_relativity}
+\include{chapters/ch02_quantum_mechanics}
+\include{chapters/ch03_particle_physics}
+\include{chapters/ch04_ar_xr_frameworks}
+\include{chapters/ch05_nuclear_physics}
+\include{chapters/ch06_quantum_computing}
+\include{chapters/ch07_astrophysics}
+
+\end{document}
