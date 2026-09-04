@@ -59,6 +59,7 @@
 \captionsetup{labelsep=thaisep}
 \captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=rbruNavy}, textfont={normalfont}, labelsep=thaisep}
 \captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=rbruNavy}, textfont={normalfont}, labelsep=thaisep}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
 
 % 3.1 Indexing System (ดัชนีสืบค้น 2 ภาษา)
 \RequirePackage{imakeidx}
@@ -84,11 +85,184 @@
 \definecolor{physDisplace}{HTML}{38A169}     % Green: การกระจัด/ตำแหน่ง (Displacement)
 \definecolor{physGeneric}{HTML}{2D3748}      % Dark Slate: เวกเตอร์ทั่วไป/แกน
 
-% 5. Section & Chapter Formatting (RBRU Standards: ตัดคำว่าหัวข้อ, ตัด colon, เคาะ 1 เคาะ, หัวบทกล่องวิชาการ)
+% Modern Glow Colors for Chapter Motifs & Diagrams
+\definecolor{cyanGlow}{HTML}{00E5FF}
+\definecolor{emeraldGlow}{HTML}{10B981}
+\definecolor{goldGlow}{HTML}{FBBF24}
+\definecolor{coralGlow}{HTML}{EF4444}
+\definecolor{purpleGlow}{HTML}{A855F7}
+
+\RequirePackage{enumitem}
+
+% 5. Section & Chapter Formatting
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{titlesec}
 
-% กล่องหัวบทวิชาการพร้อมภาพประกอบเวกเตอร์ฟิสิกส์ (Chapter Banner Box with Vector Illustration)
+% Dynamic Chapter Motif based on \value{chapter} for Mathematics for Physics
+\newcommand{\renderchaptermotif}{%
+    \ifcase\value{chapter}%
+        % Case 0 / Unnumbered chapters (Preface, Table of Contents, References, Appendix)
+        \begin{scope}[opacity=0.22]
+            \draw[cyan!50!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.2);
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (0.8, 0.8) -- (5.2, 0.8) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (0.8, 0.8) -- (0.8, 4.2) node[above, font=\scriptsize\bfseries\color{white}] {$y$};
+            \draw[rbruGold, line width=1.4pt, domain=0.8:6.4, samples=80] plot (\x, {2.2 + 0.8*sin(3.0*\x r)*exp(-0.1*(\x-3.2)*(\x-3.2))});
+            \draw[rbruGreen, line width=1.0pt, dashed] (3.4, 2.2) circle (1.8cm);
+        \end{scope}
+    \or% Case 1: Coordinate Systems (Cartesian, Cylindrical, Spherical & Scale Factors)
+        \begin{scope}[opacity=0.28]
+            \draw[cyan!50!white, line width=0.4pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.0);
+            % 3D Axes
+            \coordinate (O) at (1.2, 1.0);
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (O) -- (5.8, 1.0) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (O) -- (1.2, 4.6) node[above, font=\scriptsize\bfseries\color{white}] {$z$};
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (O) -- (0.3, 0.2) node[below left, font=\scriptsize\bfseries\color{white}] {$y$};
+            % Spherical and Cylindrical vectors
+            \coordinate (P) at (4.5, 3.8);
+            \draw[-{Stealth[scale=1.3]}, rbruGold, line width=1.8pt] (O) -- (P) node[above, font=\footnotesize\bfseries\color{rbruGold}] {$\vec{r}(r,\theta,\phi)$};
+            \draw[white, dashed, line width=0.9pt] (P) -- (4.5, 1.0);
+            \draw[cyan, line width=1.2pt] (O) -- (4.5, 1.0) node[midway, below, font=\tiny\bfseries\color{cyan}] {$\rho$};
+            % Unit vectors
+            \draw[-{Stealth[scale=1.1]}, physForce, line width=1.4pt] (P) -- (5.4, 4.4) node[right, font=\tiny\bfseries\color{physForce}] {$\hat{e}_r$};
+            \draw[-{Stealth[scale=1.1]}, physVelocity, line width=1.4pt] (P) -- (4.0, 4.4) node[above left, font=\tiny\bfseries\color{physVelocity}] {$\hat{e}_\theta$};
+            \node at (3.5, 4.6) [font=\tiny\bfseries\color{white}] {$h_r=1, h_\theta=r, h_\phi=r\sin\theta$};
+        \end{scope}
+    \or% Case 2: Vectors (Triangle, Dot & Cross Product, Parallelepiped)
+        \begin{scope}[opacity=0.28]
+            \coordinate (V0) at (0.8, 1.0);
+            \coordinate (VA) at (4.0, 1.0);
+            \coordinate (VB) at (2.4, 3.8);
+            \coordinate (VC) at (5.6, 3.8);
+            % Vectors A and B
+            \draw[-{Stealth[scale=1.3]}, physVelocity, line width=1.8pt] (V0) -- (VA) node[midway, below, font=\footnotesize\bfseries\color{physVelocity}] {$\vec{A}$};
+            \draw[-{Stealth[scale=1.3]}, physForce, line width=1.8pt] (V0) -- (VB) node[midway, above left, font=\footnotesize\bfseries\color{physForce}] {$\vec{B}$};
+            \draw[-{Stealth[scale=1.3]}, rbruGold, line width=1.8pt] (V0) -- (VC) node[above right, font=\footnotesize\bfseries\color{rbruGold}] {$\vec{A}+\vec{B}$};
+            \draw[white, dashed, line width=0.9pt] (VA) -- (VC) -- (VB);
+            % Normal Vector Cross Product
+            \draw[-{Stealth[scale=1.3]}, emeraldGlow!90!white, line width=1.6pt] (V0) -- (0.8, 4.4) node[above, font=\footnotesize\bfseries\color{emeraldGlow!90!white}] {$\vec{A}\times\vec{B}$};
+            \node at (3.8, 4.6) [font=\tiny\bfseries\color{white}] {$|\vec{A}\times\vec{B}| = AB\sin\theta$};
+            \node at (4.8, 2.2) [font=\tiny\bfseries\color{rbruGold}] {$\vec{A}\cdot\vec{B} = AB\cos\theta$};
+        \end{scope}
+    \or% Case 3: Series (Taylor & Fourier Harmonic Expansions)
+        \begin{scope}[opacity=0.28]
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (0.6, 2.5) -- (6.6, 2.5) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (3.4, 0.4) -- (3.4, 4.6) node[above, font=\scriptsize\bfseries\color{white}] {$f(x)$};
+            % Harmonic waveforms
+            \draw[rbruGold, line width=1.6pt, domain=0.6:6.2, samples=80] plot (\x, {2.5 + 1.4*sin(2.5*(\x-3.4) r)});
+            \draw[cyan, line width=1.1pt, dashed, domain=0.6:6.2, samples=80] plot (\x, {2.5 + 1.4*sin(2.5*(\x-3.4) r) + 0.45*sin(7.5*(\x-3.4) r)});
+            \draw[emeraldGlow!90!white, line width=1.0pt, domain=1.5:5.3, samples=50] plot (\x, {2.5 + 1.2*(\x-3.4) - 0.2*(\x-3.4)^3});
+            \node at (2.0, 4.4) [font=\tiny\bfseries\color{rbruGold}] {$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n$};
+            \node at (5.0, 0.8) [font=\tiny\bfseries\color{cyan}] {Fourier: $\sum b_n \sin(nx)$};
+        \end{scope}
+    \or% Case 4: Complex Numbers (Argand Plane, Euler Formula & Roots of Unity)
+        \begin{scope}[opacity=0.28]
+            \coordinate (CO) at (3.4, 2.5);
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (0.8, 2.5) -- (6.0, 2.5) node[right, font=\scriptsize\bfseries\color{white}] {$\text{Re}$};
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (3.4, 0.5) -- (3.4, 4.5) node[above, font=\scriptsize\bfseries\color{white}] {$\text{Im}$};
+            % Unit circle
+            \draw[cyan!70!white, line width=1.2pt] (CO) circle (1.6cm);
+            % Phasor z = r e^{i theta}
+            \coordinate (Z) at (4.53, 3.63);
+            \draw[-{Stealth[scale=1.3]}, rbruGold, line width=1.8pt] (CO) -- (Z) node[above right, font=\footnotesize\bfseries\color{rbruGold}] {$z = r e^{i\theta}$};
+            \draw[white, dashed, line width=0.8pt] (Z) -- (4.53, 2.5);
+            \draw[white, dashed, line width=0.8pt] (Z) -- (3.4, 3.63);
+            % Roots of unity
+            \foreach \ang in {0, 60, 120, 180, 240, 300} {
+                \fill[emeraldGlow!90!white] ({3.4 + 1.6*cos(\ang)}, {2.5 + 1.6*sin(\ang)}) circle (2.5pt);
+            }
+            \node at (2.0, 4.4) [font=\tiny\bfseries\color{white}] {$e^{i\pi} + 1 = 0$};
+            \node at (5.2, 1.2) [font=\tiny\bfseries\color{cyan}] {Cauchy-Riemann};
+        \end{scope}
+    \or% Case 5: Matrices & Linear Algebra (Eigenvectors, Transformations & Determinants)
+        \begin{scope}[opacity=0.28]
+            \draw[cyan!50!white, line width=0.4pt, step=0.6cm] (0.4, 0.4) grid (6.6, 4.8);
+            % Transformed grid vectors
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (1.0, 1.0) -- (5.8, 1.0) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (1.0, 1.0) -- (1.0, 4.4) node[above, font=\scriptsize\bfseries\color{white}] {$y$};
+            % Eigenvectors A v = lambda v
+            \draw[-{Stealth[scale=1.3]}, physForce, line width=1.8pt] (1.0, 1.0) -- (5.0, 3.5) node[above, font=\footnotesize\bfseries\color{physForce}] {$\mathbf{A}\vec{v}_1 = \lambda_1\vec{v}_1$};
+            \draw[-{Stealth[scale=1.3]}, physVelocity, line width=1.6pt] (1.0, 1.0) -- (2.2, 4.0) node[above left, font=\footnotesize\bfseries\color{physVelocity}] {$\vec{v}_2$};
+            % Transformed area
+            \draw[fill=rbruGold!30, opacity=0.3] (1.0, 1.0) -- (3.0, 1.4) -- (4.2, 3.4) -- (2.2, 3.0) -- cycle;
+            \node at (4.4, 4.6) [font=\tiny\bfseries\color{white}] {$\det(\mathbf{A} - \lambda\mathbf{I}) = 0$};
+            \node at (5.2, 1.6) [font=\tiny\bfseries\color{rbruGold}] {$\mathbf{A} = \mathbf{P}\mathbf{D}\mathbf{P}^{-1}$};
+        \end{scope}
+    \or% Case 6: Vector Derivatives (Gradient, Divergence & Curl)
+        \begin{scope}[opacity=0.28]
+            % Contour lines for scalar field
+            \draw[cyan!60!white, line width=0.9pt] (1.0, 1.2) .. controls (2.5, 3.5) and (4.5, 3.5) .. (6.0, 1.2);
+            \draw[cyan!80!white, line width=1.1pt] (1.4, 1.8) .. controls (2.6, 3.8) and (4.4, 3.8) .. (5.6, 1.8);
+            \draw[cyan, line width=1.3pt] (1.8, 2.4) .. controls (2.8, 4.0) and (4.2, 4.0) .. (5.2, 2.4);
+            % Gradient Vectors (perpendicular to contours)
+            \draw[-{Stealth[scale=1.3]}, physForce, line width=1.7pt] (3.5, 2.4) -- (3.5, 4.4) node[above, font=\footnotesize\bfseries\color{physForce}] {$\vec{\nabla}\phi$};
+            \draw[-{Stealth[scale=1.1]}, physForce, line width=1.3pt] (2.4, 2.0) -- (2.0, 3.4);
+            \draw[-{Stealth[scale=1.1]}, physForce, line width=1.3pt] (4.6, 2.0) -- (5.0, 3.4);
+            % Curl circular loop
+            \draw[-{Stealth[scale=1.2]}, rbruGold, line width=1.4pt] (5.2, 3.6) arc (0:270:0.7cm) node[below, font=\tiny\bfseries\color{rbruGold}] {$\vec{\nabla}\times\vec{F}$};
+            % Divergence source
+            \foreach \ang in {0, 60, 120, 180, 240, 300} {
+                \draw[-{Stealth[scale=1.0]}, emeraldGlow!90!white, line width=1.1pt] ({1.4 + 0.2*cos(\ang)}, {3.8 + 0.2*sin(\ang)}) -- ({1.4 + 0.7*cos(\ang)}, {3.8 + 0.7*sin(\ang)});
+            }
+            \node at (1.4, 4.6) [font=\tiny\bfseries\color{emeraldGlow!90!white}] {$\vec{\nabla}\cdot\vec{F} > 0$};
+            \node at (5.2, 1.0) [font=\tiny\bfseries\color{white}] {$\nabla^2 = \vec{\nabla}\cdot\vec{\nabla}$};
+        \end{scope}
+    \or% Case 7: Vector Integrals (Gauss Divergence & Stokes Theorems)
+        \begin{scope}[opacity=0.28]
+            % Closed surface volume (Gauss)
+            \draw[fill=cyan!30, draw=cyan, line width=1.2pt] (2.2, 2.4) ellipse (1.6cm and 1.2cm);
+            \foreach \ang in {30, 90, 150, 210, 270, 330} {
+                \draw[-{Stealth[scale=1.1]}, physForce, line width=1.2pt] ({2.2 + 1.4*cos(\ang)}, {2.4 + 1.0*sin(\ang)}) -- ({2.2 + 2.0*cos(\ang)}, {2.4 + 1.5*sin(\ang)});
+            }
+            % Stokes loop and surface
+            \draw[fill=rbruGold!20, draw=rbruGold, line width=1.4pt] (5.2, 2.5) ellipse (1.2cm and 1.5cm);
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (5.2, 2.5) -- (5.2, 4.4) node[above, font=\footnotesize\bfseries\color{white}] {$\hat{n}$};
+            \draw[-{Stealth[scale=1.2]}, rbruGold, line width=1.4pt] (6.4, 2.5) arc (0:90:1.2cm and 1.5cm);
+            \node at (2.2, 0.8) [font=\tiny\bfseries\color{cyan}] {$\oiint_S \vec{F}\cdot d\vec{A} = \iiint_V (\vec{\nabla}\cdot\vec{F})\,dV$};
+            \node at (5.2, 0.6) [font=\tiny\bfseries\color{rbruGold}] {$\oint_C \vec{F}\cdot d\vec{r} = \iint_S (\vec{\nabla}\times\vec{F})\cdot d\vec{A}$};
+        \end{scope}
+    \or% Case 8: First Order ODEs (Slope Fields & Exponential Trajectories)
+        \begin{scope}[opacity=0.28]
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (0.6, 1.0) -- (6.4, 1.0) node[right, font=\scriptsize\bfseries\color{white}] {$t$};
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (0.6, 0.6) -- (0.6, 4.6) node[above, font=\scriptsize\bfseries\color{white}] {$y$};
+            % Direction field segments
+            \foreach \x in {1.2, 2.0, 2.8, 3.6, 4.4, 5.2} {
+                \foreach \y in {1.6, 2.4, 3.2, 4.0} {
+                    \draw[cyan!60!white, line width=0.8pt] ({\x-0.2}, {\y + 0.1*(\y-1.0)}) -- ({\x+0.2}, {\y - 0.1*(\y-1.0)});
+                }
+            }
+            % Exponential decay solution curves
+            \draw[rbruGold, line width=1.8pt, domain=0.6:6.0, samples=60] plot (\x, {1.0 + 3.2*exp(-0.7*(\x-0.6))});
+            \draw[emeraldGlow!90!white, line width=1.4pt, dashed, domain=0.6:6.0, samples=60] plot (\x, {1.0 + 2.0*exp(-0.7*(\x-0.6))});
+            \draw[physVelocity, line width=1.2pt, dotted, domain=0.6:6.0, samples=60] plot (\x, {1.0 + 1.0*exp(-0.7*(\x-0.6))});
+            \node at (4.2, 4.4) [font=\tiny\bfseries\color{white}] {$\frac{dy}{dt} + P(t)y = Q(t)$};
+            \node at (4.5, 2.8) [font=\tiny\bfseries\color{rbruGold}] {$y(t) = y_0 e^{-kt}$};
+        \end{scope}
+    \or% Case 9: Second Order ODEs (Damped Oscillations & Phase Portrait Spiral)
+        \begin{scope}[opacity=0.28]
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (0.6, 2.5) -- (4.2, 2.5) node[right, font=\tiny\bfseries\color{white}] {$t$};
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.2pt] (0.6, 0.6) -- (0.6, 4.6) node[above, font=\tiny\bfseries\color{white}] {$x$};
+            % Underdamped oscillation
+            \draw[rbruGold, line width=1.6pt, domain=0.6:4.0, samples=80] plot (\x, {2.5 + 1.8*exp(-0.8*(\x-0.6))*cos(8.0*(\x-0.6) r)});
+            \draw[cyan, line width=0.9pt, dashed, domain=0.6:4.0, samples=50] plot (\x, {2.5 + 1.8*exp(-0.8*(\x-0.6))});
+            \draw[cyan, line width=0.9pt, dashed, domain=0.6:4.0, samples=50] plot (\x, {2.5 - 1.8*exp(-0.8*(\x-0.6))});
+            % Phase space spiral (x vs v)
+            \coordinate (PO) at (5.4, 2.5);
+            \draw[-{Stealth[scale=1.0]}, white, line width=0.8pt] (4.4, 2.5) -- (6.4, 2.5) node[right, font=\tiny\bfseries\color{white}] {$x$};
+            \draw[-{Stealth[scale=1.0]}, white, line width=0.8pt] (5.4, 1.2) -- (5.4, 3.8) node[above, font=\tiny\bfseries\color{white}] {$\dot{x}$};
+            \draw[emeraldGlow!90!white, line width=1.2pt, domain=0:1250, samples=100] plot ({5.4 + (0.9 - 0.0006*\x)*cos(\x)}, {2.5 + (0.9 - 0.0006*\x)*sin(\x)});
+            \node at (2.4, 4.4) [font=\tiny\bfseries\color{white}] {$m\ddot{x} + b\dot{x} + kx = 0$};
+            \node at (5.4, 0.8) [font=\tiny\bfseries\color{emeraldGlow!90!white}] {Phase Portrait};
+        \end{scope}
+    \else
+        % Fallback for unnumbered / appendix
+        \begin{scope}[opacity=0.22]
+            \draw[cyan!50!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.2);
+            \draw[rbruGold, line width=1.4pt, domain=0.8:6.4, samples=80] plot (\x, {2.2 + 0.8*sin(3.0*\x r)*exp(-0.1*(\x-3.2)*(\x-3.2))});
+        \end{scope}
+    \fi
+}
+
+% กล่องหัวบทวิชาการพร้อมภาพประกอบเวกเตอร์ฟิสิกส์ (Chapter Banner Box with Dynamic Vector Illustration)
 \newtcolorbox{chapterbannerbox}{
     enhanced,
     width=\textwidth,
@@ -102,24 +276,7 @@
     drop shadow=black!10,
     underlay={
         \begin{tcbclipinterior}
-            \begin{scope}[opacity=0.22]
-                % ตารางพิกัดจำลอง (Coordinate Grid)
-                \draw[cyan!50!white, line width=0.5pt, step=0.7cm] (0.2, 0.2) grid (6.5, 5.5);
-                % แกนพิกัด 3 มิติ (3D Axes)
-                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.1, 0.8) -- (4.6, 0.8) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
-                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.1, 0.8) -- (1.1, 3.8) node[above, font=\scriptsize\bfseries\color{white}] {$z$};
-                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.1, 0.8) -- (0.2, 0.2) node[below left, font=\scriptsize\bfseries\color{white}] {$y$};
-                % เวกเตอร์ฟิสิกส์ (Force, Velocity, Position Vectors)
-                \draw[-{Stealth[scale=1.2]}, physForce, line width=1.7pt] (1.1, 0.8) -- (3.8, 2.9) node[above left, font=\small\bfseries\color{physForce}] {$\vec{F}$};
-                \draw[-{Stealth[scale=1.0]}, physVelocity, line width=1.3pt] (1.1, 0.8) -- (3.0, 1.2) node[below right, font=\footnotesize\bfseries\color{physVelocity}] {$\vec{v}$};
-                \draw[-{Stealth[scale=1.0]}, physDisplace, line width=1.3pt] (1.1, 0.8) -- (1.9, 3.2) node[above right, font=\footnotesize\bfseries\color{physDisplace}] {$\vec{r}$};
-                % คลื่นกล / การแกว่งกวัด (Wave packet oscillation)
-                \draw[rbruGold, line width=1.4pt, domain=0.4:6.8, samples=80] 
-                    plot (\x, {1.9 + 0.7*sin(3.0*\x r) * exp(-0.10*(\x-3.4)*(\x-3.4))});
-                % วงโคจรทรงรี (Orbital Trajectory)
-                \draw[rotate around={22:(3.4,1.9)}, white, line width=0.8pt, dashdotdotted] 
-                    (3.4,1.9) ellipse (2.6cm and 0.95cm);
-            \end{scope}
+            \renderchaptermotif
         \end{tcbclipinterior}
     }
 }
@@ -149,12 +306,14 @@
   {}
   {0pt}
   {\rbruchapterbanner}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titleformat{name=\chapter,numberless}[block]
   {\normalfont}
   {}
   {0pt}
   {\rbruunnumberedchapterbanner}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titlespacing*{\chapter}{0pt}{0pt}{22pt}
 
@@ -163,12 +322,14 @@
   {\makebox[1.25cm][l]{\thesection}}
   {0pt}
   {}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titleformat{name=\section,numberless}
   {\normalfont\fontsize{16}{20}\bfseries\color{rbruNavy}}
   {}
   {0pt}
   {}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titlespacing{\section}{0pt}{18pt plus 4pt minus 2pt}{8pt plus 2pt minus 1pt}
 
@@ -177,16 +338,43 @@
   {\makebox[1.25cm][l]{\thesubsection}}
   {0pt}
   {}
+  [\global\setlength{\parindent}{2.50cm}]
 
 \titleformat{name=\subsection,numberless}
   {\normalfont\fontsize{14}{18}\bfseries\color{rbruGreen}}
   {}
   {0pt}
   {}
+  [\global\setlength{\parindent}{2.50cm}]
 
-\titlespacing{\subsection}{0pt}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
+\titlespacing{\subsection}{1.25cm}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
+
+% Dynamic Paragraph Indentation Command Wrappers (RBRU Hierarchical Indentation)
+\let\rbruorigchapter\chapter
+\renewcommand{\chapter}{\global\setlength{\parindent}{1.25cm}\rbruorigchapter}
+
+\let\rbruorigsection\section
+\renewcommand{\section}{\global\setlength{\parindent}{1.25cm}\rbruorigsection}
+
+\let\rbruorigsubsection\subsection
+\renewcommand{\subsection}{\global\setlength{\parindent}{2.50cm}\rbruorigsubsection}
+
+\let\rbruorigsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\global\setlength{\parindent}{3.75cm}\rbruorigsubsubsection}
 
 % 6. Academic Boxes (tcolorbox)
+
+% กล่องแผนบริหารการสอนประจำบทตามระเบียบ มรภ.รำไพพรรณี
+\newtcolorbox{lessonplanbox}{
+    enhanced,
+    colback=white,
+    colframe=rbruNavy,
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=3.5mm,
+    top=10pt, bottom=10pt, left=12pt, right=12pt,
+    drop shadow=black!8
+}
 
 % กล่องวัตถุประสงค์เชิงพฤติกรรมประจำบท (OBE Learning Outcomes)
 \newtcolorbox{chapterobjectives}[1][วัตถุประสงค์เชิงพฤติกรรมประจำบท]{
@@ -305,5 +493,17 @@
 \fancyhead[R]{\thepage}
 \fancyhead[L]{\slshape \nouppercase{\leftmark}}
 \renewcommand{\headrulewidth}{0.5pt}
+
+% ลบเครื่องหมายจุด (.) ที่ต่อท้ายหมายเลขบทใน Running Header
+\renewcommand{\chaptermark}[1]{%
+    \markboth{%
+        \ifnum \c@secnumdepth >\m@ne
+            \if@mainmatter
+                \chaptertitlename\ \thechapter\quad
+            \fi
+        \fi
+        #1%
+    }{}%
+}
 
 \endinput
