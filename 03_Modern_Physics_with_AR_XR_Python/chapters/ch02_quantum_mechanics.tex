@@ -10,6 +10,7 @@
 \section*{แผนบริหารการสอนประจำบทที่ 2}
 \addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 2}
 
+\begin{lessonplanbox}
 \noindent\textbf{หัวข้อเนื้อหาประจำบท}
 \begin{enumerate}
     \item การกำเนิดทฤษฎีควอนตัม การแผ่รังสีของวัตถุดำ
@@ -24,6 +25,7 @@
     \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
 \end{enumerate}
 
+\vspace{0.4em}
 \noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
 \begin{enumerate}
     \item อธิบายวิกฤตการณ์รังสีอัลตราไวโอเลตและสมมติฐานควอนตัมของมักซ์ พลังค์ได้อย่างถูกต้อง
@@ -34,6 +36,7 @@
     \item ออกแบบสคริปต์ Python เพื่อหาค่าไอเกนของพลังงานและพล็อตฟังก์ชันคลื่นด้วยวิธี Finite Difference ได้อย่างมีประสิทธิภาพ
 \end{enumerate}
 
+\vspace{0.4em}
 \noindent\textbf{กิจกรรมการเรียนการสอน}
 \begin{enumerate}
     \item การบรรยายเชิงทฤษฎีและอภิปรายการกำเนิดฟิสิกส์ควอนตัมและการแผ่รังสีของวัตถุดำ
@@ -43,6 +46,7 @@
     \item การศึกษาตัวอย่างและการแก้โจทย์ปัญหาเชิงลึกตามขั้นตอน P-S-C-T
 \end{enumerate}
 
+\vspace{0.4em}
 \noindent\textbf{สื่อการเรียนการสอน}
 \begin{enumerate}
     \item เอกสารคำสอน บทที่ 2 กลศาสตร์ควอนตัมเบื้องต้น
@@ -51,6 +55,7 @@
     \item ชุดแบบฝึกหัดและการประเมินผลโจทย์ปัญหา P-S-C-T ประจำบทที่ 2
 \end{enumerate}
 
+\vspace{0.4em}
 \noindent\textbf{การประเมินผล}
 \begin{enumerate}
     \item การประเมินผลจากการมีส่วนร่วมในการอภิปรายและการตอบคำถามในชั้นเรียน
@@ -58,6 +63,7 @@
     \item การประเมินรายงานการทดลองและแบบฝึกหัดท้ายบท
     \item การทดสอบย่อยวัดความรู้ความเข้าใจประจำบทที่ 2
 \end{enumerate}
+\end{lessonplanbox}
 
 \newpage
 
@@ -67,13 +73,13 @@
 
 ในปลายคริสต์ศตวรรษที่ 19 กฎการแผ่รังสีของเรย์ลี-ยีนส์ (Rayleigh-Jeans Law) ซึ่งสร้างขึ้นจากอุณหพลศาสตร์คลาสสิกและทฤษฎีคลื่นแม่เหล็กไฟฟ้า ทำนายว่าความหนาแน่นพลังงานของการแผ่รังสีจะพุ่งเข้าสู่อนันต์เมื่อความยาวคลื่นสั้นลงเข้าใกล้ศูนย์ ($\lambda \to 0$ หรือความถี่สูงในย่านรังสีอัลตราไวโอเลต) ปรากฏการณ์ล้มเหลวอย่างร้ายแรงนี้เรียกว่า \textbf{วิกฤตการณ์รังสีอัลตราไวโอเลต (Ultraviolet Catastrophe)}
 
-ในปี ค.ศ. 1900 มักซ์ พลังค์ (Max Planck) ได้เสนอสมมติฐานปฏิวัติว่า อะตอมในผนังของโพรงวัตถุดำไม่ได้ดูดกลืนหรือปล่อยพลังงานอย่างต่อเนื่อง แต่กระทำในรูปของก้อนพลังงานไม่ต่อเนื่องเรียกว่า \textbf{ควอนตา (Quanta)}:
+ในปี ค.ศ. 1900 มักซ์ พลังค์ (Max Planck) ได้เสนอสมมติฐานปฏิวัติว่า อะตอมในผนังของโพรงวัตถุดำไม่ได้ดูดกลืนหรือปล่อยพลังงานอย่างต่อเนื่อง แต่กระทำในรูปของก้อนพลังงานไม่ต่อเนื่องเรียกว่า \textbf{ควอนตา (Quanta)}
 \begin{equation}
 E_n = n h \nu = n \hbar \omega, \quad n = 0, 1, 2, 3, \dots
 \end{equation}
 โดยที่ $h \approx 6.62607015 \times 10^{-34}\text{ J}\cdot\text{s}$ คือค่าคงตัวของพลังค์ (Planck's Constant) และ $\hbar = \frac{h}{2\pi}$ 
 
-กฎการแผ่รังสีของพลังค์สำหรับความหนาแน่นสเปกตรัมของพลังงานคือ:
+กฎการแผ่รังสีของพลังค์สำหรับความหนาแน่นสเปกตรัมของพลังงานคือ
 \begin{equation}
 u(\lambda, T) = \frac{8\pi h c}{\lambda^5} \frac{1}{e^{\frac{hc}{\lambda k_B T}} - 1}
 \end{equation}
@@ -120,14 +126,14 @@ u(\lambda, T) = \frac{8\pi h c}{\lambda^5} \frac{1}{e^{\frac{hc}{\lambda k_B T}}
 \index{การกระเจิงคอมป์ตัน}
 
 \subsection{ปรากฏการณ์โฟโตอิเล็กทริก}
-\textbf{ปรากฏการณ์โฟโตอิเล็กทริก (Photoelectric Effect)} ในปี ค.ศ. 1905 อัลเบิร์ต ไอน์สไตน์ อธิบายว่าแสงประกอบด้วยอนุภาคพลังงานเรียกว่า \textbf{โฟตอน (Photon)} แต่ละโฟตอนมีพลังงาน $E = h\nu$ เมื่อโฟตอนชนกับอิเล็กตรอนในผิวโลหะ จะถ่ายทอดพลังงานทั้งหมดให้อิเล็กตรอนตัวเดียว หากพลังงานนี้มากกว่า \textbf{ฟังก์ชันงาน (Work Function, $\Phi$)} ของโลหะ อิเล็กตรอนจะหลุดออกไปพร้อมพลังงานจลน์สูงสุด:
+\textbf{ปรากฏการณ์โฟโตอิเล็กทริก (Photoelectric Effect)} ในปี ค.ศ. 1905 อัลเบิร์ต ไอน์สไตน์ อธิบายว่าแสงประกอบด้วยอนุภาคพลังงานเรียกว่า \textbf{โฟตอน (Photon)} แต่ละโฟตอนมีพลังงาน $E = h\nu$ เมื่อโฟตอนชนกับอิเล็กตรอนในผิวโลหะ จะถ่ายทอดพลังงานทั้งหมดให้อิเล็กตรอนตัวเดียว หากพลังงานนี้มากกว่า \textbf{ฟังก์ชันงาน (Work Function, $\Phi$)} ของโลหะ อิเล็กตรอนจะหลุดออกไปพร้อมพลังงานจลน์สูงสุด
 \begin{equation}
 K_{\max} = h\nu - \Phi = e V_s
 \end{equation}
 โดยที่ $V_s$ คือความต่างศักย์หยุดยั้ง (Stopping Potential)
 
 \subsection{การกระเจิงคอมป์ตัน}
-\textbf{การกระเจิงคอมป์ตัน (Compton Scattering)} ในปี ค.ศ. 1923 อาร์เธอร์ คอมป์ตัน (Arthur H. Compton) พิสูจน์ว่าโฟตอนมีโมเมนตัม $p = \frac{h}{\lambda}$ ผ่านการทดลองยิงรังสีเอกซ์ชนกับอิเล็กตรอนอิสระ ความยาวคลื่นที่กระเจิงไปที่มุม $\theta$ จะมีความยาวคลื่นเพิ่มขึ้นตามสมการ:
+\textbf{การกระเจิงคอมป์ตัน (Compton Scattering)} ในปี ค.ศ. 1923 อาร์เธอร์ คอมป์ตัน (Arthur H. Compton) พิสูจน์ว่าโฟตอนมีโมเมนตัม $p = \frac{h}{\lambda}$ ผ่านการทดลองยิงรังสีเอกซ์ชนกับอิเล็กตรอนอิสระ ความยาวคลื่นที่กระเจิงไปที่มุม $\theta$ จะมีความยาวคลื่นเพิ่มขึ้นตามสมการ
 \begin{equation}
 \lambda' - \lambda = \frac{h}{m_e c} (1 - \cos\theta) = \lambda_C (1 - \cos\theta)
 \end{equation}
@@ -169,18 +175,18 @@ K_{\max} = h\nu - \Phi = e V_s
 \index{หลักความไม่แน่นอน}
 
 \subsection{สมมติฐานเดอบรอยล์}
-\textbf{สมมติฐานเดอบรอยล์ (de Broglie Hypothesis)} ในปี ค.ศ. 1924 หลุยส์ เดอบรอยล์ (Louis de Broglie) เสนอว่า หากคลื่นแสงสามารถประพฤติตัวเป็นอนุภาคได้ อนุภาคของสสาร (เช่น อิเล็กตรอน) ก็ย่อมต้องแสดงสมบัติของคลื่นได้เช่นกัน โดยมีความยาวคลื่น:
+\textbf{สมมติฐานเดอบรอยล์ (de Broglie Hypothesis)} ในปี ค.ศ. 1924 หลุยส์ เดอบรอยล์ (Louis de Broglie) เสนอว่า หากคลื่นแสงสามารถประพฤติตัวเป็นอนุภาคได้ อนุภาคของสสาร (เช่น อิเล็กตรอน) ก็ย่อมต้องแสดงสมบัติของคลื่นได้เช่นกัน โดยมีความยาวคลื่น
 \begin{equation}
 \lambda = \frac{h}{p} = \frac{h}{\gamma m_0 v}
 \end{equation}
 สมมติฐานนี้ได้รับการยืนยันอย่างชัดเจนโดยการทดลองการเลี้ยวเบนของอิเล็กตรอนของเดวิสสันและเกอร์เมอร์ (Davisson-Germer Experiment) ในปี ค.ศ. 1927
 
 \subsection{หลักความไม่แน่นอนของไฮเซนเบิร์ก}
-\textbf{หลักความไม่แน่นอนของไฮเซนเบิร์ก (Heisenberg Uncertainty Principle)} แวร์เนอร์ ไฮเซนเบิร์ก (Werner Heisenberg) พิสูจน์ในปี ค.ศ. 1927 ว่า ในระบบควอนตัม เป็นไปไม่ได้โดยหลักการที่จะวัดค่าของปริมาณคู่ควบ (Conjugate Variables) เช่น ตำแหน่งและโมเมนตัม พร้อมกันได้อย่างแม่นยำไร้ขีดจำกัด:
+\textbf{หลักความไม่แน่นอนของไฮเซนเบิร์ก (Heisenberg Uncertainty Principle)} แวร์เนอร์ ไฮเซนเบิร์ก (Werner Heisenberg) พิสูจน์ในปี ค.ศ. 1927 ว่า ในระบบควอนตัม เป็นไปไม่ได้โดยหลักการที่จะวัดค่าของปริมาณคู่ควบ (Conjugate Variables) เช่น ตำแหน่งและโมเมนตัม พร้อมกันได้อย่างแม่นยำไร้ขีดจำกัด
 \begin{equation}
 \Delta x \Delta p_x \ge \frac{\hbar}{2}
 \end{equation}
-ในทำนองเดียวกัน สำหรับความไม่แน่นอนของพลังงานและเวลา:
+ในทำนองเดียวกัน สำหรับความไม่แน่นอนของพลังงานและเวลา
 \begin{equation}
 \Delta E \Delta t \ge \frac{\hbar}{2}
 \end{equation}
@@ -190,21 +196,21 @@ K_{\max} = h\nu - \Phi = e V_s
 \index{ฟังก์ชันคลื่น}
 \index{การแปลความหมายของบอร์น}
 
-แอร์วิน ชเรอดิงเงอร์ (Erwin Schrödinger) เสนอสมการคลื่นเพื่ออธิบายสถานะของระบบควอนตัม ฟังก์ชันคลื่น $\Psi(\mathbf{r}, t)$ บรรจุข้อมูลทั้งหมดของระบบ สมการคลื่นชเรอดิงเงอร์ที่ไม่ขึ้นกับเวลาใน 1 มิติคือ:
+แอร์วิน ชเรอดิงเงอร์ (Erwin Schrödinger) เสนอสมการคลื่นเพื่ออธิบายสถานะของระบบควอนตัม ฟังก์ชันคลื่น $\Psi(\mathbf{r}, t)$ บรรจุข้อมูลทั้งหมดของระบบ สมการคลื่นชเรอดิงเงอร์ที่ไม่ขึ้นกับเวลาใน 1 มิติคือ
 \begin{equation}
 -\frac{\hbar^2}{2m} \frac{d^2 \psi(x)}{dx^2} + V(x)\psi(x) = E\psi(x)
 \end{equation}
-โดยมักเขียนในรูปตัวดำเนินการฮามิลโทเนียน (Hamiltonian Operator):
+โดยมักเขียนในรูปตัวดำเนินการฮามิลโทเนียน (Hamiltonian Operator)
 \begin{equation}
 \hat{H}\psi = E\psi, \quad \hat{H} = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + V(x)
 \end{equation}
 
 \begin{mathdefinition}[การแปลความหมายทางความน่าจะเป็นของมักซ์ บอร์น]
-ค่ามอดุลัสยกกำลังสองของฟังก์ชันคลื่น $|\psi(x)|^2 = \psi^*(x)\psi(x)$ แทน \textbf{ความหนาแน่นความน่าจะเป็น (Probability Density)} ในการตรวจพบอนุภาค ณ บริเวณระหว่าง $x$ ถึง $x + dx$:
+ค่ามอดุลัสยกกำลังสองของฟังก์ชันคลื่น $|\psi(x)|^2 = \psi^*(x)\psi(x)$ แทน \textbf{ความหนาแน่นความน่าจะเป็น (Probability Density)} ในการตรวจพบอนุภาค ณ บริเวณระหว่าง $x$ ถึง $x + dx$
 \begin{equation}
 P(a \le x \le b) = \int_a^b |\psi(x)|^2 dx
 \end{equation}
-และฟังก์ชันคลื่นที่ยอมรับได้ทางกายภาพต้องเป็นไปตามเงื่อนไขนอร์แมลไลซ์ (Normalization Condition):
+และฟังก์ชันคลื่นที่ยอมรับได้ทางกายภาพต้องเป็นไปตามเงื่อนไขนอร์แมลไลซ์ (Normalization Condition)
 \begin{equation}
 \int_{-\infty}^{\infty} |\psi(x)|^2 dx = 1
 \end{equation}
@@ -214,15 +220,15 @@ P(a \le x \le b) = \int_a^b |\psi(x)|^2 dx
 \index{อนุภาคในกล่อง}
 \index{ระดับพลังงานควอนไทซ์}
 
-พิจารณาปัญหา\textbf{อนุภาคในกล่องศักย์อนันต์ 1 มิติ (Particle in a 1D Box)} ของอนุภาคมวล $m$ ในบ่อศักย์ลึกอนันต์:
+พิจารณาปัญหา\textbf{อนุภาคในกล่องศักย์อนันต์ 1 มิติ (Particle in a 1D Box)} ของอนุภาคมวล $m$ ในบ่อศักย์ลึกอนันต์
 \begin{equation}
 V(x) = \begin{cases} 0 & 0 < x < L \\ \infty & \text{บริเวณอื่น} \end{cases}
 \end{equation}
-เนื่องจากฟังก์ชันคลื่นต้องเป็นศูนย์ที่ขอบกำแพง $\psi(0) = \psi(L) = 0$ คำตอบของสมการชเรอดิงเงอร์จึงเป็นฟังก์ชันไซน์นิ่ง:
+เนื่องจากฟังก์ชันคลื่นต้องเป็นศูนย์ที่ขอบกำแพง $\psi(0) = \psi(L) = 0$ คำตอบของสมการชเรอดิงเงอร์จึงเป็นฟังก์ชันไซน์นิ่ง
 \begin{equation}
 \psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right), \quad n = 1, 2, 3, \dots
 \end{equation}
-และระดับพลังงานของอนุภาคจะถูก \textbf{ควอนไทซ์ (Quantized)} เป็นค่าไม่ต่อเนื่อง:
+และระดับพลังงานของอนุภาคจะถูก \textbf{ควอนไทซ์ (Quantized)} เป็นค่าไม่ต่อเนื่อง
 \begin{equation}
 E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2} = \frac{n^2 h^2}{8m L^2}
 \end{equation}
@@ -303,47 +309,130 @@ T \approx 16 \frac{E}{V_0} \left(1 - \frac{E}{V_0}\right) e^{-2\kappa a}
     % Region I: Incident + Reflected wave
     \draw[line width=1.4pt, color=cyberBlue, domain=0:3.0, samples=80] 
         plot (\x, {2.2 + 0.65*sin(5.5*\x r)});
-    \node at (1.5, 3.2) [font=\scriptsize\bfseries\color{cyberBlue}] {ย่าน I: คลื่นตกกระทบ + สะท้อน};
+    \node at (1.5, 3.2) [font=\scriptsize\bfseries\color{cyberBlue}] {ย่าน I -- คลื่นตกกระทบ + สะท้อน};
     
     % Region II: Exponential decaying wavefunction
     \draw[line width=1.6pt, color=red!80!black, domain=3.0:5.0, samples=50] 
         plot (\x, {2.2 + 0.65*exp(-1.4*(\x-3.0))});
-    \node at (4.0, 1.6) [font=\scriptsize\bfseries\color{red!80!black}] {ย่าน II: $\propto e^{-\kappa x}$};
+    \node at (4.0, 1.6) [font=\scriptsize\bfseries\color{red!80!black}] {ย่าน II -- $\propto e^{-\kappa x}$};
     
     % Region III: Transmitted wave
     \draw[line width=1.4pt, color=emeraldGlow, domain=5.0:8.0, samples=80] 
         plot (\x, {2.2 + 0.15*sin(5.5*\x r)});
-    \node at (6.5, 3.2) [font=\scriptsize\bfseries\color{emeraldGlow}] {ย่าน III: คลื่นทะลุผ่าน ($T \ll 1$)};
+    \node at (6.5, 3.2) [font=\scriptsize\bfseries\color{emeraldGlow}] {ย่าน III -- คลื่นทะลุผ่าน ($T \ll 1$)};
 \end{tikzpicture}
 \caption{ปรากฏการณ์การทะลุผ่านกำแพงศักย์เชิงควอนตัม (Quantum Tunneling) แสดงการลดทอนของแอมพลิจูดคลื่น}
 \label{fig:quantum_tunneling}
 \end{figure}
 
-\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR 3D Quantum Orbitals and Tunneling}
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR แบบจำลองอะตอมและออร์บิทัล 3 มิติ}
 \index{WebXR}
 \index{Quantum Orbitals AR}
+\index{Bohr Atom AR}
 
-\begin{arbox}[การจำลองกลุ่มหมอกอิเล็กตรอน 3 มิติ และคลื่นควอนตัมทะลุกำแพงศักย์]
+\begin{arbox}[การจำลองกลุ่มหมอกอิเล็กตรอน 3 มิติ และแบบจำลองอะตอมของบอร์ใน WebXR]
 \textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR}
 \begin{enumerate}
     \item แสดงภาพพื้นผิวความน่าจะเป็นเท่ากัน (Isosurface Probability Density $|\psi_{nlm}(r,\theta,\phi)|^2$) ของออร์บิทัลอะตอมไฮโดรเจน ($1s, 2p, 3d, 4f$) ลอยหมุนได้ 360 องศา
     \item ผู้เรียนสามารถใช้ระบบจับการเคลื่อนไหวมือ (Hand Tracking) ยืด-หด ความกว้างของกล่องศักย์ $L$ และสังเกตการบีบอัดของความยาวคลื่น $\lambda_n$ และการขยับขึ้นของระดับพลังงาน $E_n$
     \item การจำลองเวฟแพ็กเก็ต (Wavepacket) เคลื่อนที่ชนกำแพงศักย์ โดยแสดงการแบ่งแยกเป็นคลื่นสะท้อนและคลื่นทะลุผ่านแบบ Real-Time Shader
+    \item ทดลองเปลี่ยนระดับชั้นพลังงาน $n=1, 2, 3$ ในแบบจำลองอะตอมของบอร์ผ่านสมาร์ตโฟน พร้อมสังเกตวงโคจรและการแผ่โฟตอนเสมือนจริง
 \end{enumerate}
 
 \textbf{ข้อกำหนดทางเทคนิค (Technical Specification)}
 \begin{itemize}
-    \item \textbf{Rendering Engine:} Three.js Raymarching Volumetric Cloud Shader บน WebGL 2.0
-    \item \textbf{Interaction:} WebXR Hit-Test วางฐานจำลองบนโต๊ะเรียนจริง พร้อมการควบคุมด้วยท่าทาง MediaPipe
-    \item \textbf{Acoustic Feedback:} Web Audio API สังเคราะห์ความถี่เสียงตามค่าระดับพลังงาน $E_n$
+    \item \textbf{Rendering Engine}\quad Three.js Raymarching Volumetric Cloud Shader บน WebGL 2.0
+    \item \textbf{Interaction}\quad WebXR Hit-Test วางฐานจำลองบนโต๊ะเรียนจริง พร้อมการควบคุมด้วยท่าทาง MediaPipe
+    \item \textbf{Acoustic Feedback}\quad Web Audio API สังเคราะห์ความถี่เสียงตามค่าระดับพลังงาน $E_n$
 \end{itemize}
 \end{arbox}
+
+\begin{pythonbox}[bohr\_atom\_webxr.html -- โค้ดต้นแบบจำลองอะตอมบอร์เสมือนจริงใน WebXR แบบสมบูรณ์]
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>WebXR Bohr Atom Simulator - Dr. Chewa Thassana</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Sarabun', sans-serif; }
+        #ar-button {
+            position: absolute; bottom: 20px; left: 50%;
+            transform: translateX(-50%); padding: 12px 24px;
+            background: #0284C7; color: white; border: none;
+            border-radius: 8px; font-weight: bold; font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <button id="ar-button">เข้าสู่โหมดการทดลอง AR</button>
+    <script>
+        let scene, camera, renderer, xrSession = null;
+        let electron, nucleus, orbitLines = [];
+        let currentLevel = 1;
+        const scratchVec = new THREE.Vector3(); // Zero-GC scratchpad
+
+        function initScene() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.01, 20);
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.xr.enabled = true;
+            document.body.appendChild(renderer.domElement);
+
+            // นิวเคลียส (โปรตอน)
+            const nucGeo = new THREE.SphereGeometry(0.06, 32, 32);
+            const nucMat = new THREE.MeshStandardMaterial({ color: 0xF59E0B, roughness: 0.2 });
+            nucleus = new THREE.Mesh(nucGeo, nucMat);
+            nucleus.position.set(0, 0, -1.0);
+            scene.add(nucleus);
+
+            // อิเล็กตรอน
+            const elecGeo = new THREE.SphereGeometry(0.02, 16, 16);
+            const elecMat = new THREE.MeshBasicMaterial({ color: 0x0284C7 });
+            electron = new THREE.Mesh(elecGeo, elecMat);
+            scene.add(electron);
+
+            // แสงสว่างในฉาก
+            const light = new THREE.PointLight(0xffffff, 1.5, 10);
+            light.position.set(1, 2, 0);
+            scene.add(light);
+            scene.add(new THREE.AmbientLight(0x404040));
+        }
+
+        let angle = 0;
+        function renderLoop(timestamp, frame) {
+            angle += 0.03;
+            const r = 0.3 * (currentLevel ** 2);
+            electron.position.x = nucleus.position.x + r * Math.cos(angle);
+            electron.position.z = nucleus.position.z + r * Math.sin(angle);
+            electron.position.y = nucleus.position.y;
+            renderer.render(scene, camera);
+        }
+
+        document.getElementById('ar-button').addEventListener('click', async () => {
+            if (navigator.xr) {
+                const session = await navigator.xr.requestSession('immersive-ar', {
+                    requiredFeatures: ['local-floor']
+                });
+                renderer.xr.setSession(session);
+                renderer.setAnimationLoop(renderLoop);
+            } else {
+                alert('อุปกรณ์ไม่รองรับ WebXR กรุณาใช้สมาร์ตโฟนที่รองรับ ARCore');
+            }
+        });
+
+        initScene();
+    </script>
+</body>
+</html>
+\end{pythonbox}
 
 \section{การคำนวณเชิงตัวเลขด้วย Python Finite Difference Solver}
 \index{Python}
 \index{SciPy}
 
-\begin{pythonbox}[quantum\_well\_solver.py: การหาค่าไอเกนของสมการชเรอดิงเงอร์ 1 มิติ]
+\begin{pythonbox}[quantum\_well\_solver.py -- การหาค่าไอเกนของสมการชเรอดิงเงอร์ 1 มิติ]
 import numpy as np
 import scipy.linalg as la
 
@@ -389,7 +478,7 @@ solve_1d_schrodinger()
 \section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
 
 \begin{psctexample}[พลังงานสถานะพื้นของอิเล็กตรอนในกล่องศักย์ขนาดอะตอม]
-\textbf{โจทย์ (Problem):} \\
+\textbf{โจทย์ (Problem)} \\
 อิเล็กตรอนตัวหนึ่งถูกกักขังให้อยู่ในกล่องศักย์ 1 มิติที่มีความกว้าง $L = 0.100\text{ nm}$ (ขนาดระดับรัศมีอะตอมไฮโดรเจน) 
 \begin{enumerate}
     \item จงคำนวณพลังงานในสถานะพื้น ($n=1$) และสถานะถูกกระตุ้นแรก ($n=2$) ในหน่วยอิเล็กตรอนโวลต์ (eV)
@@ -397,29 +486,29 @@ solve_1d_schrodinger()
     \item จงหาความน่าจะเป็นที่จะตรวจพบอิเล็กตรอนในสถานะพื้นในช่วงกึ่งกลางกล่องระหว่าง $x = 0.49L$ ถึง $x = 0.51L$
 \end{enumerate}
 
-\textbf{ยุทธวิธี (Strategy):} \\
+\textbf{ยุทธวิธี (Strategy)} \\
 \begin{itemize}
     \item พลังงานระดับควอนไทซ์ $E_n = \frac{n^2 h^2}{8m_e L^2}$
     \item ความยาวคลื่นของโฟตอนคำนวณจาก $\Delta E = E_2 - E_1 = \frac{hc}{\lambda} \implies \lambda = \frac{hc}{\Delta E}$
     \item ความน่าจะเป็น $P \approx |\psi_1(x_{\text{mid}})|^2 \Delta x$ เมื่อช่วง $\Delta x = 0.02L$ มีขนาดแคบมาก
 \end{itemize}
 
-\textbf{การคำนวณ (Computation):} \\
-\textit{1. คำนวณพลังงาน $E_1$ และ $E_2$:}
-กำหนดมวลอิเล็กตรอน $m_e = 9.109 \times 10^{-31}\text{ kg}$, $h = 6.626 \times 10^{-34}\text{ J}\cdot\text{s}$, $L = 1.00 \times 10^{-10}\text{ m}$:
+\textbf{การคำนวณ (Computation)} \\
+\textit{1. คำนวณพลังงาน $E_1$ และ $E_2$}
+กำหนดมวลอิเล็กตรอน $m_e = 9.109 \times 10^{-31}\text{ kg}$, $h = 6.626 \times 10^{-34}\text{ J}\cdot\text{s}$, $L = 1.00 \times 10^{-10}\text{ m}$
 \begin{equation}
 E_1 = \frac{(1)^2 (6.626 \times 10^{-34})^2}{8 (9.109 \times 10^{-31}) (1.00 \times 10^{-10})^2} \approx \frac{4.390 \times 10^{-67}}{7.287 \times 10^{-50}} \approx 6.025 \times 10^{-18}\text{ J}
 \end{equation}
-แปลงเป็นหน่วยอิเล็กตรอนโวลต์ ($1\text{ eV} = 1.602 \times 10^{-19}\text{ J}$):
+แปลงเป็นหน่วยอิเล็กตรอนโวลต์ ($1\text{ eV} = 1.602 \times 10^{-19}\text{ J}$)
 \begin{equation}
 E_1 = \frac{6.025 \times 10^{-18}}{1.602 \times 10^{-19}} \approx 37.61\text{ eV}
 \end{equation}
-สำหรับสถานะ $n=2$:
+สำหรับสถานะ $n=2$
 \begin{equation}
 E_2 = 2^2 \times E_1 = 4 \times 37.61\text{ eV} \approx 150.44\text{ eV}
 \end{equation}
 
-\textit{2. คำนวณความยาวคลื่นโฟตอน $\lambda$:}
+\textit{2. คำนวณความยาวคลื่นโฟตอน $\lambda$}
 \begin{equation}
 \Delta E = E_2 - E_1 = 150.44 - 37.61 = 112.83\text{ eV} = 1.808 \times 10^{-17}\text{ J}
 \end{equation}
@@ -429,17 +518,17 @@ E_2 = 2^2 \times E_1 = 4 \times 37.61\text{ eV} \approx 150.44\text{ eV}
 \end{align}
 ซึ่งอยู่ในช่วง \textbf{รังสีอัลตราไวโอเลตสุญญากาศ (Extreme UV / Soft X-Ray)}
 
-\textit{3. ความน่าจะเป็นในการพบอิเล็กตรอนกึ่งกลางกล่อง:}
-ฟังก์ชันคลื่นสถานะพื้นคือ $\psi_1(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)$ ที่จุดกึ่งกลาง $x = 0.5L$:
+\textit{3. ความน่าจะเป็นในการพบอิเล็กตรอนกึ่งกลางกล่อง}
+ฟังก์ชันคลื่นสถานะพื้นคือ $\psi_1(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{\pi x}{L}\right)$ ที่จุดกึ่งกลาง $x = 0.5L$
 \begin{equation}
 |\psi_1(0.5L)|^2 = \frac{2}{L}\sin^2\left(\frac{\pi}{2}\right) = \frac{2}{L}
 \end{equation}
-ช่วงกว้าง $\Delta x = 0.51L - 0.49L = 0.02L$:
+ช่วงกว้าง $\Delta x = 0.51L - 0.49L = 0.02L$
 \begin{equation}
 P \approx |\psi_1(0.5L)|^2 \Delta x = \left(\frac{2}{L}\right) (0.02L) = 0.04 = 4.0\%
 \end{equation}
 
-\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway)} \\
 แม้ว่าอิเล็กตรอนจะถูกจำกัดบริเวณในขอบเขตเล็กเพียง $0.1\text{ nm}$ แต่พลังงานต่ำสุดของมันมีค่าสูงถึง $37.6\text{ eV}$ ซึ่งเป็นผลลัพธ์โดยตรงจากสมบัติคลื่นของสสารและหลักความไม่แน่นอน หากระบบคลาสสิก พลังงานต่ำสุดย่อมสามารถเป็นศูนย์ได้
 \qedexam
 \end{psctexample}
@@ -451,51 +540,51 @@ P \approx |\psi_1(0.5L)|^2 \Delta x = \left(\frac{2}{L}\right) (0.02L) = 0.04 = 
     \item คำนวณพลังงานสถานะพื้น $E_0 = \frac{1}{2}\hbar\omega$ ในหน่วย $\text{eV}$ และหาความยาวคลื่นของโฟตอนที่ถูกดูดกลืนเมื่ออิเล็กตรอนเปลี่ยนสถานะจาก $n=0$ ไปยัง $n=1$
 \end{enumerate}
 
-\textbf{โจทย์ (Problem):} \\
+\textbf{โจทย์ (Problem)} \\
 หาพลังงานสถานะต่ำสุดของตัวแกว่งกวัดควอนตัม และความยาวคลื่นของการเปลี่ยนระดับพลังงานระหว่างสองสถานะแรก
 
-\textbf{ยุทธวิธี (Strategy):} \\
+\textbf{ยุทธวิธี (Strategy)} \\
 \begin{itemize}
     \item พลังงานรวมของตัวแกว่งกวัดคือ $E = K + V = \frac{p^2}{2m} + \frac{1}{2}m\omega^2 x^2$
     \item จากหลักความไม่แน่นอน หากอนุภาคหยุดนิ่งที่จุดกึ่งกลาง ($x=0, p=0$) จะทำให้ $\Delta x = 0, \Delta p = 0$ ซึ่งละเมิด $\Delta x \Delta p \ge \hbar/2$ ดังนั้น $\Delta p \approx \frac{\hbar}{2\Delta x}$
-    \item พลังงานประมาณการในรูปของ $\Delta x$:
+    \item พลังงานประมาณการในรูปของ $\Delta x$
     \begin{equation}
     E(\Delta x) \approx \frac{\hbar^2}{8m(\Delta x)^2} + \frac{1}{2}m\omega^2 (\Delta x)^2
     \end{equation}
     หาค่าต่ำสุดโดย $\frac{dE}{d(\Delta x)} = 0$
 \end{itemize}
 
-\textbf{การคำนวณ (Computation):} \\
-\textit{1. อนุพันธ์เทียบกับ $\Delta x$ เพื่อหาพลังงานต่ำสุด:}
+\textbf{การคำนวณ (Computation)} \\
+\textit{1. อนุพันธ์เทียบกับ $\Delta x$ เพื่อหาพลังงานต่ำสุด}
 \begin{align}
 \frac{dE}{d(\Delta x)} &= -\frac{\hbar^2}{4m(\Delta x)^3} + m\omega^2 \Delta x = 0 \nonumber \\
 (\Delta x)^4 &= \frac{\hbar^2}{4m^2\omega^2} \implies (\Delta x)^2 = \frac{\hbar}{2m\omega}
 \end{align}
-แทนค่า $(\Delta x)^2$ กลับเข้าสู่สมการพลังงาน:
+แทนค่า $(\Delta x)^2$ กลับเข้าสู่สมการพลังงาน
 \begin{align}
 E_{\min} &\approx \frac{\hbar^2}{8m\left(\frac{\hbar}{2m\omega}\right)} + \frac{1}{2}m\omega^2 \left(\frac{\hbar}{2m\omega}\right) \nonumber \\
 &= \frac{1}{4}\hbar\omega + \frac{1}{4}\hbar\omega = \frac{1}{2}\hbar\omega
 \end{align}
 ซึ่งตรงกับพลังงานสถานะพื้นแท้จริง (Zero-Point Energy) ของสมการชเรอดิงเงอร์ $E_n = \left(n + \frac{1}{2}\right)\hbar\omega$ ที่ $n=0$
 
-\textit{2. คำนวณค่าตัวเลขและสเปกตรัมการดูดกลืน:}
+\textit{2. คำนวณค่าตัวเลขและสเปกตรัมการดูดกลืน}
 \begin{align}
 E_0 &= \frac{1}{2} \hbar \omega = \frac{1}{2} (1.0546 \times 10^{-34}\text{ J}\cdot\text{s}) (1.0 \times 10^{15}\text{ s}^{-1}) \nonumber \\
 &= 5.273 \times 10^{-20}\text{ J} = \frac{5.273 \times 10^{-20}}{1.602 \times 10^{-19}}\text{ eV} \approx 0.329\text{ eV}
 \end{align}
-ผลต่างพลังงานระหว่างสถานะ $n=1$ และ $n=0$ คือ:
+ผลต่างพลังงานระหว่างสถานะ $n=1$ และ $n=0$ คือ
 \begin{align}
 \Delta E &= E_1 - E_0 = \left(\frac{3}{2}\hbar\omega\right) - \left(\frac{1}{2}\hbar\omega\right) = \hbar\omega \nonumber \\
 &= 2 E_0 \approx 0.658\text{ eV} = 1.055 \times 10^{-19}\text{ J}
 \end{align}
-ความยาวคลื่นโฟตอน:
+ความยาวคลื่นโฟตอน
 \begin{align}
 \lambda &= \frac{hc}{\Delta E} = \frac{(6.626 \times 10^{-34}\text{ J}\cdot\text{s}) (3.00 \times 10^8\text{ m/s})}{1.055 \times 10^{-19}\text{ J}} \nonumber \\
 &\approx 1.884 \times 10^{-6}\text{ m} \approx 1.884\,\mu\text{m}
 \end{align}
-ซึ่งอยู่ในช่วงรังสีอินฟราเรดใกล้ (Near-Infrared: NIR)
+ซึ่งอยู่ในช่วงรังสีอินฟราเรดใกล้ (Near-Infrared, NIR)
 
-\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway)} \\
 พลังงานจุดศูนย์ (Zero-Point Energy) $E_0 = \frac{1}{2}\hbar\omega$ ยืนยันว่าในอาณาจักรควอนตัม สสารไม่สามารถหยุดนิ่งสนิทได้อย่างแท้จริง แม้ที่อุณหภูมิศูนย์สัมบูรณ์ ($0\text{ K}$) ผลการแกว่งนี้ส่งผลต่อการเกิดปรากฏการณ์คาซิมีร์ (Casimir Effect) และการคงสถานะของเหลวของฮีเลียมเหลวภายใต้ความดันบรรยากาศ
 \qedexam
 \end{psctexample}
@@ -523,7 +612,7 @@ E_0 &= \frac{1}{2} \hbar \omega = \frac{1}{2} (1.0546 \times 10^{-34}\text{ J}\c
 
 \section{แบบฝึกหัดท้ายบท}
 \begin{enumerate}
-    \item โฟตอนของรังสีเอกซ์พลังงาน $100\text{ keV}$ ชนกับอิเล็กตรอนอิสระและกระเจิงทำมุม $90^\circ$ กับทิศเดิม จงคำนวณ:
+    \item โฟตอนของรังสีเอกซ์พลังงาน $100\text{ keV}$ ชนกับอิเล็กตรอนอิสระและกระเจิงทำมุม $90^\circ$ กับทิศเดิม จงคำนวณ
     \begin{enumerate}
         \item ความยาวคลื่นของโฟตอนก่อนและหลังการกระเจิง
         \item พลังงานจลน์ที่ถ่ายทอดให้อิเล็กตรอนถอยร่น

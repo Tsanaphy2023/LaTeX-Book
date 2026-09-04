@@ -6,11 +6,13 @@
 \index{ฟิวชัน}
 
 % ==========================================================
-% แผนบริหารการสอนประจำบทที่ 5
+% แผนบริหารการสอนประจำบทที่ 4
 % ==========================================================
-\section*{แผนบริหารการสอนประจำบทที่ 5}
-\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 5}
+\section*{แผนบริหารการสอนประจำบทที่ 4}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 4}
 
+
+\begin{lessonplanbox}
 \noindent\textbf{หัวข้อเนื้อหาประจำบท}
 \begin{enumerate}
     \item สมบัติของนิวเคลียสและพลังงานยึดเหนี่ยว
@@ -44,7 +46,7 @@
 
 \noindent\textbf{สื่อการเรียนการสอน}
 \begin{enumerate}
-    \item เอกสารคำสอน บทที่ 5 ฟิสิกส์นิวเคลียร์และปฏิกิริยานิวเคลียร์
+    \item เอกสารคำสอน บทที่ 4 ฟิสิกส์นิวเคลียร์และปฏิกิริยานิวเคลียร์
     \item สื่อจำลอง 3 มิติปฏิสัมพันธ์ WebXR Nuclear Chain Reaction Simulator
     \item ชุดสคริปต์ภาษา Python (SciPy solve\_ivp) จำลองการสลายตัวของสารกัมมันตรังสีลูกโซ่
     \item แพลตฟอร์มการจัดการเรียนรู้ดิจิทัล (LMS) และชุดโจทย์แบบฝึกหัด P-S-C-T
@@ -55,25 +57,25 @@
     \item การประเมินจากการตอบคำถามและการมีส่วนร่วมในกิจกรรมการเรียนรู้ในชั้นเรียน
     \item การตรวจรายงานผลปฏิบัติการคอมพิวเตอร์ด้วย Python และแบบฝึกหัดท้ายบท
     \item การประเมินผลการทดลองจำลองสถานการณ์เสมือนจริงใน WebXR
-    \item การทดสอบย่อยวัดผลสัมฤทธิ์ทางการเรียนประจำบทที่ 5
+    \item การทดสอบย่อยวัดผลสัมฤทธิ์ทางการเรียนประจำบทที่ 4
 \end{enumerate}
-
+\end{lessonplanbox}
 \newpage
 
 \section{สมบัติของนิวเคลียสและพลังงานยึดเหนี่ยว}
 \index{นิวคลีออน}
 \index{มวลบกพร่อง}
 
-นิวเคลียสอะตอมประกอบด้วยโปรตอน $Z$ ตัว และนิวตรอน $N$ ตัว รวมกันเป็นเลขมวล $A = Z + N$ รัศมีของนิวเคลียสโดยประมาณคือ:
+นิวเคลียสอะตอมประกอบด้วยโปรตอน $Z$ ตัว และนิวตรอน $N$ ตัว รวมกันเป็นเลขมวล $A = Z + N$ รัศมีของนิวเคลียสโดยประมาณคือ
 \begin{equation}
 R \approx R_0 A^{1/3}, \quad R_0 \approx 1.2\text{ fm} = 1.2 \times 10^{-15}\text{ m}
 \end{equation}
 
-เมื่อนิวคลีออนอิสระมารวมตัวกันเป็นนิวเคลียส มวลของนิวเคลียส $M(A, Z)$ จะน้อยกว่าผลรวมมวลของนิวคลีออนเดี่ยวเสมอ ผลต่างนี้เรียกว่า \textbf{มวลบกพร่อง (Mass Defect, $\Delta m$)}:
+เมื่อนิวคลีออนอิสระมารวมตัวกันเป็นนิวเคลียส มวลของนิวเคลียส $M(A, Z)$ จะน้อยกว่าผลรวมมวลของนิวคลีออนเดี่ยวเสมอ ผลต่างนี้เรียกว่า \textbf{มวลบกพร่อง (Mass Defect, $\Delta m$)}
 \begin{equation}
 \Delta m = Z m_p + N m_n - M(A, Z)
 \end{equation}
-พลังงานที่ปลดปล่อยออกมาในกระบวนการรวมตัวนี้เรียกว่า \textbf{พลังงานยึดเหนี่ยว (Binding Energy, $B$)}:
+พลังงานที่ปลดปล่อยออกมาในกระบวนการรวมตัวนี้เรียกว่า \textbf{พลังงานยึดเหนี่ยว (Binding Energy, $B$)}
 \begin{equation}
 B = \Delta m \cdot c^2 = \left[ Z m_p + (A - Z) m_n - M(A, Z) \right] c^2
 \end{equation}
@@ -125,11 +127,11 @@ B(A, Z) = a_v A - a_s A^{2/3} - a_c \frac{Z(Z-1)}{A^{1/3}} - a_a \frac{(A - 2Z)^
 \end{equation}
 โดยที่ค่าคงที่จากการทดลองโดยประมาณคือ
 \begin{itemize}
-    \item $a_v \approx 15.8\text{ MeV}$ (พจน์ปริมาตร: Volume Term)
-    \item $a_s \approx 18.3\text{ MeV}$ (พจน์พื้นที่ผิว: Surface Term)
-    \item $a_c \approx 0.714\text{ MeV}$ (พจน์แรงผลักคูลอมบ์: Coulomb Term)
-    \item $a_a \approx 23.2\text{ MeV}$ (พจน์อสมมาตร: Asymmetry Term)
-    \item $\delta(A, Z)$ คือพจน์การจับคู่ (Pairing Term): เป็น $+a_p A^{-1/2}$ สำหรับคู่-คู่, $0$ สำหรับคี่-คู่, และ $-a_p A^{-1/2}$ สำหรับคี่-คี่
+    \item $a_v \approx 15.8\text{ MeV}$ (พจน์ปริมาตร)
+    \item $a_s \approx 18.3\text{ MeV}$ (พจน์พื้นที่ผิว)
+    \item $a_c \approx 0.714\text{ MeV}$ (พจน์แรงผลักคูลอมบ์)
+    \item $a_a \approx 23.2\text{ MeV}$ (พจน์อสมมาตร)
+    \item $\delta(A, Z)$ คือพจน์การจับคู่ (Pairing Term) มีค่าเป็น $+a_p A^{-1/2}$ สำหรับคู่-คู่, $0$ สำหรับคี่-คู่, และ $-a_p A^{-1/2}$ สำหรับคี่-คี่
 \end{itemize}
 
 \section{กัมมันตภาพรังสีและสมการลูกโซ่ของเบตแมน}
@@ -271,9 +273,9 @@ n \cdot T \cdot \tau_E \ge 3 \times 10^{21}\text{ keV}\cdot\text{s}\cdot\text{m}
     \item เมื่อผู้เรียนยิงนิวตรอนเข้าสู่ก้อนมวล ระบบจะทำการจำลองการแตกตัวแบบ Monte Carlo Particle Cascade แบบ 60 FPS
     \item ผู้เรียนสามารถเลื่อนแท่งควบคุมนิวตรอน (Control Rods) ที่ทำจากแคดเมียมหรือโบรอนเข้า-ออก เพื่อสังเกตค่าตัวคูณการคูณจำนวนนิวตรอนประสิทธิผล $k_{\text{eff}}$ ดังนี้
     \begin{itemize}
-        \item $k_{\text{eff}} < 1$ : สภาวะต่ำกว่าวิกฤต (Subcritical) ปฏิกิริยามอดดับลง
-        \item $k_{\text{eff}} = 1$ : สภาวะวิกฤต (Critical) เครื่องปฏิกรณ์เดินเครื่องด้วยกำลังคงที่
-        \item $k_{\text{eff}} > 1$ : สภาวะเหนือวิกฤต (Supercritical) ปฏิกิริยาทวีคูณอย่างรวดเร็ว
+        \item $k_{\text{eff}} < 1$ หมายถึง สภาวะต่ำกว่าวิกฤต (Subcritical) ปฏิกิริยามอดดับลง
+        \item $k_{\text{eff}} = 1$ หมายถึง สภาวะวิกฤต (Critical) เครื่องปฏิกรณ์เดินเครื่องด้วยกำลังคงที่
+        \item $k_{\text{eff}} > 1$ หมายถึง สภาวะเหนือวิกฤต (Supercritical) ปฏิกิริยาทวีคูณอย่างรวดเร็ว
     \end{itemize}
 \end{enumerate}
 \end{arbox}
@@ -282,7 +284,7 @@ n \cdot T \cdot \tau_E \ge 3 \times 10^{21}\text{ keV}\cdot\text{s}\cdot\text{m}
 \index{Python}
 \index{Bateman Solver}
 
-\begin{pythonbox}[nuclear\_bateman\_decay.py: การแก้สมการลูกโซ่การสลายตัวกัมมันตรังสี]
+\begin{pythonbox}[nuclear\_bateman\_decay.py -- การแก้สมการลูกโซ่การสลายตัวกัมมันตรังสี]
 import numpy as np
 from scipy.integrate import solve_ivp
 
@@ -321,34 +323,34 @@ print(f"Peak daughter (B) activity occurs at t = {t_peak:.2f} days with N_B = {N
 \section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
 
 \begin{psctexample}[พลังงานปลดปล่อยและการสูญเสียมวลในปฏิกิริยาฟิชชันของ U-235]
-\textbf{โจทย์ (Problem):} \\
-พิจารณาปฏิกิริยาฟิชชันของ $^{235}\text{U}$ โดยนิวตรอนพลังงานต่ำ:
+\textbf{โจทย์ (Problem)} \\
+พิจารณาปฏิกิริยาฟิชชันของ $^{235}\text{U}$ โดยนิวตรอนพลังงานต่ำ
 \begin{equation}
 ^{235}_{\ 92}\text{U} + ^1_0\text{n} \to ^{141}_{\ 56}\text{Ba} + ^{92}_{36}\text{Kr} + 3 ^1_0\text{n}
 \end{equation}
-กำหนดมวลอะตอมในหน่วยมวลอะตอม ($u$):
+กำหนดมวลอะตอมในหน่วยมวลอะตอม ($u$)
 \begin{itemize}
     \item $M(^{235}\text{U}) = 235.0439299\text{ u}$
     \item $M(^1\text{n}) = 1.0086649\text{ u}$
     \item $M(^{141}\text{Ba}) = 140.914411\text{ u}$
     \item $M(^{92}\text{Kr}) = 91.926156\text{ u}$
 \end{itemize}
-(กำหนดค่าสมมูลมวล-พลังงาน: $1\text{ u} \cdot c^2 = 931.494\text{ MeV}$)
+(กำหนดค่าสมมูลมวล-พลังงาน $1\text{ u} \cdot c^2 = 931.494\text{ MeV}$)
 \begin{enumerate}
     \item จงคำนวณมวลบกพร่องของปฏิกิริยานี้ในหน่วย $u$
     \item จงหาพลังงานปลดปล่อย $Q$ ในหน่วย $\text{MeV}$
     \item หากโรงไฟฟ้านิวเคลียร์ใช้ $^{235}\text{U}$ บริสุทธิ์ $1.0\text{ kg}$ เกิดฟิชชันสมบูรณ์ จะปลดปล่อยพลังงานทั้งหมดกี่เมกะวัตต์-วัน (MW$\cdot$day)?
 \end{enumerate}
 
-\textbf{ยุทธวิธี (Strategy):} \\
+\textbf{ยุทธวิธี (Strategy)} \\
 \begin{itemize}
     \item มวลบกพร่อง $\Delta M = M_{\text{ตั้งต้น}} - M_{\text{ผลิตภัณฑ์}}$
     \item พลังงานปลดปล่อย $Q = \Delta M \times 931.494\text{ MeV}$
     \item จำนวนนิวเคลียสใน $1.0\text{ kg}$ คำนวณจาก $N = \frac{m}{M_{\text{mol}}} N_A$
 \end{itemize}
 
-\textbf{การคำนวณ (Computation):} \\
-\textit{1. คำนวณมวลตั้งต้นและมวลผลผลิต:}
+\textbf{การคำนวณ (Computation)} \\
+\textit{1. คำนวณมวลตั้งต้นและมวลผลผลิต}
 \begin{equation}
 M_{\text{in}} = M(^{235}\text{U}) + M(^1\text{n}) = 235.043930 + 1.008665 = 236.052595\text{ u}
 \end{equation}
@@ -356,81 +358,81 @@ M_{\text{in}} = M(^{235}\text{U}) + M(^1\text{n}) = 235.043930 + 1.008665 = 236.
 M_{\text{out}} &= M(^{141}\text{Ba}) + M(^{92}\text{Kr}) + 3 M(^1\text{n}) \nonumber \\
 &= 140.914411 + 91.926156 + 3(1.008665) = 235.866562\text{ u}
 \end{align}
-ผลต่างมวลคือ:
+ผลต่างมวลคือ
 \begin{equation}
 \Delta M = 236.052595 - 235.866562 \approx 0.186033\text{ u}
 \end{equation}
 
-\textit{2. คำนวณค่า $Q$:}
+\textit{2. คำนวณค่า $Q$}
 \begin{equation}
 Q = 0.186033\text{ u} \times 931.494\text{ MeV/u} \approx 173.29\text{ MeV}
 \end{equation}
 (หากรวมพลังงานจากการสลายตัวบีตาของผลผลิตฟิชชันเพิ่มเติม จะได้ประมาณ $200\text{ MeV}$)
 
-\textit{3. พลังงานจาก $^{235}\text{U}$ ปริมาณ $1.0\text{ kg}$:}
+\textit{3. พลังงานจาก $^{235}\text{U}$ ปริมาณ $1.0\text{ kg}$}
 \begin{equation}
 N = \frac{1000\text{ g}}{235\text{ g/mol}} \times 6.022 \times 10^{23}\text{ nuclei/mol} \approx 2.563 \times 10^{24}\text{ nuclei}
 \end{equation}
-พลังงานรวมในหน่วยจูล:
+พลังงานรวมในหน่วยจูล
 \begin{equation}
 E_{\text{total}} = N \times (173.29\text{ MeV}) \times (1.602 \times 10^{-13}\text{ J/MeV}) \approx 7.115 \times 10^{13}\text{ J}
 \end{equation}
-แปลงเป็นหน่วยเมกะวัตต์-วัน ($1\text{ MW}\cdot\text{day} = 10^6\text{ W} \times 86400\text{ s} = 8.64 \times 10^{10}\text{ J}$):
+แปลงเป็นหน่วยเมกะวัตต์-วัน ($1\text{ MW}\cdot\text{day} = 10^6\text{ W} \times 86400\text{ s} = 8.64 \times 10^{10}\text{ J}$)
 \begin{equation}
 E = \frac{7.115 \times 10^{13}\text{ J}}{8.64 \times 10^{10}\text{ J/(MW}\cdot\text{day)}} \approx 823.5\text{ MW}\cdot\text{day}
 \end{equation}
 
-\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway)} \\
 ยูเรเนียมเพียง $1\text{ kg}$ ปลดปล่อยพลังงานความร้อนเทียบเท่ากับการเผาไหม้ถ่านหินคุณภาพสูงมากกว่า $2500\text{ ตัน}$ นี่คือพลังอันมหาศาลของแรงนิวเคลียร์อย่างเข้มเมื่อเปรียบเทียบกับปฏิกิริยาเคมีดั้งเดิม
 \qedexam
 \end{psctexample}
 
 \begin{psctexample}[การคำนวณค่า $Q$-Value และการกระจายพลังงานในปฏิกิริยาฟิวชัน D-T (D-T Fusion)]
-ปฏิกิริยาฟิวชันเทอร์โมนิวเคลียร์หลักที่ใช้ในเครื่องปฏิกรณ์นิวเคลียร์ฟิวชันระดับนานาชาติ ITER คือปฏิกิริยาระหว่างดิวเทอเรียม ($^2_1\text{H}$) และทริเทียม ($^3_1\text{H}$):
+ปฏิกิริยาฟิวชันเทอร์โมนิวเคลียร์หลักที่ใช้ในเครื่องปฏิกรณ์นิวเคลียร์ฟิวชันระดับนานาชาติ ITER คือปฏิกิริยาระหว่างดิวเทอเรียม ($^2_1\text{H}$) และทริเทียม ($^3_1\text{H}$)
 \begin{equation}
 ^2_1\text{H} + ^3_1\text{H} \to ^4_2\text{He} + ^1_0\text{n}
 \end{equation}
-กำหนดมวลนิวเคลียส: $m(^2\text{H}) = 2.014102\text{ u}$, $m(^3\text{H}) = 3.016049\text{ u}$, $m(^4\text{He}) = 4.002603\text{ u}$, $m_n = 1.008665\text{ u}$ และ $1\text{ u} \cdot c^2 = 931.494\text{ MeV}$
+กำหนดมวลนิวเคลียส $m(^2\text{H}) = 2.014102\text{ u}$, $m(^3\text{H}) = 3.016049\text{ u}$, $m(^4\text{He}) = 4.002603\text{ u}$, $m_n = 1.008665\text{ u}$ และ $1\text{ u} \cdot c^2 = 931.494\text{ MeV}$
 \begin{enumerate}
     \item จงคำนวณค่าพลังงานปลดปล่อยสุทธิ $Q$-Value ของปฏิกิริยาในหน่วย $\text{MeV}$
     \item ในกรอบที่อนุภาคตั้งต้นเคลื่อนที่ช้ามากจนโมเมนตัมรวมของระบบเป็นศูนย์ จงคำนวณการแบ่งสันปันส่วนพลังงานจลน์ให้กับอนุภาคแอลฟา ($K_\alpha$) และนิวตรอน ($K_n$)
 \end{enumerate}
 
-\textbf{โจทย์ (Problem):} \\
+\textbf{โจทย์ (Problem)} \\
 คำนวณพลังงานรวมที่ปลดปล่อยและสัดส่วนพลังงานจลน์ของแต่ละอนุภาคหลังเกิดปฏิกิริยาฟิวชัน
 
-\textbf{ยุทธวิธี (Strategy):} \\
+\textbf{ยุทธวิธี (Strategy)} \\
 \begin{itemize}
-    \item มวลพร่องเชิงปฏิกิริยา: $\Delta m = [m(^2\text{H}) + m(^3\text{H})] - [m(^4\text{He}) + m_n]$
+    \item มวลพร่องเชิงปฏิกิริยา $\Delta m = [m(^2\text{H}) + m(^3\text{H})] - [m(^4\text{He}) + m_n]$
     \item ค่า $Q = \Delta m \cdot c^2$
-    \item กฎอนุรักษ์โมเมนตัม: $\mathbf{p}_\alpha + \mathbf{p}_n = 0 \implies p_\alpha = p_n = p$
-    \item พลังงานจลน์แบบไม่สัมพัทธภาพ: $K = \frac{p^2}{2m}$ ดังนั้น $\frac{K_\alpha}{K_n} = \frac{m_n}{m_\alpha} \approx \frac{1}{4}$
+    \item กฎอนุรักษ์โมเมนตัม $\mathbf{p}_\alpha + \mathbf{p}_n = 0 \implies p_\alpha = p_n = p$
+    \item พลังงานจลน์แบบไม่สัมพัทธภาพ $K = \frac{p^2}{2m}$ ดังนั้น $\frac{K_\alpha}{K_n} = \frac{m_n}{m_\alpha} \approx \frac{1}{4}$
     \item $K_\alpha + K_n = Q \implies K_n = \frac{m_\alpha}{m_\alpha + m_n} Q, \quad K_\alpha = \frac{m_n}{m_\alpha + m_n} Q$
 \end{itemize}
 
-\textbf{การคำนวณ (Computation):} \\
-\textit{1. คำนวณมวลพร่องและ $Q$-Value:}
+\textbf{การคำนวณ (Computation)} \\
+\textit{1. คำนวณมวลพร่องและ $Q$-Value}
 \begin{align}
 m_{\text{reactants}} &= 2.014102\text{ u} + 3.016049\text{ u} = 5.030151\text{ u} \nonumber \\
 m_{\text{products}} &= 4.002603\text{ u} + 1.008665\text{ u} = 5.011268\text{ u} \nonumber \\
 \Delta m &= 5.030151\text{ u} - 5.011268\text{ u} = 0.018883\text{ u}
 \end{align}
-คำนวณค่า $Q$:
+คำนวณค่า $Q$
 \begin{equation}
 Q = (0.018883\text{ u}) \times (931.494\text{ MeV/u}) \approx 17.589\text{ MeV} \approx 17.59\text{ MeV}
 \end{equation}
 
-\textit{2. การแบ่งพลังงานจลน์:}
+\textit{2. การแบ่งพลังงานจลน์}
 \begin{align}
 K_n &= \left(\frac{4.002603}{4.002603 + 1.008665}\right) \times 17.589\text{ MeV} \nonumber \\
 &= \left(\frac{4.002603}{5.011268}\right) \times 17.589\text{ MeV} \approx 0.7987 \times 17.589\text{ MeV} \approx 14.05\text{ MeV}
 \end{align}
-และสำหรับอนุภาคแอลฟา:
+และสำหรับอนุภาคแอลฟา
 \begin{equation}
 K_\alpha = Q - K_n = 17.589 - 14.048 \approx 3.54\text{ MeV}
 \end{equation}
 
-\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway)} \\
 พลังงานร้อยละ 80 ของปฏิกิริยา ($14.05\text{ MeV}$) ตกไปอยู่นิวตรอนที่ไม่มีประจุไฟฟ้า นิวตรอนเหล่านี้จะทะลุผ่านสนามแม่เหล็กกักกันพลาสมาออกไปชนกับผนังผ้าห่ม (Blanket) เพื่อเปลี่ยนพลังงานจลน์เป็นความร้อนสำหรับผลิตไอน้ำปั่นกังหัน ขณะที่อนุภาคแอลฟาประจุ $+2$ จะถูกกักไว้ในสนามแม่เหล็กเพื่อคอยถ่ายทอดความร้อนกลับเข้าสู่พลาสมา (Alpha Heating) เพื่อรักษาอุณหภูมิฟิวชันให้คงอยู่ต่อไป
 \qedexam
 \end{psctexample}
@@ -461,5 +463,5 @@ SEMF & $B \approx a_v A - a_s A^{2/3} - \dots$ & อธิบายสมบั�
     \item ไอโซโทปกัมมันตรังสีชนิดหนึ่งมีกิจกรรมกัมมันตรังสีลดลงเหลือ $12.5\%$ ของค่าเริ่มต้นในเวลา 18 วัน จงหาครึ่งชีวิตและค่าคงตัวการสลายตัวของไอโซโทปนี้
     \item จงอธิบายบทบาทของสารหน่วงนิวตรอน (Moderator) และแท่งควบคุม (Control Rods) ในเครื่องปฏิกรณ์นิวเคลียร์ฟิชชัน
     \item ไอโซโทปคาร์บอน-14 ($^{14}_{6}\text{C}$) สลายตัวให้อนุภาคบีตาลบด้วยครึ่งชีวิต $T_{1/2} = 5730\text{ ปี}$ ตัวอย่างไม้โบราณที่ขุดพบมีกิจกรรมกัมมันตรังสีของ $^{14}\text{C}$ เพียง $25.0\%$ เมื่อเทียบกับไม้มีชีวิตในปัจจุบัน จงประเมินอายุของโบราณวัตถุชิ้นนี้
-    \item จงอธิบายเกณฑ์ของลอว์สัน (Lawson Criterion: $n \tau_E \ge 10^{20}\text{ m}^{-3}\text{s}$) สำหรับการจุดระเบิดพลาสมาฟิวชัน (Fusion Ignition) และเปรียบเทียบการกักขังพลาสมาด้วยสนามแม่เหล็ก (Magnetic Confinement: Tokamak) กับการกักขังด้วยความเฉื่อย (Inertial Confinement: Laser Fusion)
+    \item จงอธิบายเกณฑ์ของลอว์สัน (เกณฑ์ของลอว์สัน $n \tau_E \ge 10^{20}\text{ m}^{-3}\text{s}$) สำหรับการจุดระเบิดพลาสมาฟิวชัน (Fusion Ignition) และเปรียบเทียบการกักขังพลาสมาด้วยสนามแม่เหล็ก (Magnetic Confinement -- Tokamak) กับการกักขังด้วยความเฉื่อย (Inertial Confinement -- Laser Fusion)
 \end{enumerate}

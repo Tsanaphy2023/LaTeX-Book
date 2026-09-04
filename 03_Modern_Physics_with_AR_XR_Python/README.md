@@ -7,17 +7,17 @@
 
 ---
 
-## สารบัญและโครงสร้าง 7 บทเรียน
+## สารบัญและโครงสร้างตำรา (บทนำ + 6 บทเรียนหลัก)
 
-| บทที่ | ชื่อบท | ไฟล์ LaTeX | Google Drive Folder ID |
-| :---: | :--- | :--- | :---: |
-| 1 | ทฤษฎีสัมพัทธภาพพิเศษ (Special Relativity) | `chapters/ch01_special_relativity.tex` | `14v6_U4h1_pqPr7qzV6OFQAxeF6oPkSnj` |
-| 2 | กลศาสตร์ควอนตัม (Quantum Mechanics) | `chapters/ch02_quantum_mechanics.tex` | `15CTmdO7W3XQpk2xIz6XQhzFPgufd8SOi` |
-| 3 | ฟิสิกส์ของอนุภาค (Particle Physics) | `chapters/ch03_particle_physics.tex` | `1c6B-6DfRaQjAaAyofmlnyDgKSiF-WzsE` |
-| 4 | สถาปัตยกรรม AR/XR ในการศึกษาวิชาฟิสิกส์ | `chapters/ch04_ar_xr_frameworks.tex` | `14pf67ENv0UUvUcVlISVr7v_AqpsDp_mN` |
-| 5 | ฟิสิกส์นิวเคลียร์ (Nuclear Physics) | `chapters/ch05_nuclear_physics.tex` | `1G2iFjBWh76Si7yymyU2Tz8S7KbJMCfSt` |
-| 6 | การคำนวณเชิงควอนตัม (Quantum Computing) | `chapters/ch06_quantum_computing.tex` | `185tsgMaWHUtuhGxdhvlfgOINFQPAMd_u` |
-| 7 | ดาราศาสตร์ฟิสิกส์และจักรวาลวิทยา (Astrophysics) | `chapters/ch07_astrophysics.tex` | `1k4aJrkACWu8OqNVkmEMtQGo454HMTfvF` |
+| บทที่ | ชื่อบท | ไฟล์ LaTeX |
+| :---: | :--- | :--- |
+| **บทนำ** | สถาปัตยกรรมการจำลองเสมือนจริง AR/XR และการคำนวณด้วย Python | `chapters/ch00_introduction.tex` |
+| 1 | ทฤษฎีสัมพัทธภาพพิเศษ (Special Relativity) | `chapters/ch01_special_relativity.tex` |
+| 2 | กลศาสตร์ควอนตัม (Quantum Mechanics) | `chapters/ch02_quantum_mechanics.tex` |
+| 3 | ฟิสิกส์ของอนุภาค (Particle Physics) | `chapters/ch03_particle_physics.tex` |
+| 4 | ฟิสิกส์นิวเคลียร์และรังสี (Nuclear Physics) [เดิมบทที่ 5] | `chapters/ch04_nuclear_physics.tex` |
+| 5 | การคำนวณเชิงควอนตัมและสารสนเทศควอนตัม (Quantum Computing) [เดิมบทที่ 6] | `chapters/ch05_quantum_computing.tex` |
+| 6 | ดาราศาสตร์ฟิสิกส์และจักรวาลวิทยา (Astrophysics & Cosmology) [เดิมบทที่ 7] | `chapters/ch06_astrophysics.tex` |
 
 ---
 

@@ -269,6 +269,22 @@
     pad at break=2mm
 }
 
+% Lesson Plan Box for Chapter Administration Plan (Masterclass RBRU Identity)
+\newtcolorbox{lessonplanbox}[1][]{
+    enhanced,
+    breakable,
+    colback=rbruLightBg,
+    colframe=darkNavy,
+    arc=3mm,
+    boxrule=1.2pt,
+    leftrule=5mm,
+    borderline west={2.5pt}{0pt}{cyberBlue},
+    top=12pt, bottom=12pt, left=14pt, right=14pt,
+    drop shadow=black!10,
+    pad at break=3mm,
+    #1
+}
+
 % AR/XR Interactive Simulation Frame Box
 \newtcolorbox{arbox}[1][การจำลองเสมือนจริง AR/XR]{
     enhanced,
@@ -277,7 +293,7 @@
     colframe=cyberBlue,
     coltitle=white,
     fonttitle=\bfseries,
-    title=\textbf{AR/XR Interactive Simulation:} #1,
+    title=\textbf{AR/XR Interactive Simulation}\quad #1,
     arc=3mm,
     boxrule=1.2pt,
     leftrule=5mm,
@@ -290,7 +306,7 @@
     colback=red!5!white,
     colframe=red!75!black,
     fonttitle=\bfseries,
-    title=\textbf{ข้อควรระวัง (Pitfall Alert):} #1,
+    title=\textbf{ข้อควรระวัง (Pitfall Alert)}\quad #1,
     arc=2mm,
     boxrule=0.8pt,
     leftrule=4mm
@@ -302,7 +318,7 @@
     colback=teal!5!white,
     colframe=teal!75!black,
     fonttitle=\bfseries,
-    title=\textbf{Active Learning (Concept Check):} #1,
+    title=\textbf{Active Learning (Concept Check)}\quad #1,
     arc=2mm,
     boxrule=0.8pt,
     leftrule=4mm
@@ -314,7 +330,7 @@
     colback=green!5!white,
     colframe=emeraldGlow!90!black,
     fonttitle=\bfseries,
-    title=\textbf{Physics in the Real World:} #1,
+    title=\textbf{Physics in the Real World}\quad #1,
     arc=2mm,
     boxrule=0.8pt,
     leftrule=4mm
