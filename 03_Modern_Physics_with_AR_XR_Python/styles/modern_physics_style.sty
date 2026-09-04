@@ -19,6 +19,11 @@
 \XeTeXlinebreakskip = 0pt plus 2pt minus 0.5pt
 \setlength{\emergencystretch}{2.5em}
 
+% 1.3 Paragraph Indentation (RBRU Academic Standard: 1 Tab = 1.25cm)
+\RequirePackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+
 % 1.2 Thai Academic Terminology (RBRU Standard without colons)
 \renewcommand{\chaptername}{บทที่}
 \renewcommand{\figurename}{ภาพที่}
@@ -148,21 +153,45 @@
 
 \titleformat{\section}
   {\normalfont\fontsize{16}{20}\bfseries\color{darkNavy}}
-  {\thesection}
-  {1em}
+  {\makebox[1.25cm][l]{\thesection}}
+  {0pt}
   {}
+
+\titleformat{name=\section,numberless}
+  {\normalfont\fontsize{16}{20}\bfseries\color{darkNavy}}
+  {}
+  {0pt}
+  {}
+
+\titlespacing{\section}{0pt}{18pt plus 4pt minus 2pt}{8pt plus 2pt minus 1pt}
 
 \titleformat{\subsection}
   {\normalfont\fontsize{14}{18}\bfseries\color{cyberBlue}}
-  {\thesubsection}
-  {0.8em}
+  {\makebox[1.25cm][l]{\thesubsection}}
+  {0pt}
   {}
+
+\titleformat{name=\subsection,numberless}
+  {\normalfont\fontsize{14}{18}\bfseries\color{cyberBlue}}
+  {}
+  {0pt}
+  {}
+
+\titlespacing{\subsection}{0pt}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
 
 \titleformat{\subsubsection}
   {\normalfont\fontsize{12}{15}\bfseries\color{neonPurple}}
-  {\thesubsubsection}
-  {0.6em}
+  {\makebox[1.25cm][l]{\thesubsubsection}}
+  {0pt}
   {}
+
+\titleformat{name=\subsubsection,numberless}
+  {\normalfont\fontsize{12}{15}\bfseries\color{neonPurple}}
+  {}
+  {0pt}
+  {}
+
+\titlespacing{\subsubsection}{0pt}{10pt plus 2pt minus 1pt}{4pt plus 1pt minus 1pt}
 
 % 6. Academic & Simulation Boxes (tcolorbox)
 

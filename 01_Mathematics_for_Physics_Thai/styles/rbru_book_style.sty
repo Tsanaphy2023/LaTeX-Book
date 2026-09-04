@@ -21,6 +21,11 @@
 % ป้องกัน overfull hbox และ orphan word ในตำราฟิสิกส์คณิตศาสตร์
 \setlength{\emergencystretch}{2.5em}
 
+% 1.3 Paragraph Indentation (มาตรฐาน มรภ.รำไพพรรณี: 1 Tab = 1.25cm)
+\RequirePackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+
 % 1.2 Thai Academic Terminology (มาตรฐานระเบียบวิชาการ มรภ.รำไพพรรณี)
 \renewcommand{\chaptername}{บทที่}
 \renewcommand{\figurename}{ภาพที่}
@@ -155,15 +160,31 @@
 
 \titleformat{\section}
   {\normalfont\fontsize{16}{20}\bfseries\color{rbruNavy}}
-  {\thesection}
-  {1em}
+  {\makebox[1.25cm][l]{\thesection}}
+  {0pt}
   {}
+
+\titleformat{name=\section,numberless}
+  {\normalfont\fontsize{16}{20}\bfseries\color{rbruNavy}}
+  {}
+  {0pt}
+  {}
+
+\titlespacing{\section}{0pt}{18pt plus 4pt minus 2pt}{8pt plus 2pt minus 1pt}
 
 \titleformat{\subsection}
   {\normalfont\fontsize{14}{18}\bfseries\color{rbruGreen}}
-  {\thesubsection}
-  {0.8em}
+  {\makebox[1.25cm][l]{\thesubsection}}
+  {0pt}
   {}
+
+\titleformat{name=\subsection,numberless}
+  {\normalfont\fontsize{14}{18}\bfseries\color{rbruGreen}}
+  {}
+  {0pt}
+  {}
+
+\titlespacing{\subsection}{0pt}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
 
 % 6. Academic Boxes (tcolorbox)
 
