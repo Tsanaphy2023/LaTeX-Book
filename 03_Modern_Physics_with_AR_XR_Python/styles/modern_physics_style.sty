@@ -577,4 +577,16 @@
 \fancyhead[L]{\slshape \nouppercase{\leftmark}}
 \renewcommand{\headrulewidth}{0.5pt}
 
+% Custom Chapter Mark without trailing dot after chapter number
+\renewcommand{\chaptermark}[1]{%
+    \markboth{%
+        \ifnum \c@secnumdepth >\m@ne
+            \if@mainmatter
+                \chaptertitlename\ \thechapter\quad
+            \fi
+        \fi
+        #1%
+    }{}%
+}
+
 \endinput
