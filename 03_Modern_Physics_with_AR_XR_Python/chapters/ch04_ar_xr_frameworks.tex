@@ -289,11 +289,61 @@ MediaPipe Hands ของ Google ใช้โครงข่ายประส�
 \qedexam
 \end{psctexample}
 
+\begin{psctexample}[การแปลงพิกัดและวางวัตถุเสมือนด้วย WebXR Hit-Test (WebXR Spatial Reticle Transformation)]
+ในเซสชัน WebXR Augmented Reality การวางแบบจำลองอะตอม 3 มิติลงบนโต๊ะทดลองในโลกจริง อาศัยระบบตรวจจับระนาบพื้นผิวด้วยลำรังสีเสมือน (XR Hit-Testing) ซึ่งระบบจะส่งเมทริกซ์การแปลงพิกัดขนาด $4 \times 4$ แบบ Column-Major:
+\begin{equation}
+\mathbf{M}_{\text{hit}} = \begin{bmatrix}
+r_{11} & r_{12} & r_{13} & t_x \\
+r_{21} & r_{22} & r_{23} & t_y \\
+r_{31} & r_{32} & r_{33} & t_z \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\end{equation}
+กำหนดให้เวกเตอร์ตำแหน่งของกล้องบนแว่น AR คือ $\mathbf{p}_{\text{cam}} = (0.00, 1.60, 0.00)\text{ m}$ และทิศทางการมอง (Gaze Unit Vector) ของผู้สังเกตคือ $\hat{\mathbf{v}} = (0.60, -0.30, -0.7416)$
+\begin{enumerate}
+    \item จงอธิบายระเบียบวิธีสลายเมทริกซ์ (Matrix Decomposition) ใน Three.js เพื่อแยกเวกเตอร์ตำแหน่ง $\mathbf{t}$, ควอเทอร์เนียนการหมุน $\mathbf{q}$, และสเกล $\mathbf{s}$
+    \item หากลำรังสีการมองกระทบระนาบโต๊ะทดลองที่ระยะห่างเชิงเส้นตามแนวสายตา $d = 1.80\text{ m}$ จงคำนวณเวกเตอร์พิกัด 3 มิติ $\mathbf{p}_{\text{hit}}$ ในระบบอ้างอิงของโลกเสมือน (World Coordinates) ที่ต้องนำโมเดลอะตอมไปวาง
+\end{enumerate}
+
+\textbf{โจทย์ (Problem):} \\
+คำนวณตำแหน่ง 3 มิติในโลกจริงที่เส้นสายตาตัดกับระนาบโต๊ะทดลองเพื่อปักหมุดวัตถุเสมือนใน WebXR
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item ตำแหน่งตกกระทบของการยิงรังสี (Ray Casting) คำนวณจากสมการเส้นตรงพาราเมตริก:
+    \begin{equation}
+    \mathbf{p}_{\text{hit}} = \mathbf{p}_{\text{cam}} + d \hat{\mathbf{v}}
+    \end{equation}
+    \item ตรวจสอบว่า $\hat{\mathbf{v}}$ เป็นเวกเตอร์หนึ่งหน่วย: $|\hat{\mathbf{v}}|^2 = (0.60)^2 + (-0.30)^2 + (-0.7416)^2 \approx 0.36 + 0.09 + 0.55 = 1.00$
+    \item ใน Three.js การอัปเดตตำแหน่งของ Mesh ทำได้โดยตรงผ่านเมธอด \texttt{mesh.position.copy(pHit)} หรือใช้ \texttt{mesh.matrix.fromArray(hitPoseMatrix)}
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. คำนวณพิกัดแต่ละแกน:}
+\begin{align}
+x_{\text{hit}} &= x_{\text{cam}} + d v_x = 0.00 + (1.80\text{ m}) (0.60) = +1.08\text{ m} \nonumber \\
+y_{\text{hit}} &= y_{\text{cam}} + d v_y = 1.60 + (1.80\text{ m}) (-0.30) = 1.60 - 0.54 = +1.06\text{ m} \nonumber \\
+z_{\text{hit}} &= z_{\text{cam}} + d v_z = 0.00 + (1.80\text{ m}) (-0.7416) \approx -1.335\text{ m}
+\end{align}
+ดังนั้น เวกเตอร์ตำแหน่งที่ตกกระทบคือ:
+\begin{equation}
+\mathbf{p}_{\text{hit}} = (1.08, 1.06, -1.335)\text{ m}
+\end{equation}
+
+\textit{2. การจัดวางระนาบสัมผัส (Surface Normal Alignment):}
+ความสูง $y_{\text{hit}} = 1.06\text{ m}$ สอดคล้องกับความสูงระดับโต๊ะทดลองมาตรฐาน (ประมาณ $1.0\text{ m}$ จากพื้นห้อง) เมทริกซ์การหมุนจะปรับเวกเตอร์แนวฉากของเป้าเล็ง (Reticle) ให้ขนานกับเวกเตอร์แนวฉากของพื้นผิวโต๊ะ $\hat{\mathbf{n}} = (0, 1, 0)$ โดยอัตโนมัติ
+
+\textbf{ข้อคิดทางฟิสิกส์และวิศวกรรม (Takeaway):} \\
+การคำนวณพิกัดสัมบูรณ์ในระบบพิกัดคาร์ทีเซียน 3 มิติช่วยให้นักศึกษาฟิสิกส์สามารถเชื่อมโยงแนวคิดคณิตศาสตร์เวกเตอร์และเมทริกซ์เข้ากับการทำงานจริงของฮาร์ดแวร์เซนเซอร์ LiDAR และกล้อง Stereo Tracking ในอุปกรณ์ AR ได้อย่างเป็นรูปธรรม
+\qedexam
+\end{psctexample}
+
 \section{สรุปสาระสำคัญประจำบท}
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{l Z Y}
+\small
+\begin{tabularx}{\textwidth}{l >{\centering\arraybackslash}p{3.8cm} Y}
 \toprule
 \textbf{เทคโนโลยี / ฟังก์ชัน} & \textbf{เครื่องมือหลัก} & \textbf{หน้าที่ในการศึกษาฟิสิกส์} \\
 \midrule
@@ -313,4 +363,6 @@ Spatial LERP & $(1-\alpha)\mathbf{x}_0 + \alpha\mathbf{x}_1$ & ลดสัญ�
     \item จงอธิบายความแตกต่างระหว่าง AR แบบมาร์กเกอร์ (Marker-based AR) และ AR แบบตรวจจับระนาบพื้นผิว (Surface / Markerless AR via Hit-Testing) ในแง่ของการนำมาประยุกต์ใช้ในการทดลองฟิสิกส์
     \item หากต้องการจำลองสนามแม่เหล็ก $B$ รอบลวดตัวนำที่มีกระแสไฟฟ้าไหลผ่าน จงร่างอัลกอริทึมในการแสดงเส้นแรงแม่เหล็กเสมือนจริงในมุมมอง 3 มิติ
     \item เหตุใดการสร้างอินสแตนซ์เวกเตอร์ใหม่ (\texttt{new THREE.Vector3()}) ภายในฟังก์ชัน \texttt{requestAnimationFrame} จึงก่อให้เกิดปัญหาต่อประสบการณ์ของผู้ใช้ และมีแนวทางแก้ไขอย่างไร?
+    \item จงเขียนโฟลว์ชาร์ตและสมการในการตรวจจับท่าทาง "บีบนิ้วชี้กับนิ้วหัวแม่มือ (Pinch Gesture)" จากพิกัด 3 มิติของจุด Landmark ข้อที่ 4 (Thumb Tip) และข้อที่ 8 (Index Tip) ใน MediaPipe Hands เพื่อใช้เป็นทริกเกอร์เลือกและเคลื่อนย้ายประจุไฟฟ้าในการทดลอง
+    \item จงอธิบายหลักการทำงานของ Web Audio API และ Spatial Panning Node ในการสร้างเสียงสะท้อน 3 มิติตามตำแหน่งของแหล่งกำเนิดเสียงทางฟิสิกส์ (เช่น เสียงการแผ่รังสีของเครื่องไกเกอร์เคาน์เตอร์เมื่อเข้าใกล้อนุภาคนิวเคลียร์)
 \end{enumerate}

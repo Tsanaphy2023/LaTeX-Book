@@ -378,9 +378,10 @@ E_2 = 2^2 \times E_1 = 4 \times 37.61\text{ eV} \approx 150.44\text{ eV}
 \begin{equation}
 \Delta E = E_2 - E_1 = 150.44 - 37.61 = 112.83\text{ eV} = 1.808 \times 10^{-17}\text{ J}
 \end{equation}
-\begin{equation}
-\lambda = \frac{hc}{\Delta E} = \frac{(6.626 \times 10^{-34}\text{ J}\cdot\text{s}) (3.00 \times 10^8\text{ m/s})}{1.808 \times 10^{-17}\text{ J}} \approx 1.099 \times 10^{-8}\text{ m} \approx 11.0\text{ nm}
-\end{equation}
+\begin{align}
+\lambda &= \frac{hc}{\Delta E} = \frac{(6.626 \times 10^{-34}\text{ J}\cdot\text{s}) (3.00 \times 10^8\text{ m/s})}{1.808 \times 10^{-17}\text{ J}} \nonumber \\
+&\approx 1.099 \times 10^{-8}\text{ m} \approx 11.0\text{ nm}
+\end{align}
 ซึ่งอยู่ในช่วง \textbf{รังสีอัลตราไวโอเลตสุญญากาศ (Extreme UV / Soft X-Ray)}
 
 \textit{3. ความน่าจะเป็นในการพบอิเล็กตรอนกึ่งกลางกล่อง:}
@@ -398,11 +399,68 @@ P \approx |\psi_1(0.5L)|^2 \Delta x = \left(\frac{2}{L}\right) (0.02L) = 0.04 = 
 \qedexam
 \end{psctexample}
 
+\begin{psctexample}[ตัวแกว่งกวัดฮาร์มอนิกควอนตัมและพลังงานจุดศูนย์ (Quantum Harmonic Oscillator)]
+พิจารณาอิเล็กตรอนในบ่อศักย์ฮาร์มอนิก 1 มิติ $V(x) = \frac{1}{2} m \omega^2 x^2$ โดยมีความถี่เชิงมุมของการแกว่ง $\omega = 1.0 \times 10^{15}\text{ rad/s}$
+\begin{enumerate}
+    \item จงพิสูจน์โดยใช้หลักความไม่แน่นอนของไฮเซนเบิร์ก $\Delta x \Delta p \ge \hbar/2$ ว่าพลังงานของสถานะต่ำสุดไม่สามารถเป็นศูนย์ได้ และประเมินค่าพลังงานต่ำสุดนี้
+    \item คำนวณพลังงานสถานะพื้น $E_0 = \frac{1}{2}\hbar\omega$ ในหน่วย $\text{eV}$ และหาความยาวคลื่นของโฟตอนที่ถูกดูดกลืนเมื่ออิเล็กตรอนเปลี่ยนสถานะจาก $n=0$ ไปยัง $n=1$
+\end{enumerate}
+
+\textbf{โจทย์ (Problem):} \\
+หาพลังงานสถานะต่ำสุดของตัวแกว่งกวัดควอนตัม และความยาวคลื่นของการเปลี่ยนระดับพลังงานระหว่างสองสถานะแรก
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item พลังงานรวมของตัวแกว่งกวัดคือ $E = K + V = \frac{p^2}{2m} + \frac{1}{2}m\omega^2 x^2$
+    \item จากหลักความไม่แน่นอน หากอนุภาคหยุดนิ่งที่จุดกึ่งกลาง ($x=0, p=0$) จะทำให้ $\Delta x = 0, \Delta p = 0$ ซึ่งละเมิด $\Delta x \Delta p \ge \hbar/2$ ดังนั้น $\Delta p \approx \frac{\hbar}{2\Delta x}$
+    \item พลังงานประมาณการในรูปของ $\Delta x$:
+    \begin{equation}
+    E(\Delta x) \approx \frac{\hbar^2}{8m(\Delta x)^2} + \frac{1}{2}m\omega^2 (\Delta x)^2
+    \end{equation}
+    หาค่าต่ำสุดโดย $\frac{dE}{d(\Delta x)} = 0$
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. อนุพันธ์เทียบกับ $\Delta x$ เพื่อหาพลังงานต่ำสุด:}
+\begin{align}
+\frac{dE}{d(\Delta x)} &= -\frac{\hbar^2}{4m(\Delta x)^3} + m\omega^2 \Delta x = 0 \nonumber \\
+(\Delta x)^4 &= \frac{\hbar^2}{4m^2\omega^2} \implies (\Delta x)^2 = \frac{\hbar}{2m\omega}
+\end{align}
+แทนค่า $(\Delta x)^2$ กลับเข้าสู่สมการพลังงาน:
+\begin{align}
+E_{\min} &\approx \frac{\hbar^2}{8m\left(\frac{\hbar}{2m\omega}\right)} + \frac{1}{2}m\omega^2 \left(\frac{\hbar}{2m\omega}\right) \nonumber \\
+&= \frac{1}{4}\hbar\omega + \frac{1}{4}\hbar\omega = \frac{1}{2}\hbar\omega
+\end{align}
+ซึ่งตรงกับพลังงานสถานะพื้นแท้จริง (Zero-Point Energy) ของสมการชเรอดิงเงอร์ $E_n = \left(n + \frac{1}{2}\right)\hbar\omega$ ที่ $n=0$
+
+\textit{2. คำนวณค่าตัวเลขและสเปกตรัมการดูดกลืน:}
+\begin{align}
+E_0 &= \frac{1}{2} \hbar \omega = \frac{1}{2} (1.0546 \times 10^{-34}\text{ J}\cdot\text{s}) (1.0 \times 10^{15}\text{ s}^{-1}) \nonumber \\
+&= 5.273 \times 10^{-20}\text{ J} = \frac{5.273 \times 10^{-20}}{1.602 \times 10^{-19}}\text{ eV} \approx 0.329\text{ eV}
+\end{align}
+ผลต่างพลังงานระหว่างสถานะ $n=1$ และ $n=0$ คือ:
+\begin{align}
+\Delta E &= E_1 - E_0 = \left(\frac{3}{2}\hbar\omega\right) - \left(\frac{1}{2}\hbar\omega\right) = \hbar\omega \nonumber \\
+&= 2 E_0 \approx 0.658\text{ eV} = 1.055 \times 10^{-19}\text{ J}
+\end{align}
+ความยาวคลื่นโฟตอน:
+\begin{align}
+\lambda &= \frac{hc}{\Delta E} = \frac{(6.626 \times 10^{-34}\text{ J}\cdot\text{s}) (3.00 \times 10^8\text{ m/s})}{1.055 \times 10^{-19}\text{ J}} \nonumber \\
+&\approx 1.884 \times 10^{-6}\text{ m} \approx 1.884\,\mu\text{m}
+\end{align}
+ซึ่งอยู่ในช่วงรังสีอินฟราเรดใกล้ (Near-Infrared: NIR)
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+พลังงานจุดศูนย์ (Zero-Point Energy) $E_0 = \frac{1}{2}\hbar\omega$ ยืนยันว่าในอาณาจักรควอนตัม สสารไม่สามารถหยุดนิ่งสนิทได้อย่างแท้จริง แม้ที่อุณหภูมิศูนย์สัมบูรณ์ ($0\text{ K}$) ผลการแกว่งนี้ส่งผลต่อการเกิดปรากฏการณ์คาซิมีร์ (Casimir Effect) และการคงสถานะของเหลวของฮีเลียมเหลวภายใต้ความดันบรรยากาศ
+\qedexam
+\end{psctexample}
+
 \section{สรุปสาระสำคัญประจำบท}
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{l Z Y}
+\small
+\begin{tabularx}{\textwidth}{l >{\centering\arraybackslash}p{4.2cm} Y}
 \toprule
 \textbf{แนวคิดหลัก} & \textbf{สูตร/สมการ} & \textbf{ความสำคัญทางกายภาพ} \\
 \midrule
@@ -427,4 +485,6 @@ P \approx |\psi_1(0.5L)|^2 \Delta x = \left(\frac{2}{L}\right) (0.02L) = 0.04 = 
     \end{enumerate}
     \item อนุภาคฝุ่นมวล $1.0\,\mu\text{g}$ เคลื่อนที่ด้วยความเร็ว $1.0\text{ mm/s}$ จงคำนวณความยาวคลื่นเดอบรอยล์ และอธิบายว่าเหตุใดเราจึงไม่สังเกตเห็นสมบัติคลื่นของฝุ่นนี้ในชีวิตประจำวัน
     \item สำหรับอนุภาคในกล่องศักย์อนันต์ 1 มิติ ในสถานะ $n=3$ จงหาจุดที่มีโอกาสตรวจพบอนุภาคมากที่สุด และจุดที่โอกาสพบอนุภาคเป็นศูนย์ (Nodes)
+    \item อนุภาคพลังงาน $E = 2.0\text{ eV}$ พุ่งชนกำแพงศักย์สี่เหลี่ยมผืนผ้าความสูง $V_0 = 5.0\text{ eV}$ และความกว้าง $L = 0.50\text{ nm}$ จงคำนวณสัมประสิทธิ์การทะลุผ่านควอนตัม (Transmission Probability $T$) เมื่ออนุภาคคืออิเล็กตรอน ($m_e = 9.11 \times 10^{-31}\text{ kg}$)
+    \item จงแสดงว่าฟังก์ชันคลื่นสถานะพื้นของตัวแกว่งกวัดฮาร์มอนิก $\psi_0(x) = A e^{-\frac{m\omega}{2\hbar}x^2}$ สอดคล้องกับสมการชเรอดิงเงอร์ไม่อิงเวลา $\left(-\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + \frac{1}{2}m\omega^2 x^2\right)\psi_0 = E_0 \psi_0$ พร้อมทั้งหาค่าพลังงาน $E_0$ และพิสูจน์ว่าค่าคงตัวนอร์แมลไลซ์คือ $A = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4}$
 \end{enumerate}

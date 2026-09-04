@@ -304,11 +304,65 @@ P(1) &= \left| \frac{\sqrt{3}-1}{2\sqrt{2}} \right|^2 = \frac{4 - 2\sqrt{3}}{8} 
 \qedexam
 \end{psctexample}
 
+\begin{psctexample}[การสร้างสถานะพัวพันเบลล์และการจำลองด้วย Qiskit (Bell State Generation)]
+ในการสื่อสารเชิงควอนตัม สถานะพัวพันเบลล์ (Bell State) $|\Phi^+\rangle = \frac{\ket{00} + \ket{11}}{\sqrt{2}}$ เป็นทรัพยากรหลักสำหรับการส่งสถานะทางไกล (Quantum Teleportation) และการเข้ารหัสลับควอนตัม
+\begin{enumerate}
+    \item จงแสดงขั้นตอนการแปลงสถานะเมื่อเริ่มต้นจากสถานะคิวบิตคู่ $\ket{\psi_0} = \ket{00}$ ผ่านเกตฮาดามาร์ดบนคิวบิต 0 และตามด้วยเกต CNOT ($0 \to 1$)
+    \item หากอลิซ (Alice) ทำการวัดคิวบิตที่ 0 ในฐานเชิงคำนวณและได้ผลลัพธ์เป็น $1$ จงหาความน่าจะเป็นที่บ็อบ (Bob) จะวัดคิวบิตที่ 1 ได้ผลลัพธ์ $1$ พร้อมอธิบายปรากฏการณ์ความพัวพันเชิงควอนตัม (Quantum Entanglement)
+    \item จงเขียนโค้ดภาษา Python ด้วยเฟรมเวิร์ก Qiskit เพื่อสร้างและรันวงจรนี้
+\end{enumerate}
+
+\textbf{โจทย์ (Problem):} \\
+แสดงคณิตศาสตร์การสร้างสถานะเบลล์ การวัดสถานะพัวพัน และการจำลองด้วย Qiskit
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item สถานะเริ่มต้น: $\ket{\psi_0} = \ket{0} \otimes \ket{0} = \ket{00}$
+    \item ขั้นที่ 1: ใช้เกต $H \otimes I$ บนคิวบิตแรก: $\ket{\psi_1} = (H\ket{0}) \otimes \ket{0} = \left(\frac{\ket{0} + \ket{1}}{\sqrt{2}}\right) \otimes \ket{0} = \frac{\ket{00} + \ket{10}}{\sqrt{2}}$
+    \item ขั้นที่ 2: ใช้เกต CNOT โดยให้คิวบิตแรกเป็นตัวควบคุม (Control) และคิวบิตที่สองเป็นเป้าหมาย (Target):
+    $\text{CNOT}\ket{00} = \ket{00}, \quad \text{CNOT}\ket{10} = \ket{11}$
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. การแปลงสถานะ:}
+\begin{equation}
+\ket{\psi_2} = \text{CNOT}_{0\to 1} \ket{\psi_1} = \frac{\text{CNOT}\ket{00} + \text{CNOT}\ket{10}}{\sqrt{2}} = \frac{\ket{00} + \ket{11}}{\sqrt{2}} = \ket{\Phi^+}
+\end{equation}
+
+\textit{2. ผลของการวัดค่า:}
+เมื่ออลิซวัดคิวบิต 0 ได้สถานะ $\ket{1}$ สถานะรวมของระบบ 2 คิวบิตจะยุบตัวลง (Wavefunction Collapse) สู่:
+\begin{equation}
+\ket{\psi_{\text{collapsed}}} = \ket{11}
+\end{equation}
+ดังนั้น ความน่าจะเป็นที่บ็อบจะวัดคิวบิต 1 แล้วได้สถานะ $\ket{1}$ คือ $100\%$ ($P=1.0$) ทันที แม้ว่าบ็อบจะอยู่ห่างออกไปคนละซีกจักรวาลโดยไม่มีการส่งสัญญาณคลาสสิกระหว่างกัน
+
+\textit{3. สคริปต์จำลองด้วย Qiskit:}
+\begin{lstlisting}[language=Python, caption={การสร้างสถานะเบลล์ด้วย Qiskit}, label={lst:qiskit_bell}]
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import Statevector
+
+# สร้างวงจรควอนตัม 2 คิวบิต
+qc = QuantumCircuit(2)
+qc.h(0)         # ใส่เกต Hadamard ที่คิวบิต 0
+qc.cx(0, 1)     # ใส่เกต CNOT ควบคุมโดยคิวบิต 0 ส่งผลต่อคิวบิต 1
+
+# คำนวณ Statevector
+psi = Statevector.from_instruction(qc)
+print("Bell State Vector:", psi.data)
+# ผลลัพธ์: [0.7071+0j, 0, 0, 0.7071+0j] สอดคล้องกับ (|00> + |11>)/sqrt(2)
+\end{lstlisting}
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+ความพัวพันเชิงควอนตัมไม่สามารถนำมาใช้ส่งข้อมูลได้เร็วกว่าแสง (No-Signaling Theorem) เนื่องจากผลการวัดของอลิซเป็นแบบสุ่มอย่างแท้จริง บ็อบจำเป็นต้องได้รับข้อมูลคลาสสิกจากอลิซเพื่อถอดรหัสสารสนเทศเสมอ
+\qedexam
+\end{psctexample}
+
 \section{สรุปสาระสำคัญประจำบท}
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{l Z Y}
+\small
+\begin{tabularx}{\textwidth}{l >{\centering\arraybackslash}p{4.2cm} Y}
 \toprule
 \textbf{มโนทัศน์} & \textbf{สัญลักษณ์ / สูตร} & \textbf{ความสำคัญ} \\
 \midrule
@@ -328,4 +382,6 @@ P(1) &= \left| \frac{\sqrt{3}-1}{2\sqrt{2}} \right|^2 = \frac{4 - 2\sqrt{3}}{8} 
     \item จงคำนวณผลลัพธ์ของ $H \cdot X \cdot H$ และอธิบายความหมายในรูปของเกตเพาลีอื่น
     \item จงพิสูจน์ว่าสถานะ $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{01} - \ket{10})$ เป็นสถานะพัวพันสมบูรณ์ (Singlet State)
     \item จงร่างวงจรควอนตัมสำหรับการส่งสถานะทางไกล (Quantum Teleportation) พร้อมอธิบายบทบาทของการส่งข้อมูลคลาสสิก 2 บิต
+    \item จงเขียนเมทริกซ์ของเกตเฟสควอนตัม $S = \begin{pmatrix} 1 & 0 \\ 0 & i \end{pmatrix}$ และเกต $T = \begin{pmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{pmatrix}$ พร้อมแสดงว่า $T^2 = S$ และ $S^2 = Z$
+    \item ในขั้นตอนการกระจายกุญแจรหัสลับเชิงควอนตัม (BB84 Quantum Key Distribution: QKD) หากมีผู้ดักฟัง (Eavesdropper: Eve) เข้ามาวัดสถานะคิวบิตในฐานที่ไม่ถูกต้อง จงคำนวณอัตราความผิดพลาดของบิตควอนตัม (Quantum Bit Error Rate: QBER) ที่ Alice และ Bob จะตรวจพบได้
 \end{enumerate}

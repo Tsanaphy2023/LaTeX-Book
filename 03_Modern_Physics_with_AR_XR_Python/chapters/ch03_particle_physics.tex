@@ -382,15 +382,17 @@ m_\pi c^2 - pc &= \sqrt{(pc)^2 + (m_\mu c^2)^2} \\
 pc &= \frac{(m_\pi c^2)^2 - (m_\mu c^2)^2}{2 m_\pi c^2}
 \end{align}
 แทนค่าตัวเลขในหน่วย MeV:
-\begin{equation}
-pc = \frac{(139.57)^2 - (105.66)^2}{2 (139.57)} = \frac{19479.78 - 11164.04}{279.14} = \frac{8315.74}{279.14} \approx 29.79\text{ MeV}
-\end{equation}
+\begin{align}
+pc &= \frac{(139.57)^2 - (105.66)^2}{2 (139.57)} = \frac{19479.78 - 11164.04}{279.14} \nonumber \\
+&= \frac{8315.74}{279.14} \approx 29.79\text{ MeV}
+\end{align}
 ดังนั้น โมเมนตัมของทั้งสองอนุภาคคือ $p \approx 29.79\text{ MeV}/c$
 
 พลังงานรวมของมิวออนคือ:
-\begin{equation}
-E_\mu = \sqrt{(pc)^2 + (m_\mu c^2)^2} = \sqrt{(29.79)^2 + (105.66)^2} \approx \sqrt{887.44 + 11164.04} \approx 109.78\text{ MeV}
-\end{equation}
+\begin{align}
+E_\mu &= \sqrt{(pc)^2 + (m_\mu c^2)^2} = \sqrt{(29.79)^2 + (105.66)^2} \nonumber \\
+&\approx \sqrt{887.44 + 11164.04} \approx 109.78\text{ MeV}
+\end{align}
 พลังงานจลน์ของมิวออนคำนวณจาก:
 \begin{equation}
 K_\mu = E_\mu - m_\mu c^2 = 109.78 - 105.66 = 4.12\text{ MeV}
@@ -401,11 +403,64 @@ K_\mu = E_\mu - m_\mu c^2 = 109.78 - 105.66 = 4.12\text{ MeV}
 \qedexam
 \end{psctexample}
 
+\begin{psctexample}[การสลายตัวของอนุภาคฮิกส์โบซอนและมวลไม่แปรเปลี่ยน (Higgs Invariant Mass)]
+ที่เครื่องชนอนุภาคขนาดใหญ่ LHC ที่เซิร์น (CERN) อนุภาคฮิกส์โบซอน $H^0$ ที่ถูกสร้างขึ้นจากการชนของโปรตอน สามารถสลายตัวไปเป็นโฟตอนพลังงานสูง 2 อนุภาคตามปฏิกิริยา:
+\begin{equation}
+H^0 \to \gamma_1 + \gamma_2
+\end{equation}
+เครื่องตรวจวัดอนุภาคคาโลริมิเตอร์ (Calorimeter) ตรวจวัดพลังงานของโฟตอนทั้งสองได้ $E_1 = 70.0\text{ GeV}$ และ $E_2 = 56.5\text{ GeV}$ โดยแนวการเคลื่อนที่ของโฟตอนทั้งสองทำมุมเปิดต่อกัน $\theta = 150.0^\circ$
+\begin{enumerate}
+    \item จงพิสูจน์ความสัมพันธ์ของมวลไม่แปรเปลี่ยน (Invariant Mass) ของระบบโฟตอนคู่:
+    \begin{equation}
+    M_{\gamma\gamma} c^2 = \sqrt{2 E_1 E_2 (1 - \cos\theta)}
+    \end{equation}
+    \item คำนวณมวลไม่แปรเปลี่ยน $M_{\gamma\gamma} c^2$ ในหน่วย $\text{GeV}$ และเปรียบเทียบกับมวลของอนุภาคฮิกส์ที่วัดได้ในระดับสากล ($125.1\text{ GeV}/c^2$)
+\end{enumerate}
+
+\textbf{โจทย์ (Problem):} \\
+คำนวณมวลนิ่งของอนุภาคแม่ที่สลายตัวจากพลังงานและมุมเปิดของโฟตอนลูกสองอนุภาค
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item โฟตอนเป็นอนุภาคไร้มวล มี $m_\gamma = 0$ ดังนั้น $E_i = p_i c$ เวกเตอร์ 4-โมเมนตัมของโฟตอนแต่ละตัวคือ $P_i = (E_i/c, \mathbf{p}_i)$ โดยที่ $P_i^2 = (E_i/c)^2 - |\mathbf{p}_i|^2 = 0$
+    \item 4-โมเมนตัมรวมของระบบโฟตอนคู่คือ $P_{\text{tot}} = P_1 + P_2$
+    \item มวลไม่แปรเปลี่ยนคำนวณจากสเกลาร์ลอเรนซ์ $P_{\text{tot}}^2 = M_{\gamma\gamma}^2 c^2$:
+    \begin{equation}
+    P_{\text{tot}}^2 = (P_1 + P_2)^2 = P_1^2 + P_2^2 + 2 P_1 \cdot P_2 = 0 + 0 + 2 \left(\frac{E_1 E_2}{c^2} - \mathbf{p}_1 \cdot \mathbf{p}_2\right)
+    \end{equation}
+    \item เนื่องจาก $\mathbf{p}_1 \cdot \mathbf{p}_2 = |\mathbf{p}_1| |\mathbf{p}_2| \cos\theta = \left(\frac{E_1}{c}\right)\left(\frac{E_2}{c}\right)\cos\theta$
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. พิสูจน์สูตรมวลไม่แปรเปลี่ยน:}
+\begin{align}
+M_{\gamma\gamma}^2 c^2 &= 2 \left[\frac{E_1 E_2}{c^2} - \frac{E_1 E_2}{c^2}\cos\theta\right] = \frac{2 E_1 E_2}{c^2}(1 - \cos\theta) \nonumber \\
+M_{\gamma\gamma} c^2 &= \sqrt{2 E_1 E_2 (1 - \cos\theta)}
+\end{align}
+
+\textit{2. แทนค่าตัวเลข:}
+\begin{align}
+\cos(150.0^\circ) &= -\frac{\sqrt{3}}{2} \approx -0.8660 \nonumber \\
+1 - \cos(150.0^\circ) &= 1 - (-0.8660) = 1.8660
+\end{align}
+คำนวณมวล:
+\begin{align}
+M_{\gamma\gamma} c^2 &= \sqrt{2 \times (70.0\text{ GeV}) \times (56.5\text{ GeV}) \times 1.8660} \nonumber \\
+&= \sqrt{2 \times 3955 \times 1.8660} = \sqrt{14760.06} \approx 121.5\text{ GeV}
+\end{align}
+ซึ่งสอดคล้องกับพีคมวลของอนุภาคฮิกส์โบซอน (Higgs Boson Resonance Peak) ที่มีค่าเฉลี่ยประมาณ $125.1\text{ GeV}/c^2$ ภายในขอบเขตความคลาดเคลื่อนเชิงสถิติของการทดลอง ATLAS และ CMS
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+อนุภาคฮิกส์โบซอนมีอายุขัยสั้นมากเพียง $1.6 \times 10^{-22}\text{ s}$ จึงไม่สามารถตรวจวัดรอยทาง (Track) ของมันได้โดยตรง แต่นักฟิสิกส์อนุภาคค้นพบมันได้จากการพล็อตกราฟการแจกแจงมวลไม่แปรเปลี่ยน $M_{\gamma\gamma}$ ของโฟตอนคู่จำนวนนับล้านคู่ แล้วมองหา "ยอดพีคส่วนเกิน (Bump/Resonance)" เหนือระดับสัญญาณพื้นหลัง (Background)
+\qedexam
+\end{psctexample}
+
 \section{สรุปสาระสำคัญประจำบท}
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{l Z Y}
+\small
+\begin{tabularx}{\textwidth}{l >{\centering\arraybackslash}p{4.2cm} Y}
 \toprule
 \textbf{กลุ่มอนุภาค} & \textbf{สมาชิกหลัก} & \textbf{คุณลักษณะทางฟิสิกส์} \\
 \midrule
@@ -430,4 +485,6 @@ K_\mu = E_\mu - m_\mu c^2 = 109.78 - 105.66 = 4.12\text{ MeV}
     \end{enumerate}
     \item จงเขียนโครงสร้างควาร์กของอนุภาคแอนติโปรตอน ($\bar{p}$) และแอนตินิวตรอน ($\bar{n}$) พร้อมตรวจสอบประจุไฟฟ้ารวม
     \item ในการสลายตัวของ $Z^0$ โบซอนที่อยู่นิ่งเป็นคู่อิเล็กตรอน-โพซิตรอน ($Z^0 \to e^- + e^+$) จงคำนวณพลังงานจลน์ของอิเล็กตรอน (กำหนด $M_Z \approx 91.19\text{ GeV}/c^2$)
+    \item อนุภาคแลมบ์ดา ($\Lambda^0$) สลายตัวผ่านอันตรกิริยาอย่างอ่อนตามปฏิกิริยา $\Lambda^0 \to p + \pi^-$ จงวิเคราะห์การอนุรักษ์ประจุไฟฟ้า เลขแบริออน เลขเลปตอน สปิน และเลขสเตรนจ์เนส ($\Delta S$) พร้อมอธิบายว่าเหตุใด $\Delta S = 1$ จึงยอมรับได้ในอันตรกิริยานี้
+    \item จงร่างแผนภาพไฟน์แมน (Feynman Diagram) ในระดับควาร์กสำหรับการสลายตัวบีตาลบของนิวตรอน $n \to p + e^- + \bar{\nu}_e$ โดยระบุบทบาทของเกจโบซอน $W^-$ และการเปลี่ยนเฟลเวอร์ของควาร์ก ($d \to u$) อย่างละเอียด
 \end{enumerate}

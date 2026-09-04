@@ -335,9 +335,10 @@ for v_rel in speeds:
 \end{equation}
 
 \textit{1. การวิเคราะห์แบบคลาสสิก:}
-\begin{equation}
-d_{\text{classical}} = v \tau_0 = (0.995 \times 3.00 \times 10^8\text{ m/s}) \times (2.20 \times 10^{-6}\text{ s}) \approx 656.7\text{ m} \approx 0.66\text{ km}
-\end{equation}
+\begin{align}
+d_{\text{classical}} &= v \tau_0 = (0.995 \times 3.00 \times 10^8\text{ m/s}) \times (2.20 \times 10^{-6}\text{ s}) \nonumber \\
+&\approx 656.7\text{ m} \approx 0.66\text{ km}
+\end{align}
 เนื่องจาก $0.66\text{ km} \ll 10\text{ km}$ มิวออนเกือบทั้งหมดจึงควรสลายตัวไปหมดก่อนถึงพื้นโลก ซึ่งขัดแย้งกับข้อเท็จจริงจากการทดลอง
 
 \textit{2. การวิเคราะห์ในกรอบโลก (Time Dilation):}
@@ -346,9 +347,10 @@ d_{\text{classical}} = v \tau_0 = (0.995 \times 3.00 \times 10^8\text{ m/s}) \ti
 \Delta t = \gamma \tau_0 = (10.0125) \times (2.20\,\mu\text{s}) \approx 22.03\,\mu\text{s}
 \end{equation}
 ระยะทางที่มิวออนเคลื่อนที่ได้ในกรอบโลกจึงเป็น:
-\begin{equation}
-d_{\text{Earth}} = v \Delta t = (0.995 \times 3.00 \times 10^8\text{ m/s}) \times (22.03 \times 10^{-6}\text{ s}) \approx 6576\text{ m} \approx 6.58\text{ km}
-\end{equation}
+\begin{align}
+d_{\text{Earth}} &= v \Delta t = (0.995 \times 3.00 \times 10^8\text{ m/s}) \times (22.03 \times 10^{-6}\text{ s}) \nonumber \\
+&\approx 6576\text{ m} \approx 6.58\text{ km}
+\end{align}
 หากพิจารณาการกระจายทางสถิติของอายุขัย $N(t) = N_0 e^{-t/\Delta t}$ จะพบมิวออนจำนวนมากสามารถรอดชีวิตมาถึงสถานีตรวจวัดบนพื้นโลกได้จริง!
 
 \textit{3. การวิเคราะห์ในกรอบมิวออน (Length Contraction):}
@@ -367,6 +369,63 @@ H' = \frac{H}{\gamma} = \frac{10\,000\text{ m}}{10.0125} \approx 998.75\text{ m}
 \qedexam
 \end{psctexample}
 
+\begin{psctexample}[พลังงานขีดเริ่มเปลี่ยนในการสร้างอนุภาคไพออน (Threshold Energy for Pion Production)]
+ลำอนุภาคโปรตอนพลังงานสูงจากเครื่องเร่งอนุภาคพุ่งชนเป้าโปรตอนที่อยู่นิ่งในห้องปฏิบัติการเพื่อสร้างไพออนที่เป็นกลางทางไฟฟ้าตามปฏิกิริยา:
+\begin{equation}
+p + p \to p + p + \pi^0
+\end{equation}
+กำหนดให้มวลนิ่งของโปรตอน $m_p c^2 = 938.27\text{ MeV}$ และมวลนิ่งของไพออน $m_{\pi^0} c^2 = 134.98\text{ MeV}$
+\begin{enumerate}
+    \item จงหาสมการพลังงานรวมขีดเริ่มเปลี่ยน (Threshold Total Energy) $E_{\text{th}}$ และพลังงานจลน์ขีดเริ่มเปลี่ยน $K_{\text{th}}$ ของโปรตอนในกรอบห้องปฏิบัติการ
+    \item คำนวณค่าตัวเลขของ $K_{\text{th}}$ ในหน่วย MeV
+\end{enumerate}
+
+\textbf{โจทย์ (Problem):} \\
+คำนวณพลังงานจลน์ต่ำสุดที่ต้องให้กับโปรตอนตัวพุ่งชน เพื่อให้เกิดปฏิกิริยาสร้างอนุภาคใหม่ $\pi^0$ ขึ้นมาได้
+
+\textbf{ยุทธวิธี (Strategy):} \\
+ใช้ปริมาณคงตัวลอเรนซ์ของเวกเตอร์ 4-โมเมนตัมรวม (Mandelstam Invariant $s$):
+\begin{equation}
+s = (P_1 + P_2)^2 = E_{\text{tot, CM}}^2 / c^2
+\end{equation}
+\begin{itemize}
+    \item ในกรอบห้องปฏิบัติการ (Lab Frame): โปรตอนตัวที่สองอยู่นิ่ง $P_2 = (m_p c, \mathbf{0})$ และโปรตอนตัวแรกมี $P_1 = (E/c, \mathbf{p})$:
+    \begin{equation}
+    s = (P_1 + P_2)^2 = 2 m_p^2 c^2 + 2 \left(\frac{E}{c}\right) (m_p c) = 2 m_p^2 c^2 + 2 m_p E
+    \end{equation}
+    \item ที่พลังงานขีดเริ่มเปลี่ยน ในกรอบจุดศูนย์กลางโมเมนตัม (CM Frame) อนุภาคผลลัพธ์ทั้งหมด ($p, p, \pi^0$) จะอยู่นิ่งสัมพัทธ์ซึ่งกันและกัน:
+    \begin{equation}
+    s = (2 m_p + m_{\pi^0})^2 c^2
+    \end{equation}
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. เทียบปริมาณคงตัว $s$ ทั้งสองกรอบ:}
+\begin{align}
+2 m_p^2 c^2 + 2 m_p E_{\text{th}} &= (2 m_p + m_{\pi^0})^2 c^2 \nonumber \\
+&= 4 m_p^2 c^2 + 4 m_p m_{\pi^0} c^2 + m_{\pi^0}^2 c^2
+\end{align}
+แก้สมการหา $E_{\text{th}}$:
+\begin{equation}
+E_{\text{th}} = m_p c^2 + 2 m_{\pi^0} c^2 + \frac{m_{\pi^0}^2 c^2}{2 m_p}
+\end{equation}
+พลังงานจลน์ขีดเริ่มเปลี่ยนคือ $K_{\text{th}} = E_{\text{th}} - m_p c^2$:
+\begin{equation}
+K_{\text{th}} = 2 m_{\pi^0} c^2 + \frac{(m_{\pi^0} c^2)^2}{2 m_p c^2}
+\end{equation}
+
+\textit{2. แทนค่าตัวเลข:}
+\begin{align}
+K_{\text{th}} &= 2 (134.98\text{ MeV}) + \frac{(134.98\text{ MeV})^2}{2 (938.27\text{ MeV})} \nonumber \\
+&= 269.96\text{ MeV} + \frac{18219.60}{1876.54}\text{ MeV} \nonumber \\
+&= 269.96\text{ MeV} + 9.71\text{ MeV} \approx 279.67\text{ MeV}
+\end{align}
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+มวลของอนุภาค $\pi^0$ ที่ต้องการสร้างคือ $134.98\text{ MeV}/c^2$ แต่ต้องใช้พลังงานจลน์ของโปรตอนตัวพุ่งชนถึง $279.67\text{ MeV}$ (มากกว่าสองเท่าของมวลที่สร้างขึ้น) เนื่องจากในกรอบห้องปฏิบัติการ อนุภาคทั้งหมดต้องเคลื่อนที่ไปข้างหน้าเพื่อรักษาโมเมนตัมรวมของระบบไว้ พลังงานจลน์ส่วนใหญ่จึงสูญเสียไปกับการเคลื่อนที่ของจุดศูนย์กลางมวล นี่คือเหตุผลที่ฟิสิกส์พลังงานสูงในปัจจุบันหันมาใช้เครื่องชนอนุภาคแบบลำอนุภาคปะทะกัน (Colliders) เช่น LHC แทนเครื่องเร่งอนุภาคแบบชนเป้านิ่ง
+\qedexam
+\end{psctexample}
+
 \begin{conceptcheck}[คำถามทบทวนแนวคิด]
 \begin{enumerate}
     \item ยานอวกาศลำหนึ่งมีความเร็วสัมพัทธ์ $0.8c$ เมื่อเทียบกับสถานีอวกาศ หากนักบินอวกาศบนยานยิงแสงเลเซอร์ไปข้างหน้า ผู้สังเกตบนสถานีอวกาศจะวัดอัตราเร็วของลำแสงเลเซอร์ได้เท่าใด?
@@ -378,7 +437,8 @@ H' = \frac{H}{\gamma} = \frac{10\,000\text{ m}}{10.0125} \approx 998.75\text{ m}
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{l Z Y}
+\small
+\begin{tabularx}{\textwidth}{l >{\centering\arraybackslash}p{4.2cm} Y}
 \toprule
 \textbf{หัวข้อ} & \textbf{สมการหลัก} & \textbf{ความหมายเชิงกายภาพ} \\
 \midrule
@@ -404,4 +464,10 @@ H' = \frac{H}{\gamma} = \frac{10\,000\text{ m}}{10.0125} \approx 998.75\text{ m}
     \end{enumerate}
     \item ยานอวกาศยาว $100\text{ m}$ เคลื่อนที่ผ่านสถานีอวกาศด้วยความเร็ว $0.6c$ ผู้สังเกตบนสถานีจะวัดความยาวของยานลำนี้ได้เท่าใด?
     \item จงพิสูจน์ว่าช่วงปริภูมิเวลา $\Delta s^2 = c^2 \Delta t^2 - \Delta x^2$ มีค่าเท่าเดิมภายใต้การแปลงลอเรนซ์ ($c^2 \Delta t'^2 - \Delta x'^2 = c^2 \Delta t^2 - \Delta x^2$)
+    \item ปรากฏการณ์ด็อปเปลอร์เชิงสัมพัทธภาพ (Relativistic Doppler Effect) สำหรับแสง: กาแล็กซีอันไกลโพ้นแห่งหนึ่งมีสเปกตรัมเส้นไฮโดรเจน $H_\alpha$ ($\lambda_0 = 656.3\text{ nm}$) ปรากฏที่ความยาวคลื่นที่วัดได้บนโลก $\lambda = 800.0\text{ nm}$ (เกิดการเลื่อนทางแดง: Redshift) จงคำนวณอัตราเร็วในการถอยห่าง $v$ ของกาแล็กซีนี้ในรูปของสัดส่วนอัตราเร็วแสง $c$
+    \item ยานอวกาศ $A$ และยานอวกาศ $B$ เคลื่อนที่ออกจากสถานีอวกาศในทิศทางตรงกันข้ามกันด้วยอัตราเร็ว $0.70c$ และ $0.80c$ ตามลำดับ เมื่อเทียบกับสถานีอวกาศ จงคำนวณ:
+    \begin{enumerate}
+        \item อัตราเร็วของยาน $B$ เมื่อสังเกตจากผู้สังเกตบนยาน $A$ ตามทฤษฎีสัมพัทธภาพพิเศษ
+        \item เปรียบเทียบผลลัพธ์ที่ได้กับการคำนวณตามจลนศาสตร์แบบคลาสสิกของกาลิเลโอ
+    \end{enumerate}
 \end{enumerate}

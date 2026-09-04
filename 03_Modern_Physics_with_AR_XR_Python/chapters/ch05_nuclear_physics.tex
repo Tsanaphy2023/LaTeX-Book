@@ -342,11 +342,62 @@ E = \frac{7.115 \times 10^{13}\text{ J}}{8.64 \times 10^{10}\text{ J/(MW}\cdot\t
 \qedexam
 \end{psctexample}
 
+\begin{psctexample}[การคำนวณค่า $Q$-Value และการกระจายพลังงานในปฏิกิริยาฟิวชัน D-T (D-T Fusion)]
+ปฏิกิริยาฟิวชันเทอร์โมนิวเคลียร์หลักที่ใช้ในเครื่องปฏิกรณ์นิวเคลียร์ฟิวชันระดับนานาชาติ ITER คือปฏิกิริยาระหว่างดิวเทอเรียม ($^2_1\text{H}$) และทริเทียม ($^3_1\text{H}$):
+\begin{equation}
+^2_1\text{H} + ^3_1\text{H} \to ^4_2\text{He} + ^1_0\text{n}
+\end{equation}
+กำหนดมวลนิวเคลียส: $m(^2\text{H}) = 2.014102\text{ u}$, $m(^3\text{H}) = 3.016049\text{ u}$, $m(^4\text{He}) = 4.002603\text{ u}$, $m_n = 1.008665\text{ u}$ และ $1\text{ u} \cdot c^2 = 931.494\text{ MeV}$
+\begin{enumerate}
+    \item จงคำนวณค่าพลังงานปลดปล่อยสุทธิ $Q$-Value ของปฏิกิริยาในหน่วย $\text{MeV}$
+    \item ในกรอบที่อนุภาคตั้งต้นเคลื่อนที่ช้ามากจนโมเมนตัมรวมของระบบเป็นศูนย์ จงคำนวณการแบ่งสันปันส่วนพลังงานจลน์ให้กับอนุภาคแอลฟา ($K_\alpha$) และนิวตรอน ($K_n$)
+\end{enumerate}
+
+\textbf{โจทย์ (Problem):} \\
+คำนวณพลังงานรวมที่ปลดปล่อยและสัดส่วนพลังงานจลน์ของแต่ละอนุภาคหลังเกิดปฏิกิริยาฟิวชัน
+
+\textbf{ยุทธวิธี (Strategy):} \\
+\begin{itemize}
+    \item มวลพร่องเชิงปฏิกิริยา: $\Delta m = [m(^2\text{H}) + m(^3\text{H})] - [m(^4\text{He}) + m_n]$
+    \item ค่า $Q = \Delta m \cdot c^2$
+    \item กฎอนุรักษ์โมเมนตัม: $\mathbf{p}_\alpha + \mathbf{p}_n = 0 \implies p_\alpha = p_n = p$
+    \item พลังงานจลน์แบบไม่สัมพัทธภาพ: $K = \frac{p^2}{2m}$ ดังนั้น $\frac{K_\alpha}{K_n} = \frac{m_n}{m_\alpha} \approx \frac{1}{4}$
+    \item $K_\alpha + K_n = Q \implies K_n = \frac{m_\alpha}{m_\alpha + m_n} Q, \quad K_\alpha = \frac{m_n}{m_\alpha + m_n} Q$
+\end{itemize}
+
+\textbf{การคำนวณ (Computation):} \\
+\textit{1. คำนวณมวลพร่องและ $Q$-Value:}
+\begin{align}
+m_{\text{reactants}} &= 2.014102\text{ u} + 3.016049\text{ u} = 5.030151\text{ u} \nonumber \\
+m_{\text{products}} &= 4.002603\text{ u} + 1.008665\text{ u} = 5.011268\text{ u} \nonumber \\
+\Delta m &= 5.030151\text{ u} - 5.011268\text{ u} = 0.018883\text{ u}
+\end{align}
+คำนวณค่า $Q$:
+\begin{equation}
+Q = (0.018883\text{ u}) \times (931.494\text{ MeV/u}) \approx 17.589\text{ MeV} \approx 17.59\text{ MeV}
+\end{equation}
+
+\textit{2. การแบ่งพลังงานจลน์:}
+\begin{align}
+K_n &= \left(\frac{4.002603}{4.002603 + 1.008665}\right) \times 17.589\text{ MeV} \nonumber \\
+&= \left(\frac{4.002603}{5.011268}\right) \times 17.589\text{ MeV} \approx 0.7987 \times 17.589\text{ MeV} \approx 14.05\text{ MeV}
+\end{align}
+และสำหรับอนุภาคแอลฟา:
+\begin{equation}
+K_\alpha = Q - K_n = 17.589 - 14.048 \approx 3.54\text{ MeV}
+\end{equation}
+
+\textbf{ข้อคิดทางฟิสิกส์ (Takeaway):} \\
+พลังงานร้อยละ 80 ของปฏิกิริยา ($14.05\text{ MeV}$) ตกไปอยู่นิวตรอนที่ไม่มีประจุไฟฟ้า นิวตรอนเหล่านี้จะทะลุผ่านสนามแม่เหล็กกักกันพลาสมาออกไปชนกับผนังผ้าห่ม (Blanket) เพื่อเปลี่ยนพลังงานจลน์เป็นความร้อนสำหรับผลิตไอน้ำปั่นกังหัน ขณะที่อนุภาคแอลฟาประจุ $+2$ จะถูกกักไว้ในสนามแม่เหล็กเพื่อคอยถ่ายทอดความร้อนกลับเข้าสู่พลาสมา (Alpha Heating) เพื่อรักษาอุณหภูมิฟิวชันให้คงอยู่ต่อไป
+\qedexam
+\end{psctexample}
+
 \section{สรุปสาระสำคัญประจำบท}
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{l Z Y}
+\small
+\begin{tabularx}{\textwidth}{l >{\centering\arraybackslash}p{4.2cm} Y}
 \toprule
 \textbf{กระบวนการ} & \textbf{สมการ / สูตร} & \textbf{ความสำคัญทางฟิสิกส์} \\
 \midrule
@@ -366,4 +417,6 @@ SEMF & $B \approx a_v A - a_s A^{2/3} - \dots$ & อธิบายสมบั�
     \item จงคำนวณพลังงานยึดเหนี่ยวนิวเคลียสต่อนิวคลีออนของ $^{4}_{2}\text{He}$ กำหนดมวลอะตอม $M(^4\text{He}) = 4.002603\text{ u}$, $m_p = 1.007276\text{ u}$, $m_n = 1.008665\text{ u}$
     \item ไอโซโทปกัมมันตรังสีชนิดหนึ่งมีกิจกรรมกัมมันตรังสีลดลงเหลือ $12.5\%$ ของค่าเริ่มต้นในเวลา 18 วัน จงหาครึ่งชีวิตและค่าคงตัวการสลายตัวของไอโซโทปนี้
     \item จงอธิบายบทบาทของสารหน่วงนิวตรอน (Moderator) และแท่งควบคุม (Control Rods) ในเครื่องปฏิกรณ์นิวเคลียร์ฟิชชัน
+    \item ไอโซโทปคาร์บอน-14 ($^{14}_{6}\text{C}$) สลายตัวให้อนุภาคบีตาลบด้วยครึ่งชีวิต $T_{1/2} = 5730\text{ ปี}$ ตัวอย่างไม้โบราณที่ขุดพบมีกิจกรรมกัมมันตรังสีของ $^{14}\text{C}$ เพียง $25.0\%$ เมื่อเทียบกับไม้มีชีวิตในปัจจุบัน จงประเมินอายุของโบราณวัตถุชิ้นนี้
+    \item จงอธิบายเกณฑ์ของลอว์สัน (Lawson Criterion: $n \tau_E \ge 10^{20}\text{ m}^{-3}\text{s}$) สำหรับการจุดระเบิดพลาสมาฟิวชัน (Fusion Ignition) และเปรียบเทียบการกักขังพลาสมาด้วยสนามแม่เหล็ก (Magnetic Confinement: Tokamak) กับการกักขังด้วยความเฉื่อย (Inertial Confinement: Laser Fusion)
 \end{enumerate}
