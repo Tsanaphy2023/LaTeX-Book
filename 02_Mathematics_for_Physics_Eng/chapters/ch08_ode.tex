@@ -135,6 +135,58 @@ print(f"Terminal velocity: {vt:.1f} m/s")
 print(f"Maximum discrepancy between numerical and analytical solutions: {max_error:.2e} m/s")
 \end{pythonbox}
 
+\begin{psctexample}[Logistic Population Growth — Nonlinear First-Order ODE]
+A bacterial population $N(t)$ in a nutrient-limited environment obeys the logistic equation:
+\begin{equation}
+\frac{dN}{dt} = rN\!\left(1 - \frac{N}{K}\right)
+\end{equation}
+where $r = 0.5\;\text{h}^{-1}$ is the intrinsic growth rate and $K = 10^6$ cells is the carrying capacity. Given $N(0) = 1000$ cells, (i) solve the ODE analytically, (ii) find the time $t_{1/2}$ when $N = K/2$, and (iii) determine $\lim_{t\to\infty} N(t)$.
+
+\textbf{Solution:}
+
+\textbf{(i) Separation of variables:}
+\begin{equation}
+\frac{dN}{N(1 - N/K)} = r\,dt \implies \int\!\left(\frac{1}{N} + \frac{1}{K - N}\right)\!dN = r\,dt
+\end{equation}
+Integrating both sides:
+\begin{equation}
+\ln N - \ln(K - N) = rt + C \implies \frac{N}{K - N} = Ae^{rt}, \quad A = \frac{N_0}{K - N_0}
+\end{equation}
+Solving for $N(t)$:
+\begin{equation}
+\boxed{N(t) = \frac{K}{1 + \left(\dfrac{K - N_0}{N_0}\right)e^{-rt}} = \frac{10^6}{1 + 999\,e^{-0.5t}}}
+\end{equation}
+
+\textbf{(ii) Time to reach $N = K/2$:}
+\begin{equation}
+\frac{K}{2} = \frac{K}{1 + Ce^{-rt_{1/2}}} \implies Ce^{-rt_{1/2}} = 1 \implies t_{1/2} = \frac{\ln(K/N_0 - 1)}{r} = \frac{\ln 999}{0.5} \approx 13.8\;\text{h}
+\end{equation}
+
+\textbf{(iii) Long-time limit:} $\lim_{t\to\infty} N(t) = K = 10^6$ cells (carrying capacity is a stable equilibrium).
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+The inflection point (maximum growth rate) occurs at $N = K/2$. The logistic model appears in epidemiology (SIR model), tumour growth kinetics, the adoption curve of technologies (Bass diffusion model), and enzyme kinetics (Michaelis-Menten equation). The Bernoulli substitution $u = N^{1-1} = N^0$ is not needed here — separation of variables suffices due to the product structure.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Logistic Growth Numerical vs.\ Analytical Comparison]
+import numpy as np
+from scipy.integrate import solve_ivp
+
+r, K, N0 = 0.5, 1e6, 1000.0
+
+def logistic(t, N):
+    return r * N * (1 - N / K)
+
+sol = solve_ivp(logistic, [0, 40], [N0], dense_output=True)
+t_test = np.linspace(0, 40, 5)
+N_analytical = K / (1 + ((K - N0)/N0) * np.exp(-r * t_test))
+N_numerical  = sol.sol(t_test)[0]
+
+for t, Na, Nn in zip(t_test, N_analytical, N_numerical):
+    print(f"t={t:4.0f}h  Analytical={Na:.0f}  Numerical={Nn:.0f}  Err={abs(Na-Nn):.2e}")
+\end{pythonbox}
+
 \section{Summary of Key Formulas}
 \begin{table}[H]
 \centering
@@ -147,6 +199,7 @@ Separable & $\frac{dy}{dx} = g(x)h(y)$ & Direct integration: $\int \frac{dy}{h(y
 Linear 1st-Order & $\frac{dy}{dx} + P(x)y = Q(x)$ & Integrating factor: $\mu(x) = \exp(\int P(x)dx)$ \\
 Exact Equation & $M\,dx + N\,dy = 0, \; \frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$ & Potential function: $\phi(x,y) = C$ \\
 $RC$ Circuit Discharge & $R\frac{dQ}{dt} + \frac{Q}{C} = 0$ & Exponential relaxation: $Q(t) = Q_0 e^{-t/\tau}, \; \tau = RC$ \\
+Logistic Equation & $\frac{dN}{dt} = rN(1 - N/K)$ & Separation: $N(t) = K/[1 + (K/N_0 - 1)e^{-rt}]$ \\
 \bottomrule
 \end{tabularx}
 \caption{Classification and solution methods for first-order ordinary differential equations.}
@@ -158,4 +211,6 @@ $RC$ Circuit Discharge & $R\frac{dQ}{dt} + \frac{Q}{C} = 0$ & Exponential relaxa
     \item \textbf{Series RL Circuit:} A circuit consists of an inductance $L$ and resistance $R$ connected to a constant voltage $V_0$. At $t = 0$, the switch is closed. Solve $L\frac{dI}{dt} + RI = V_0$ with $I(0) = 0$ and identify the time constant.
     \item \textbf{Newton's Law of Cooling:} A metal ingot at $800^\circ\text{C}$ is placed in a quenching bath maintained at $25^\circ\text{C}$. After $2\text{ minutes}$, the temperature is $400^\circ\text{C}$. Determine the time required for the temperature to drop to $50^\circ\text{C}$.
     \item \textbf{Bernoulli Differential Equation:} Solve the nonlinear Bernoulli equation $\frac{dy}{dx} + \frac{1}{x}y = x y^2$ using the change of variable $u = y^{1-2} = y^{-1}$.
+    \item \textbf{Mixing Problem:} A tank initially contains $100\;\text{L}$ of pure water. Saltwater with concentration $2\;\text{g/L}$ flows in at rate $3\;\text{L/min}$, and well-mixed solution drains at $3\;\text{L/min}$. Write and solve the ODE for salt mass $m(t)$, and find the limiting salt concentration.
+    \item \textbf{Radioactive Chain Decay:} Nuclide A decays to B (decay constant $\lambda_A$), and B decays to stable C ($\lambda_B$). Given $N_A(0) = N_0$ and $N_B(0) = 0$, solve the coupled system to find $N_B(t)$. Show that $N_B$ reaches a maximum at $t^* = \ln(\lambda_B/\lambda_A)/(\lambda_B - \lambda_A)$.
 \end{enumerate}

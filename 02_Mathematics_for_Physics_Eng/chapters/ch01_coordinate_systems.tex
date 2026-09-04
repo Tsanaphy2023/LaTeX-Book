@@ -186,6 +186,57 @@ print(f"At t = 1.0s: rho = {rho_0*np.exp(alpha):.3f} m")
 print(f"Radial acceleration: {a_rho[250]:.3f} m/s^2, Tangential: {a_phi[250]:.3f} m/s^2")
 \end{pythonbox}
 
+\begin{psctexample}[GPS Geodesic Distance from Spherical Coordinates]
+Two points on Earth's surface are given by geographic coordinates: Bangkok $(\lambda_1 = 13.75°\text{N},\; \phi_1 = 100.52°\text{E})$ and Tokyo $(\lambda_2 = 35.68°\text{N},\; \phi_2 = 139.65°\text{E})$. Using the spherical law of cosines, calculate the great-circle (geodesic) distance between them. Take Earth's mean radius $R_\oplus = 6371\;\text{km}$.
+
+\textbf{Solution:}
+
+\textbf{Step 1 — Convert to spherical coordinates.}
+In physics conventions, the polar angle $\theta$ is measured from the North Pole, so $\theta = 90° - \lambda$:
+\begin{align}
+\theta_1 &= 90° - 13.75° = 76.25°, \quad \phi_1 = 100.52° \\
+\theta_2 &= 90° - 35.68° = 54.32°, \quad \phi_2 = 139.65°
+\end{align}
+
+\textbf{Step 2 — Apply the spherical law of cosines.}
+The angle $\Delta\sigma$ subtended at Earth's centre between two points on a unit sphere satisfies:
+\begin{equation}
+\cos(\Delta\sigma) = \cos\theta_1\cos\theta_2 + \sin\theta_1\sin\theta_2\cos(\phi_2 - \phi_1)
+\end{equation}
+Substituting $\Delta\phi = 139.65° - 100.52° = 39.13°$:
+\begin{align}
+\cos(\Delta\sigma) &= \cos(76.25°)\cos(54.32°) + \sin(76.25°)\sin(54.32°)\cos(39.13°) \\
+                   &= (0.2385)(0.5835) + (0.9712)(0.8122)(0.7753) \\
+                   &= 0.1391 + 0.6124 = 0.7515
+\end{align}
+Therefore $\Delta\sigma = \arccos(0.7515) = 41.27°= 0.7203\;\text{rad}$.
+
+\textbf{Step 3 — Compute the geodesic distance:}
+\begin{equation}
+\boxed{d = R_\oplus \cdot \Delta\sigma = 6371 \times 0.7203 \approx 4589\;\text{km}}
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+This calculation underlies all GPS receiver algorithms. The Haversine formula (used in navigation software) is numerically superior to the simple cosine formula when $\Delta\sigma \to 0$, because it avoids catastrophic cancellation. For intercontinental distances, however, both formulas agree to better than $0.1\%$.
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Great-Circle Distance Verification in Python]
+import numpy as np
+
+def great_circle(lat1, lon1, lat2, lon2, R=6371):
+    # Convert degrees to radians
+    t1, t2 = np.radians(90 - lat1), np.radians(90 - lat2)
+    p1, p2 = np.radians(lon1), np.radians(lon2)
+    cos_dsigma = np.cos(t1)*np.cos(t2) + np.sin(t1)*np.sin(t2)*np.cos(p2 - p1)
+    dsigma = np.arccos(np.clip(cos_dsigma, -1, 1))
+    return R * dsigma
+
+d = great_circle(13.75, 100.52, 35.68, 139.65)
+print(f"Bangkok → Tokyo great-circle distance: {d:.1f} km")
+print(f"Subtended angle: {np.degrees(d/6371):.2f} degrees")
+\end{pythonbox}
+
 \section{Summary of Key Formulas}
 \begin{table}[H]
 \centering
@@ -198,6 +249,7 @@ Metric Scale Factor & $h_i = |\partial\vec{r}/\partial u_i|$ & Local arc length 
 Infinitesimal Line Element & $ds^2 = \sum_{i} h_i^2 du_i^2$ & Invariant metric distance in differential geometry \\
 Cylindrical Basis Derivatives & $\dot{\hat{\rho}} = \dot{\phi}\hat{\phi}, \; \dot{\hat{\phi}} = -\dot{\phi}\hat{\rho}$ & Origin of centripetal and Coriolis inertial terms \\
 Spherical Solid Angle & $d\Omega = \sin\theta\,d\theta\,d\phi$ & Measure of angular aperture in radiation and scattering \\
+Great-Circle Distance & $d = R\arccos(\cos\theta_1\cos\theta_2 + \sin\theta_1\sin\theta_2\cos\Delta\phi)$ & Shortest path on a sphere (GPS, aviation) \\
 \bottomrule
 \end{tabularx}
 \caption{Summary of coordinate geometry relations and physical interpretations.}
@@ -209,4 +261,6 @@ Spherical Solid Angle & $d\Omega = \sin\theta\,d\theta\,d\phi$ & Measure of angu
     \item \textbf{Analytical Transformation:} Find the spherical coordinates $(r, \theta, \phi)$ of the point given in Cartesian coordinates by $P(-2, 2\sqrt{3}, -4)$.
     \item \textbf{Scale Factor Derivation:} Consider parabolic cylindrical coordinates $(u, v, z)$ defined by $x = \frac{1}{2}(u^2 - v^2)$, $y = uv$, $z = z$. Calculate scale factors $h_u, h_v, h_z$ and show that the coordinate system is orthogonal.
     \item \textbf{Solid Angle of a Cone:} A right-circular cone has a semi-vertical angle $\alpha$. By integrating the spherical solid angle $d\Omega = \sin\theta\,d\theta\,d\phi$, prove that the solid angle subtended at the apex is $\Omega = 2\pi(1 - \cos\alpha)$.
+    \item \textbf{Velocity in Spherical Coordinates:} A particle moves on a sphere of radius $R$ with $\dot\theta = \omega_\theta$ (const) and $\dot\phi = \omega_\phi$ (const). Write the velocity vector $\vec{v}$ in the spherical basis $(\hat{r}, \hat{\theta}, \hat{\phi})$ and compute its magnitude. Under what condition is $|\vec{v}|$ constant?
+    \item \textbf{Ellipsoidal Coordinates:} Prolate spheroidal coordinates $(\xi, \eta, \phi)$ are related to Cartesian coordinates by $x = a\sinh\xi\sin\eta\cos\phi$, $y = a\sinh\xi\sin\eta\sin\phi$, $z = a\cosh\xi\cos\eta$ where $a > 0$. Derive the three scale factors and the volume element $dV$.
 \end{enumerate}

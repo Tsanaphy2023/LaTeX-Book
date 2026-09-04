@@ -16,11 +16,15 @@
 
 % 2. Math & Science Packages (Physics Textbook Architect)
 \RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\allowdisplaybreaks   % Allow long equation arrays to break across pages
 \RequirePackage{bm}
 \RequirePackage{siunitx}
 \RequirePackage{physics}
 \RequirePackage{esint}
 \RequirePackage{microtype}
+
+% Typography: prevent overfull hboxes in mixed math-text paragraphs
+\setlength{\emergencystretch}{2.5em}
 
 % 3. Graphics, TikZ, Tables & Floats
 \RequirePackage{graphicx}

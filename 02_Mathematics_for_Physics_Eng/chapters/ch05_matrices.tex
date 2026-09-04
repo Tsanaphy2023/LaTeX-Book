@@ -144,6 +144,42 @@ print("Orthonormal Eigenvectors (Columns):")
 print(evecs)
 \end{pythonbox}
 
+\begin{psctexample}[Diagonalization of a 2D Moment of Inertia Tensor]
+A thin rigid lamina consists of two equal point masses $m$ located at $\vec{r}_1 = (a, 0, 0)$ and $\vec{r}_2 = (0, b, 0)$. Find the inertia tensor $\mathbf{I}$, determine its eigenvalues (principal moments), and find the principal axes of rotation.
+
+\textbf{Solution:}
+
+The inertia tensor components are $I_{jk} = \sum_\alpha m_\alpha(\delta_{jk}|\vec{r}_\alpha|^2 - r_{\alpha j}r_{\alpha k})$.
+
+For mass 1 at $(a, 0, 0)$: $|\vec{r}_1|^2 = a^2$.
+For mass 2 at $(0, b, 0)$: $|\vec{r}_2|^2 = b^2$.
+
+Assembling the relevant $2\times 2$ block in the $xy$-plane:
+\begin{align}
+I_{xx} &= m(0^2) + m(b^2) = mb^2 \\
+I_{yy} &= m(a^2) + m(0^2) = ma^2 \\
+I_{xy} &= I_{yx} = -m(a)(0) - m(0)(b) = 0
+\end{align}
+The inertia tensor (in the $xy$-plane) is diagonal:
+\begin{equation}
+\mathbf{I} = m\begin{pmatrix} b^2 & 0 \\ 0 & a^2 \end{pmatrix}
+\end{equation}
+The eigenvalues are $I_1 = mb^2$ (rotation about $\hat{x}$) and $I_2 = ma^2$ (rotation about $\hat{y}$). The eigenvectors are simply $\hat{e}_1 = \hat{x}$ and $\hat{e}_2 = \hat{y}$, confirming that the coordinate axes are already principal axes.
+
+Now consider a perturbed configuration where an additional product of inertia coupling $I_{xy} = -mab/2$ is introduced. The characteristic equation is:
+\begin{equation}
+\det\begin{pmatrix} mb^2 - \lambda & -mab/2 \\ -mab/2 & ma^2 - \lambda \end{pmatrix} = 0
+\implies \lambda^2 - m(a^2 + b^2)\lambda + m^2\!\left(a^2b^2 - \frac{a^2b^2}{4}\right) = 0
+\end{equation}
+\begin{equation}
+\boxed{\lambda_{1,2} = \frac{m(a^2 + b^2)}{2} \pm \frac{m}{2}\sqrt{(a^2 - b^2)^2 + a^2b^2}}
+\end{equation}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+Diagonalizing $\mathbf{I}$ is physically equivalent to finding a body frame in which the angular momentum $\vec{L} = \mathbf{I}\vec{\omega}$ is always parallel to $\vec{\omega}$. This frame defines the principal axes. For a free rigid body, rotation about the largest and smallest principal moments is stable (Tennis Racket Theorem).
+\qedexam
+\end{psctexample}
+
 \section{Summary of Key Formulas}
 \begin{table}[H]
 \centering
@@ -156,6 +192,7 @@ Characteristic Equation & $\det(\mathbf{A} - \lambda\mathbf{I}) = 0$ & Frequenci
 Hermitian Matrix & $\mathbf{H}^\dagger = \mathbf{H}$ & Observables in quantum theory have real spectra \\
 Unitary Transformation & $\mathbf{U}^\dagger \mathbf{U} = \mathbf{I}$ & Conservation of total probability and vector lengths \\
 Inertia Tensor Diagonalization & $\mathbf{R}^T \mathbf{I} \mathbf{R} = \text{diag}(I_1, I_2, I_3)$ & Finding principal axes of rotation in rigid body mechanics \\
+Spectral Theorem & $\mathbf{A} = \sum_i \lambda_i |\hat{v}_i\rangle\langle\hat{v}_i|$ & Any Hermitian operator is a sum of projections onto eigenstates \\
 \bottomrule
 \end{tabularx}
 \caption{Key matrix algebra formulas and their physical interpretations.}
@@ -167,4 +204,6 @@ Inertia Tensor Diagonalization & $\mathbf{R}^T \mathbf{I} \mathbf{R} = \text{dia
     \item \textbf{Pauli Spin Matrices:} The Pauli spin matrices in quantum mechanics are $\sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, $\sigma_y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}$, $\sigma_z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$. Prove that each is Hermitian and find their eigenvalues and normalized eigenvectors.
     \item \textbf{Inertia Tensor:} A system consists of three equal masses $m$ located at $(a, 0, 0)$, $(0, a, a)$, and $(0, 0, a)$. Calculate the inertia tensor components $I_{ij}$ and diagonalize the matrix to determine the principal moments of inertia.
     \item \textbf{Three-Coupled Oscillators:} Write the $3 \times 3$ stiffness matrix for three coupled masses in a ring topology and calculate the normal mode frequencies.
+    \item \textbf{Cayley-Hamilton Theorem:} Every square matrix satisfies its own characteristic equation. Verify this for $\mathbf{A} = \begin{pmatrix} 3 & 1 \\ 2 & 4 \end{pmatrix}$ by computing $\mathbf{A}^2 - 7\mathbf{A} + 10\mathbf{I}$ and confirming it equals the zero matrix.
+    \item \textbf{Singular Value Decomposition (SVD):} Explain what the singular values $\sigma_i$ of a real matrix $\mathbf{M}$ represent geometrically. For the matrix $\mathbf{M} = \begin{pmatrix} 3 & 0 \\ 4 & 5 \end{pmatrix}$, compute $\mathbf{M}^T\mathbf{M}$ and find its eigenvalues, which are $\sigma_i^2$.
 \end{enumerate}

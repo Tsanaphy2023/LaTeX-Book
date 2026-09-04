@@ -167,6 +167,39 @@ for Q in [2, 5, 10, 20]:
     print(f"Q = {Q:2d}: Peak Amplitude = {np.max(A)*100:.2f} cm")
 \end{pythonbox}
 
+\begin{psctexample}[Driven RLC Resonance and Q-Factor Analysis]
+A series RLC circuit has $L = 10\;\text{mH}$, $C = 100\;\mu\text{F}$, $R = 2\;\Omega$, and is driven by $\mathcal{E}(t) = 12\cos(\omega t)\;\text{V}$. (i) Find the resonance frequency $\omega_0$, (ii) compute the Q-factor and bandwidth $\Delta\omega$, (iii) calculate the maximum current amplitude at resonance, and (iv) identify the analogous mechanical oscillator.
+
+\textbf{Solution:}
+
+\textbf{(i) Resonance frequency:}
+\begin{equation}
+\omega_0 = \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{10 \times 10^{-3} \times 100 \times 10^{-6}}} = \frac{1}{\sqrt{10^{-6}}} = 1000\;\text{rad/s}
+\end{equation}
+Corresponding to $f_0 = \omega_0/2\pi \approx 159.2\;\text{Hz}$.
+
+\textbf{(ii) Q-factor and bandwidth:}
+\begin{equation}
+Q = \frac{\omega_0 L}{R} = \frac{1000 \times 0.010}{2} = \boxed{5}
+\qquad
+\Delta\omega = \frac{\omega_0}{Q} = \frac{1000}{5} = 200\;\text{rad/s}
+\end{equation}
+The $Q = 5$ indicates moderate selectivity: at frequencies $|\omega - \omega_0| > 100\;\text{rad/s}$, the response amplitude falls below $1/\sqrt{2}$ of peak.
+
+\textbf{(iii) Maximum current at resonance} (where $X_L = X_C$ cancel):
+\begin{equation}
+\tilde{Z}(\omega_0) = R + i(\omega_0 L - 1/\omega_0 C) = R + 0 = 2\;\Omega
+\implies \boxed{I_\text{max} = \frac{\mathcal{E}_0}{R} = \frac{12}{2} = 6\;\text{A}}
+\end{equation}
+
+\textbf{(iv) Mechanical analogy:}
+The RLC equation $L\ddot{Q} + R\dot{Q} + Q/C = \mathcal{E}_0\cos\omega t$ maps exactly to $m\ddot{x} + b\dot{x} + kx = F_0\cos\omega t$ via: $L \leftrightarrow m$, $R \leftrightarrow b$, $1/C \leftrightarrow k$, $Q \leftrightarrow x$, $\mathcal{E}_0 \leftrightarrow F_0$.
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+The Q-factor simultaneously quantifies: (1) energy stored relative to energy dissipated per cycle, $Q = 2\pi E/\Delta E_\text{cycle}$; (2) frequency selectivity (bandwidth); and (3) oscillation longevity after the drive is switched off ($\tau_\text{decay} = Q/\omega_0$). High-$Q$ resonators (quartz crystal, optical cavities) are fundamental to precise timekeeping and spectroscopy.
+\qedexam
+\end{psctexample}
+
 \section{Summary of Key Formulas}
 \begin{table}[H]
 \centering
@@ -179,6 +212,7 @@ Natural Frequency & $\omega_0 = \sqrt{k/m}$ & Oscillation frequency without damp
 Damped Frequency & $\omega_d = \sqrt{\omega_0^2 - \gamma^2}$ & Actual oscillation rate under viscous resistance \\
 Amplitude Resonance & $\omega_r = \sqrt{\omega_0^2 - 2\gamma^2}$ & Frequency of maximum steady-state displacement response \\
 Quality Factor ($Q$) & $Q = \frac{\omega_0}{2\gamma} = 2\pi \frac{E}{\Delta E_{\text{cycle}}}$ & Measure of energy retention per cycle and frequency selectivity \\
+RLC Resonance & $\omega_0 = 1/\sqrt{LC}$, $Q = \omega_0 L/R$ & Electrical analogue of the mechanical oscillator \\
 \bottomrule
 \end{tabularx}
 \caption{Key relationships for damped and driven harmonic oscillators.}
@@ -190,4 +224,6 @@ Quality Factor ($Q$) & $Q = \frac{\omega_0}{2\gamma} = 2\pi \frac{E}{\Delta E_{\
     \item \textbf{Underdamped Logarithmic Decrement:} Show that the ratio of two successive maximum displacements $x_n$ and $x_{n+1}$ of an underdamped oscillator separated by period $T = 2\pi/\omega_d$ satisfies $\delta_{\text{log}} \equiv \ln(x_n / x_{n+1}) = \gamma T = \frac{2\pi\gamma}{\sqrt{\omega_0^2 - \gamma^2}}$.
     \item \textbf{Bridge Resonance Safety:} An army detachment marches across a suspension bridge of mass $M = 50,000\text{ kg}$ and natural frequency $f_0 = 1.2\text{ Hz}$. Explain why troops are ordered to break step using the resonance amplitude formula.
     \item \textbf{Electrical-Mechanical Analogies:} Construct a dictionary table mapping mass $m$, damping $b$, spring $k$, position $x$, and driving force $F_0$ to their electrical series $LRC$ circuit counterparts.
+    \item \textbf{Coupled Pendulums:} Two identical pendulums of length $\ell$ are connected by a spring of constant $k$ at their midpoints. Let $\theta_1$ and $\theta_2$ be the angular displacements. Write the linearised equations of motion, introduce normal coordinates $q_\pm = \theta_1 \pm \theta_2$, and identify the two normal mode frequencies $\omega_\pm$.
+    \item \textbf{Critically Damped Shock Absorber:} A car's suspension system has spring constant $k = 12\;\text{kN/m}$ and effective mass $m = 300\;\text{kg}$. Calculate the critical damping coefficient $b_c = 2\sqrt{mk}$ needed to eliminate oscillation after a road bump, and write the general solution $x(t)$ for critical damping with initial conditions $x(0) = x_0$, $\dot{x}(0) = 0$.
 \end{enumerate}

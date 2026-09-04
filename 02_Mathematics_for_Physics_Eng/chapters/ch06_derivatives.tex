@@ -135,6 +135,33 @@ print(f"Numerical Minimum V = {V[min_idx]:.4f} at x = {x[min_idx]:.4f}, y = {y[m
 print(f"Analytical Minimum: -1/3 = {-1/3:.4f}, x = 4/3 = {4/3:.4f}, y = sqrt(5)/3 = {np.sqrt(5)/3:.4f}")
 \end{pythonbox}
 
+\begin{psctexample}[Fourier's Heat Law and the Temperature Gradient]
+A cylindrical aluminium rod of length $L$ has its left end maintained at $T_0 = 100\;^\circ\text{C}$ and its right end at $T_L = 20\;^\circ\text{C}$. At steady state, the temperature profile along the rod is $T(x) = T_0 + (T_L - T_0)\frac{x}{L}$. Calculate (i) the temperature gradient $\nabla T$, (ii) the heat flux vector $\vec{q} = -k\nabla T$ with thermal conductivity $k = 237\;\text{W\,m}^{-1}\text{K}^{-1}$, and (iii) verify that $\nabla^2 T = 0$ at steady state.
+
+\textbf{Solution:}
+
+\textbf{(i) Temperature gradient in the $x$-direction:}
+\begin{equation}
+\nabla T = \frac{dT}{dx}\hat{i} = \frac{T_L - T_0}{L}\hat{i} = \frac{20 - 100}{L}\hat{i} = -\frac{80}{L}\,\hat{i}\quad [\text{K\,m}^{-1}]
+\end{equation}
+
+\textbf{(ii) Heat flux vector (Fourier's law):}
+\begin{equation}
+\vec{q} = -k\nabla T = -237 \times \left(-\frac{80}{L}\right)\hat{i} = \frac{18960}{L}\,\hat{i}\quad [\text{W\,m}^{-2}]
+\end{equation}
+The positive sign confirms heat flows in the $+x$ direction (from hot to cold).
+
+\textbf{(iii) Laplacian verification:}
+\begin{equation}
+\nabla^2 T = \frac{d^2T}{dx^2} = \frac{d}{dx}\!\left(-\frac{80}{L}\right) = 0 \quad \checkmark
+\end{equation}
+This confirms the linear profile satisfies Laplace's equation $\nabla^2 T = 0$, as expected for steady-state heat conduction with no internal heat sources.
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+At steady state, the heat equation $\frac{\partial T}{\partial t} = \alpha \nabla^2 T$ reduces to Laplace's equation $\nabla^2 T = 0$. The temperature profile is harmonic — it has no local maxima or minima in the interior (maximum principle). This same mathematical structure governs electrostatic potential, gravitational potential, and steady-state diffusion.
+\qedexam
+\end{psctexample}
+
 \section{Summary of Key Formulas}
 \begin{table}[H]
 \centering
@@ -147,6 +174,7 @@ Clairaut's Symmetry & $\frac{\partial^2 f}{\partial x \partial y} = \frac{\parti
 Total Differential & $df = \sum_i \frac{\partial f}{\partial x_i}dx_i$ & First law of thermodynamics, propagation of experimental errors \\
 Directional Derivative & $D_{\hat{u}} f = \nabla f \cdot \hat{u}$ & Temperature gradients in heat conduction, pressure gradients in meteorology \\
 Lagrange Multipliers & $\nabla f = \sum_k \lambda_k \nabla g_k$ & Microcanonical entropy maximization, constraint forces in D'Alembert mechanics \\
+Fourier's Heat Law & $\vec{q} = -k\nabla T$ & Heat conduction, Fick's diffusion, Darcy's porous flow \\
 \bottomrule
 \end{tabularx}
 \caption{Key relations in multivariable differential calculus and thermodynamics.}
@@ -158,4 +186,6 @@ Lagrange Multipliers & $\nabla f = \sum_k \lambda_k \nabla g_k$ & Microcanonical
     \item \textbf{Thermodynamic Maxwell Relation:} From the Helmholtz free energy $F = U - TS$ with $dF = -SdT - PdV$, prove that $\left(\frac{\partial S}{\partial V}\right)_T = \left(\frac{\partial P}{\partial T}\right)_V$.
     \item \textbf{Tangent Plane to an Ellipsoid:} Find the equation of the tangent plane to the ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$ at an arbitrary point $(x_0, y_0, z_0)$.
     \item \textbf{Maximum Area with Fixed Perimeter:} Use Lagrange multipliers to prove that among all rectangles of fixed perimeter $P$, the square encloses the maximum area.
+    \item \textbf{Gradient in Spherical Coordinates:} A spherically symmetric gravitational potential is $\Phi(r) = -GM/r$. Calculate $\vec{g} = -\nabla\Phi$ in spherical coordinates and verify that $\nabla \cdot \vec{g} = 0$ for $r \neq 0$ (Gauss's law in vacuum).
+    \item \textbf{Second Derivative Test in 2D:} The function $f(x,y) = x^3 + y^3 - 3xy$ has a critical point structure. Find all critical points, compute the Hessian determinant $D = f_{xx}f_{yy} - f_{xy}^2$ at each, and classify each as a local minimum, maximum, or saddle point.
 \end{enumerate}

@@ -147,6 +147,32 @@ print(f"Resonance Frequency f_0 = {omega_0 / (2*np.pi):.2f} Hz")
 print(f"Max Current at resonance = {V0 / R:.3f} A")
 \end{pythonbox}
 
+\begin{psctexample}[Quantum Phase Interference and the Double-Slit Experiment]
+A quantum particle passes simultaneously through two slits separated by distance $d$. The probability amplitudes from the two slits at an angle $\theta$ are complex numbers $\psi_1 = Ae^{i\phi_1}$ and $\psi_2 = Ae^{i\phi_2}$, where the phase difference is $\delta = \phi_2 - \phi_1 = \frac{2\pi d \sin\theta}{\lambda}$. Calculate (i) the total amplitude $\psi = \psi_1 + \psi_2$, (ii) the probability density $|\psi|^2$, and (iii) the positions of constructive and destructive interference.
+
+\textbf{Solution:}
+
+\textbf{(i) Total amplitude:}
+\begin{equation}
+\psi = Ae^{i\phi_1}(1 + e^{i\delta}) = Ae^{i\phi_1} \cdot 2\cos\!\left(\frac{\delta}{2}\right)e^{i\delta/2} = 2A\cos\!\left(\frac{\delta}{2}\right)e^{i(\phi_1 + \delta/2)}
+\end{equation}
+
+\textbf{(ii) Probability density (using modulus squared):}
+\begin{equation}
+\boxed{|\psi|^2 = |2A\cos(\delta/2)|^2 = 4A^2\cos^2\!\left(\frac{\pi d \sin\theta}{\lambda}\right)}
+\end{equation}
+
+\textbf{(iii) Interference conditions:}
+\begin{align}
+\text{Constructive: } \cos^2(\delta/2) = 1 \implies \delta = 2m\pi &\implies d\sin\theta = m\lambda, \quad m \in \mathbb{Z} \\
+\text{Destructive: } \cos^2(\delta/2) = 0 \implies \delta = (2m+1)\pi &\implies d\sin\theta = \left(m + \tfrac{1}{2}\right)\lambda
+\end{align}
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+The interference pattern $\propto \cos^2(\delta/2)$ arises entirely from the complex algebra of probability amplitudes. Unlike classical probability (which would give $|\psi_1|^2 + |\psi_2|^2 = 2A^2$, a featureless sum), quantum mechanics predicts an oscillating pattern — an experimentally verified signature of wave-particle duality. The cross term $2\text{Re}[\psi_1\psi_2^*] = 2A^2\cos\delta$ is the quantum interference term.
+\qedexam
+\end{psctexample}
+
 \section{Summary of Key Formulas}
 \begin{table}[H]
 \centering
@@ -159,6 +185,7 @@ Euler's Formula & $e^{i\theta} = \cos\theta + i\sin\theta$ & Wave kinematics, ro
 Complex Impedance & $\tilde{Z} = R + i(\omega L - \frac{1}{\omega C})$ & Frequency-domain analysis of AC filters and oscillators \\
 Average Real Power & $\langle P \rangle = \frac{1}{2}\text{Re}[\tilde{V}_0 \tilde{I}_0^*]$ & Electrical power transmission, optical energy absorption \\
 Cauchy-Riemann & $\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}, \; \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}$ & 2D electrostatics, potential flow around aerofoils \\
+Quantum Interference & $|\psi_1 + \psi_2|^2 = |\psi_1|^2 + |\psi_2|^2 + 2\text{Re}[\psi_1\psi_2^*]$ & Double-slit experiment, thin-film optical coatings \\
 \bottomrule
 \end{tabularx}
 \caption{Summary of complex analysis relations in physical sciences.}
@@ -170,4 +197,6 @@ Cauchy-Riemann & $\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y},
     \item \textbf{Roots of Unity:} Determine all four roots of the equation $z^4 + 16 = 0$ in polar and Cartesian form, and plot them in the Argand plane.
     \item \textbf{Trigonometric Summation:} Using the geometric series formula with complex exponentials, evaluate the sum $\sum_{k=0}^n \cos(k\theta)$.
     \item \textbf{Parallel RLC Network:} Derive the equivalent complex admittance $\tilde{Y} = 1/\tilde{Z}$ for a parallel combination of $R$, $L$, and $C$, and find the anti-resonance condition.
+    \item \textbf{Cauchy's Integral Formula:} Evaluate the contour integral $\oint_C \frac{e^{iz}}{z^2 + 1}\,dz$ where $C$ is the circle $|z| = 2$ traversed counterclockwise. Use the residue theorem and state which poles lie inside $C$.
+    \item \textbf{Phasor Power Factor:} A series RL circuit has resistance $R = 50\;\Omega$ and inductance $L = 0.2\;\text{H}$. For a source voltage $\tilde{V} = 240e^{i0}$ V at $f = 50\;\text{Hz}$, calculate the complex power $\tilde{S} = \frac{1}{2}\tilde{V}\tilde{I}^*$ and the power factor $\cos\phi$.
 \end{enumerate}

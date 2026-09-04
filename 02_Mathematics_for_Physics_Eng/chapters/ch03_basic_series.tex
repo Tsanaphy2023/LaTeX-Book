@@ -146,6 +146,49 @@ print(f"At x = 1.0 rad: Exact={np.sin(1.0):.6f}")
 print(f"P1 error: {err_p1[150]:.6f}, P3 error: {err_p3[150]:.6f}, P5 error: {err_p5[150]:.6f}")
 \end{pythonbox}
 
+\begin{psctexample}[Fourier Series of a Square Wave]
+A periodic square wave with period $T = 2\pi$ is defined by:
+\[
+f(x) = \begin{cases} +1, & 0 < x < \pi \\ -1, & \pi < x < 2\pi \end{cases}
+\]
+Derive the Fourier series and calculate the partial sums $S_1$, $S_3$, and $S_5$. Verify the Gibbs phenomenon.
+
+\textbf{Solution:}
+
+The Fourier coefficients are:
+\begin{align}
+a_0 &= \frac{1}{\pi}\int_0^{2\pi} f(x)\,dx = 0 \quad (\text{odd function}) \\
+a_n &= \frac{1}{\pi}\int_0^{2\pi} f(x)\cos(nx)\,dx = 0 \quad (\text{odd integrand})\\
+b_n &= \frac{1}{\pi}\int_0^{2\pi} f(x)\sin(nx)\,dx = \frac{2}{n\pi}[1 - \cos(n\pi)]
+\end{align}
+Since $1 - \cos(n\pi) = 0$ for even $n$ and $= 2$ for odd $n$:
+\begin{equation}
+\boxed{f(x) = \frac{4}{\pi}\sum_{k=0}^{\infty} \frac{\sin\bigl((2k+1)x\bigr)}{2k+1} = \frac{4}{\pi}\left(\sin x + \frac{\sin 3x}{3} + \frac{\sin 5x}{5} + \cdots\right)}
+\end{equation}
+At $x = \pi/2$, the series gives the Leibniz formula: $f(\pi/2) = \frac{4}{\pi}(1 - \frac{1}{3} + \frac{1}{5} - \cdots) = 1$ \checkmark
+
+\textbf{\color{rbruNavy}Think / Physical Insights:}
+The Gibbs phenomenon is the $\approx 9\%$ overshoot ($1.0895$ instead of $1$) near the discontinuity that persists no matter how many harmonics are included. It originates from the inability of any finite set of smooth sinusoids to represent a sharp jump discontinuity. In signal processing, the Gibbs phenomenon motivates windowed Fourier transforms (Hann, Hamming windows).
+\qedexam
+\end{psctexample}
+
+\begin{pythonbox}[Fourier Series Partial Sums and Gibbs Phenomenon in Python]
+import numpy as np
+
+x = np.linspace(0.01, 2*np.pi - 0.01, 2000)
+
+def fourier_square(x, N):
+    s = np.zeros_like(x)
+    for k in range(N):
+        n = 2*k + 1
+        s += np.sin(n * x) / n
+    return 4/np.pi * s
+
+for N in [1, 3, 5, 21]:
+    s = fourier_square(x, N)
+    print(f"N={N:2d} harmonics: max value = {s.max():.4f}  (Gibbs overshoot: {100*(s.max()-1):.1f}%)")
+\end{pythonbox}
+
 \section{Summary of Key Formulas}
 \begin{table}[H]
 \centering
@@ -158,6 +201,7 @@ Taylor Series & $f(x) = \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n$ & 
 Ratio Test Radius & $R = \lim_{n \to \infty} |a_n / a_{n+1}|$ & Valid boundary limits for mathematical physics models \\
 Binomial Expansion & $(1+x)^p = 1 + px + \frac{p(p-1)}{2}x^2 + \cdots$ & Relativistic velocity limits, electrostatic multipole fields \\
 Small Angle Approximation & $\cos\theta \approx 1 - \frac{\theta^2}{2}, \; \sin\theta \approx \theta$ & Harmonic oscillator approximations in mechanics and optics \\
+Fourier Series (odd) & $f(x) = \frac{4}{\pi}\sum_{k=0}^{\infty}\frac{\sin((2k+1)x)}{2k+1}$ & Signal decomposition, heat conduction, quantum wave packets \\
 \bottomrule
 \end{tabularx}
 \caption{Summary of infinite series expansions and physical approximations.}
@@ -169,4 +213,6 @@ Small Angle Approximation & $\cos\theta \approx 1 - \frac{\theta^2}{2}, \; \sin\
     \item \textbf{Electric Dipole Potential:} Two point charges $+q$ and $-q$ are situated on the $z$-axis at $z = +d/2$ and $z = -d/2$. Write the exact potential at $(0, 0, z)$ for $z > d/2$, and use the binomial series to show that the leading term is the dipole potential $V \approx \frac{q d}{4\pi\epsilon_0 z^2}$.
     \item \textbf{Planck's Radiation Law Limit:} Planck's spectral energy density is given by $\rho(\nu) = \frac{8\pi h\nu^3}{c^3}\frac{1}{e^{h\nu/k_B T} - 1}$. Expand the exponential for $h\nu \ll k_B T$ to deduce the classical Rayleigh-Jeans formula.
     \item \textbf{Radius of Convergence:} Determine the radius of convergence of the series $\sum_{n=1}^\infty \frac{n^2 x^n}{3^n (n+1)!}$.
+    \item \textbf{Fourier Coefficient Parseval's Theorem:} For a square-integrable function $f(x)$ on $[-\pi, \pi]$ with Fourier coefficients $a_n, b_n$, Parseval's theorem states $\frac{1}{\pi}\int_{-\pi}^{\pi}|f(x)|^2\,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2)$. Apply Parseval's theorem to the square wave above to prove $\sum_{k=0}^\infty \frac{1}{(2k+1)^2} = \frac{\pi^2}{8}$.
+    \item \textbf{Asymptotic Expansion of Stirling:} The Gamma function satisfies $\ln\Gamma(n+1) = n\ln n - n + \frac{1}{2}\ln(2\pi n) + O(1/n)$. Use this to estimate the number of digits in $100!$ (i.e., $\lfloor \log_{10}(100!) \rfloor + 1$).
 \end{enumerate}
