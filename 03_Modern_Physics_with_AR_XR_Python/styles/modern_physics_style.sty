@@ -82,7 +82,211 @@
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{titlesec}
 
-% Cyber-Modern Chapter Banner Box with Spacetime & Quantum Motifs
+% Dynamic Chapter Motif based on \value{chapter}
+\newcommand{\renderchaptermotif}{%
+    \ifcase\value{chapter}%
+        % Case 0 / Unnumbered chapters (Preface, Table of Contents, References, Appendix)
+        \begin{scope}[opacity=0.22]
+            \draw[cyan!60!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.2);
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (0.8, 0.8) -- (5.2, 0.8) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (0.8, 0.8) -- (0.8, 4.2) node[above, font=\scriptsize\bfseries\color{white}] {$y$};
+            \draw[quantumGold, line width=1.4pt, domain=0.8:6.4, samples=80] plot (\x, {2.2 + 0.9*sin(3.0*\x r)*exp(-0.1*(\x-3.2)*(\x-3.2))});
+            \draw[emeraldGlow, line width=1.0pt, dashed] (3.4, 2.2) circle (1.8cm);
+            \draw[neonPurple!80!white, line width=0.9pt] (3.4, 2.2) ellipse (2.5cm and 0.9cm);
+        \end{scope}
+    \or% Case 1: Introduction - Spatial AR/XR, Deep Learning Neural Networks & MediaPipe Hands
+        \begin{scope}[opacity=0.28]
+            % 3D Spatial Grid
+            \draw[cyan!50!white, line width=0.4pt, step=0.5cm] (0.2, 0.2) grid (6.8, 5.0);
+            % Spatial Computing Headset Outline & Anchor Brackets
+            \draw[quantumGold, line width=1.3pt] (0.8, 4.4) -- (0.5, 4.4) -- (0.5, 3.8);
+            \draw[quantumGold, line width=1.3pt] (5.8, 4.4) -- (6.1, 4.4) -- (6.1, 3.8);
+            \draw[quantumGold, line width=1.3pt] (0.8, 0.6) -- (0.5, 0.6) -- (0.5, 1.2);
+            \draw[quantumGold, line width=1.3pt] (6.1, 0.6) -- (6.1, 1.2);
+            % Deep Neural Network Architecture (Input -> Hidden -> Output)
+            \foreach \y in {1.2, 2.0, 2.8, 3.6} {
+                \fill[cyan] (1.2, \y) circle (2.2pt);
+            }
+            \foreach \y in {1.0, 1.7, 2.4, 3.1, 3.8} {
+                \fill[neonPurple!90!white] (2.4, \y) circle (2.2pt);
+                \foreach \xprev in {1.2, 2.0, 2.8, 3.6} {
+                    \draw[cyan!40!white, line width=0.3pt] (1.2, \xprev) -- (2.4, \y);
+                }
+            }
+            \foreach \y in {1.4, 2.4, 3.4} {
+                \fill[emeraldGlow] (3.6, \y) circle (2.5pt);
+                \foreach \xprev in {1.0, 1.7, 2.4, 3.1, 3.8} {
+                    \draw[neonPurple!50!white, line width=0.3pt] (2.4, \xprev) -- (3.6, \y);
+                }
+            }
+            % MediaPipe Hand Skeleton (21 Landmarks Articulation)
+            \coordinate (wrist) at (5.2, 1.0);
+            \coordinate (thumb1) at (4.7, 1.4); \coordinate (thumb2) at (4.5, 1.9);
+            \coordinate (index1) at (5.0, 2.0); \coordinate (index2) at (5.0, 2.8);
+            \coordinate (mid1) at (5.4, 2.1);   \coordinate (mid2) at (5.4, 3.0);
+            \coordinate (ring1) at (5.7, 2.0);  \coordinate (ring2) at (5.8, 2.7);
+            \coordinate (pinky1) at (6.0, 1.7); \coordinate (pinky2) at (6.1, 2.3);
+            \draw[emeraldGlow, line width=1.1pt] (wrist) -- (thumb1) -- (thumb2);
+            \draw[emeraldGlow, line width=1.1pt] (wrist) -- (index1) -- (index2);
+            \draw[emeraldGlow, line width=1.1pt] (wrist) -- (mid1) -- (mid2);
+            \draw[emeraldGlow, line width=1.1pt] (wrist) -- (ring1) -- (ring2);
+            \draw[emeraldGlow, line width=1.1pt] (wrist) -- (pinky1) -- (pinky2);
+            \foreach \pt in {wrist,thumb1,thumb2,index1,index2,mid1,mid2,ring1,ring2,pinky1,pinky2} {
+                \fill[quantumGold] (\pt) circle (2.0pt);
+            }
+            % Python & PINN Math Indicator
+            \node at (4.6, 4.4) [font=\scriptsize\bfseries\color{cyan!90!white}] {$\mathcal{L}_{\text{PINN}} + \text{XR 60fps}$};
+        \end{scope}
+    \or% Case 2: Special Relativity - Spacetime Light Cone & Lorentz Transformation
+        \begin{scope}[opacity=0.28]
+            % Spacetime Grid
+            \draw[cyan!50!white, line width=0.4pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.0);
+            % Axes: ct vs x
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (3.4, 0.4) -- (3.4, 4.8) node[above, font=\scriptsize\bfseries\color{white}] {$ct$};
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (0.6, 2.4) -- (6.4, 2.4) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
+            % Light Cone Null Lines (v = c)
+            \draw[quantumGold, line width=1.5pt] (1.2, 0.4) -- (5.6, 4.8);
+            \draw[quantumGold, line width=1.5pt] (5.6, 0.4) -- (1.2, 4.8);
+            % Spacetime Invariant Hyperbolas s^2 = c^2 t^2 - x^2 = const
+            \draw[emeraldGlow, line width=1.2pt, domain=-2.2:2.2, samples=60] 
+                plot ({3.4 + \x}, {2.4 + sqrt(\x*\x + 0.8)});
+            \draw[emeraldGlow, line width=1.2pt, domain=-2.2:2.2, samples=60] 
+                plot ({3.4 + \x}, {2.4 - sqrt(\x*\x + 0.8)});
+            % Worldline of Particle with Subluminal Velocity
+            \draw[neonPurple!90!white, line width=1.4pt, dashed] (2.4, 0.4) .. controls (3.0, 1.8) and (3.8, 3.2) .. (4.2, 4.6);
+            \node at (1.8, 4.2) [font=\scriptsize\bfseries\color{quantumGold}] {$\gamma = \frac{1}{\sqrt{1-v^2/c^2}}$};
+            \node at (5.2, 1.2) [font=\scriptsize\bfseries\color{cyan}] {$ds^2 = -c^2 dt^2 + dx^2$};
+        \end{scope}
+    \or% Case 3: Quantum Mechanics - Wavefunctions, Potential Well & Hydrogen Orbitals
+        \begin{scope}[opacity=0.28]
+            % Energy Levels in Infinite Square Well
+            \draw[white, line width=1.4pt] (0.6, 4.6) -- (0.6, 0.6) -- (4.2, 0.6) -- (4.2, 4.6);
+            % Level n=1
+            \draw[cyan!80!white, line width=1.0pt] (0.6, 1.4) -- (4.2, 1.4);
+            \draw[cyan, line width=1.4pt, domain=0.6:4.2, samples=60] plot (\x, {1.4 + 0.6*sin((\x-0.6)/(4.2-0.6)*180)});
+            % Level n=2
+            \draw[quantumGold!80!white, line width=1.0pt] (0.6, 2.5) -- (4.2, 2.5);
+            \draw[quantumGold, line width=1.4pt, domain=0.6:4.2, samples=60] plot (\x, {2.5 + 0.6*sin((\x-0.6)/(4.2-0.6)*360)});
+            % Level n=3
+            \draw[emeraldGlow!80!white, line width=1.0pt] (0.6, 3.8) -- (4.2, 3.8);
+            \draw[emeraldGlow, line width=1.4pt, domain=0.6:4.2, samples=60] plot (\x, {3.8 + 0.5*sin((\x-0.6)/(4.2-0.6)*540)});
+            % 3D Hydrogen Orbitals Probability Density Cloud & Electron Spin
+            \draw[rotate around={35:(5.5, 2.5)}, neonPurple!90!white, line width=1.2pt] (5.5, 2.5) ellipse (1.2cm and 0.5cm);
+            \draw[rotate around={-35:(5.5, 2.5)}, neonPurple!90!white, line width=1.2pt] (5.5, 2.5) ellipse (1.2cm and 0.5cm);
+            \fill[quantumGold] (5.5, 2.5) circle (3pt);
+            \draw[-{Stealth[scale=1.2]}, white, line width=1.4pt] (5.5, 2.5) -- (5.5, 4.4) node[above, font=\scriptsize\bfseries\color{white}] {$\vec{S}$};
+            \node at (2.4, 4.4) [font=\scriptsize\bfseries\color{cyan}] {$i\hbar\frac{\partial\psi}{\partial t} = \hat{H}\psi$};
+            \node at (5.5, 1.0) [font=\tiny\bfseries\color{quantumGold}] {LSDA+U / $\hat{J}_{\text{ex}}$};
+        \end{scope}
+    \or% Case 4: Particle Physics - Feynman Diagram & Standard Model Gauge Interactions
+        \begin{scope}[opacity=0.28]
+            % Feynman Diagram: Quark-Antiquark Annihilation to Gluon/Z0 and Pair Production
+            \coordinate (q1) at (0.6, 4.2); \coordinate (q2) at (0.6, 1.0);
+            \coordinate (v1) at (2.4, 2.6); \coordinate (v2) at (4.4, 2.6);
+            \coordinate (p1) at (6.2, 4.2); \coordinate (p2) at (6.2, 1.0);
+            % Incoming fermions
+            \draw[-{Stealth[scale=1.1]}, cyan, line width=1.4pt] (q1) -- (1.5, 3.4);
+            \draw[cyan, line width=1.4pt] (1.5, 3.4) -- (v1);
+            \draw[-{Stealth[scale=1.1]}, cyan, line width=1.4pt] (v1) -- (1.5, 1.8);
+            \draw[cyan, line width=1.4pt] (1.5, 1.8) -- (q2);
+            % Propagator (Gluon/Boson curly/wavy line)
+            \draw[quantumGold, line width=1.5pt, decorate, decoration={snake, segment length=6pt, amplitude=2.5pt}] (v1) -- (v2);
+            % Outgoing fermions
+            \draw[-{Stealth[scale=1.1]}, emeraldGlow, line width=1.4pt] (v2) -- (5.3, 3.4);
+            \draw[emeraldGlow, line width=1.4pt] (5.3, 3.4) -- (p1);
+            \draw[-{Stealth[scale=1.1]}, emeraldGlow, line width=1.4pt] (p2) -- (5.3, 1.8);
+            \draw[emeraldGlow, line width=1.4pt] (5.3, 1.8) -- (v2);
+            % Vertices & Higgs/Collision Particle Tracks
+            \fill[white] (v1) circle (2.8pt); \fill[white] (v2) circle (2.8pt);
+            \draw[neonPurple!80!white, line width=1.0pt, dashed] (v1) -- (2.4, 4.5);
+            \node at (0.8, 2.6) [font=\scriptsize\bfseries\color{cyan}] {$q\bar{q}$};
+            \node at (3.4, 3.2) [font=\scriptsize\bfseries\color{quantumGold}] {$g / Z^0$};
+            \node at (6.0, 2.6) [font=\scriptsize\bfseries\color{emeraldGlow}] {$\ell^+\ell^-$};
+            \node at (3.4, 0.8) [font=\scriptsize\bfseries\color{neonPurple!90!white}] {Deep Learning Jet Tagging};
+        \end{scope}
+    \or% Case 5: Nuclear Physics - Binding Energy, Fission Split & Chain Cascade
+        \begin{scope}[opacity=0.28]
+            % Nuclear Binding Energy Curve B/A vs A
+            \draw[-{Stealth[scale=1.0]}, white, line width=1.2pt] (0.5, 0.8) -- (4.2, 0.8) node[right, font=\tiny\bfseries\color{white}] {$A$};
+            \draw[-{Stealth[scale=1.0]}, white, line width=1.2pt] (0.5, 0.8) -- (0.5, 4.4) node[above, font=\tiny\bfseries\color{white}] {$B/A$};
+            \draw[quantumGold, line width=1.5pt] (0.6, 1.1) .. controls (1.0, 3.8) and (1.6, 4.2) .. (2.2, 4.1) .. controls (3.0, 3.8) .. (4.0, 3.4);
+            \fill[quantumGold] (2.2, 4.1) circle (2.5pt) node[above, font=\tiny\bfseries\color{white}] {$^{56}\text{Fe}$};
+            % Nuclear Fission: Heavy Nucleus Splitting
+            \coordinate (nuc) at (5.2, 2.6);
+            \draw[fill=neonPurple!60!black, line width=1.2pt, neonPurple] (nuc) circle (0.75cm);
+            % Fission fragments
+            \draw[-{Stealth[scale=1.1]}, emeraldGlow, line width=1.4pt] (5.4, 2.8) -- (6.4, 3.8);
+            \draw[-{Stealth[scale=1.1]}, cyan, line width=1.4pt] (5.0, 2.4) -- (4.2, 1.4);
+            % Prompt Neutrons
+            \draw[-{Stealth[scale=1.0]}, white, dashed, line width=1.0pt] (nuc) -- (6.4, 2.6);
+            \draw[-{Stealth[scale=1.0]}, white, dashed, line width=1.0pt] (nuc) -- (5.6, 1.4);
+            \draw[-{Stealth[scale=1.0]}, white, dashed, line width=1.0pt] (nuc) -- (6.0, 3.4);
+            \node at (2.4, 1.6) [font=\tiny\bfseries\color{cyan}] {Tokamak AI Plasma};
+            \node at (5.2, 0.8) [font=\tiny\bfseries\color{quantumGold}] {$^{235}\text{U} + n \to \text{Fission} + 2.5n$};
+        \end{scope}
+    \or% Case 6: Quantum Computing - Bloch Sphere & Multi-Qubit Circuit
+        \begin{scope}[opacity=0.28]
+            % Bloch Sphere
+            \coordinate (center) at (2.4, 2.5);
+            \draw[cyan!80!white, line width=1.2pt] (center) circle (1.8cm);
+            \draw[cyan!60!white, line width=0.8pt, dashed] (center) ellipse (1.8cm and 0.55cm);
+            % Axes
+            \draw[-{Stealth[scale=1.1]}, white, line width=1.3pt] (2.4, 0.5) -- (2.4, 4.5) node[above, font=\scriptsize\bfseries\color{white}] {$|0\rangle$};
+            \node at (2.4, 0.3) [below, font=\scriptsize\bfseries\color{white}] {$|1\rangle$};
+            \draw[-{Stealth[scale=1.0]}, white, line width=0.9pt] (0.8, 2.5) -- (4.0, 2.5) node[right, font=\tiny\bfseries\color{white}] {$y$};
+            \draw[-{Stealth[scale=1.0]}, white, line width=0.9pt] (1.3, 1.5) -- (3.5, 3.5) node[above right, font=\tiny\bfseries\color{white}] {$x$};
+            % State Vector |psi>
+            \draw[-{Stealth[scale=1.3]}, quantumGold, line width=1.8pt] (center) -- (3.4, 3.8) node[right, font=\scriptsize\bfseries\color{quantumGold}] {$|\psi\rangle$};
+            % Quantum Circuit Wires & Gates
+            \draw[white, line width=1.0pt] (4.4, 3.5) -- (6.6, 3.5);
+            \draw[white, line width=1.0pt] (4.4, 1.5) -- (6.6, 1.5);
+            % Hadamard Gate
+            \draw[fill=neonPurple, draw=white, line width=0.8pt] (4.7, 3.1) rectangle (5.3, 3.9);
+            \node at (5.0, 3.5) [font=\scriptsize\bfseries\color{white}] {$H$};
+            % CNOT Gate (Control and Target)
+            \fill[white] (5.9, 3.5) circle (2.5pt);
+            \draw[white, line width=1.0pt] (5.9, 3.5) -- (5.9, 1.5);
+            \draw[emeraldGlow, line width=1.2pt] (5.9, 1.5) circle (5pt);
+            \draw[emeraldGlow, line width=1.0pt] (5.9, 1.25) -- (5.9, 1.75);
+            \draw[emeraldGlow, line width=1.0pt] (5.65, 1.5) -- (6.15, 1.5);
+            \node at (5.5, 0.8) [font=\tiny\bfseries\color{quantumGold}] {VQE / QML Hybrid};
+        \end{scope}
+    \or% Case 7: Astrophysics - Black Hole Accretion, Gravitational Waves & Binary Orbit
+        \begin{scope}[opacity=0.28]
+            % Supermassive Black Hole & Lensing Accretion Disk
+            \coordinate (bh) at (2.4, 2.5);
+            % Gravitational Lensing Arcs
+            \draw[quantumGold, line width=1.6pt] (0.8, 2.5) .. controls (0.8, 4.0) and (4.0, 4.0) .. (4.0, 2.5);
+            \draw[quantumGold, line width=1.6pt] (1.1, 2.5) .. controls (1.1, 1.3) and (3.7, 1.3) .. (3.7, 2.5);
+            % Accretion Disk
+            \draw[rotate around={-15:(bh)}, fill=orange!40!black, line width=1.2pt, color=quantumGold] 
+                (bh) ellipse (2.0cm and 0.45cm);
+            % Event Horizon Shadow
+            \fill[black] (bh) circle (0.75cm);
+            \draw[cyan, line width=1.2pt] (bh) circle (0.75cm);
+            % Relativistic Jet
+            \draw[-{Stealth[scale=1.2]}, cyan, line width=1.5pt] (bh) -- (2.0, 4.7);
+            \draw[-{Stealth[scale=1.2]}, cyan, line width=1.5pt] (bh) -- (2.8, 0.3);
+            % Binary Star System & Gravitational Waves (Thassana et al. DF Hydrae motif)
+            \coordinate (star1) at (5.2, 3.4); \coordinate (star2) at (5.9, 2.4);
+            \fill[quantumGold] (star1) circle (4pt); \fill[yellow] (star2) circle (3pt);
+            \draw[white, line width=0.8pt, dashed] (5.5, 2.9) ellipse (0.8cm and 0.6cm);
+            % Gravitational Wave Ripples
+            \draw[emeraldGlow, line width=1.0pt, domain=0:180] plot ({5.5 + 0.9*cos(\x)}, {2.9 + 0.9*sin(\x)});
+            \draw[emeraldGlow, line width=1.0pt, domain=0:180] plot ({5.5 + 1.3*cos(\x)}, {2.9 + 1.3*sin(\x)});
+            \node at (5.5, 1.4) [font=\tiny\bfseries\color{quantumGold}] {Binary Star (DF Hydrae)};
+            \node at (5.5, 0.8) [font=\tiny\bfseries\color{cyan}] {LIGO/JWST AI Transient};
+        \end{scope}
+    \else
+        % Fallback for any higher chapter numbers
+        \begin{scope}[opacity=0.22]
+            \draw[cyan!60!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.2);
+            \draw[quantumGold, line width=1.4pt, domain=0.8:6.4, samples=80] plot (\x, {2.2 + 0.9*sin(3.0*\x r)*exp(-0.1*(\x-3.2)*(\x-3.2))});
+        \end{scope}
+    \fi
+}
+
+% Cyber-Modern Chapter Banner Box with Dynamic Chapter Motifs
 \newtcolorbox{chapterbannerbox}{
     enhanced,
     width=\textwidth,
@@ -96,24 +300,7 @@
     drop shadow=black!15,
     underlay={
         \begin{tcbclipinterior}
-            \begin{scope}[opacity=0.20]
-                % Spacetime Light Cone & Coordinate Grid
-                \draw[cyan!60!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.5);
-                % 4D Spacetime Axes
-                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.0, 0.8) -- (4.8, 0.8) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
-                \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (1.0, 0.8) -- (1.0, 4.0) node[above, font=\scriptsize\bfseries\color{white}] {$ct$};
-                % Relativistic Light Cone Lines (x = +/- ct)
-                \draw[quantumGold, line width=1.3pt, dashed] (1.0, 0.8) -- (4.0, 3.8);
-                \draw[quantumGold, line width=1.3pt, dashed] (1.0, 0.8) -- (-0.5, 2.3);
-                % Quantum Wavefunction / De Broglie Harmonic Packet
-                \draw[cyan, line width=1.5pt, domain=0.4:6.8, samples=100] 
-                    plot (\x, {2.2 + 0.8*sin(3.5*\x r) * exp(-0.12*(\x-3.4)*(\x-3.4))});
-                % Orbital Electron Cloud Shell
-                \draw[rotate around={30:(3.4,2.2)}, neonPurple!80!white, line width=1.0pt, dashdotted] 
-                    (3.4,2.2) ellipse (2.8cm and 1.1cm);
-                \draw[rotate around={-40:(3.4,2.2)}, emeraldGlow, line width=0.9pt] 
-                    (3.4,2.2) ellipse (2.4cm and 0.8cm);
-            \end{scope}
+            \renderchaptermotif
         \end{tcbclipinterior}
     }
 }

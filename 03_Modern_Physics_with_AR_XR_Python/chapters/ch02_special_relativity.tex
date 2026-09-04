@@ -362,6 +362,22 @@ for v_rel in speeds:
     print(f"beta = {v_rel:5.3f} | gamma = {g:7.3f} | K_rel = {k_rel:9.4f} MeV | Ratio = {ratio:6.2f}")
 \end{pythonbox}
 
+\section{การประยุกต์ใช้การเรียนรู้เชิงลึกและ PINN ในพลศาสตร์สัมพัทธภาพ}
+\index{PINN ในสัมพัทธภาพ}
+\index{การเรียนรู้เชิงลึก}
+
+ในระบบพลศาสตร์เชิงสัมพัทธภาพ สมการการเคลื่อนที่ของอนุภาคภายใต้แรงภายนอก $\mathbf{F}$ มีลักษณะไม่เชิงเส้นเนื่องจากตัวคูณลอเรนซ์ $\gamma(v)$ ขึ้นอยู่กับขนาดความเร็วอย่างยิ่งยวด
+\begin{equation}
+\frac{d}{dt}\left(\frac{m_0 \mathbf{v}}{\sqrt{1 - v^2/c^2}}\right) = \mathbf{F}(\mathbf{r}, t)
+\end{equation}
+
+การแก้สมการเชิงอนุพันธ์ไม่เชิงเส้นดังกล่าวด้วยระเบียบวิธีเชิงตัวเลขดั้งเดิม เช่น Runge-Kutta มักเผชิญปัญหาเสถียรภาพตัวเลขเมื่อความเร็วเข้าใกล้อัตราเร็วแสง ($v \to c$) ปัจจุบันได้มีการนำ \textbf{โครงข่ายประสาทเทียมที่รู้ฟิสิกส์ (Physics-Informed Neural Networks: PINNs)} มาประยุกต์ใช้ โดยกำหนดให้โครงข่ายประสาทเทียม $\mathbf{r}_{\theta}(t)$ ทำนายพิกัดตำแหน่งของอนุภาค และใช้ระบบอนุพันธ์อัตโนมัติ (Automatic Differentiation) คำนวณความเร็ว $\mathbf{v} = \frac{d\mathbf{r}}{dt}$ และความเร่ง เพื่อสร้างฟังก์ชันการสูญเสียตกค้างทางกายภาพ
+\begin{equation}
+\mathcal{L}_{\text{physics}} = \frac{1}{N}\sum_{i=1}^{N} \left\| \frac{d}{dt}\left(\gamma_i m_0 \mathbf{v}_i\right) - \mathbf{F}(\mathbf{r}_i, t_i) \right\|^2
+\end{equation}
+
+นอกจากนี้ การเรียนรู้เชิงลึกยังถูกนำมาพัฒนาเป็นตัวเรนเดอร์แบบประสาท (Neural Relativistic Ray Tracing) เพื่อจำลองปรากฏการณ์ทัศนศาสตร์เชิงสัมพัทธภาพ เช่น การเลื่อนด็อปเปลอร์ของสี (Doppler Color Shift) และการรวมแสงไปข้างหน้าแบบไฟหน้ารถ (Relativistic Beaming / Searchlight Effect) ในระบบเสมือนจริง WebXR ได้อย่างลื่นไหลที่ 60 เฟรมต่อวินาที
+
 \section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
 
 \begin{psctexample}[การสลายตัวของมิวออนในบรรยากาศโลก (Muon Decay Paradox)]
