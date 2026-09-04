@@ -18,8 +18,8 @@
     \item สมการคลื่นชเรอดิงเงอร์และฟังก์ชันคลื่น
     \item อนุภาคในกล่องศักย์อนันต์ 1 มิติ
     \item ปรากฏการณ์การทะลุผ่านกำแพงศักย์
-    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Quantum Orbitals and Tunneling
-    \item การคำนวณเชิงตัวเลขด้วย Python: Finite Difference Solver
+    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR 3D Quantum Orbitals and Tunneling
+    \item การคำนวณเชิงตัวเลขด้วย Python Finite Difference Solver
     \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
     \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
 \end{enumerate}
@@ -61,7 +61,7 @@
 
 \newpage
 
-\section{การกำเนิดทฤษฎีควอนตัม: การแผ่รังสีของวัตถุดำ}
+\section{การกำเนิดทฤษฎีควอนตัม การแผ่รังสีของวัตถุดำ}
 \index{วัตถุดำ}
 \index{วิกฤตการณ์รังสีอัลตราไวโอเลต}
 
@@ -119,15 +119,15 @@ u(\lambda, T) = \frac{8\pi h c}{\lambda^5} \frac{1}{e^{\frac{hc}{\lambda k_B T}}
 \index{โฟโตอิเล็กทริก}
 \index{การกระเจิงคอมป์ตัน}
 
-\subsection{ปรากฏการณ์โฟโตอิเล็กทริก (Photoelectric Effect)}
-ในปี ค.ศ. 1905 อัลเบิร์ต ไอน์สไตน์ อธิบายว่าแสงประกอบด้วยอนุภาคพลังงานเรียกว่า \textbf{โฟตอน (Photon)} แต่ละโฟตอนมีพลังงาน $E = h\nu$ เมื่อโฟตอนชนกับอิเล็กตรอนในผิวโลหะ จะถ่ายทอดพลังงานทั้งหมดให้อิเล็กตรอนตัวเดียว หากพลังงานนี้มากกว่า \textbf{ฟังก์ชันงาน (Work Function, $\Phi$)} ของโลหะ อิเล็กตรอนจะหลุดออกไปพร้อมพลังงานจลน์สูงสุด:
+\subsection{ปรากฏการณ์โฟโตอิเล็กทริก}
+\textbf{ปรากฏการณ์โฟโตอิเล็กทริก (Photoelectric Effect)} ในปี ค.ศ. 1905 อัลเบิร์ต ไอน์สไตน์ อธิบายว่าแสงประกอบด้วยอนุภาคพลังงานเรียกว่า \textbf{โฟตอน (Photon)} แต่ละโฟตอนมีพลังงาน $E = h\nu$ เมื่อโฟตอนชนกับอิเล็กตรอนในผิวโลหะ จะถ่ายทอดพลังงานทั้งหมดให้อิเล็กตรอนตัวเดียว หากพลังงานนี้มากกว่า \textbf{ฟังก์ชันงาน (Work Function, $\Phi$)} ของโลหะ อิเล็กตรอนจะหลุดออกไปพร้อมพลังงานจลน์สูงสุด:
 \begin{equation}
 K_{\max} = h\nu - \Phi = e V_s
 \end{equation}
 โดยที่ $V_s$ คือความต่างศักย์หยุดยั้ง (Stopping Potential)
 
-\subsection{การกระเจิงคอมป์ตัน (Compton Scattering)}
-ในปี ค.ศ. 1923 อาร์เธอร์ คอมป์ตัน (Arthur H. Compton) พิสูจน์ว่าโฟตอนมีโมเมนตัม $p = \frac{h}{\lambda}$ ผ่านการทดลองยิงรังสีเอกซ์ชนกับอิเล็กตรอนอิสระ ความยาวคลื่นที่กระเจิงไปที่มุม $\theta$ จะมีความยาวคลื่นเพิ่มขึ้นตามสมการ:
+\subsection{การกระเจิงคอมป์ตัน}
+\textbf{การกระเจิงคอมป์ตัน (Compton Scattering)} ในปี ค.ศ. 1923 อาร์เธอร์ คอมป์ตัน (Arthur H. Compton) พิสูจน์ว่าโฟตอนมีโมเมนตัม $p = \frac{h}{\lambda}$ ผ่านการทดลองยิงรังสีเอกซ์ชนกับอิเล็กตรอนอิสระ ความยาวคลื่นที่กระเจิงไปที่มุม $\theta$ จะมีความยาวคลื่นเพิ่มขึ้นตามสมการ:
 \begin{equation}
 \lambda' - \lambda = \frac{h}{m_e c} (1 - \cos\theta) = \lambda_C (1 - \cos\theta)
 \end{equation}
@@ -168,15 +168,15 @@ K_{\max} = h\nu - \Phi = e V_s
 \index{ความยาวคลื่นเดอบรอยล์}
 \index{หลักความไม่แน่นอน}
 
-\subsection{สมมติฐานเดอบรอยล์ (de Broglie Hypothesis)}
-ในปี ค.ศ. 1924 หลุยส์ เดอบรอยล์ (Louis de Broglie) เสนอว่า หากคลื่นแสงสามารถประพฤติตัวเป็นอนุภาคได้ อนุภาคของสสาร (เช่น อิเล็กตรอน) ก็ย่อมต้องแสดงสมบัติของคลื่นได้เช่นกัน โดยมีความยาวคลื่น:
+\subsection{สมมติฐานเดอบรอยล์}
+\textbf{สมมติฐานเดอบรอยล์ (de Broglie Hypothesis)} ในปี ค.ศ. 1924 หลุยส์ เดอบรอยล์ (Louis de Broglie) เสนอว่า หากคลื่นแสงสามารถประพฤติตัวเป็นอนุภาคได้ อนุภาคของสสาร (เช่น อิเล็กตรอน) ก็ย่อมต้องแสดงสมบัติของคลื่นได้เช่นกัน โดยมีความยาวคลื่น:
 \begin{equation}
 \lambda = \frac{h}{p} = \frac{h}{\gamma m_0 v}
 \end{equation}
 สมมติฐานนี้ได้รับการยืนยันอย่างชัดเจนโดยการทดลองการเลี้ยวเบนของอิเล็กตรอนของเดวิสสันและเกอร์เมอร์ (Davisson-Germer Experiment) ในปี ค.ศ. 1927
 
-\subsection{หลักความไม่แน่นอนของไฮเซนเบิร์ก (Heisenberg Uncertainty Principle)}
-แวร์เนอร์ ไฮเซนเบิร์ก (Werner Heisenberg) พิสูจน์ในปี ค.ศ. 1927 ว่า ในระบบควอนตัม เป็นไปไม่ได้โดยหลักการที่จะวัดค่าของปริมาณคู่ควบ (Conjugate Variables) เช่น ตำแหน่งและโมเมนตัม พร้อมกันได้อย่างแม่นยำไร้ขีดจำกัด:
+\subsection{หลักความไม่แน่นอนของไฮเซนเบิร์ก}
+\textbf{หลักความไม่แน่นอนของไฮเซนเบิร์ก (Heisenberg Uncertainty Principle)} แวร์เนอร์ ไฮเซนเบิร์ก (Werner Heisenberg) พิสูจน์ในปี ค.ศ. 1927 ว่า ในระบบควอนตัม เป็นไปไม่ได้โดยหลักการที่จะวัดค่าของปริมาณคู่ควบ (Conjugate Variables) เช่น ตำแหน่งและโมเมนตัม พร้อมกันได้อย่างแม่นยำไร้ขีดจำกัด:
 \begin{equation}
 \Delta x \Delta p_x \ge \frac{\hbar}{2}
 \end{equation}
@@ -210,11 +210,11 @@ P(a \le x \le b) = \int_a^b |\psi(x)|^2 dx
 \end{equation}
 \end{mathdefinition}
 
-\section{อนุภาคในกล่องศักย์อนันต์ 1 มิติ (Particle in a 1D Box)}
+\section{อนุภาคในกล่องศักย์อนันต์ 1 มิติ}
 \index{อนุภาคในกล่อง}
 \index{ระดับพลังงานควอนไทซ์}
 
-พิจารณาอนุภาคมวล $m$ ในบ่อศักย์ลึกอนันต์:
+พิจารณาปัญหา\textbf{อนุภาคในกล่องศักย์อนันต์ 1 มิติ (Particle in a 1D Box)} ของอนุภาคมวล $m$ ในบ่อศักย์ลึกอนันต์:
 \begin{equation}
 V(x) = \begin{cases} 0 & 0 < x < L \\ \infty & \text{บริเวณอื่น} \end{cases}
 \end{equation}
@@ -275,13 +275,13 @@ E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2} = \frac{n^2 h^2}{8m L^2}
 \label{fig:particle_in_box}
 \end{figure}
 
-\section{ปรากฏการณ์การทะลุผ่านกำแพงศักย์ (Quantum Tunneling)}
+\section{ปรากฏการณ์การทะลุผ่านกำแพงศักย์}
 \index{ทันเนลลิง}
 \index{กล้อง STM}
 
-ในฟิสิกส์ดั้งเดิม หากอนุภาคมีพลังงาน $E$ น้อยกว่าความสูงของกำแพงศักย์ $V_0$ ($E < V_0$) อนุภาคจะไม่สามารถทะลุผ่านกำแพงไปได้เลย แต่ในกลศาสตร์ควอนตัม ฟังก์ชันคลื่นภายในกำแพง ($0 < x < a$) จะลดรูปเป็นฟังก์ชันเอกซ์โพเนนเชียลสลายตัว $\psi(x) \propto e^{-\kappa x}$ โดยที่ $\kappa = \frac{\sqrt{2m(V_0 - E)}}{\hbar}$
+\textbf{ปรากฏการณ์การทะลุผ่านกำแพงศักย์ (Quantum Tunneling)} ในฟิสิกส์ดั้งเดิม หากอนุภาคมีพลังงาน $E$ น้อยกว่าความสูงของกำแพงศักย์ $V_0$ ($E < V_0$) อนุภาคจะไม่สามารถทะลุผ่านกำแพงไปได้เลย แต่ในกลศาสตร์ควอนตัม ฟังก์ชันคลื่นภายในกำแพง ($0 < x < a$) จะลดรูปเป็นฟังก์ชันเอกซ์โพเนนเชียลสลายตัว $\psi(x) \propto e^{-\kappa x}$ โดยที่ $\kappa = \frac{\sqrt{2m(V_0 - E)}}{\hbar}$
 
-สัมประสิทธิ์การทะลุผ่าน (Transmission Coefficient, $T$) โดยประมาณคือ:
+สัมประสิทธิ์การทะลุผ่าน (Transmission Coefficient, $T$) โดยประมาณคือ
 \begin{equation}
 T \approx 16 \frac{E}{V_0} \left(1 - \frac{E}{V_0}\right) e^{-2\kappa a}
 \end{equation}
@@ -319,19 +319,19 @@ T \approx 16 \frac{E}{V_0} \left(1 - \frac{E}{V_0}\right) e^{-2\kappa a}
 \label{fig:quantum_tunneling}
 \end{figure}
 
-\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Quantum Orbitals \& Tunneling}
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR 3D Quantum Orbitals and Tunneling}
 \index{WebXR}
 \index{Quantum Orbitals AR}
 
 \begin{arbox}[การจำลองกลุ่มหมอกอิเล็กตรอน 3 มิติ และคลื่นควอนตัมทะลุกำแพงศักย์]
-\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR}
 \begin{enumerate}
     \item แสดงภาพพื้นผิวความน่าจะเป็นเท่ากัน (Isosurface Probability Density $|\psi_{nlm}(r,\theta,\phi)|^2$) ของออร์บิทัลอะตอมไฮโดรเจน ($1s, 2p, 3d, 4f$) ลอยหมุนได้ 360 องศา
     \item ผู้เรียนสามารถใช้ระบบจับการเคลื่อนไหวมือ (Hand Tracking) ยืด-หด ความกว้างของกล่องศักย์ $L$ และสังเกตการบีบอัดของความยาวคลื่น $\lambda_n$ และการขยับขึ้นของระดับพลังงาน $E_n$
     \item การจำลองเวฟแพ็กเก็ต (Wavepacket) เคลื่อนที่ชนกำแพงศักย์ โดยแสดงการแบ่งแยกเป็นคลื่นสะท้อนและคลื่นทะลุผ่านแบบ Real-Time Shader
 \end{enumerate}
 
-\textbf{ข้อกำหนดทางเทคนิค (Technical Specification):}
+\textbf{ข้อกำหนดทางเทคนิค (Technical Specification)}
 \begin{itemize}
     \item \textbf{Rendering Engine:} Three.js Raymarching Volumetric Cloud Shader บน WebGL 2.0
     \item \textbf{Interaction:} WebXR Hit-Test วางฐานจำลองบนโต๊ะเรียนจริง พร้อมการควบคุมด้วยท่าทาง MediaPipe
@@ -339,7 +339,7 @@ T \approx 16 \frac{E}{V_0} \left(1 - \frac{E}{V_0}\right) e^{-2\kappa a}
 \end{itemize}
 \end{arbox}
 
-\section{การคำนวณเชิงตัวเลขด้วย Python: Finite Difference Solver}
+\section{การคำนวณเชิงตัวเลขด้วย Python Finite Difference Solver}
 \index{Python}
 \index{SciPy}
 

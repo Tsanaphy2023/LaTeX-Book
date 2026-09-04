@@ -14,10 +14,10 @@
 \noindent\textbf{หัวข้อเนื้อหาประจำบท}
 \begin{enumerate}
     \item สมดุลไฮโดรสแตติกและวิวัฒนาการของดาวฤกษ์
-    \item หลุมดำและเรขาคณิตชวาร์ซชิลด์ (Schwarzschild Black Holes)
-    \item จักรวาลวิทยาและสมการฟรีดมันน์ (Friedmann Cosmology)
-    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: Spacetime Curvature and Lensing
-    \item การคำนวณเชิงตัวเลขด้วย Python: Friedmann Universe Expansion
+    \item หลุมดำและเรขาคณิตชวาร์ซชิลด์
+    \item จักรวาลวิทยาและสมการฟรีดมันน์
+    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR Spacetime Curvature and Lensing
+    \item การคำนวณเชิงตัวเลขด้วย Python Friedmann Universe Expansion
     \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
     \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
 \end{enumerate}
@@ -105,22 +105,22 @@
     \item \textbf{หลุมดำ (Black Hole):} หากมวลสารตกค้างมากกว่าขีดจำกัด TOV ไม่มีแรงใดในเอกภพสามารถต้านทานแรงโน้มถ่วงได้ ดาวจะยุบตัวลงสู่ภาวะเอกฐาน (Singularity)
 \end{enumerate}
 
-\section{หลุมดำและเรขาคณิตชวาร์ซชิลด์ (Schwarzschild Black Holes)}
+\section{หลุมดำและเรขาคณิตชวาร์ซชิลด์}
 \index{หลุมดำ}
 \index{รัศมีชวาร์ซชิลด์}
 \index{ขอบฟ้าเหตุการณ์}
 
-ตามทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์ คาร์ล ชวาร์ซชิลด์ (Karl Schwarzschild) ได้หาผลเฉลยแม่นตรงสำหรับปริภูมิ-เวลารอบมวลทรงกลมสถิตที่ไม่มีประจุและไม่หมุน:
+\textbf{หลุมดำและเรขาคณิตชวาร์ซชิลด์ (Schwarzschild Black Holes)} ตามทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์ คาร์ล ชวาร์ซชิลด์ (Karl Schwarzschild) ได้หาผลเฉลยแม่นตรงสำหรับปริภูมิ-เวลารอบมวลทรงกลมสถิตที่ไม่มีประจุและไม่หมุน
 \begin{equation}
 ds^2 = -\left(1 - \frac{R_s}{r}\right) c^2 dt^2 + \left(1 - \frac{R_s}{r}\right)^{-1} dr^2 + r^2 (d\theta^2 + \sin^2\theta d\phi^2)
 \end{equation}
-โดยที่ $R_s$ คือ \textbf{รัศมีชวาร์ซชิลด์ (Schwarzschild Radius)} ซึ่งเป็นตำแหน่งของ \textbf{ขอบฟ้าเหตุการณ์ (Event Horizon)}:
+โดยที่ $R_s$ คือ \textbf{รัศมีชวาร์ซชิลด์ (Schwarzschild Radius)} ซึ่งเป็นตำแหน่งของ \textbf{ขอบฟ้าเหตุการณ์ (Event Horizon)} ดังนี้
 \begin{equation}
 R_s = \frac{2GM}{c^2}
 \end{equation}
 ไม่มีสิ่งใดแม้กระทั่งแสงสามารถหลุดรอดออกจากภายในขอบฟ้าเหตุการณ์ได้
 
-การยืดของเวลาเนื่องจากแรงโน้มถ่วงสำหรับผู้สังเกตที่ระยะห่าง $r$ สัมพันธ์กับเวลาเฉพาะที่ระยะอนันต์คือ:
+การยืดของเวลาเนื่องจากแรงโน้มถ่วงสำหรับผู้สังเกตที่ระยะห่าง $r$ สัมพันธ์กับเวลาเฉพาะที่ระยะอนันต์คือ
 \begin{equation}
 \Delta t(r) = \frac{\Delta t_\infty}{\sqrt{1 - \frac{R_s}{r}}}
 \end{equation}
@@ -155,19 +155,19 @@ R_s = \frac{2GM}{c^2}
 \label{fig:black_hole_anatomy}
 \end{figure}
 
-\section{จักรวาลวิทยาและสมการฟรีดมันน์ (Friedmann Cosmology)}
+\section{จักรวาลวิทยาและสมการฟรีดมันน์}
 \index{กฎของฮับเบิล}
 \index{สมการฟรีดมันน์}
 \index{สสารมืด}
 \index{พลังงานมืด}
 
-เอ็ดวิน ฮับเบิล (Edwin Hubble) และจอร์จ เลอแมทร์ (Georges Lemaître) ค้นพบว่าดาราจักรส่วนใหญ่กำลังเคลื่อนที่ถอยห่างออกจากเราด้วยความเร็วแปรผันตรงกับระยะทาง:
+\textbf{จักรวาลวิทยาและสมการฟรีดมันน์ (Friedmann Cosmology)} เอ็ดวิน ฮับเบิล (Edwin Hubble) และจอร์จ เลอแมทร์ (Georges Lemaître) ค้นพบว่าดาราจักรส่วนใหญ่กำลังเคลื่อนที่ถอยห่างออกจากเราด้วยความเร็วแปรผันตรงกับระยะทาง
 \begin{equation}
 v = H_0 d
 \end{equation}
 โดยที่ $H_0 \approx 70\text{ km}\cdot\text{s}^{-1}\cdot\text{Mpc}^{-1}$ คือค่าคงตัวของฮับเบิล (Hubble Constant)
 
-ตามแบบจำลอง FLRW (Friedmann-Lemaître-Robertson-Walker Metric) พลวัตการขยายตัวของเอกภพถูกกำหนดด้วย \textbf{สเกลแฟกเตอร์ $a(t)$} ผ่านสมการฟรีดมันน์:
+ตามแบบจำลอง FLRW (Friedmann-Lemaître-Robertson-Walker Metric) พลวัตการขยายตัวของเอกภพถูกกำหนดด้วย \textbf{สเกลแฟกเตอร์ $a(t)$} ผ่านสมการฟรีดมันน์
 \begin{equation}
 H^2(t) = \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3} \rho - \frac{k c^2}{a^2} + \frac{\Lambda c^2}{3}
 \end{equation}
@@ -215,12 +215,12 @@ H^2(t) = \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3} \rho - \frac{k c^2}
 \label{fig:cosmological_models}
 \end{figure}
 
-\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: Spacetime Curvature \& Lensing}
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR Spacetime Curvature and Lensing}
 \index{WebXR}
 \index{Black Hole AR}
 
 \begin{arbox}[การจำลองการบิดโค้งของปริภูมิเวลาและเลนส์โน้มถ่วงรอบหลุมดำ 3 มิติ]
-\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR}
 \begin{enumerate}
     \item แสดงหลุมดำมวลยิ่งยวดพร้อมจานสะสมมวล (Accretion Disk) เรืองแสงและปรากฏการณ์เงาหลุมดำ (Black Hole Shadow)
     \item ใช้ GLSL Custom Shader จำลองการหักเหของเส้นทางแสง (Gravitational Lensing) จากดวงดาวพื้นหลังรอบขอบฟ้าเหตุการณ์
@@ -228,7 +228,7 @@ H^2(t) = \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3} \rho - \frac{k c^2}
 \end{enumerate}
 \end{arbox}
 
-\section{การคำนวณเชิงตัวเลขด้วย Python: Friedmann Universe Expansion}
+\section{การคำนวณเชิงตัวเลขด้วย Python Friedmann Universe Expansion}
 \index{Python}
 \index{Cosmology Solver}
 

@@ -16,7 +16,7 @@
     \item วิวัฒนาการและบทบาทของ WebXR ในการศึกษาฟิสิกส์
     \item วงจรชีวิตของ WebXR Session และการเรนเดอร์ 3 มิติ
     \item การควบคุมแบบไร้สัมผัสด้วย MediaPipe Hands
-    \item วิศวกรรมลูปประสิทธิภาพสูง (Zero-GC Loop Engineering)
+    \item วิศวกรรมลูปประสิทธิภาพสูง
     \item ตัวอย่างโค้ดระบบเต็ม แบบจำลองอะตอมบอร์เสมือนจริงใน WebXR
     \item ตัวอย่างการแก้ปัญหาเชิงเทคนิคตามระเบียบวิธี P-S-C-T
     \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
@@ -201,14 +201,14 @@ MediaPipe Hands ของ Google ใช้โครงข่ายประส�
 \label{fig:mediapipe_hand_landmarks}
 \end{figure}
 
-\section{วิศวกรรมลูปประสิทธิภาพสูง (Zero-GC Loop Engineering)}
+\section{วิศวกรรมลูปประสิทธิภาพสูง}
 \index{Zero-GC}
 \index{Garbage Collection}
 
-ในแอนิเมชัน 60 FPS เบราว์เซอร์มีเวลาประมวลผลเพียง $16.67\text{ ms}$ ต่อเฟรม หากโค้ดสร้างอ็อบเจกต์ใหม่ในลูป เช่น \texttt{new THREE.Vector3()} ขยะในหน่วยความจำจะสะสมอย่างรวดเร็วและกระตุ้นการทำงานของ Garbage Collector (GC Pause) ส่งผลให้ภาพกระตุกอย่างรุนแรง
+\textbf{วิศวกรรมลูปประสิทธิภาพสูง (Zero-GC Loop Engineering)} ในแอนิเมชัน 60 FPS เบราว์เซอร์มีเวลาประมวลผลเพียง $16.67\text{ ms}$ ต่อเฟรม หากโค้ดสร้างอ็อบเจกต์ใหม่ในลูป เช่น \texttt{new THREE.Vector3()} ขยะในหน่วยความจำจะสะสมอย่างรวดเร็วและกระตุ้นการทำงานของ Garbage Collector (GC Pause) ส่งผลให้ภาพกระตุกอย่างรุนแรง
 
 \begin{pitfallbox}[การจัดสรรหน่วยความจำในลูปแอนิเมชัน 60 FPS]
-\textbf{ข้อพึงปฏิบัติอย่างเคร่งครัด:}
+\textbf{ข้อพึงปฏิบัติอย่างเคร่งครัด}
 \begin{itemize}
     \item ประกาศตัวแปรชั่วคราว เช่น เวกเตอร์และเมทริกซ์ ไว้นอกลูปหลักเสมอ (Global/Module Scope Scratchpad)
     \item ใช้เมธอด \texttt{.copy()}, \texttt{.set()}, หรือ \texttt{.add()} แทนการสร้างอินสแตนซ์ใหม่
@@ -216,7 +216,7 @@ MediaPipe Hands ของ Google ใช้โครงข่ายประส�
 \end{itemize}
 \end{pitfallbox}
 
-\section{ตัวอย่างโค้ดระบบเต็ม: แบบจำลองอะตอมบอร์เสมือนจริงใน WebXR}
+\section{ตัวอย่างโค้ดระบบเต็ม แบบจำลองอะตอมบอร์เสมือนจริงใน WebXR}
 \index{Bohr Atom AR}
 \index{JavaScript}
 

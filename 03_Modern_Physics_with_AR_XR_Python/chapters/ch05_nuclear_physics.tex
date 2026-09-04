@@ -14,11 +14,11 @@
 \noindent\textbf{หัวข้อเนื้อหาประจำบท}
 \begin{enumerate}
     \item สมบัติของนิวเคลียสและพลังงานยึดเหนี่ยว
-    \item แบบจำลองหยดของเหลวและสูตรมวลไวซ์แซคเกอร์ (SEMF)
-    \item กัมมันตภาพรังสีและสมการลูกโซ่ของเบตแมน (Bateman Equations)
+    \item แบบจำลองหยดของเหลวและสูตรมวลไวซ์แซคเกอร์
+    \item กัมมันตภาพรังสีและสมการลูกโซ่ของเบตแมน
     \item ปฏิกิริยานิวเคลียร์ฟิชชันและฟิวชัน
-    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: Nuclear Chain Reaction Simulator
-    \item การคำนวณเชิงตัวเลขด้วย Python: Bateman Decay Chain Solver
+    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR Nuclear Chain Reaction Simulator
+    \item การคำนวณเชิงตัวเลขด้วย Python Bateman Decay Chain Solver
     \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
     \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
 \end{enumerate}
@@ -115,15 +115,15 @@ B = \Delta m \cdot c^2 = \left[ Z m_p + (A - Z) m_n - M(A, Z) \right] c^2
 \label{fig:binding_energy_curve}
 \end{figure}
 
-\section{แบบจำลองหยดของเหลวและสูตรมวลไวซ์แซคเกอร์ (SEMF)}
+\section{แบบจำลองหยดของเหลวและสูตรมวลไวซ์แซคเกอร์}
 \index{SEMF}
 \index{แบบจำลองหยดของเหลว}
 
-คาร์ล ฟรีดริช ฟอน ไวซ์แซคเกอร์ (Carl Friedrich von Weizsäcker) เสนอสูตรมวลกึ่งเชิงประจักษ์ (Semi-Empirical Mass Formula: SEMF) โดยมองนิวเคลียสเสมือนหยดของเหลวที่มีแรงตึงผิวและประจุไฟฟ้า:
+\textbf{แบบจำลองหยดของเหลวและสูตรมวลไวซ์แซคเกอร์ (Semi-Empirical Mass Formula, SEMF)} เสนอโดย คาร์ล ฟรีดริช ฟอน ไวซ์แซคเกอร์ (Carl Friedrich von Weizsäcker) โดยมองนิวเคลียสเสมือนหยดของเหลวที่มีแรงตึงผิวและประจุไฟฟ้า
 \begin{equation}
 B(A, Z) = a_v A - a_s A^{2/3} - a_c \frac{Z(Z-1)}{A^{1/3}} - a_a \frac{(A - 2Z)^2}{A} + \delta(A, Z)
 \end{equation}
-โดยที่ค่าคงที่จากการทดลองโดยประมาณคือ:
+โดยที่ค่าคงที่จากการทดลองโดยประมาณคือ
 \begin{itemize}
     \item $a_v \approx 15.8\text{ MeV}$ (พจน์ปริมาตร: Volume Term)
     \item $a_s \approx 18.3\text{ MeV}$ (พจน์พื้นที่ผิว: Surface Term)
@@ -132,22 +132,22 @@ B(A, Z) = a_v A - a_s A^{2/3} - a_c \frac{Z(Z-1)}{A^{1/3}} - a_a \frac{(A - 2Z)^
     \item $\delta(A, Z)$ คือพจน์การจับคู่ (Pairing Term): เป็น $+a_p A^{-1/2}$ สำหรับคู่-คู่, $0$ สำหรับคี่-คู่, และ $-a_p A^{-1/2}$ สำหรับคี่-คี่
 \end{itemize}
 
-\section{กัมมันตภาพรังสีและสมการลูกโซ่ของเบตแมน (Bateman Equations)}
+\section{กัมมันตภาพรังสีและสมการลูกโซ่ของเบตแมน}
 \index{กัมมันตภาพรังสี}
 \index{สมการเบตแมน}
 \index{ครึ่งชีวิต}
 
-กฎการสลายตัวของสารกัมมันตรังสีชนิดเดียวคือ:
+\textbf{กัมมันตภาพรังสีและสมการลูกโซ่ของเบตแมน (Bateman Equations)} กฎการสลายตัวของสารกัมมันตรังสีชนิดเดียวคือ
 \begin{equation}
 N(t) = N_0 e^{-\lambda t} = N_0 2^{-t/t_{1/2}}
 \end{equation}
 โดยที่ $\lambda = \frac{\ln 2}{t_{1/2}}$ คือค่าคงตัวการสลายตัว (Decay Constant)
 
-ในกรณีการสลายตัวต่อเนื่องเป็นลูกโซ่ ($N_1 \xrightarrow{\lambda_1} N_2 \xrightarrow{\lambda_2} N_3 \xrightarrow{\lambda_3} \dots$):
+ในกรณีการสลายตัวต่อเนื่องเป็นลูกโซ่ ($N_1 \xrightarrow{\lambda_1} N_2 \xrightarrow{\lambda_2} N_3 \xrightarrow{\lambda_3} \dots$)
 \begin{equation}
 \frac{dN_1}{dt} = -\lambda_1 N_1, \quad \frac{dN_2}{dt} = \lambda_1 N_1 - \lambda_2 N_2, \quad \frac{dN_3}{dt} = \lambda_2 N_2 - \lambda_3 N_3
 \end{equation}
-แฮร์รี เบตแมน (Harry Bateman) ได้แก้สมการเชิงอนุพันธ์นี้ในรูปผลเฉลยแม่นตรง:
+แฮร์รี เบตแมน (Harry Bateman) ได้แก้สมการเชิงอนุพันธ์นี้ในรูปผลเฉลยแม่นตรง
 \begin{equation}
 N_n(t) = \sum_{i=1}^n c_i e^{-\lambda_i t}, \quad c_i = N_1(0) \left[ \prod_{j=1}^{n-1} \lambda_j \right] \prod_{j=1, j \neq i}^n \frac{1}{\lambda_j - \lambda_i}
 \end{equation}
@@ -194,8 +194,8 @@ N_n(t) = \sum_{i=1}^n c_i e^{-\lambda_i t}, \quad c_i = N_1(0) \left[ \prod_{j=1
 \index{ฟิวชัน}
 \index{เกณฑ์ของลอว์สัน}
 
-\subsection{นิวเคลียร์ฟิชชัน (Nuclear Fission)}
-เมื่อยูเรเนียม-235 จับนิวตรอนช้า (Thermal Neutron) จะเกิดการแตกตัวให้นิวเคลียสขนาดกลางและนิวตรอนความเร็วสูง 2--3 ตัว เช่น:
+\subsection{นิวเคลียร์ฟิชชัน}
+\textbf{นิวเคลียร์ฟิชชัน (Nuclear Fission)} เมื่อยูเรเนียม-235 จับนิวตรอนช้า (Thermal Neutron) จะเกิดการแตกตัวให้นิวเคลียสขนาดกลางและนิวตรอนความเร็วสูง 2--3 ตัว เช่น
 \begin{equation}
 ^{235}_{\ 92}\text{U} + ^1_0\text{n} \to ^{236}_{\ 92}\text{U}^* \to ^{141}_{\ 56}\text{Ba} + ^{92}_{36}\text{Kr} + 3 ^1_0\text{n} + Q
 \end{equation}
@@ -249,27 +249,27 @@ N_n(t) = \sum_{i=1}^n c_i e^{-\lambda_i t}, \quad c_i = N_1(0) \left[ \prod_{j=1
 \label{fig:fission_stages}
 \end{figure}
 
-\subsection{นิวเคลียร์ฟิวชัน (Nuclear Fusion)}
-ปฏิกิริยารวมตัวของนิวเคลียสเบา เช่น วงจรดิวเทอเรียม-ทริเทียม (D-T):
+\subsection{นิวเคลียร์ฟิวชัน}
+\textbf{นิวเคลียร์ฟิวชัน (Nuclear Fusion)} ปฏิกิริยารวมตัวของนิวเคลียสเบา เช่น วงจรดิวเทอเรียม-ทริเทียม (D-T)
 \begin{equation}
 ^2_1\text{H} + ^3_1\text{H} \to ^4_2\text{He} + ^1_0\text{n} + 17.6\text{ MeV}
 \end{equation}
-\textbf{เกณฑ์ของลอว์สัน (Lawson Criterion)} ระบุเงื่อนไขการจุดระเบิดฟิวชันแบบพึ่งพาตัวเอง (Ignition):
+\textbf{เกณฑ์ของลอว์สัน (Lawson Criterion)} ระบุเงื่อนไขการจุดระเบิดฟิวชันแบบพึ่งพาตัวเอง (Ignition)
 \begin{equation}
 n \cdot T \cdot \tau_E \ge 3 \times 10^{21}\text{ keV}\cdot\text{s}\cdot\text{m}^{-3}
 \end{equation}
 โดยที่ $n$ คือความหนาแน่นของพลาสมา, $T$ คืออุณหภูมิ, และ $\tau_E$ คือเวลาการกักเก็บพลังงาน
 
-\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: Nuclear Chain Reaction Simulator}
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR Nuclear Chain Reaction Simulator}
 \index{WebXR}
 \index{Fission AR}
 
 \begin{arbox}[การจำลองปฏิกิริยาลูกโซ่นิวเคลียร์ฟิชชัน 3 มิติ แบบ Real-Time]
-\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR}
 \begin{enumerate}
     \item แสดงก้อนมวลยูเรเนียม $^{235}\text{U}$ เสริมสมรรถนะในรูปทรงลูกบาศก์ 3 มิติ ลอยตัวในห้องจริง
     \item เมื่อผู้เรียนยิงนิวตรอนเข้าสู่ก้อนมวล ระบบจะทำการจำลองการแตกตัวแบบ Monte Carlo Particle Cascade แบบ 60 FPS
-    \item ผู้เรียนสามารถเลื่อนแท่งควบคุมนิวตรอน (Control Rods) ที่ทำจากแคดเมียมหรือโบรอนเข้า-ออก เพื่อสังเกตค่าตัวคูณการคูณจำนวนนิวตรอนประสิทธิผล $k_{\text{eff}}$:
+    \item ผู้เรียนสามารถเลื่อนแท่งควบคุมนิวตรอน (Control Rods) ที่ทำจากแคดเมียมหรือโบรอนเข้า-ออก เพื่อสังเกตค่าตัวคูณการคูณจำนวนนิวตรอนประสิทธิผล $k_{\text{eff}}$ ดังนี้
     \begin{itemize}
         \item $k_{\text{eff}} < 1$ : สภาวะต่ำกว่าวิกฤต (Subcritical) ปฏิกิริยามอดดับลง
         \item $k_{\text{eff}} = 1$ : สภาวะวิกฤต (Critical) เครื่องปฏิกรณ์เดินเครื่องด้วยกำลังคงที่
@@ -278,7 +278,7 @@ n \cdot T \cdot \tau_E \ge 3 \times 10^{21}\text{ keV}\cdot\text{s}\cdot\text{m}
 \end{enumerate}
 \end{arbox}
 
-\section{การคำนวณเชิงตัวเลขด้วย Python: Bateman Decay Chain Solver}
+\section{การคำนวณเชิงตัวเลขด้วย Python Bateman Decay Chain Solver}
 \index{Python}
 \index{Bateman Solver}
 

@@ -14,11 +14,11 @@
 \noindent\textbf{หัวข้อเนื้อหาประจำบท}
 \begin{enumerate}
     \item อันตรกิริยามูลฐาน 4 แรงในธรรมชาติ
-    \item แบบจำลองมาตรฐาน (The Standard Model)
-    \item ฮาดรอนและโครงสร้างควาร์ก (Hadrons: Baryons and Mesons)
-    \item แผนภาพไฟน์แมน (Feynman Diagrams)
-    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Hadron Structure
-    \item การคำนวณเชิงตัวเลขด้วย Python: Invariant Mass Reconstruction
+    \item แบบจำลองมาตรฐาน
+    \item ฮาดรอนและโครงสร้างควาร์ก
+    \item แผนภาพไฟน์แมน
+    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR 3D Hadron Structure
+    \item การคำนวณเชิงตัวเลขด้วย Python Invariant Mass Reconstruction
     \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
     \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
 \end{enumerate}
@@ -82,23 +82,23 @@
 \label{tab:four_fundamental_forces}
 \end{table}
 
-\section{แบบจำลองมาตรฐาน (The Standard Model)}
+\section{แบบจำลองมาตรฐาน}
 \index{ควาร์ก}
 \index{เลปตอน}
 \index{แฟร์มิออน}
 
-แบบจำลองมาตรฐานคือทฤษฎีควอนตัมสนาม (Quantum Field Theory) ที่อธิบายอนุภาคพื้นฐานที่เป็นองค์ประกอบของสสารและแรงสื่อสาร (ยกเว้นแรงโน้มถ่วง) อนุภาคในแบบจำลองมาตรฐานแบ่งเป็น 2 กลุ่มใหญ่ตามค่าสปิน:
+\textbf{แบบจำลองมาตรฐาน (The Standard Model)} คือทฤษฎีควอนตัมสนาม (Quantum Field Theory) ที่อธิบายอนุภาคพื้นฐานที่เป็นองค์ประกอบของสสารและแรงสื่อสาร (ยกเว้นแรงโน้มถ่วง) อนุภาคในแบบจำลองมาตรฐานแบ่งเป็น 2 กลุ่มใหญ่ตามค่าสปิน ดังนี้
 
-\subsection{แฟร์มิออน (Fermions: สปิน $s = 1/2$)}
-เป็นอนุภาคที่สร้างสสาร เป็นไปตามหลักการกีดกันของเพาลี (Pauli Exclusion Principle) แบ่งออกเป็น 3 ยุค (Generations):
+\subsection{แฟร์มิออน}
+\textbf{แฟร์มิออน (Fermions: สปิน $s = 1/2$)} เป็นอนุภาคที่สร้างสสาร เป็นไปตามหลักการกีดกันของเพาลี (Pauli Exclusion Principle) แบ่งออกเป็น 3 ยุค (Generations) ดังนี้
 \begin{itemize}
-    \item \textbf{ควาร์ก (Quarks):} มีประจุเศษส่วนและมีประจุสี (Color Charge: แดง เขียว น้ำเงิน) ประกอบด้วย:
+    \item \textbf{ควาร์ก (Quarks):} มีประจุเศษส่วนและมีประจุสี (Color Charge: แดง เขียว น้ำเงิน) ประกอบด้วย
     \begin{itemize}
         \item รุ่นที่ 1: อัพ ($u, +2/3e$) และ ดาวน์ ($d, -1/3e$)
         \item รุ่นที่ 2: ชาร์ม ($c, +2/3e$) และ สเตรนจ์ ($s, -1/3e$)
         \item รุ่นที่ 3: ท็อป ($t, +2/3e$) และ บอตทอม ($b, -1/3e$)
     \end{itemize}
-    \item \textbf{เลปตอน (Leptons):} ไม่มีประจุสี ไม่ทำอันตรกิริยาอย่างเข้ม ประกอบด้วย:
+    \item \textbf{เลปตอน (Leptons):} ไม่มีประจุสี ไม่ทำอันตรกิริยาอย่างเข้ม ประกอบด้วย
     \begin{itemize}
         \item รุ่นที่ 1: อิเล็กตรอน ($e^-$) และ อิเล็กตรอนนิวทริโน ($\nu_e$)
         \item รุ่นที่ 2: มิวออน ($\mu^-$) และ มิวออนนิวทริโน ($\nu_\mu$)
@@ -106,11 +106,11 @@
     \end{itemize}
 \end{itemize}
 
-\subsection{เกจโบซอน (Gauge Bosons: สปิน $s = 1$)}
-อนุภาคสื่อแรงตามสมมาตรเกจ $SU(3)_C \times SU(2)_L \times U(1)_Y$: โฟตอน ($\gamma$), กลูออน ($g$), โบซอนเวกเตอร์ $W^{\pm}$ และ $Z^0$
+\subsection{เกจโบซอน}
+\textbf{เกจโบซอน (Gauge Bosons: สปิน $s = 1$)} อนุภาคสื่อแรงตามสมมาตรเกจ $SU(3)_C \times SU(2)_L \times U(1)_Y$: โฟตอน ($\gamma$), กลูออน ($g$), โบซอนเวกเตอร์ $W^{\pm}$ และ $Z^0$
 
-\subsection{สเกลาร์โบซอน: ฮิกส์โบซอน (Higgs Boson: สปิน $s = 0$)}
-ค้นพบที่เซิร์น (CERN LHC) ในปี ค.ศ. 2012 มวลประมาณ $125.1\text{ GeV}/c^2$ ทำหน้าที่ให้มวลแก่อนุภาคผ่านกลไกการทำลายสมมาตรทางไฟฟ้า-อ่อนอย่างเกิดขึ้นเอง (Spontaneous Symmetry Breaking)
+\subsection{สเกลาร์โบซอน ฮิกส์โบซอน}
+\textbf{ฮิกส์โบซอน (Higgs Boson: สปิน $s = 0$)} ค้นพบที่เซิร์น (CERN LHC) ในปี ค.ศ. 2012 มวลประมาณ $125.1\text{ GeV}/c^2$ ทำหน้าที่ให้มวลแก่อนุภาคผ่านกลไกการทำลายสมมาตรทางไฟฟ้า-อ่อนอย่างเกิดขึ้นเอง (Spontaneous Symmetry Breaking)
 
 \begin{figure}[H]
 \centering
@@ -200,15 +200,15 @@
 \label{fig:standard_model_grid}
 \end{figure}
 
-\section{ฮาดรอนและโครงสร้างควาร์ก (Hadrons: Baryons and Mesons)}
+\section{ฮาดรอนและโครงสร้างควาร์ก}
 \index{ฮาดรอน}
 \index{แบริออน}
 \index{เมซอน}
 \index{การกักขังประจุสี}
 
-เนื่องจากปรากฏการณ์ \textbf{การกักขังประจุสี (Color Confinement)} ในทฤษฎีควอนตัมโครโมไดนามิกส์ (QCD) ควาร์กเดี่ยวไม่สามารถปรากฏอยู่อย่างอิสระได้ ควาร์กจึงต้องรวมตัวกันเป็นกลุ่มที่ประจุสีรวมเป็นกลาง เรียกว่า \textbf{ฮาดรอน (Hadrons)}:
+\textbf{ฮาดรอนและโครงสร้างควาร์ก (Hadrons: Baryons and Mesons)} เนื่องจากปรากฏการณ์ \textbf{การกักขังประจุสี (Color Confinement)} ในทฤษฎีควอนตัมโครโมไดนามิกส์ (QCD) ควาร์กเดี่ยวไม่สามารถปรากฏอยู่อย่างอิสระได้ ควาร์กจึงต้องรวมตัวกันเป็นกลุ่มที่ประจุสีรวมเป็นกลาง เรียกว่า \textbf{ฮาดรอน (Hadrons)} ดังนี้
 \begin{enumerate}
-    \item \textbf{แบริออน (Baryons):} ประกอบด้วย 3 ควาร์ก ($qqq$) เช่น:
+    \item \textbf{แบริออน (Baryons):} ประกอบด้วย 3 ควาร์ก ($qqq$) เช่น
     \begin{itemize}
         \item โปรตอน ($p$): มีโครงสร้างควาร์กเป็น $uud$ (ประจุรวม $= +2/3 + 2/3 - 1/3 = +1$)
         \item นิวตรอน ($n$): มีโครงสร้างควาร์กเป็น $udd$ (ประจุรวม $= +2/3 - 1/3 - 1/3 = 0$)
@@ -251,15 +251,15 @@
 \label{fig:proton_quarks}
 \end{figure}
 
-\section{แผนภาพไฟน์แมน (Feynman Diagrams)}
+\section{แผนภาพไฟน์แมน}
 \index{แผนภาพไฟน์แมน}
 \index{การสลายตัวบีตา}
 
-ริชาร์ด ไฟน์แมน (Richard P. Feynman) ได้ประดิษฐ์แผนภาพเชิงภาพที่ทรงอานุภาพเพื่อคำนวณแอมพลิจูดการกระเจิงของอนุภาคในทฤษฎีควอนตัมสนาม ตัวอย่างคลาสสิกคือ \textbf{การสลายตัวบีตาลบ (Beta-minus Decay)} ของนิวตรอนเป็นโปรตอน:
+\textbf{แผนภาพไฟน์แมน (Feynman Diagrams)} ริชาร์ด ไฟน์แมน (Richard P. Feynman) ได้ประดิษฐ์แผนภาพเชิงภาพที่ทรงอานุภาพเพื่อคำนวณแอมพลิจูดการกระเจิงของอนุภาคในทฤษฎีควอนตัมสนาม ตัวอย่างคลาสสิกคือ \textbf{การสลายตัวบีตาลบ (Beta-minus Decay)} ของนิวตรอนเป็นโปรตอน
 \begin{equation}
 n \to p + e^- + \bar{\nu}_e
 \end{equation}
-ในระดับควาร์ก ปฏิกิริยานี้คือควาร์กดาวน์เปลี่ยนเป็นควาร์กอัพผ่านการปลดปล่อยโบซอนเสมือน $W^-$:
+ในระดับควาร์ก ปฏิกิริยานี้คือควาร์กดาวน์เปลี่ยนเป็นควาร์กอัพผ่านการปลดปล่อยโบซอนเสมือน $W^-$
 \begin{equation}
 d \to u + W^- \to u + e^- + \bar{\nu}_e
 \end{equation}
@@ -336,12 +336,12 @@ d \to u + W^- \to u + e^- + \bar{\nu}_e
 \label{fig:feynman_muon_pair}
 \end{figure}
 
-\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Hadron Structure}
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR 3D Hadron Structure}
 \index{WebXR}
 \index{Hadron AR}
 
 \begin{arbox}[การจำลองโครงสร้าง 3D ควาร์ก-กลูออน และเครื่องเร่งอนุภาคชนกัน]
-\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR}
 \begin{enumerate}
     \item แสดงการจัดเรียงควาร์ก 3 มิติ ภายในโปรตอน นิวตรอน และไพออน พร้อมสนามพลังสี (Flux Tube / Color String) เชื่อมต่อกัน
     \item เมื่อผู้เรียนใช้มือจำลองดึงควาร์กตัวหนึ่งออกจากกลุ่ม พลังงานศักย์ของเส้นแรงกลูออนจะเพิ่มขึ้นเป็นเส้นตรง ($V(r) = \sigma r$) จนกระทั่งเกิดปรากฏการณ์ \textbf{String Breaking} กลายเป็นคู่ควาร์ก-แอนติควาร์กใหม่
@@ -349,12 +349,12 @@ d \to u + W^- \to u + e^- + \bar{\nu}_e
 \end{enumerate}
 \end{arbox}
 
-\section{การคำนวณเชิงตัวเลขด้วย Python: Invariant Mass Reconstruction}
+\section{การคำนวณเชิงตัวเลขด้วย Python Invariant Mass Reconstruction}
 \index{Python}
 \index{LHC}
 \index{มวลคงตัว}
 
-ในฟิสิกส์พลังงานสูง เมื่ออนุภาคที่ไม่เสถียร (เช่น ฮิกส์โบซอน $H^0$) สลายตัวอย่างรวดเร็วเป็นสองโฟตอน ($H^0 \to \gamma_1 + \gamma_2$) นักฟิสิกส์จะคำนวณ \textbf{มวลคงตัว (Invariant Mass, $M$)}:
+ในฟิสิกส์พลังงานสูง เมื่ออนุภาคที่ไม่เสถียร (เช่น ฮิกส์โบซอน $H^0$) สลายตัวอย่างรวดเร็วเป็นสองโฟตอน ($H^0 \to \gamma_1 + \gamma_2$) นักฟิสิกส์จะคำนวณ \textbf{มวลคงตัว (Invariant Mass, $M$)}
 \begin{equation}
 M^2 c^4 = (E_1 + E_2)^2 - (\mathbf{p}_1 + \mathbf{p}_2)^2 c^2 = 2 E_1 E_2 (1 - \cos\theta)
 \end{equation}

@@ -13,12 +13,12 @@
 
 \noindent\textbf{หัวข้อเนื้อหาประจำบท}
 \begin{enumerate}
-    \item จากบิตคลาสสิกสู่คิวบิต (Classical Bits vs. Qubits)
-    \item ทรงกลมบล็อค (The Bloch Sphere)
-    \item เกตควอนตัม 1 คิวบิต (Single-Qubit Quantum Gates)
-    \item ระบบหลายคิวบิตและความพัวพันควอนตัม (Quantum Entanglement)
-    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Interactive Bloch Sphere
-    \item การคำนวณเชิงตัวเลขด้วย Python: Quantum Statevector Simulator
+    \item จากบิตคลาสสิกสู่คิวบิต
+    \item ทรงกลมบล็อค
+    \item เกตควอนตัม 1 คิวบิต
+    \item ระบบหลายคิวบิตและความพัวพันควอนตัม
+    \item สถาปัตยกรรมการจำลองเสมือนจริง AR/XR 3D Interactive Bloch Sphere
+    \item การคำนวณเชิงตัวเลขด้วย Python Quantum Statevector Simulator
     \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
     \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
 \end{enumerate}
@@ -60,24 +60,24 @@
 
 \newpage
 
-\section{จากบิตคลาสสิกสู่คิวบิต (Classical Bits vs. Qubits)}
+\section{จากบิตคลาสสิกสู่คิวบิต}
 \index{คิวบิต}
 \index{การซ้อนทับควอนตัม}
 
-ในระบบคอมพิวเตอร์แบบดั้งเดิม หน่วยย่อยของสารสนเทศคือ \textbf{บิต (Bit)} ซึ่งมีค่าได้เพียงสองสถานะคือ $0$ หรือ $1$ เท่านั้น ทว่าในกลศาสตร์ควอนตัม หน่วยย่อยของข้อมูลเรียกว่า \textbf{คิวบิต (Qubit: Quantum Bit)} ซึ่งเป็นระบบควอนตัมสองระดับ (Two-Level Quantum System) ที่สามารถอยู่ในสภาวะ \textbf{การซ้อนทับเชิงเส้น (Superposition)}:
+\textbf{จากบิตคลาสสิกสู่คิวบิต (Classical Bits vs. Qubits)} ในระบบคอมพิวเตอร์แบบดั้งเดิม หน่วยย่อยของสารสนเทศคือ \textbf{บิต (Bit)} ซึ่งมีค่าได้เพียงสองสถานะคือ $0$ หรือ $1$ เท่านั้น ทว่าในกลศาสตร์ควอนตัม หน่วยย่อยของข้อมูลเรียกว่า \textbf{คิวบิต (Qubit: Quantum Bit)} ซึ่งเป็นระบบควอนตัมสองระดับ (Two-Level Quantum System) ที่สามารถอยู่ในสภาวะ \textbf{การซ้อนทับเชิงเส้น (Superposition)} ดังนี้
 \begin{equation}
 \ket{\psi} = \alpha \ket{0} + \beta \ket{1}
 \end{equation}
-โดยที่ $\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ และ $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$ คือสถานะฐานเชิงคำนวณ (Computational Basis States) ส่วน $\alpha, \beta \in \mathbb{C}$ คือแอมพลิจูดความน่าจะเป็น ซึ่งสอดคล้องกับเงื่อนไขนอร์แมลไลเซชัน:
+โดยที่ $\ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ และ $\ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$ คือสถานะฐานเชิงคำนวณ (Computational Basis States) ส่วน $\alpha, \beta \in \mathbb{C}$ คือแอมพลิจูดความน่าจะเป็น ซึ่งสอดคล้องกับเงื่อนไขนอร์แมลไลเซชัน
 \begin{equation}
 |\alpha|^2 + |\beta|^2 = 1
 \end{equation}
 เมื่อทำการวัดค่าคิวบิต ฟังก์ชันคลื่นจะยุบตัวลง (Wavefunction Collapse) โดยจะวัดได้ผลลัพธ์เป็น $0$ ด้วยความน่าจะเป็น $|\alpha|^2$ หรือได้ $1$ ด้วยความน่าจะเป็น $|\beta|^2$
 
-\section{ทรงกลมบล็อค (The Bloch Sphere)}
+\section{ทรงกลมบล็อค}
 \index{ทรงกลมบล็อค}
 
-เนื่องจากเงื่อนไข $|\alpha|^2 + |\beta|^2 = 1$ และเฟสรวมภายนอกไม่มีผลต่อการวัด เราจึงสามารถเขียนสถานะของ 1 คิวบิตให้อยู่ในรูปพิกัดเชิงขั้วบนพื้นผิวทรงกลมหน่วยหนึ่งมิติ เรียกว่า \textbf{ทรงกลมบล็อค (Bloch Sphere)}:
+\textbf{ทรงกลมบล็อค (Bloch Sphere)} เนื่องจากเงื่อนไข $|\alpha|^2 + |\beta|^2 = 1$ และเฟสรวมภายนอกไม่มีผลต่อการวัด เราจึงสามารถเขียนสถานะของ 1 คิวบิตให้อยู่ในรูปพิกัดเชิงขั้วบนพื้นผิวทรงกลมหน่วยหนึ่งมิติได้ดังนี้
 \begin{equation}
 \ket{\psi} = \cos\left(\frac{\theta}{2}\right) \ket{0} + e^{i\phi} \sin\left(\frac{\theta}{2}\right) \ket{1}
 \end{equation}
@@ -119,14 +119,14 @@
 \label{fig:bloch_sphere}
 \end{figure}
 
-\section{เกตควอนตัม 1 คิวบิต (Single-Qubit Quantum Gates)}
+\section{เกตควอนตัม 1 คิวบิต}
 \index{เกตควอนตัม}
 \index{เกตฮาดามาร์ด}
 \index{เพาลีเมทริกซ์}
 
-การเปลี่ยนแปลงสถานะของคิวบิตต้องรักษาขนาดความน่าจะเป็นรวมเป็น 1 เสมอ การดำเนินการจึงต้องเป็นไปตาม \textbf{เมทริกซ์เอกภาพ (Unitary Matrix, $U$)} โดยที่ $U^\dagger U = I$
+\textbf{เกตควอนตัม 1 คิวบิต (Single-Qubit Quantum Gates)} การเปลี่ยนแปลงสถานะของคิวบิตต้องรักษาขนาดความน่าจะเป็นรวมเป็น 1 เสมอ การดำเนินการจึงต้องเป็นไปตาม \textbf{เมทริกซ์เอกภาพ (Unitary Matrix, $U$)} โดยที่ $U^\dagger U = I$
 
-เกตเดี่ยวพื้นฐานที่สำคัญประกอบด้วย:
+เกตเดี่ยวพื้นฐานที่สำคัญประกอบด้วย
 \begin{enumerate}
     \item \textbf{เกตเพาลี (Pauli Gates):}
     \begin{equation}
@@ -135,23 +135,23 @@
     Z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
     \end{equation}
     โดยที่เกต $X$ ทำหน้าที่เสมือนเกต NOT ทางควอนตัม ($X\ket{0} = \ket{1}, X\ket{1} = \ket{0}$)
-    \item \textbf{เกตฮาดามาร์ด (Hadamard Gate, $H$):} ทำหน้าที่สร้างสถานะซ้อนทับเท่ากัน:
+    \item \textbf{เกตฮาดามาร์ด (Hadamard Gate, $H$):} ทำหน้าที่สร้างสถานะซ้อนทับเท่ากัน
     \begin{equation}
     H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \implies H\ket{0} = \frac{\ket{0} + \ket{1}}{\sqrt{2}} = \ket{+}, \quad H\ket{1} = \frac{\ket{0} - \ket{1}}{\sqrt{2}} = \ket{-}
     \end{equation}
 \end{enumerate}
 
-\section{ระบบหลายคิวบิตและความพัวพันควอนตัม (Quantum Entanglement)}
+\section{ระบบหลายคิวบิตและความพัวพันควอนตัม}
 \index{ความพัวพันควอนตัม}
 \index{เกต CNOT}
 \index{สถานะเบลล์}
 
-สถานะของระบบ 2 คิวบิตแสดงด้วยผลคูณเทนเซอร์ (Tensor Product):
+\textbf{ระบบหลายคิวบิตและความพัวพันควอนตัม (Quantum Entanglement)} สถานะของระบบ 2 คิวบิตแสดงด้วยผลคูณเทนเซอร์ (Tensor Product)
 \begin{equation}
 \ket{\Psi} = c_{00} \ket{00} + c_{01} \ket{01} + c_{10} \ket{10} + c_{11} \ket{11}
 \end{equation}
 
-\textbf{เกตควบคุม NOT (Controlled-NOT: CNOT):} มี 2 อินพุตคือ คิวบิตควบคุม (Control) และคิวบิตเป้าหมาย (Target) หากคิวบิตควบคุมเป็น 1 จะทำการกลับค่าคิวบิตเป้าหมาย:
+\textbf{เกตควบคุม NOT (Controlled-NOT, CNOT)} มี 2 อินพุตคือ คิวบิตควบคุม (Control) และคิวบิตเป้าหมาย (Target) หากคิวบิตควบคุมเป็น 1 จะทำการกลับค่าคิวบิตเป้าหมาย
 \begin{equation}
 \text{CNOT} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{pmatrix}
 \end{equation}
@@ -245,12 +245,12 @@
 \label{fig:quantum_teleportation}
 \end{figure}
 
-\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Interactive Bloch Sphere}
+\section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR 3D Interactive Bloch Sphere}
 \index{WebXR}
 \index{Bloch Sphere AR}
 
 \begin{arbox}[การจำลองทรงกลมบล็อคและเกตควอนตัม 3 มิติ ผ่าน WebXR]
-\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR:}
+\textbf{วัตถุประสงค์การเรียนรู้ผ่าน AR}
 \begin{enumerate}
     \item แสดงภาพทรงกลมบล็อคโปร่งใสลอยอยู่เหนือโต๊ะเรียนจริง พร้อมเวกเตอร์สถานะ $\ket{\psi}$ สีทอง
     \item ผู้เรียนใช้มือแตะเลือกเกต $X, Y, Z, H$ เพื่อดูการหมุน (Unitary Rotation) ของเวกเตอร์สถานะรอบแกนต่างๆ แบบเรียลไทม์
@@ -258,7 +258,7 @@
 \end{enumerate}
 \end{arbox}
 
-\section{การคำนวณเชิงตัวเลขด้วย Python: Quantum Statevector Simulator}
+\section{การคำนวณเชิงตัวเลขด้วย Python Quantum Statevector Simulator}
 \index{Python}
 \index{Statevector}
 
