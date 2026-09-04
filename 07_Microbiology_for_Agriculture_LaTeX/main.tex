@@ -1,59 +1,76 @@
-\documentclass[a4paper,16pt]{book}
-\input{preamble/preamble.tex}
-%\title{จุลชีววิทยาสำหรับการเกษตร}
-%\author{จิรภัทร  จันทมาลี}
-%\date{\thaidate}
-\begin{document}
-\input{coverpage}
-\clearpage
-\thispagestyle{empty} % ไม่แสดงเลขหน้าหรือส่วนหัว
-\mbox{Microbiology for Agriculture } \\
+\documentclass[12pt,a4paper,oneside]{book}
 
- \mbox{ผศ.ดร.จิรภัทร  จันทมาลี }
-\clearpage
-\pagenumbering{Roman}
-\input{prefaces/preface.tex}
-\input{prefaces/acknowledgements.tex}% กิตติกรรมประกาศ
+% นำเข้าแพ็กเกจสไตล์มาตรฐาน มรภ.รำไพพรรณี สาขาจุลชีววิทยาการเกษตร
+\usepackage{styles/microbiology_style}
+\usepackage{hanging}
+
+% การตั้งค่าภาษาและฟอนต์ไทยสำหรับ XeLaTeX
+\usepackage{fontspec}
+\setmainfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% การตั้งค่า Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=agriGreen,
+    citecolor=agriLeaf,
+    filecolor=agriGold,
+    urlcolor=agriBlue,
+    pdftitle={จุลชีววิทยาสำหรับการเกษตร - ผศ.ดร.จิรภัทร จันทมาลี},
+    pdfauthor={ผู้ช่วยศาสตราจารย์ ดร.จิรภัทร จันทมาลี}
+}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/cover}
+\input{frontmatter/title}
+\input{frontmatter/preface}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/syllabus}
 
 % สารบัญ
 \tableofcontents
 \clearpage
-
-\setstretch{1} %
-% สารบัญภาพ
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
-\addcontentsline{toc}{chapter}{สารบัญภาพ} % เพิ่มสารบัญภาพในสารบัญ
 \clearpage
-\setstretch{1} %
-% สารบัญตาราง
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
-\addcontentsline{toc}{chapter}{สารบัญตาราง} % เพิ่มสารบัญตารางในสารบัญ
 \clearpage
 
-% เริ่มนับเลขหน้าจาก 1 ในบทที่ 1
-\setcounter{page}{1}
-%% บทนำ
-%\input{chapters/introduction}
+\mainmatter
 
-%% บทต่างๆ
-\input{chapters/chapter1}
-\input{chapters/chapter2}
-\input{chapters/chapter3}
-\input{chapters/chapter4}
-\input{chapters/chapter5}
-\input{chapters/chapter6}
-\input{chapters/chapter7}
-\input{chapters/chapter8}
-\input{chapters/chapter9}
+% บทนำและเนื้อหาบทเรียน 9 บท
+\include{chapters/introduction}
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/chapter6}
+\include{chapters/chapter7}
+\include{chapters/chapter8}
+\include{chapters/chapter9}
 
-%% ภาคผนวก
+% ภาคผนวก
 \appendix
-\input{appendices/appendixA}
-\input{appendices/appendixB}
-\input{appendices/appendixC}
-\input{appendices/appendixD}
+\include{appendices/appendixA}
+\include{appendices/appendixB}
+\include{appendices/appendixC}
+\include{appendices/appendixD}
 
-%% บรรณานุกรม
-\bibliography{bibliography/references}
+% ส่วนท้ายเล่ม
+\backmatter
+\input{backmatter/references}
+
+% ดัชนีสืบค้นคำสำคัญ 2 ภาษา
+\printindex
+
+% ประวัติผู้เขียนอย่างเป็นทางการ (ผศ.ดร.จิรภัทร จันทมาลี)
+\input{backmatter/biography}
 
 \end{document}

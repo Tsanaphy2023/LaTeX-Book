@@ -1,0 +1,132 @@
+\chapter{การประยุกต์ใช้ AI และโอมิกส์สมัยใหม่ในจุลชีววิทยาการเกษตร}
+\label{chap:ch09}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 9
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 9}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 9}
+
+\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item ข้อจำกัดของการเพาะเลี้ยงแบบดั้งเดิมและการก้าวสู่ยุคโอมิกส์ (Omics Era)
+    \item เทคนิคดีเอ็นเอรหัสแท่ง (DNA Metabarcoding) 16S rRNA และ ITS
+    \item เมตาเจโนมิกส์แบบช็อตกัน (Shotgun Metagenomics) และการอ่านลำดับเบสแบบสายยาว (Nanopore)
+    \item ชีวสารสนเทศศาสตร์และการวิเคราะห์โครงสร้างความหลากหลายของชุมชนจุลินทรีย์
+    \item การประยุกต์ใช้ปัญญาประดิษฐ์ (AI) ในการพยากรณ์โรคพืชและประเมินดัชนีสุขภาพดิน
+\end{enumerate}
+
+\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{itemize}
+    \item อธิบายหลักการของปรากฏการณ์ The Great Plate Count Anomaly ได้
+    \item อธิบายขั้นตอนการสกัด DNA และการหาลำดับเบส 16S rRNA และ ITS ได้
+    \item วิเคราะห์ดัชนีความหลากหลายทางชีวภาพ (Alpha และ Beta Diversity) จากข้อมูลจีโนมได้
+    \item อธิบายการนำแบบจำลอง Machine Learning มาทำนายการระบาดของโรคพืชในแปลงเกษตรแม่นยำได้
+\end{itemize}
+
+\textbf{กิจกรรมการเรียนการสอน}
+\begin{itemize}
+    \item การบรรยายประกอบการสาธิตการใช้ฐานข้อมูลชีวสารสนเทศศาสตร์ (NCBI, SILVA, UNITE)
+    \item ปฏิบัติการคอมพิวเตอร์วิเคราะห์ข้อมูล FASTQ ด้วยโปรแกรม QIIME2 หรือ Galaxy Platform
+    \item การศึกษาแบบจำลองปัญญาประดิษฐ์ในการจำแนกกลุ่มดินอุดมสมบูรณ์จากโปรไฟล์ไมโครไบโอม
+\end{itemize}
+
+\textbf{สื่อการเรียนการสอน}
+\begin{itemize}
+    \item เอกสารคำสอนบทที่ 9 และผังกระบวนการวิเคราะห์เมตาเจโนมิกส์ด้วย AI
+    \item ชุดข้อมูลตัวอย่าง 16S rRNA Amplicon จากดินสวนทุเรียนภาคตะวันออก
+\end{itemize}
+
+\textbf{การประเมินผล}
+\begin{itemize}
+    \item การตรวจรายงานการวิเคราะห์และแปลผลกราฟความหลากหลายของจุลินทรีย์ดิน
+    \item การทดสอบความเข้าใจเกี่ยวกับอัลกอริทึม Machine Learning ในเกษตรแม่นยำ
+\end{itemize}
+
+\newpage
+
+% ==========================================================
+% เนื้อหาบทเรียน
+% ==========================================================
+
+\section{จากจุลชีววิทยาดั้งเดิมสู่ยุคโอมิกส์}
+\index{ยุคโอมิกส์ (Omics Era)}
+
+ในอดีต การศึกษาจุลินทรีย์ในดินอาศัยการแยกและเพาะเลี้ยงบนอาหารสังเคราะห์ในห้องปฏิบัติการ (Culture-dependent methods) ทว่านักจุลชีววิทยาได้ค้นพบปรากฏการณ์ที่เรียกว่า \textbf{The Great Plate Count Anomaly} ซึ่งระบุว่า จุลินทรีย์ที่อาศัยอยู่ในดินตามธรรมชาติมากกว่า 99\% เป็นจุลินทรีย์ที่ไม่สามารถเพาะเลี้ยงได้ในห้องปฏิบัติการ (Unculturable Microorganisms) ด้วยสูตรอาหารมาตรฐานในปัจจุบัน
+
+การก้าวเข้ามาของเทคโนโลยีพันธุศาสตร์ระดับโมเลกุลและการหาลำดับเบสดีเอ็นเอรุ่นใหม่ (Next-Generation Sequencing: NGS) ได้เปลี่ยนผ่านจุลชีววิทยาการเกษตรเข้าสู่ยุค \textbf{เมตาเจโนมิกส์ (Metagenomics)} ซึ่งเป็นการสกัดและวิเคราะห์สารพันธุกรรมทั้งหมดของชุมชนจุลินทรีย์โดยตรงจากตัวอย่างดินภาคสนาม ทำให้มนุษย์สามารถมองเห็น “สิ่งมีชีวิตที่ซ่อนเร้น (The Microbial Dark Matter)” ในดินได้อย่างครบถ้วนสมบูรณ์
+
+\section{เทคนิคดีเอ็นเอรหัสแท่งและเมตาเจโนมิกส์}
+\index{เมตาเจโนมิกส์ (Metagenomics)}
+
+การวิเคราะห์ไมโครไบโอมของดินในปัจจุบันใช้ 2 แนวทางหลัก:
+\begin{enumerate}
+    \item \textbf{แอมพลิคอนเมตาบาร์โคดดิง (Amplicon Metabarcoding)} การเพิ่มปริมาณชิ้นส่วนยีนจำเพาะด้วยเทคนิค PCR:
+    \begin{itemize}
+        \item ยีน \textbf{16S rRNA} บริเวณ V3--V4 สำหรับระบุชนิดของแบคทีเรียและอาร์เคีย
+        \item ชิ้นส่วน \textbf{ITS (Internal Transcribed Spacer)} สำหรับระบุชนิดของเชื้อรา
+    \end{itemize}
+    \item \textbf{ช็อตกันเมตาเจโนมิกส์ (Shotgun Metagenomics)} การตัดชิ้นส่วนดีเอ็นเอทั้งหมดในตัวอย่างดินแล้วนำมาหาลำดับเบสโดยตรง ทำให้ทราบทั้งชนิดของจุลินทรีย์ (Who is there?) และยีนการทำงานทางเมแทบอลิซึม (What can they do?) เช่น ยีนตรึงไนโตรเจน (\textit{nifH}) ยีนย่อยฟอสฟอรัส (\textit{phoD}) และยีนสังเคราะห์สารต้านจุลชีพ
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92]
+    % 1. Soil Sample
+    \node (soil) [rectangle, rounded corners=6pt, draw=agriEarth, fill=agriEarth!20, line width=1.4pt, minimum width=3.2cm, minimum height=1.0cm, align=center, font=\scriptsize\bfseries]
+        {1. ตัวอย่างดินเกษตร\\(Soil Sample)};
+
+    % 2. DNA Extraction
+    \node (dna) [rectangle, rounded corners=6pt, draw=agriGreen, fill=agriMint, line width=1.4pt, minimum width=3.2cm, minimum height=1.0cm, align=center, font=\scriptsize\bfseries, right=1.0cm of soil]
+        {2. สกัดดีเอ็นเอรวม\\(Total DNA Extraction)};
+
+    % 3. NGS Sequencing
+    \node (ngs) [rectangle, rounded corners=6pt, draw=agriBlue, fill=agriBlue!15, line width=1.4pt, minimum width=3.5cm, minimum height=1.0cm, align=center, font=\scriptsize\bfseries, right=1.0cm of dna]
+        {3. หาลำดับเบส (NGS)\\Illumina / Nanopore};
+
+    % 4. Bioinformatics
+    \node (bioinfo) [rectangle, rounded corners=6pt, draw=agriGold, fill=yellow!20, line width=1.4pt, minimum width=3.5cm, minimum height=1.0cm, align=center, font=\scriptsize\bfseries, below=1.6cm of ngs]
+        {4. ชีวสารสนเทศศาสตร์\\OTU/ASV \& Functional Profiling};
+
+    % 5. AI Machine Learning
+    \node (ai) [rectangle, rounded corners=6pt, draw=agriRed, fill=red!15, line width=1.5pt, minimum width=4.0cm, minimum height=1.2cm, align=center, font=\scriptsize\bfseries, left=1.2cm of bioinfo]
+        {5. ปัญญาประดิษฐ์ (AI)\\Random Forest / Deep Learning\\ทำนายดัชนีสุขภาพดิน};
+
+    % 6. Smart Farm Application
+    \node (farm) [rectangle, rounded corners=6pt, draw=agriLeaf, fill=agriLeaf!25, line width=1.5pt, minimum width=3.5cm, minimum height=1.2cm, align=center, font=\scriptsize\bfseries, left=1.2cm of ai]
+        {6. เกษตรแม่นยำ (Smart Farm)\\ปรับปรุงดินเฉพาะจุด\\เตือนภัยโรคระบาดล่วงหน้า};
+
+    % Connecting arrows
+    \draw[-{Stealth[scale=1.3]}, line width=1.6pt, color=agriEarth] (soil) -- (dna);
+    \draw[-{Stealth[scale=1.3]}, line width=1.6pt, color=agriGreen] (dna) -- (ngs);
+    \draw[-{Stealth[scale=1.3]}, line width=1.6pt, color=agriBlue] (ngs) -- (bioinfo);
+    \draw[-{Stealth[scale=1.3]}, line width=1.6pt, color=agriGold] (bioinfo) -- (ai);
+    \draw[-{Stealth[scale=1.3]}, line width=1.6pt, color=agriRed] (ai) -- (farm);
+\end{tikzpicture}
+\caption{ขั้นตอนการวิเคราะห์ชุมชนจุลินทรีย์ในดินด้วยเมตาเจโนมิกส์และปัญญาประดิษฐ์เพื่อเกษตรแม่นยำ}
+\label{fig:ai_metagenomics_pipeline}
+\end{figure}
+
+\section{ปัญญาประดิษฐ์กับจุลชีววิทยาการเกษตรแม่นยำ}
+\index{ปัญญาประดิษฐ์ในการเกษตร (AI in Agriculture)}
+
+ข้อมูลลำดับเบสระดับเมตาเจโนมิกส์มีขนาดมหาศาล (Big Omics Data) ซึ่งประกอบด้วยข้อมูลจุลินทรีย์หลายพันชนิดในแต่ละตัวอย่างดิน การนำเทคโนโลยีปัญญาประดิษฐ์ (AI) และการเรียนรู้ของเครื่อง (Machine Learning: ML) เช่น อัลกอริทึม Random Forest, Support Vector Machines (SVM) และโครงข่ายประสาทเทียมเชิงลึก (Deep Neural Networks) เข้ามาประมวลผล ก่อให้เกิดประโยชน์สำคัญ:
+\begin{enumerate}
+    \item \textbf{การสร้างดัชนีสุขภาพดินทางชีวภาพ (Soil Biological Health Index: SHI)} แบบจำลอง AI สามารถวิเคราะห์สัดส่วนจุลินทรีย์ที่เป็นประโยชน์และกลุ่มก่อโรค เพื่อให้คะแนนความสมบูรณ์ของดิน ทำให้เกษตรกรทราบสภาพดินล่วงหน้าก่อนการเพาะปลูก
+    \item \textbf{การพยากรณ์การเกิดโรคพืชล่วงหน้า (Early Disease Outbreak Prediction)} ตรวจจับการเพิ่มขึ้นของประชากรเชื้อก่อโรค เช่น \textit{Phytophthora} หรือ \textit{Ralstonia} ตั้งแต่ระยะเริ่มต้นที่พืชยังไม่แสดงอาการเหี่ยวเฉา ทำให้สามารถควบคุมได้ทันท่วงที
+    \item \textbf{การออกแบบสูตรหัวเชื้อจุลินทรีย์เฉพาะบุคคล (Customized Bio-Inoculants)} ปัญญาประดิษฐ์ช่วยจับคู่กลุ่มจุลินทรีย์สังเคราะห์ (Synthetic Communities: SynCom) ที่ทำงานเสริมฤทธิ์กันได้อย่างแม่นยำสำหรับชนิดพืชและชุดดินเฉพาะพื้นที่
+\end{enumerate}
+
+\begin{casestudy}{การใช้ Nanopore Sequencing ร่วมกับ AI ในสวนทุเรียนเมืองจันทบุรี}
+งานวิจัยร่วมระหว่างคณะเทคโนโลยีการเกษตร มหาวิทยาลัยราชภัฏรำไพพรรณี ได้ทดสอบการใช้เครื่องอ่านดีเอ็นเอขนาดพกพา Oxford Nanopore MinION ในการตรวจวิเคราะห์ดีเอ็นเอจุลินทรีย์ในแปลงทุเรียน ผลการวิเคราะห์ด้วยโมเดล Machine Learning สามารถจำแนกความแตกต่างของไมโครไบโอมระหว่างดินที่เกิดโรครากเน่าและดินที่มีสุขภาพดีได้แม่นยำถึง 94.2\% โดยพบว่าในดินสุขภาพดีมีประชากรเชื้อรา \textit{Trichoderma} และแบคทีเรีย \textit{Streptomyces} สูงกว่าแปลงที่มีโรคอย่างมีนัยสำคัญ
+\end{casestudy}
+
+\section*{คำถามทบทวนท้ายบทที่ 9}
+\addcontentsline{toc}{section}{คำถามทบทวนท้ายบทที่ 9}
+\begin{enumerate}
+    \item จงอธิบายสาเหตุของปรากฏการณ์ The Great Plate Count Anomaly ในจุลชีววิทยาของดิน
+    \item เหตุใดการวิเคราะห์ 16S rRNA จึงสามารถใช้จำแนกชนิดของแบคทีเรียในดินได้
+    \item ปัญญาประดิษฐ์ (AI) มีบทบาทอย่างไรในการนำข้อมูลขนาดใหญ่จากเมตาเจโนมิกส์มาประยุกต์ใช้ในการทำเกษตรแม่นยำ (Precision Agriculture)
+\end{enumerate}
+
+\clearpage

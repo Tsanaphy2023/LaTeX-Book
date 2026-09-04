@@ -1,0 +1,260 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/microbiology_style}[2026/09/04 RBRU Microbiology for Agriculture Style Standard]
+
+% 1. Page Geometry (มาตรฐาน มรภ.รำไพพรรณี: ซ้าย 1.5 นิ้ว, บน 1.5 นิ้ว, ขวา 1.0 นิ้ว, ล่าง 1.0 นิ้ว)
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=1.5in,
+    bottom=1.0in,
+    left=1.5in,
+    right=1.0in,
+    headheight=36pt,
+    headsep=14pt,
+    footskip=0.5in
+}
+
+% 1.1 Thai Linebreak & Hyphenation for XeLaTeX
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.5pt
+
+% 1.2 Thai Academic Terminology (มาตรฐานระเบียบวิชาการ มรภ.รำไพพรรณี)
+\renewcommand{\chaptername}{บทที่}
+\renewcommand{\figurename}{ภาพที่}
+\renewcommand{\tablename}{ตารางที่}
+\renewcommand{\contentsname}{สารบัญ}
+\renewcommand{\listfigurename}{สารบัญภาพ}
+\renewcommand{\listtablename}{สารบัญตาราง}
+\renewcommand{\appendixname}{ภาคผนวก}
+\renewcommand{\bibname}{บรรณานุกรม}
+\renewcommand{\indexname}{ดัชนีสืบค้นคำสำคัญ}
+
+% 2. Math & Science Packages
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+
+% 3. Graphics, TikZ, Tables & Floats
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{thaisep}{\quad}
+\captionsetup{labelsep=thaisep}
+\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=agriGreen}, textfont={bf}, labelsep=thaisep}
+\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=agriGreen}, textfont={bf}, labelsep=thaisep}
+
+% 3.1 Indexing System (ดัชนีสืบค้น 2 ภาษา)
+\RequirePackage{imakeidx}
+\makeindex[columns=2, title=ดัชนีสืบค้นคำสำคัญ, intoc]
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,patterns,decorations.pathmorphing,decorations.pathreplacing}
+
+% 4. Color Palette (Agricultural Microbiology & RBRU Green/Earth Identity)
+\RequirePackage{xcolor}
+\definecolor{agriGreen}{HTML}{1B5E20}       % Forest / Primary Deep Green
+\definecolor{agriLeaf}{HTML}{2E7D32}        % Chlorophyll / Plant Green
+\definecolor{agriEarth}{HTML}{4E342E}       % Soil / Humus Brown
+\definecolor{agriGold}{HTML}{D97706}        % Golden Grain / Accent
+\definecolor{agriMint}{HTML}{E8F5E9}        % Light Mint Cell Background
+\definecolor{agriSoftBg}{HTML}{F9FBE7}      % Pale Harvest Background
+\definecolor{agriBlue}{HTML}{0277BD}        % Water / Moisture Blue
+\definecolor{agriRed}{HTML}{C62828}         % Pathogen / Alert Red
+\definecolor{agriSlate}{HTML}{37474F}       % Slate Dark Grey for Text
+\definecolor{slateGrey}{HTML}{4A5568}       % Neutral Grey
+
+% 5. Section & Chapter Formatting
+\RequirePackage{enumitem}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{titlesec}
+\RequirePackage{setspace}
+\setstretch{1.2}
+
+% กล่องหัวบทวิชาการพร้อมภาพเวกเตอร์ชีววิทยาเกษตร (Chapter Banner Box with Bio-Vector)
+\newtcolorbox{chapterbannerbox}{
+    enhanced,
+    width=\textwidth,
+    arc=6pt,
+    boxrule=1pt,
+    colframe=agriGreen!90!black,
+    interior style={left color=agriGreen!98!black, right color=agriGreen!80!agriEarth},
+    colback=agriGreen,
+    borderline east={4pt}{0pt}{agriGold},
+    top=16pt, bottom=16pt, left=16pt, right=20pt,
+    drop shadow=black!10,
+    underlay={
+        \begin{tcbclipinterior}
+            \begin{scope}[opacity=0.20]
+                % ใบไม้และกิ่งก้านเวกเตอร์
+                \draw[green!40!white, line width=1.5pt] (0.5, 0.5) .. controls (2.0, 3.0) and (4.0, 1.0) .. (6.5, 4.5);
+                \draw[green!40!white, line width=1.0pt] (2.0, 2.0) .. controls (3.5, 3.5) .. (5.0, 3.0);
+                % เซลล์จุลินทรีย์ทรงกลมและแท่งจำลอง
+                \draw[fill=yellow!50!white, draw=white, line width=0.8pt] (1.2, 3.8) circle (0.4cm);
+                \draw[fill=cyan!50!white, draw=white, line width=0.8pt] (2.5, 4.5) circle (0.25cm);
+                \draw[fill=green!60!black, draw=white, rounded corners=6pt] (4.0, 1.0) rectangle (5.5, 1.8);
+                % เกลียวดีเอ็นเอจางๆ
+                \draw[orange!50!white, line width=0.8pt, domain=0:6, samples=50] plot (\x, {0.6*sin(\x*120) + 1.2});
+            \end{scope}
+        \end{tcbclipinterior}
+    }
+}
+
+% รูปแบบหัวบท Chapter Display (ตัดคำว่าหัวข้อ ตัด colon เคาะ 1 เคาะ ตัวเลข 44pt ชื่อบท 25pt ชิดขวา)
+\newcommand{\agrichapterbanner}[1]{%
+    \begin{chapterbannerbox}
+        \raggedleft
+        {\fontsize{44}{50}\selectfont\bfseries\color{white} \chaptername\ \thechapter\par}
+        \vspace{6pt}
+        {\color{agriGold}\rule{0.50\textwidth}{2pt}\par}
+        \vspace{6pt}
+        {\fontsize{25}{31}\selectfont\bfseries\color{white} #1\par}
+    \end{chapterbannerbox}
+}
+
+\newcommand{\agriunnumberedchapterbanner}[1]{%
+    \begin{chapterbannerbox}
+        \raggedleft
+        \vspace{4pt}
+        {\fontsize{28}{34}\selectfont\bfseries\color{white} #1\par}
+        \vspace{4pt}
+    \end{chapterbannerbox}
+}
+
+\titleformat{\chapter}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {\agrichapterbanner}
+
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont}
+  {}
+  {0pt}
+  {\agriunnumberedchapterbanner}
+
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
+
+% การจัดรูปแบบ Section และ Subsection (ตัดคำว่าหัวข้อ ตัด colon เคาะ 1 เคาะ)
+\titleformat{\section}
+    {\fontsize{18}{22}\bfseries\color{agriGreen}}
+    {\thesection}
+    {1em}
+    {}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+\titleformat{\subsection}
+    {\fontsize{15}{18}\bfseries\color{agriLeaf}}
+    {\thesubsection}
+    {0.8em}
+    {}
+\titlespacing*{\subsection}{0pt}{12pt}{6pt}
+
+\titleformat{\subsubsection}
+    {\fontsize{13}{16}\bfseries\color{agriEarth}}
+    {\thesubsubsection}
+    {0.6em}
+    {}
+\titlespacing*{\subsubsection}{0pt}{10pt}{4pt}
+
+% 6. Running Headers & Footers (fancyhdr)
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{agriGreen}\leaders\hrule height \headrulewidth\hfill}}
+
+\fancyhead[LE]{\small\bfseries\color{agriGreen} \thepage \quad \textbar \quad จุลชีววิทยาสำหรับการเกษตร}
+\fancyhead[RO]{\small\bfseries\color{agriGreen} \leftmark \quad \textbar \quad \thepage}
+\fancyfoot[C]{\small\color{slateGrey} มหาวิทยาลัยราชภัฏรำไพพรรณี}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \fancyfoot[C]{\small\bfseries\color{agriGreen} \thepage}
+}
+
+% 7. Academic Environments (กล่องสาระสำคัญทางการเกษตร)
+
+% 7.1 กล่องนิยามศัพท์จุลชีววิทยา (Definition Box)
+\newtcolorbox{definitionbox}[1]{
+    enhanced,
+    colback=agriMint!40!white,
+    colframe=agriGreen,
+    fonttitle=\bfseries\color{white},
+    title={\small นิยามสำคัญ \quad #1},
+    arc=4pt,
+    boxrule=1pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
+}
+
+% 7.2 กล่องเทคโนโลยีเกษตรกรรมเชิงปฏิบัติ (Agricultural Application Box)
+\newtcolorbox{agribox}[1]{
+    enhanced,
+    colback=agriSoftBg,
+    colframe=agriLeaf!90!black,
+    fonttitle=\bfseries\color{white},
+    title={\small การประยุกต์ใช้ทางการเกษตร \quad #1},
+    arc=4pt,
+    boxrule=1.2pt,
+    borderline west={4pt}{0pt}{agriGold},
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
+}
+
+% 7.3 กล่องกรณีศึกษาวิจัย (Case Study Box)
+\newtcolorbox{casestudy}[1]{
+    enhanced,
+    colback=blue!3!white,
+    colframe=agriBlue!85!black,
+    fonttitle=\bfseries\color{white},
+    title={\small กรณีศึกษางานวิจัย \quad #1},
+    arc=4pt,
+    boxrule=1pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
+}
+
+% 7.4 กล่องเตือนภัยโรคพืชและการจัดการ (Warning & Plant Disease Alert)
+\newtcolorbox{warningbox}[1]{
+    enhanced,
+    colback=red!4!white,
+    colframe=agriRed!85!black,
+    fonttitle=\bfseries\color{white},
+    title={\small ข้อควรระวังและการจัดการโรคพืช \quad #1},
+    arc=4pt,
+    boxrule=1.2pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
+}
+
+% 7.5 กล่องการคำนวณและตัวอย่าง (Worked Example Box)
+\newtcolorbox{worked}[1]{
+    enhanced,
+    colback=agriEarth!5!white,
+    colframe=agriEarth,
+    fonttitle=\bfseries\color{white},
+    title={\small ตัวอย่างการคำนวณและวิเคราะห์ \quad #1},
+    arc=4pt,
+    boxrule=1pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
+}
+
+% 8. Paragraph Formatting & Line Breaking
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+\endinput

@@ -1,0 +1,93 @@
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+    % 1. ภาพพื้นหลังไล่ระดับสีเขียวเข้มเกษตรกรรมธรรมชาติสู่เขียวมรกตและทอง
+    \fill[left color=agriGreen!98!black, right color=agriGreen!80!agriEarth] 
+        (current page.south west) rectangle (current page.north east);
+    
+    % 2. แถบกราฟิกศิลปะชีววิทยาและเกษตรกรรม (Artistic Wave & Plant Arc)
+    \shade[top color=agriLeaf, bottom color=agriGreen, opacity=0.35]
+        (current page.south west) .. controls ([yshift=8cm]current page.south west) and ([yshift=-4cm]current page.center) .. ([yshift=4cm]current page.east) -- (current page.north east) -- (current page.north west) -- cycle;
+
+    \shade[left color=agriGold!80!black, right color=agriLeaf, opacity=0.25]
+        ([yshift=-2cm]current page.north west) .. controls ([yshift=2cm]current page.center) .. ([yshift=-6cm]current page.south east) -- (current page.south east) -- (current page.south west) -- cycle;
+
+    % 3. เวกเตอร์เซลล์จุลินทรีย์ สปอร์รา และเกลียวดีเอ็นเอชีวภาพ (Microbial & DNA Motif)
+    \begin{scope}[opacity=0.22]
+        % วงแหวนและเซลล์จุลินทรีย์
+        \foreach \r in {1.5, 2.5, 3.8, 5.2} {
+            \draw[white, line width=0.8pt, dashed] ([xshift=4cm, yshift=-3cm]current page.center) circle (\r cm);
+        }
+        \draw[fill=agriGold, draw=white, line width=1pt] ([xshift=4cm, yshift=-3cm]current page.center) circle (0.9cm);
+        \draw[fill=agriMint, draw=white, line width=1pt] ([xshift=2.5cm, yshift=-1.5cm]current page.center) circle (0.5cm);
+        \draw[fill=yellow!60!white, draw=white, line width=1pt] ([xshift=5.8cm, yshift=-4.2cm]current page.center) circle (0.4cm);
+        \draw[fill=cyan!60!white, draw=white, line width=1pt] ([xshift=3.2cm, yshift=-5.0cm]current page.center) circle (0.35cm);
+        
+        % แบคทีเรียรูปท่อน (Bacillus rod shape)
+        \draw[fill=agriMint!80!white, draw=white, rounded corners=8pt, line width=1pt] ([xshift=-4cm, yshift=-8cm]current page.center) rectangle ++(2.2, 0.9);
+        \draw[fill=agriLeaf!80!white, draw=white, rounded corners=8pt, line width=1pt, rotate around={30:([xshift=-3cm, yshift=-6cm]current page.center)}] ([xshift=-3cm, yshift=-6cm]current page.center) rectangle ++(1.8, 0.7);
+        
+        % เส้นโค้งสายใยรา (Fungal Hyphae & Spores)
+        \draw[white, line width=1.5pt] ([xshift=-6cm, yshift=-2cm]current page.center) .. controls ([xshift=-2cm, yshift=1cm]current page.center) and ([xshift=1cm, yshift=-4cm]current page.center) .. ([xshift=6cm, yshift=2cm]current page.center);
+        \draw[white, line width=1.0pt] ([xshift=-4cm, yshift=-0.5cm]current page.center) .. controls ([xshift=-1cm, yshift=3cm]current page.center) .. ([xshift=3cm, yshift=4cm]current page.center);
+    \end{scope}
+
+    % 4. แถบขอบทองสัญลักษณ์แห่งคุณค่าวิชาการ (Academic Gold Bars)
+    \fill[agriGold] ([xshift=1.2in]current page.north west) rectangle ++(0.12in, -\paperheight);
+    \fill[white] ([xshift=1.35in]current page.north west) rectangle ++(0.02in, -\paperheight);
+
+    % 5. ตราและชื่อสถาบันด้านบน
+    \node[anchor=north west, align=left] at ([xshift=1.6in, yshift=-1.3in]current page.north west) {
+        {\fontsize{14}{18}\bfseries\color{agriGold} ตำราวิชาการเฉลิมพระเกียรติ มหาวิทยาลัยราชภัฏรำไพพรรณี}\\[4pt]
+        {\fontsize{11}{14}\color{white!85} RAMBHAI BARNI RAJABHAT UNIVERSITY \quad \textbar \quad ACADEMIC TEXTBOOK SERIES}
+    };
+
+    % 6. กล่องชื่อตำรา (Book Title Card)
+    \node[anchor=west, align=left] at ([xshift=1.6in, yshift=2.0in]current page.west) {
+        \begin{tcolorbox}[
+            enhanced,
+            width=5.8in,
+            colback=black!45,
+            colframe=agriGold,
+            arc=6pt,
+            boxrule=1.5pt,
+            left=20pt, right=20pt, top=20pt, bottom=20pt,
+            drop shadow=black!35
+        ]
+            {\fontsize{34}{40}\bfseries\color{white} จุลชีววิทยา}\\[8pt]
+            {\fontsize{34}{40}\bfseries\color{agriGold} สำหรับการเกษตร}\\[14pt]
+            {\color{white}\rule{0.8\textwidth}{1.5pt}}\\[12pt]
+            {\fontsize{18}{22}\bfseries\color{agriMint} MICROBIOLOGY FOR AGRICULTURE}\\[6pt]
+            {\fontsize{12}{16}\color{white!90} นิเวศวิทยาของดิน การตรึงไนโตรเจน การควบคุมโดยชีววิธี และนวัตกรรมจุลินทรีย์การเกษตรแม่นยำ}
+        \end{tcolorbox}
+    };
+
+    % 7. ตราประทับโมเดล BCG และเกษตรกรรมยั่งยืน (Badge)
+    \node[anchor=center] at ([xshift=-2.2in, yshift=-1.5in]current page.center) {
+        \begin{tcolorbox}[
+            enhanced,
+            width=2.5in,
+            colback=agriLeaf!80!black,
+            colframe=agriGold,
+            arc=4pt,
+            boxrule=1pt,
+            halign=center,
+            drop shadow=black!25
+        ]
+            {\fontsize{11}{14}\bfseries\color{white} บูรณาการเศรษฐกิจชีวภาพ BCG}\\[2pt]
+            {\fontsize{9}{12}\color{agriGold!30!white} Bio-Circular-Green Agriculture \& AI}
+        \end{tcolorbox}
+    };
+
+    % 8. ข้อมูลผู้แต่งและตำแหน่งทางวิชาการ (Author Section)
+    \node[anchor=south west, align=left] at ([xshift=1.6in, yshift=1.2in]current page.south west) {
+        {\fontsize{13}{16}\bfseries\color{agriGold} ผู้เขียน}\\[4pt]
+        {\fontsize{22}{26}\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.จิรภัทร จันทมาลี}\\[6pt]
+        {\fontsize{12}{15}\color{white!90} วท.บ. (เกษตรศาสตร์), วท.ม. (จุลชีววิทยา), วท.ด. (เทคโนโลยีชีวภาพ)}\\[2pt]
+        {\fontsize{12}{15}\color{white!80} สาขาวิชาเกษตรศาสตร์ คณะเทคโนโลยีการเกษตร มหาวิทยาลัยราชภัฏรำไพพรรณี}\\[8pt]
+        {\fontsize{11}{14}\color{agriGold} พุทธศักราช 2569 (ค.ศ. 2026)}
+    };
+
+\end{tikzpicture}
+\end{titlepage}
+\clearpage
