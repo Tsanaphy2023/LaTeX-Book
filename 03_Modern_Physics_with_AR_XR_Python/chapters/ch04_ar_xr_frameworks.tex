@@ -67,6 +67,38 @@
     \texttt{XRSession.requestAnimationFrame(onXRFrame)} เพื่อปรับปรุงการเรนเดอร์ของ Three.js ให้ตรงกับมุมมองของผู้ใช้อย่างแม่นยำ
 \end{enumerate}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92]
+    % Real table surface
+    \draw[slateGrey, fill=gray!20, line width=1.2pt] (-4, -1.8) -- (4, -1.8) -- (5.5, -0.6) -- (-2.5, -0.6) -- cycle;
+    \node at (1.0, -1.4) [font=\scriptsize\bfseries\color{slateGrey}] {พื้นผิวโต๊ะจริงในห้องเรียน (Physical Plane)};
+    
+    % Smartphone / AR Device
+    \draw[darkNavy, fill=darkNavy!90, rounded corners=4pt, rotate around={-20:(-2, 2.5)}] (-3.0, 1.8) rectangle (-1.0, 3.2);
+    \draw[cyan, fill=cyan!15, rounded corners=2pt, rotate around={-20:(-2, 2.5)}] (-2.9, 1.9) rectangle (-1.1, 3.1);
+    \node at (-2.0, 2.8) [font=\scriptsize\bfseries\color{darkNavy}, rotate=-20] {กล้องสมาร์ตโฟน};
+    
+    % Virtual Raycast (Hit-test ray)
+    \draw[-{Stealth[scale=1.3]}, line width=1.5pt, color=red!80!black, dashed] (-1.6, 2.1) -- (1.5, -1.2);
+    \node at (0.6, 0.8) [font=\scriptsize\bfseries\color{red!80!black}, rotate=-43] {ลำแสงเสมือน (XRHitTestSource)};
+    
+    % Hit Point / Anchor Pose
+    \filldraw[quantumGold] (1.5, -1.2) circle (4pt);
+    \draw[quantumGold, ultra thick] (1.5, -1.2) circle (8pt);
+    \node at (2.4, -0.8) [font=\footnotesize\bfseries\color{quantumGold!90!black}] {จุดกระทบ (Anchor Pose)};
+    
+    % Virtual 3D Hologram spawning on top of anchor
+    \draw[cyberBlue, thick, dashed] (1.5, -1.2) -- (1.5, 0.6);
+    \draw[line width=1.6pt, color=cyberBlue, fill=cyan!20] (1.5, 1.2) circle (0.6cm);
+    \node at (1.5, 1.2) [font=\tiny\bfseries\color{darkNavy}] {แบบจำลอง};
+    \draw[neonPurple, thick, rotate around={35:(1.5, 1.2)}] (1.5, 1.2) ellipse (1.1cm and 0.35cm);
+    \node at (1.5, 2.2) [font=\footnotesize\bfseries\color{cyberBlue}] {อ็อบเจกต์ฟิสิกส์ 3 มิติ};
+\end{tikzpicture}
+\caption{ขั้นตอนการตรวจจับพื้นผิว (Hit-Testing) และการตรึงพิกัดเสมือนจริง (Spatial Anchoring) ใน WebXR}
+\label{fig:webxr_hit_test}
+\end{figure}
+
 \section{การควบคุมแบบไร้สัมผัสด้วย MediaPipe Hands}
 \index{MediaPipe}
 \index{Hand Tracking}
@@ -78,6 +110,54 @@ MediaPipe Hands ของ Google ใช้โครงข่ายประส�
     \item \textbf{Palm Facing (หงายฝ่ามือ):} ใช้เป็นแท่นรองรับอนุภาคเสมือนหรือกล่องพลังงาน
     \item \textbf{Index Pointing (ชี้ตำแหน่ง):} ใช้เลือกสถานะควอนตัม ($n=1, 2, 3$)
 \end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92]
+    % Wrist
+    \filldraw[darkNavy] (0, 0) circle (3pt) node[below, font=\tiny\bfseries] {0 (WRIST)};
+    
+    % Thumb (1, 2, 3, 4)
+    \draw[thick, color=cyberBlue] (0, 0) -- (-0.8, 0.8) -- (-1.4, 1.6) -- (-1.8, 2.3) -- (-2.1, 2.9);
+    \foreach \coord/\num in {(-0.8,0.8)/1, (-1.4,1.6)/2, (-1.8,2.3)/3, (-2.1,2.9)/4} {
+        \filldraw[cyberBlue] \coord circle (2.5pt);
+    }
+    \node at (-2.3, 3.2) [font=\tiny\bfseries\color{cyberBlue}] {4 (THUMB\_TIP)};
+    
+    % Index finger (5, 6, 7, 8)
+    \draw[thick, color=neonPurple] (0, 0) -- (-0.6, 2.0) -- (-0.8, 3.2) -- (-0.9, 4.1) -- (-1.0, 4.8);
+    \foreach \coord/\num in {(-0.6,2.0)/5, (-0.8,3.2)/6, (-0.9,4.1)/7, (-1.0,4.8)/8} {
+        \filldraw[neonPurple] \coord circle (2.5pt);
+    }
+    \node at (-1.0, 5.1) [font=\tiny\bfseries\color{neonPurple}] {8 (INDEX\_TIP)};
+    
+    % Middle finger (9, 10, 11, 12)
+    \draw[thick, color=emeraldGlow] (0, 0) -- (0.0, 2.2) -- (0.0, 3.5) -- (0.0, 4.5) -- (0.0, 5.3);
+    \foreach \coord/\num in {(0.0,2.2)/9, (0.0,3.5)/10, (0.0,4.5)/11, (0.0,5.3)/12} {
+        \filldraw[emeraldGlow] \coord circle (2.5pt);
+    }
+    \node at (0.0, 5.6) [font=\tiny\bfseries\color{emeraldGlow}] {12 (MIDDLE\_TIP)};
+    
+    % Ring finger (13, 14, 15, 16)
+    \draw[thick, color=quantumGold] (0, 0) -- (0.6, 2.0) -- (0.8, 3.2) -- (0.9, 4.1) -- (1.0, 4.8);
+    \foreach \coord/\num in {(0.6,2.0)/13, (0.8,3.2)/14, (0.9,4.1)/15, (1.0,4.8)/16} {
+        \filldraw[quantumGold] \coord circle (2.5pt);
+    }
+    \node at (1.0, 5.1) [font=\tiny\bfseries\color{quantumGold}] {16 (RING\_TIP)};
+    
+    % Pinky finger (17, 18, 19, 20)
+    \draw[thick, color=red!80!black] (0, 0) -- (1.1, 1.6) -- (1.4, 2.5) -- (1.6, 3.2) -- (1.8, 3.8);
+    \foreach \coord/\num in {(1.1,1.6)/17, (1.4,2.5)/18, (1.6,3.2)/19, (1.8,3.8)/20} {
+        \filldraw[red!80!black] \coord circle (2.5pt);
+    }
+    \node at (2.0, 4.1) [font=\tiny\bfseries\color{red!80!black}] {20 (PINKY\_TIP)};
+    
+    % Palm connective mesh
+    \draw[dashed, slateGrey] (-0.8, 0.8) -- (-0.6, 2.0) -- (0.0, 2.2) -- (0.6, 2.0) -- (1.1, 1.6);
+\end{tikzpicture}
+\caption{โครงข่ายข้อต่อนิ้วมือ 21 จุด 3 มิติ (MediaPipe 21-Joint 3D Hand Landmarks) สำหรับควบคุมการทดลองฟิสิกส์}
+\label{fig:mediapipe_hand_landmarks}
+\end{figure}
 
 \section{วิศวกรรมลูปประสิทธิภาพสูง (Zero-GC Loop Engineering)}
 \index{Zero-GC}

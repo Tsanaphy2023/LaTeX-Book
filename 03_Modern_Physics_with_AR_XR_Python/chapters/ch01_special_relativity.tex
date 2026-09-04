@@ -112,6 +112,51 @@ t &= \gamma \left( t' + \frac{vx'}{c^2} \right)
 \Delta t = \gamma \Delta t_0 = \frac{\Delta t_0}{\sqrt{1 - v^2/c^2}} \ge \Delta t_0
 \end{equation}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Left: Rest Frame S'
+    \begin{scope}[shift={(-4.5, 0)}]
+        \node at (0, 3.8) [font=\footnotesize\bfseries\color{darkNavy}] {(ก) กรอบอยู่นิ่ง $S'$ (เวลาเฉพาะ $\Delta t_0$)};
+        % Mirrors
+        \draw[darkNavy, fill=gray!30, thick] (-1.0, 3.0) rectangle (1.0, 3.2);
+        \draw[darkNavy, fill=gray!30, thick] (-1.0, 0.0) rectangle (1.0, 0.2);
+        \node at (0, 3.4) [font=\scriptsize] {กระจกบน};
+        \node at (0, -0.2) [font=\scriptsize] {กระจกล่าง / แหล่งกำเนิด};
+        % Light path up and down
+        \draw[-{Stealth[scale=1.1]}, line width=1.4pt, color=quantumGold] (-0.15, 0.2) -- (-0.15, 3.0);
+        \draw[-{Stealth[scale=1.1]}, line width=1.4pt, color=quantumGold, dashed] (0.15, 3.0) -- (0.15, 0.2);
+        \draw[<->, slateGrey, thick] (-1.4, 0.2) -- (-1.4, 3.0) node[midway, left, font=\scriptsize] {$D$};
+        \node at (0, -0.8) [font=\footnotesize] {$\Delta t_0 = \dfrac{2D}{c}$};
+    \end{scope}
+
+    % Divider
+    \draw[slateGrey!40, dashed, thick] (-1.0, -1.0) -- (-1.0, 4.0);
+
+    % Right: Moving Frame S
+    \begin{scope}[shift={(1.0, 0)}]
+        \node at (2.5, 3.8) [font=\footnotesize\bfseries\color{darkNavy}] {(ข) กรอบเคลื่อนที่ $S$ (เวลา $\Delta t = \gamma \Delta t_0$)};
+        % Mirrors at t=0, t=dt/2, t=dt
+        \draw[gray!50, fill=gray!15, dashed] (-0.8, 0.0) rectangle (0.8, 0.2);
+        \draw[darkNavy, fill=gray!30, thick] (1.7, 3.0) rectangle (3.3, 3.2);
+        \draw[gray!50, fill=gray!15, dashed] (4.2, 0.0) rectangle (5.8, 0.2);
+        
+        % Triangular light path
+        \draw[-{Stealth[scale=1.2]}, line width=1.5pt, color=cyberBlue] (0, 0.2) -- (2.5, 3.0);
+        \draw[-{Stealth[scale=1.2]}, line width=1.5pt, color=cyberBlue, dashed] (2.5, 3.0) -- (5.0, 0.2);
+        
+        % Geometry labels
+        \node at (1.0, 1.8) [font=\scriptsize\color{cyberBlue}, rotate=48] {$L = c\Delta t / 2$};
+        \draw[<->, slateGrey, thick] (2.5, 0.2) -- (2.5, 3.0) node[midway, right, font=\scriptsize] {$D$};
+        \draw[<->, slateGrey, thick] (0, -0.3) -- (2.5, -0.3) node[midway, below, font=\scriptsize] {$v\Delta t / 2$};
+        \draw[<->, slateGrey, thick] (0, -0.8) -- (5.0, -0.8) node[midway, below, font=\scriptsize] {$v\Delta t$};
+        \node at (2.5, -1.5) [font=\footnotesize] {$c^2 (\Delta t/2)^2 = D^2 + v^2 (\Delta t/2)^2$};
+    \end{scope}
+\end{tikzpicture}
+\caption{การทดลองทางความคิดเรื่องนาฬิกาแสง (Light Clock) พิสูจน์ปรากฏการณ์การยืดออกของเวลา}
+\label{fig:light_clock}
+\end{figure}
+
 \subsection{การหดสั้นของความยาว (Length Contraction)}
 วัตถุที่มีความยาววัดได้ขณะอยู่นิ่งในกรอบของตัวเองเรียกว่า \textbf{ความยาวเฉพาะ (Proper Length, $L_0$)} เมื่อผู้สังเกตที่เคลื่อนที่สัมพันธ์กับวัตถุด้วยความเร็ว $v$ ในแนวขนานกับมิติของวัตถุวัดความยาว จะพบว่าความยาวหดสั้นลง:
 \begin{equation}

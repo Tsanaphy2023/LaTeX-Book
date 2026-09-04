@@ -34,6 +34,42 @@ u(\lambda, T) = \frac{8\pi h c}{\lambda^5} \frac{1}{e^{\frac{hc}{\lambda k_B T}}
 \end{equation}
 ซึ่งให้ผลสอดคล้องกับการทดลองในทุกช่วงความยาวคลื่นอย่างสมบูรณ์แบบ
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Axes
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0,0) -- (9.5,0) node[right, font=\footnotesize\bfseries] {$\lambda$ ($\mu$m)};
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0,0) -- (0,5.8) node[above, font=\footnotesize\bfseries] {$u(\lambda, T)$};
+    
+    % Classical Rayleigh-Jeans divergence (Ultraviolet Catastrophe)
+    \draw[line width=1.5pt, color=red!80!black, dashed] 
+        plot [smooth] coordinates {(1.1, 5.2) (1.3, 3.8) (1.6, 2.7) (2.0, 1.9) (2.6, 1.3) (3.5, 0.85) (5.0, 0.55) (7.0, 0.38) (8.5, 0.3)};
+    \node at (2.4, 5.0) [font=\scriptsize\bfseries\color{red!80!black}, align=center] {กฎเรย์ลี-ยีนส์แบบคลาสสิก\\(วิกฤตการณ์รังสีอัลตราไวโอเลต $\to \infty$)};
+    
+    % Planck's Curves at T = 5000K, 4000K, 3000K
+    % T=5000K
+    \draw[line width=1.8pt, color=cyberBlue] 
+        plot [smooth] coordinates {(0.2, 0.01) (0.5, 0.35) (0.8, 1.5) (1.1, 2.8) (1.4, 3.4) (1.7, 3.25) (2.1, 2.7) (2.6, 1.95) (3.2, 1.35) (4.0, 0.85) (5.2, 0.48) (6.8, 0.25) (8.5, 0.12)};
+    \node at (2.2, 3.6) [font=\footnotesize\bfseries\color{cyberBlue}] {$T = 5000\text{ K}$};
+    
+    % T=4000K
+    \draw[line width=1.4pt, color=neonPurple] 
+        plot [smooth] coordinates {(0.3, 0.01) (0.7, 0.18) (1.1, 0.75) (1.5, 1.65) (1.9, 2.1) (2.3, 1.95) (2.8, 1.55) (3.5, 1.1) (4.5, 0.68) (6.0, 0.36) (8.5, 0.14)};
+    \node at (3.3, 2.25) [font=\footnotesize\bfseries\color{neonPurple}] {$T = 4000\text{ K}$};
+    
+    % T=3000K
+    \draw[line width=1.2pt, color=emeraldGlow] 
+        plot [smooth] coordinates {(0.4, 0.01) (1.0, 0.12) (1.5, 0.42) (2.0, 0.92) (2.5, 1.15) (3.0, 1.05) (3.7, 0.78) (4.6, 0.52) (6.0, 0.31) (8.5, 0.12)};
+    \node at (4.5, 1.1) [font=\footnotesize\bfseries\color{emeraldGlow}] {$T = 3000\text{ K}$};
+    
+    % Visible spectrum band
+    \fill[yellow!30, opacity=0.4] (1.4, 0) rectangle (2.2, 5.2);
+    \node at (1.8, 0.4) [font=\tiny\bfseries, color=darkNavy, rotate=90] {ช่วงแสงขาว (Visible)};
+\end{tikzpicture}
+\caption{สเปกตรัมการแผ่รังสีของวัตถุดำตามกฎของพลังค์ เปรียบเทียบกับวิกฤตการณ์รังสีอัลตราไวโอเลตแบบคลาสสิก}
+\label{fig:blackbody_spectrum}
+\end{figure}
+
 \section{ปรากฏการณ์โฟโตอิเล็กทริกและคอมป์ตัน}
 \index{โฟโตอิเล็กทริก}
 \index{การกระเจิงคอมป์ตัน}
@@ -147,6 +183,53 @@ E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2} = \frac{n^2 h^2}{8m L^2}
 \end{equation}
 พลังงานต่ำสุดที่ $n=1$ เรียกว่า \textbf{พลังงานสถานะพื้น (Ground State Energy หรือ Zero-Point Energy)} ซึ่งมีค่ามากกว่าศูนย์เสมอ ($E_1 > 0$) สอดคล้องกับหลักความไม่แน่นอนของไฮเซนเบิร์ก
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Potential Well walls
+    \draw[darkNavy, line width=2.5pt] (0, 0) -- (0, 4.5);
+    \draw[darkNavy, line width=2.5pt] (6, 0) -- (6, 4.5);
+    \draw[slateGrey, thick] (0, 0) -- (6, 0);
+    \node at (0, -0.3) [font=\footnotesize\bfseries] {$x = 0$};
+    \node at (6, -0.3) [font=\footnotesize\bfseries] {$x = L$};
+    \node at (-0.6, 2.2) [font=\footnotesize\bfseries\color{darkNavy}, rotate=90] {$V = \infty$};
+    \node at (6.6, 2.2) [font=\footnotesize\bfseries\color{darkNavy}, rotate=-90] {$V = \infty$};
+    
+    % Level n = 1
+    \draw[gray!40, dashed] (0, 1.0) -- (6, 1.0);
+    \draw[line width=1.4pt, color=cyberBlue, domain=0:6, samples=80] 
+        plot (\x, {1.0 + 0.6*sin((1.0*180/6)*\x)});
+    \draw[line width=1.2pt, color=cyberBlue!70!black, dashed, domain=0:6, samples=80] 
+        plot (\x, {1.0 + 0.6*(sin((1.0*180/6)*\x))^2});
+    \node at (-0.4, 1.0) [font=\footnotesize\bfseries\color{cyberBlue}] {$E_1$};
+    \node at (6.5, 1.0) [font=\scriptsize\color{cyberBlue}] {$n=1$};
+    
+    % Level n = 2
+    \draw[gray!40, dashed] (0, 2.4) -- (6, 2.4);
+    \draw[line width=1.4pt, color=neonPurple, domain=0:6, samples=100] 
+        plot (\x, {2.4 + 0.6*sin((2.0*180/6)*\x)});
+    \draw[line width=1.2pt, color=neonPurple!70!black, dashed, domain=0:6, samples=100] 
+        plot (\x, {2.4 + 0.6*(sin((2.0*180/6)*\x))^2});
+    \node at (-0.4, 2.4) [font=\footnotesize\bfseries\color{neonPurple}] {$E_2$};
+    \node at (6.5, 2.4) [font=\scriptsize\color{neonPurple}] {$n=2$};
+    
+    % Level n = 3
+    \draw[gray!40, dashed] (0, 3.8) -- (6, 3.8);
+    \draw[line width=1.4pt, color=emeraldGlow, domain=0:6, samples=120] 
+        plot (\x, {3.8 + 0.6*sin((3.0*180/6)*\x)});
+    \draw[line width=1.2pt, color=emeraldGlow!70!black, dashed, domain=0:6, samples=120] 
+        plot (\x, {3.8 + 0.6*(sin((3.0*180/6)*\x))^2});
+    \node at (-0.4, 3.8) [font=\footnotesize\bfseries\color{emeraldGlow}] {$E_3$};
+    \node at (6.5, 3.8) [font=\scriptsize\color{emeraldGlow}] {$n=3$};
+    
+    % Legend
+    \draw[line width=1.4pt, color=darkNavy] (1.0, 4.8) -- (1.8, 4.8) node[right, font=\scriptsize] {$\psi_n(x)$};
+    \draw[line width=1.2pt, color=darkNavy, dashed] (3.8, 4.8) -- (4.6, 4.8) node[right, font=\scriptsize] {$|\psi_n(x)|^2$};
+\end{tikzpicture}
+\caption{ฟังก์ชันคลื่น $\psi_n(x)$ (เส้นทึบ) และความหนาแน่นความน่าจะเป็น $|\psi_n(x)|^2$ (เส้นประ) ของอนุภาคในกล่องศักย์อนันต์ 1 มิติ สำหรับ $n=1, 2, 3$}
+\label{fig:particle_in_box}
+\end{figure}
+
 \section{ปรากฏการณ์การทะลุผ่านกำแพงศักย์ (Quantum Tunneling)}
 \index{ทันเนลลิง}
 \index{กล้อง STM}
@@ -158,6 +241,38 @@ E_n = \frac{n^2 \pi^2 \hbar^2}{2m L^2} = \frac{n^2 h^2}{8m L^2}
 T \approx 16 \frac{E}{V_0} \left(1 - \frac{E}{V_0}\right) e^{-2\kappa a}
 \end{equation}
 ปรากฏการณ์นี้เป็นพื้นฐานสำคัญของการสลายตัวให้อนุภาคแอลฟาในนิวเคลียส ฟิวชันในดาวฤกษ์ และกล้องจุลทรรศน์ส่องกราดแบบส่องผ่านอุโมงค์ (Scanning Tunneling Microscope, STM)
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Potential Barrier
+    \fill[gray!20] (3.0, 0) rectangle (5.0, 3.5);
+    \draw[line width=1.8pt, darkNavy] (0, 0) -- (3.0, 0) -- (3.0, 3.5) -- (5.0, 3.5) -- (5.0, 0) -- (8.0, 0);
+    \node at (4.0, 3.8) [font=\footnotesize\bfseries\color{darkNavy}] {กำแพงศักย์ $V_0$};
+    \draw[<->, slateGrey, thick] (3.0, -0.4) -- (5.0, -0.4) node[midway, below, font=\scriptsize] {ความหนา $a$};
+    
+    % Energy level E < V0
+    \draw[quantumGold, line width=1.2pt, dashed] (0, 2.2) -- (8.0, 2.2);
+    \node at (-0.6, 2.2) [font=\footnotesize\bfseries\color{quantumGold}] {พลังงาน $E$};
+    
+    % Region I: Incident + Reflected wave
+    \draw[line width=1.4pt, color=cyberBlue, domain=0:3.0, samples=80] 
+        plot (\x, {2.2 + 0.65*sin(5.5*\x r)});
+    \node at (1.5, 3.2) [font=\scriptsize\bfseries\color{cyberBlue}] {ย่าน I: คลื่นตกกระทบ + สะท้อน};
+    
+    % Region II: Exponential decaying wavefunction
+    \draw[line width=1.6pt, color=red!80!black, domain=3.0:5.0, samples=50] 
+        plot (\x, {2.2 + 0.65*exp(-1.4*(\x-3.0))});
+    \node at (4.0, 1.6) [font=\scriptsize\bfseries\color{red!80!black}] {ย่าน II: $\propto e^{-\kappa x}$};
+    
+    % Region III: Transmitted wave
+    \draw[line width=1.4pt, color=emeraldGlow, domain=5.0:8.0, samples=80] 
+        plot (\x, {2.2 + 0.15*sin(5.5*\x r)});
+    \node at (6.5, 3.2) [font=\scriptsize\bfseries\color{emeraldGlow}] {ย่าน III: คลื่นทะลุผ่าน ($T \ll 1$)};
+\end{tikzpicture}
+\caption{ปรากฏการณ์การทะลุผ่านกำแพงศักย์เชิงควอนตัม (Quantum Tunneling) แสดงการลดทอนของแอมพลิจูดคลื่น}
+\label{fig:quantum_tunneling}
+\end{figure}
 
 \section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Quantum Orbitals \& Tunneling}
 \index{WebXR}

@@ -109,6 +109,43 @@ N(t) = N_0 e^{-\lambda t} = N_0 2^{-t/t_{1/2}}
 N_n(t) = \sum_{i=1}^n c_i e^{-\lambda_i t}, \quad c_i = N_1(0) \left[ \prod_{j=1}^{n-1} \lambda_j \right] \prod_{j=1, j \neq i}^n \frac{1}{\lambda_j - \lambda_i}
 \end{equation}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Axes
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0, 0) -- (8.5, 0) node[right, font=\footnotesize\bfseries] {จำนวนโปรตอน $Z$};
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0, 0) -- (0, 7.5) node[above, font=\footnotesize\bfseries] {จำนวนนิวตรอน $N$};
+    
+    % N = Z line
+    \draw[gray!50, dashed, thick] (0, 0) -- (7.0, 7.0) node[above, font=\scriptsize] {$N = Z$};
+    
+    % Valley of Stability curve
+    \draw[line width=2.2pt, color=darkNavy, smooth] plot coordinates {
+        (0, 0) (1.5, 1.5) (3.0, 3.4) (4.5, 5.5) (6.0, 7.2)
+    };
+    \node at (5.2, 6.2) [font=\footnotesize\bfseries\color{darkNavy}, rotate=48] {แถบเสถียรภาพ (Valley of Stability)};
+    
+    % Decay modes arrows
+    % Beta-minus (N -> P): delta Z = +1, delta N = -1
+    \draw[-{Stealth[scale=1.3]}, line width=1.5pt, color=cyberBlue] (3.0, 5.0) -- (3.8, 4.2);
+    \node at (2.4, 5.2) [font=\scriptsize\bfseries\color{cyberBlue}, align=center] {สลายตัว $\beta^-$\\($N \to P$)};
+    
+    % Beta-plus (P -> N): delta Z = -1, delta N = +1
+    \draw[-{Stealth[scale=1.3]}, line width=1.5pt, color=neonPurple] (5.2, 3.8) -- (4.4, 4.6);
+    \node at (5.9, 3.6) [font=\scriptsize\bfseries\color{neonPurple}, align=center] {สลายตัว $\beta^+$\\($P \to N$)};
+    
+    % Alpha decay: delta Z = -2, delta N = -2
+    \draw[-{Stealth[scale=1.3]}, line width=1.8pt, color=red!80!black] (6.2, 6.8) -- (5.2, 5.8);
+    \node at (6.8, 6.0) [font=\scriptsize\bfseries\color{red!80!black}, align=center] {สลายตัว $\alpha$\\($-2P, -2N$)};
+    
+    % Fission region at high Z, N
+    \draw[fill=quantumGold!30, draw=quantumGold, thick, dashed] (5.8, 6.5) circle (0.8cm);
+    \node at (5.8, 7.6) [font=\scriptsize\bfseries\color{quantumGold!90!black}] {ย่านเกิดฟิชชัน};
+\end{tikzpicture}
+\caption{แผนผังนิวไคลด์ของเซเกร (Segrè Chart) แสดงแถบเสถียรภาพและทิศทางการสลายตัวกัมมันตรังสี}
+\label{fig:segre_chart}
+\end{figure}
+
 \section{ปฏิกิริยานิวเคลียร์ฟิชชันและฟิวชัน}
 \index{ฟิชชัน}
 \index{ฟิวชัน}
@@ -120,6 +157,54 @@ N_n(t) = \sum_{i=1}^n c_i e^{-\lambda_i t}, \quad c_i = N_1(0) \left[ \prod_{j=1
 ^{235}_{\ 92}\text{U} + ^1_0\text{n} \to ^{236}_{\ 92}\text{U}^* \to ^{141}_{\ 56}\text{Ba} + ^{92}_{36}\text{Kr} + 3 ^1_0\text{n} + Q
 \end{equation}
 พลังงานปลดปล่อย $Q \approx 200\text{ MeV}$ ต่อการฟิชชันหนึ่งครั้ง
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92]
+    % Step 1: Neutron hit U-235
+    \draw[-{Stealth[scale=1.1]}, line width=1.2pt, color=darkNavy] (-4.5, 0) -- (-3.6, 0);
+    \filldraw[darkNavy] (-4.5, 0) circle (3pt) node[below=3pt, font=\tiny] {$^1\text{n}$};
+    \draw[fill=quantumGold!30, draw=quantumGold!90!black, thick] (-2.8, 0) circle (0.7cm);
+    \node at (-2.8, 0) [font=\tiny\bfseries] {$^{235}\text{U}$};
+    \node at (-2.8, -1.2) [font=\tiny\bfseries] {1. ดูดกลืนนิวตรอน};
+    
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (-1.8, 0) -- (-1.2, 0);
+    
+    % Step 2: Oscillating Compound Nucleus
+    \draw[fill=red!20, draw=red!80!black, thick] (0, 0) ellipse (0.95cm and 0.6cm);
+    \node at (0, 0) [font=\tiny\bfseries] {$^{236}\text{U}^*$};
+    \node at (0, -1.2) [font=\tiny\bfseries] {2. สั่นไหวเสียรูป};
+    
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (1.2, 0) -- (1.8, 0);
+    
+    % Step 3: Necking / Dumbbell
+    \draw[fill=red!25, draw=red!80!black, thick] (2.7, 0) circle (0.5cm);
+    \draw[fill=red!25, draw=red!80!black, thick] (3.9, 0) circle (0.5cm);
+    \draw[line width=1.5pt, red!80!black] (3.1, 0.3) -- (3.5, 0.1);
+    \draw[line width=1.5pt, red!80!black] (3.1, -0.3) -- (3.5, -0.1);
+    \node at (3.3, -1.2) [font=\tiny\bfseries] {3. คอดตัวเป็นดัมเบลล์};
+    
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (4.6, 0) -- (5.2, 0);
+    
+    % Step 4: Fission Fragments + Prompt Neutrons
+    \draw[fill=cyan!30, draw=cyberBlue, thick] (6.5, 1.0) circle (0.55cm);
+    \node at (6.5, 1.0) [font=\tiny\bfseries] {$^{141}\text{Ba}$};
+    \draw[fill=emeraldGlow!30, draw=emeraldGlow, thick] (6.5, -1.0) circle (0.45cm);
+    \node at (6.5, -1.0) [font=\tiny\bfseries] {$^{92}\text{Kr}$};
+    
+    % 3 prompt neutrons
+    \draw[-{Stealth[scale=1.1]}, line width=1.2pt, color=darkNavy] (6.2, 0.2) -- (7.8, 0.4);
+    \filldraw[darkNavy] (7.8, 0.4) circle (2.5pt) node[right, font=\tiny] {$^1\text{n}$};
+    \draw[-{Stealth[scale=1.1]}, line width=1.2pt, color=darkNavy] (6.2, 0.0) -- (7.8, 0.0);
+    \filldraw[darkNavy] (7.8, 0.0) circle (2.5pt) node[right, font=\tiny] {$^1\text{n}$};
+    \draw[-{Stealth[scale=1.1]}, line width=1.2pt, color=darkNavy] (6.2, -0.2) -- (7.8, -0.4);
+    \filldraw[darkNavy] (7.8, -0.4) circle (2.5pt) node[right, font=\tiny] {$^1\text{n}$};
+    
+    \node at (7.0, -1.2) [font=\tiny\bfseries] {4. แตกตัว + $200\text{ MeV}$};
+\end{tikzpicture}
+\caption{ขั้นตอนการแตกตัวของนิวเคลียสในปฏิกิริยานิวเคลียร์ฟิชชันตามแบบจำลองหยดของเหลว (Liquid Drop Model)}
+\label{fig:fission_stages}
+\end{figure}
 
 \subsection{นิวเคลียร์ฟิวชัน (Nuclear Fusion)}
 ปฏิกิริยารวมตัวของนิวเคลียสเบา เช่น วงจรดิวเทอเรียม-ทริเทียม (D-T):

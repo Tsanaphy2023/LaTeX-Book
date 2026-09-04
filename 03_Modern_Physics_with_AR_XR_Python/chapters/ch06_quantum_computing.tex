@@ -119,6 +119,89 @@
 \end{equation}
 สถานะนี้ไม่สามารถแยกตัวประกอบออกเป็นสถานะของคิวบิตเดี่ยวได้ ($\ket{\Phi^+} \neq \ket{\psi_A} \otimes \ket{\psi_B}$) การวัดค่าที่คิวบิตตัวแรกจะกำหนดผลลัพธ์ของคิวบิตตัวที่สองในทันที แม้ทั้งคู่จะอยู่ห่างกันคนละฟากของเอกภพ!
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Wire 1: Qubit A
+    \node at (-1.5, 1.2) [font=\footnotesize] {$|0\rangle_A$};
+    \draw[thick, color=darkNavy] (-1.0, 1.2) -- (0.2, 1.2);
+    \draw[thick, fill=cyan!20, draw=cyberBlue] (0.2, 0.8) rectangle (1.2, 1.6);
+    \node at (0.7, 1.2) [font=\footnotesize\bfseries\color{cyberBlue}] {$H$};
+    \draw[thick, color=darkNavy] (1.2, 1.2) -- (2.2, 1.2);
+    % CNOT control dot
+    \filldraw[darkNavy] (2.2, 1.2) circle (3.5pt);
+    \draw[thick, color=darkNavy] (2.2, 1.2) -- (2.2, -0.2);
+    \draw[thick, color=darkNavy] (2.2, 1.2) -- (4.2, 1.2);
+    \node at (4.8, 1.2) [font=\footnotesize] {คิวบิต $A$};
+    
+    % Wire 2: Qubit B
+    \node at (-1.5, -0.2) [font=\footnotesize] {$|0\rangle_B$};
+    \draw[thick, color=darkNavy] (-1.0, -0.2) -- (4.2, -0.2);
+    % CNOT target XOR circle
+    \draw[thick, color=darkNavy] (2.2, -0.2) circle (7pt);
+    \draw[thick, color=darkNavy] (2.2, -0.45) -- (2.2, 0.05);
+    \draw[thick, color=darkNavy] (1.95, -0.2) -- (2.45, -0.2);
+    \node at (4.8, -0.2) [font=\footnotesize] {คิวบิต $B$};
+    
+    % Output state
+    \draw[decorate, decoration={brace, amplitude=6pt, mirror}, thick, slateGrey] (5.5, -0.5) -- (5.5, 1.5);
+    \node at (7.6, 0.5) [font=\footnotesize\bfseries\color{darkNavy}, align=center] {$\ket{\Phi^+} = \dfrac{\ket{00} + \ket{11}}{\sqrt{2}}$\\(สถานะเบลล์)};
+\end{tikzpicture}
+\caption{วงจรควอนตัมสำหรับสร้างสถานะพัวพันสมบูรณ์ของเบลล์ (Bell State Preparation)}
+\label{fig:bell_circuit}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92]
+    % Wire 1: Unknown qubit |psi>
+    \node at (-1.8, 2.0) [font=\footnotesize] {$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$};
+    \draw[thick, color=darkNavy] (-0.2, 2.0) -- (1.5, 2.0);
+    \filldraw[darkNavy] (1.5, 2.0) circle (3.5pt);
+    \draw[thick, color=darkNavy] (1.5, 2.0) -- (1.5, 0.8);
+    \draw[thick, color=darkNavy] (1.5, 2.0) -- (2.5, 2.0);
+    \draw[thick, fill=cyan!20, draw=cyberBlue] (2.5, 1.6) rectangle (3.5, 2.4);
+    \node at (3.0, 2.0) [font=\footnotesize\bfseries\color{cyberBlue}] {$H$};
+    \draw[thick, color=darkNavy] (3.5, 2.0) -- (4.2, 2.0);
+    % Measurement box 1
+    \draw[thick, fill=gray!20, draw=slateGrey] (4.2, 1.6) rectangle (5.2, 2.4);
+    \node at (4.7, 2.0) [font=\scriptsize\bfseries] {วัด $M_1$};
+    % Classical wires (double line)
+    \draw[double, thick, slateGrey] (5.2, 2.0) -- (8.2, 2.0) -- (8.2, -0.4);
+    
+    % Wire 2: Alice's entangled qubit A
+    \node at (-1.8, 0.8) [font=\footnotesize] {คู่อลิซ ($A$)};
+    \draw[thick, color=darkNavy] (-0.2, 0.8) -- (4.2, 0.8);
+    \draw[thick, color=darkNavy] (1.5, 0.8) circle (6pt);
+    \draw[thick, color=darkNavy] (1.5, 0.59) -- (1.5, 1.01);
+    \draw[thick, color=darkNavy] (1.29, 0.8) -- (1.71, 0.8);
+    % Measurement box 2
+    \draw[thick, fill=gray!20, draw=slateGrey] (4.2, 0.4) rectangle (5.2, 1.2);
+    \node at (4.7, 0.8) [font=\scriptsize\bfseries] {วัด $M_2$};
+    % Classical wires (double line)
+    \draw[double, thick, slateGrey] (5.2, 0.8) -- (7.0, 0.8) -- (7.0, -0.4);
+    
+    % Wire 3: Bob's entangled qubit B
+    \node at (-1.8, -0.4) [font=\footnotesize] {คู่บ็อบ ($B$)};
+    \draw[thick, color=darkNavy] (-0.2, -0.4) -- (6.5, -0.4);
+    % Correction gates X and Z controlled by classical bits
+    \draw[thick, fill=quantumGold!25, draw=quantumGold!90!black] (6.5, -0.8) rectangle (7.5, 0.0);
+    \node at (7.0, -0.4) [font=\footnotesize\bfseries] {$X^{M_2}$};
+    \draw[thick, color=darkNavy] (7.5, -0.4) -- (7.8, -0.4);
+    \draw[thick, fill=quantumGold!25, draw=quantumGold!90!black] (7.8, -0.8) rectangle (8.8, 0.0);
+    \node at (8.3, -0.4) [font=\footnotesize\bfseries] {$Z^{M_1}$};
+    \draw[-{Stealth[scale=1.2]}, thick, color=darkNavy] (8.8, -0.4) -- (10.2, -0.4);
+    \node at (10.8, -0.4) [font=\footnotesize\bfseries\color{cyberBlue}] {$|\psi\rangle$};
+    
+    % Separation Boundary
+    \draw[dashed, slateGrey!60, line width=1.2pt] (5.7, -1.2) -- (5.7, 2.7);
+    \node at (2.5, -1.0) [font=\scriptsize\bfseries\color{darkNavy}] {สถานีอลิซ (Alice)};
+    \node at (8.0, -1.0) [font=\scriptsize\bfseries\color{darkNavy}] {สถานีบ็อบ (Bob)};
+\end{tikzpicture}
+\caption{ผังวงจรควอนตัมเทเลพอร์ต (Quantum Teleportation Circuit) ถ่ายโอนสถานะ $|\psi\rangle$ ไปยังปลายทาง}
+\label{fig:quantum_teleportation}
+\end{figure}
+
 \section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Interactive Bloch Sphere}
 \index{WebXR}
 \index{Bloch Sphere AR}

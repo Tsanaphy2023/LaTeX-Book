@@ -84,6 +84,35 @@ R_s = \frac{2GM}{c^2}
 \end{equation}
 เมื่อ $r \to R_s$ เวลาจะหยุดเดินในสายตาของผู้สังเกตภายนอก ($\Delta t \to \infty$)
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.92]
+    % Black Hole Core / Event Horizon
+    \filldraw[black] (0, 0) circle (1.2cm);
+    \draw[line width=2.0pt, quantumGold] (0, 0) circle (1.2cm);
+    \node at (0, 0) [font=\tiny\bfseries\color{white}, align=center] {Singularity\\$r=0$};
+    
+    % Photon Sphere at 1.5 Rs
+    \draw[cyberBlue, thick, dashed] (0, 0) circle (1.8cm);
+    \node at (1.4, 1.4) [font=\tiny\bfseries\color{cyberBlue}] {ทรงกลมโฟตอน ($1.5 R_s$)};
+    
+    % ISCO at 3 Rs
+    \draw[neonPurple, thick, dashdotted] (0, 0) circle (3.6cm);
+    \node at (2.8, 2.4) [font=\tiny\bfseries\color{neonPurple}] {วงโคจรเสถียรชั้นในสุด ISCO ($3 R_s$)};
+    
+    % Accretion Disk
+    \draw[color=quantumGold!80, opacity=0.35, line width=12pt] (0, 0) ellipse (4.8cm and 1.2cm);
+    \draw[color=quantumGold!95, line width=2pt] (0, 0) ellipse (4.8cm and 1.2cm);
+    \node at (-3.8, 1.3) [font=\footnotesize\bfseries\color{quantumGold!90!black}] {จานสะสมมวล (Accretion Disk)};
+    
+    % Event Horizon label
+    \draw[-{Stealth[scale=1.2]}, quantumGold, thick] (-1.0, -1.0) -- (-2.2, -1.8);
+    \node at (-2.5, -2.1) [font=\footnotesize\bfseries\color{quantumGold!90!black}] {ขอบฟ้าเหตุการณ์ ($r = R_s$)};
+\end{tikzpicture}
+\caption{โครงสร้างทางเรขาคณิตของหลุมดำชวาร์ซชิลด์ (Schwarzschild Black Hole Anatomy)}
+\label{fig:black_hole_anatomy}
+\end{figure}
+
 \section{จักรวาลวิทยาและสมการฟรีดมันน์ (Friedmann Cosmology)}
 \index{กฎของฮับเบิล}
 \index{สมการฟรีดมันน์}
@@ -105,6 +134,44 @@ H^2(t) = \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3} \rho - \frac{k c^2}
 \frac{\ddot{a}}{a} = -\frac{4\pi G}{3}\left(\rho + \frac{3P}{c^2}\right) + \frac{\Lambda c^2}{3}
 \end{equation}
 การสังเกตการณ์ซูเปอร์โนวา Type Ia ในปี ค.ศ. 1998 ยืนยันว่าเอกภพกำลังขยายตัวด้วยความเร่ง ($\ddot{a} > 0$) ขับเคลื่อนโดย \textbf{พลังงานมืด (Dark Energy / Cosmological Constant $\Lambda$)} ซึ่งครองสัดส่วนประมาณ 68\% ของพลังงานทั้งหมดในเอกภพ
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Axes
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0, 0) -- (9.5, 0) node[right, font=\footnotesize\bfseries] {เวลา $t$};
+    \draw[-{Stealth[scale=1.2]}, slateGrey, thick] (0, 0) -- (0, 5.8) node[above, font=\footnotesize\bfseries] {สเกลแฟกเตอร์ $a(t)$};
+    
+    % Present time mark (t_0, a=1)
+    \draw[gray!40, dashed] (4.5, 0) -- (4.5, 5.2);
+    \draw[gray!40, dashed] (0, 2.5) -- (8.8, 2.5);
+    \filldraw[darkNavy] (4.5, 2.5) circle (3pt) node[above left=3pt, font=\scriptsize\bfseries] {ปัจจุบัน ($t_0, a=1$)};
+    \node at (4.5, -0.3) [font=\scriptsize\bfseries] {$t_0$};
+    \node at (-0.4, 2.5) [font=\scriptsize\bfseries] {$1.0$};
+    
+    % Accelerating universe (Lambda-CDM)
+    \draw[line width=1.8pt, color=cyberBlue, domain=1.0:8.5, samples=80] 
+        plot (\x, {0.12*(\x)^1.5 + 0.15*exp(0.4*(\x-4.5)) + 1.25});
+    \node at (8.6, 5.0) [font=\scriptsize\bfseries\color{cyberBlue}] {เร่งตัว ($\Lambda\text{CDM}$)};
+    
+    % Flat / Critical universe (k=0, Omega_m=1)
+    \draw[line width=1.4pt, color=emeraldGlow, domain=1.0:8.5, samples=80] 
+        plot (\x, {2.5 * (\x/4.5)^(0.666)});
+    \node at (8.6, 3.8) [font=\scriptsize\bfseries\color{emeraldGlow}] {แบนราบวิกฤต};
+    
+    % Open universe (k = -1)
+    \draw[line width=1.2pt, color=neonPurple, dashed, domain=1.0:8.5, samples=80] 
+        plot (\x, {2.5 * (\x/4.5)});
+    \node at (8.6, 4.4) [font=\scriptsize\bfseries\color{neonPurple}] {เปิด ($k < 0$)};
+    
+    % Closed universe (Big Crunch)
+    \draw[line width=1.5pt, color=red!80!black, domain=1.0:6.5, samples=80] 
+        plot (\x, {2.5 * sin(180/5.5*(\x-1.0))});
+    \node at (6.8, 0.4) [font=\scriptsize\bfseries\color{red!80!black}] {ปิด (Big Crunch)};
+\end{tikzpicture}
+\caption{วิวัฒนาการของสเกลแฟกเตอร์ $a(t)$ ในแบบจำลองจักรวาลวิทยาต่างๆ แสดงการขยายตัวด้วยความเร่งของเอกภพ $\Lambda\text{CDM}$}
+\label{fig:cosmological_models}
+\end{figure}
 
 \section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: Spacetime Curvature \& Lensing}
 \index{WebXR}

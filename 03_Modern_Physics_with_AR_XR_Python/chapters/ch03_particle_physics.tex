@@ -69,6 +69,94 @@
 \subsection{3. สเกลาร์โบซอน: ฮิกส์โบซอน (Higgs Boson: สปิน $s = 0$)}
 ค้นพบที่เซิร์น (CERN LHC) ในปี ค.ศ. 2012 มวลประมาณ $125.1\text{ GeV}/c^2$ ทำหน้าที่ให้มวลแก่อนุภาคผ่านกลไกการทำลายสมมาตรทางไฟฟ้า-อ่อนอย่างเกิดขึ้นเอง (Spontaneous Symmetry Breaking)
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88, every node/.style={transform shape}]
+    % Quarks column 1, 2, 3
+    % Up-type
+    \draw[purple!80!black, fill=purple!10, rounded corners=4pt, thick] (0, 4.5) rectangle (2.2, 5.8);
+    \node at (1.1, 5.3) [font=\large\bfseries\color{purple!80!black}] {$u$};
+    \node at (1.1, 4.8) [font=\tiny, align=center] {Up\\$2.2\text{ MeV}, +2/3$};
+    
+    \draw[purple!80!black, fill=purple!10, rounded corners=4pt, thick] (2.4, 4.5) rectangle (4.6, 5.8);
+    \node at (3.5, 5.3) [font=\large\bfseries\color{purple!80!black}] {$c$};
+    \node at (3.5, 4.8) [font=\tiny, align=center] {Charm\\$1.28\text{ GeV}, +2/3$};
+    
+    \draw[purple!80!black, fill=purple!10, rounded corners=4pt, thick] (4.8, 4.5) rectangle (7.0, 5.8);
+    \node at (5.9, 5.3) [font=\large\bfseries\color{purple!80!black}] {$t$};
+    \node at (5.9, 4.8) [font=\tiny, align=center] {Top\\$173\text{ GeV}, +2/3$};
+    
+    % Down-type
+    \draw[purple!80!black, fill=purple!10, rounded corners=4pt, thick] (0, 3.0) rectangle (2.2, 4.3);
+    \node at (1.1, 3.8) [font=\large\bfseries\color{purple!80!black}] {$d$};
+    \node at (1.1, 3.3) [font=\tiny, align=center] {Down\\$4.7\text{ MeV}, -1/3$};
+    
+    \draw[purple!80!black, fill=purple!10, rounded corners=4pt, thick] (2.4, 3.0) rectangle (4.6, 4.3);
+    \node at (3.5, 3.8) [font=\large\bfseries\color{purple!80!black}] {$s$};
+    \node at (3.5, 3.3) [font=\tiny, align=center] {Strange\\$96\text{ MeV}, -1/3$};
+    
+    \draw[purple!80!black, fill=purple!10, rounded corners=4pt, thick] (4.8, 3.0) rectangle (7.0, 4.3);
+    \node at (5.9, 3.8) [font=\large\bfseries\color{purple!80!black}] {$b$};
+    \node at (5.9, 3.3) [font=\tiny, align=center] {Bottom\\$4.18\text{ GeV}, -1/3$};
+    
+    % Leptons
+    % Charged
+    \draw[green!60!black, fill=green!10, rounded corners=4pt, thick] (0, 1.5) rectangle (2.2, 2.8);
+    \node at (1.1, 2.3) [font=\large\bfseries\color{green!60!black}] {$e$};
+    \node at (1.1, 1.8) [font=\tiny, align=center] {Electron\\$0.511\text{ MeV}, -1$};
+    
+    \draw[green!60!black, fill=green!10, rounded corners=4pt, thick] (2.4, 1.5) rectangle (4.6, 2.8);
+    \node at (3.5, 2.3) [font=\large\bfseries\color{green!60!black}] {$\mu$};
+    \node at (3.5, 1.8) [font=\tiny, align=center] {Muon\\$105.7\text{ MeV}, -1$};
+    
+    \draw[green!60!black, fill=green!10, rounded corners=4pt, thick] (4.8, 1.5) rectangle (7.0, 2.8);
+    \node at (5.9, 2.3) [font=\large\bfseries\color{green!60!black}] {$\tau$};
+    \node at (5.9, 1.8) [font=\tiny, align=center] {Tau\\$1.78\text{ GeV}, -1$};
+    
+    % Neutrinos
+    \draw[green!60!black, fill=green!10, rounded corners=4pt, thick] (0, 0.0) rectangle (2.2, 1.3);
+    \node at (1.1, 0.8) [font=\large\bfseries\color{green!60!black}] {$\nu_e$};
+    \node at (1.1, 0.3) [font=\tiny, align=center] {e-neutrino\\$<0.8\text{ eV}, 0$};
+    
+    \draw[green!60!black, fill=green!10, rounded corners=4pt, thick] (2.4, 0.0) rectangle (4.6, 1.3);
+    \node at (3.5, 0.8) [font=\large\bfseries\color{green!60!black}] {$\nu_\mu$};
+    \node at (3.5, 0.3) [font=\tiny, align=center] {$\mu$-neutrino\\$<0.19\text{ MeV}, 0$};
+    
+    \draw[green!60!black, fill=green!10, rounded corners=4pt, thick] (4.8, 0.0) rectangle (7.0, 1.3);
+    \node at (5.9, 0.8) [font=\large\bfseries\color{green!60!black}] {$\nu_\tau$};
+    \node at (5.9, 0.3) [font=\tiny, align=center] {$\tau$-neutrino\\$<18\text{ MeV}, 0$};
+    
+    % Gauge Bosons
+    \draw[red!80!black, fill=red!10, rounded corners=4pt, thick] (7.4, 4.5) rectangle (9.6, 5.8);
+    \node at (8.5, 5.3) [font=\large\bfseries\color{red!80!black}] {$g$};
+    \node at (8.5, 4.8) [font=\tiny, align=center] {Gluon\\$0, 0, s=1$};
+    
+    \draw[red!80!black, fill=red!10, rounded corners=4pt, thick] (7.4, 3.0) rectangle (9.6, 4.3);
+    \node at (8.5, 3.8) [font=\large\bfseries\color{red!80!black}] {$\gamma$};
+    \node at (8.5, 3.3) [font=\tiny, align=center] {Photon\\$0, 0, s=1$};
+    
+    \draw[red!80!black, fill=red!10, rounded corners=4pt, thick] (7.4, 1.5) rectangle (9.6, 2.8);
+    \node at (8.5, 2.3) [font=\large\bfseries\color{red!80!black}] {$Z^0$};
+    \node at (8.5, 1.8) [font=\tiny, align=center] {Z Boson\\$91.2\text{ GeV}, 0$};
+    
+    \draw[red!80!black, fill=red!10, rounded corners=4pt, thick] (7.4, 0.0) rectangle (9.6, 1.3);
+    \node at (8.5, 0.8) [font=\large\bfseries\color{red!80!black}] {$W^\pm$};
+    \node at (8.5, 0.3) [font=\tiny, align=center] {W Boson\\$80.4\text{ GeV}, \pm 1$};
+    
+    % Higgs Boson
+    \draw[quantumGold!90!black, fill=quantumGold!15, rounded corners=4pt, line width=1.5pt] (10.0, 2.2) rectangle (12.2, 3.6);
+    \node at (11.1, 3.1) [font=\large\bfseries\color{quantumGold!90!black}] {$H^0$};
+    \node at (11.1, 2.6) [font=\tiny, align=center] {Higgs Boson\\$125.1\text{ GeV}, 0, s=0$};
+    
+    % Headers
+    \node at (3.5, 6.2) [font=\footnotesize\bfseries\color{purple!80!black}] {แฟร์มิออน (Fermions: ควาร์กและเลปตอน 3 ยุค)};
+    \node at (8.5, 6.2) [font=\footnotesize\bfseries\color{red!80!black}] {เกจโบซอน ($s=1$)};
+    \node at (11.1, 4.0) [font=\footnotesize\bfseries\color{quantumGold!90!black}] {สเกลาร์};
+\end{tikzpicture}
+\caption{ผังจำแนกอนุภาคมูลฐานในแบบจำลองมาตรฐาน (The Standard Model Particle Grid)}
+\label{fig:standard_model_grid}
+\end{figure}
+
 \section{ฮาดรอนและโครงสร้างควาร์ก (Hadrons: Baryons and Mesons)}
 \index{ฮาดรอน}
 \index{แบริออน}
@@ -166,6 +254,43 @@ d \to u + W^- \to u + e^- + \bar{\nu}_e
 \end{tikzpicture}
 \caption{แผนภาพไฟน์แมนแสดงการสลายตัวบีตาลบในระดับควาร์ก ($d \to u + W^- \to u + e^- + \bar{\nu}_e$)}
 \label{fig:feynman_beta_decay}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Time axis
+    \draw[-{Stealth[scale=1.1]}, slateGrey, thick] (-3.5, -2.5) -- (-3.5, 2.5) node[above, font=\scriptsize\bfseries] {เวลา ($t$)};
+    
+    % Incoming electron and positron
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=cyberBlue] (-2.5, -1.8) -- (-1.25, -0.9);
+    \draw[line width=1.4pt, color=cyberBlue] (-1.25, -0.9) -- (0, 0);
+    \node at (-2.6, -2.1) [font=\footnotesize\bfseries\color{cyberBlue}] {อิเล็กตรอน ($e^-$)};
+    
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=cyberBlue] (0, 0) -- (-1.25, 0.9);
+    \draw[line width=1.4pt, color=cyberBlue] (-1.25, 0.9) -- (-2.5, 1.8);
+    \node at (-2.6, 2.1) [font=\footnotesize\bfseries\color{cyberBlue}] {โพซิตรอน ($e^+$)};
+    
+    % Virtual photon propagator
+    \draw[decorate, decoration={snake, amplitude=2.5mm, segment length=5mm}, line width=1.4pt, color=quantumGold] 
+        (0, 0) -- (2.5, 0);
+    \node at (1.25, 0.5) [font=\footnotesize\bfseries\color{quantumGold}] {โฟตอนเสมือน ($\gamma^*$)};
+    
+    % Outgoing muon and antimuon
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=neonPurple] (2.5, 0) -- (3.75, 0.9);
+    \draw[line width=1.4pt, color=neonPurple] (3.75, 0.9) -- (5.0, 1.8);
+    \node at (5.1, 2.1) [font=\footnotesize\bfseries\color{neonPurple}] {มิวออนลบ ($\mu^-$)};
+    
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, color=neonPurple] (5.0, -1.8) -- (3.75, -0.9);
+    \draw[line width=1.4pt, color=neonPurple] (3.75, -0.9) -- (2.5, 0);
+    \node at (5.1, -2.1) [font=\footnotesize\bfseries\color{neonPurple}] {แอนติมิวออน ($\mu^+$)};
+    
+    % Vertices
+    \filldraw[darkNavy] (0, 0) circle (3pt);
+    \filldraw[darkNavy] (2.5, 0) circle (3pt);
+\end{tikzpicture}
+\caption{แผนภาพไฟน์แมนแสดงการประลัยคู่อิเล็กตรอน-โพซิตรอนกลายเป็นคู่มิวออน ($e^- + e^+ \to \gamma^* \to \mu^- + \mu^+$)}
+\label{fig:feynman_muon_pair}
 \end{figure}
 
 \section{สถาปัตยกรรมการจำลองเสมือนจริง AR/XR: 3D Hadron Structure}
