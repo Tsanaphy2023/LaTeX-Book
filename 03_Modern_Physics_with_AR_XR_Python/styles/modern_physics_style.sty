@@ -142,12 +142,14 @@
   {}
   {0pt}
   {\rbruchapterbanner}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titleformat{name=\chapter,numberless}[block]
   {\normalfont}
   {}
   {0pt}
   {\rbruunnumberedchapterbanner}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titlespacing*{\chapter}{0pt}{0pt}{22pt}
 
@@ -156,12 +158,14 @@
   {\makebox[1.25cm][l]{\thesection}}
   {0pt}
   {}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titleformat{name=\section,numberless}
   {\normalfont\fontsize{16}{20}\bfseries\color{darkNavy}}
   {}
   {0pt}
   {}
+  [\global\setlength{\parindent}{1.25cm}]
 
 \titlespacing{\section}{0pt}{18pt plus 4pt minus 2pt}{8pt plus 2pt minus 1pt}
 
@@ -170,28 +174,45 @@
   {\makebox[1.25cm][l]{\thesubsection}}
   {0pt}
   {}
+  [\global\setlength{\parindent}{2.50cm}]
 
 \titleformat{name=\subsection,numberless}
   {\normalfont\fontsize{14}{18}\bfseries\color{cyberBlue}}
   {}
   {0pt}
   {}
+  [\global\setlength{\parindent}{2.50cm}]
 
-\titlespacing{\subsection}{0pt}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
+\titlespacing{\subsection}{1.25cm}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
 
 \titleformat{\subsubsection}
   {\normalfont\fontsize{12}{15}\bfseries\color{neonPurple}}
   {\makebox[1.25cm][l]{\thesubsubsection}}
   {0pt}
   {}
+  [\global\setlength{\parindent}{3.75cm}]
 
 \titleformat{name=\subsubsection,numberless}
   {\normalfont\fontsize{12}{15}\bfseries\color{neonPurple}}
   {}
   {0pt}
   {}
+  [\global\setlength{\parindent}{3.75cm}]
 
-\titlespacing{\subsubsection}{0pt}{10pt plus 2pt minus 1pt}{4pt plus 1pt minus 1pt}
+\titlespacing{\subsubsection}{2.50cm}{10pt plus 2pt minus 1pt}{4pt plus 1pt minus 1pt}
+
+% Dynamic Paragraph Indentation Wrappers (Hierarchical RBRU Standard)
+\let\rbruorigchapter\chapter
+\renewcommand{\chapter}{\global\setlength{\parindent}{1.25cm}\rbruorigchapter}
+
+\let\rbruorigsection\section
+\renewcommand{\section}{\global\setlength{\parindent}{1.25cm}\rbruorigsection}
+
+\let\rbruorigsubsection\subsection
+\renewcommand{\subsection}{\global\setlength{\parindent}{2.50cm}\rbruorigsubsection}
+
+\let\rbruorigsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\global\setlength{\parindent}{3.75cm}\rbruorigsubsubsection}
 
 % 6. Academic & Simulation Boxes (tcolorbox)
 
