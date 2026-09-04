@@ -1,6 +1,6 @@
-# Modern Physics with AR/XR Simulations and Python Computing
+# ฟิสิกส์แผนใหม่เชิงคำนวณและการจำลองเสมือนจริง (Computational and Immersive Modern Physics)
 
-- **ผู้แต่ง:** ดร.ชีวะ ทัศนา (`chewa.t@rbru.ac.th`)
+- **ผู้แต่ง:** ผศ.ดร.ชีวะ ทัศนา (`chewa.t@rbru.ac.th`)
 - **หน่วยงาน:** สาขาวิชาฟิสิกส์ มหาวิทยาลัยราชภัฏรำไพพรรณี (RBRU)
 - **Google Drive Folder:** [`1jPF1wvO4uaJXWzl4lCXUqriYE5BAj6by`](https://drive.google.com/drive/folders/1jPF1wvO4uaJXWzl4lCXUqriYE5BAj6by)
 - **ไฟล์ PDF ฉบับเต็ม:** [ดาวน์โหลด main.pdf](https://drive.google.com/file/d/13KlncT5qHyjMThhkJsVNii5TEuSr8mfT/view)
