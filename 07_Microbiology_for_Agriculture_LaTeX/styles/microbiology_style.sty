@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{styles/microbiology_style}[2026/09/04 RBRU Microbiology for Agriculture Style Standard]
+\ProvidesPackage{styles/microbiology_style}[2026/09/04 RBRU Agricultural Microbiology Style Standard]
 
 % 1. Page Geometry (มาตรฐาน มรภ.รำไพพรรณี: ซ้าย 1.5 นิ้ว, บน 1.5 นิ้ว, ขวา 1.0 นิ้ว, ล่าง 1.0 นิ้ว)
 \RequirePackage{geometry}
@@ -16,7 +16,10 @@
 
 % 1.1 Thai Linebreak & Hyphenation for XeLaTeX
 \XeTeXlinebreaklocale "th"
-\XeTeXlinebreakskip = 0pt plus 1pt minus 0.5pt
+\XeTeXlinebreakskip = 0pt plus 2pt minus 0.5pt
+
+% ป้องกัน orphan word ท้ายบรรทัดในรายการวัตถุประสงค์และกิจกรรม
+\setlength{\emergencystretch}{2.5em}
 
 % 1.2 Thai Academic Terminology (มาตรฐานระเบียบวิชาการ มรภ.รำไพพรรณี)
 \renewcommand{\chaptername}{บทที่}
@@ -69,6 +72,7 @@
 \definecolor{agriRed}{HTML}{C62828}         % Pathogen / Alert Red
 \definecolor{agriSlate}{HTML}{37474F}       % Slate Dark Grey for Text
 \definecolor{slateGrey}{HTML}{4A5568}       % Neutral Grey
+\definecolor{agriSky}{HTML}{81D4FA}         % Sky Blue / Water Droplet
 
 % 5. Section & Chapter Formatting
 \RequirePackage{enumitem}
@@ -170,7 +174,7 @@
 \renewcommand{\headrulewidth}{0.6pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{agriGreen}\leaders\hrule height \headrulewidth\hfill}}
 
-\fancyhead[LE]{\small\bfseries\color{agriGreen} \thepage \quad \textbar \quad จุลชีววิทยาสำหรับการเกษตร}
+\fancyhead[LE]{\small\bfseries\color{agriGreen} \thepage \quad \textbar \quad จุลชีววิทยาการเกษตร}
 \fancyhead[RO]{\small\bfseries\color{agriGreen} \leftmark \quad \textbar \quad \thepage}
 \fancyfoot[C]{\small\color{slateGrey} มหาวิทยาลัยราชภัฏรำไพพรรณี}
 

@@ -1,0 +1,261 @@
+\chapter{ปัญญาประดิษฐ์และการเรียนรู้เชิงลึกในจุลชีววิทยาการเกษตร}
+\label{chap:ch10}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 10
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 10}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 10}
+
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item สถาปัตยกรรมโครงข่ายประสาทเทียมเชิงลึก (Deep Neural Network Architecture)
+    \item การเรียนรู้เชิงลึก (Deep Learning) สำหรับการวินิจฉัยโรคพืชจากภาพและสัญญาณ
+    \item Transformer Model กับการวิเคราะห์จีโนมและโปรตีโอมของจุลินทรีย์
+    \item การเรียนรู้เสริม (Reinforcement Learning) กับการเพิ่มประสิทธิภาพหัวเชื้อจุลินทรีย์
+    \item ปัญญาประดิษฐ์อธิบายได้ (Explainable AI: XAI) กับการตัดสินใจทางการเกษตร
+    \item Federated Learning กับระบบเกษตรอัจฉริยะขนาดใหญ่
+\end{enumerate}
+
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
+    \item อธิบายสถาปัตยกรรม CNN, RNN, Transformer และการประยุกต์ใช้ในจุลชีววิทยาเกษตรได้
+    \item วิเคราะห์กรณีศึกษาการใช้ Deep Learning วินิจฉัยโรคพืชและประเมินสุขภาพดินได้
+    \item เปรียบเทียบข้อดีและข้อจำกัดของอัลกอริทึม AI แต่ละประเภทในบริบทเกษตรกรรมได้
+    \item อธิบายหลักการของ Explainable AI และความสำคัญในการนำไปใช้จริงในแปลงเกษตรได้
+\end{enumerate}
+
+\noindent\textbf{กิจกรรมการเรียนการสอน}
+\begin{enumerate}
+    \item การบรรยายและสาธิตการใช้ Google Teachable Machine หรือ Hugging Face ในการจำแนกภาพโรคพืช
+    \item กิจกรรมกลุ่ม: วิเคราะห์ Case Study การใช้ AI ในฟาร์มอัจฉริยะระดับนานาชาติ
+    \item ปฏิบัติการ: ทดลองใช้ Large Language Model ตอบคำถามทางจุลชีววิทยาเกษตร
+\end{enumerate}
+
+\noindent\textbf{การประเมินผล}
+\begin{enumerate}
+    \item การนำเสนอรายงานวิเคราะห์การประยุกต์ใช้ AI ในงานวิจัยจุลชีววิทยาเกษตรที่สนใจ
+    \item ข้อสอบอัตนัยวิเคราะห์ข้อดี-ข้อจำกัดของ Deep Learning ในบริบทเกษตรกรรมไทย
+\end{enumerate}
+
+\newpage
+
+% ==========================================================
+% เนื้อหาบทเรียน
+% ==========================================================
+
+\section{ภาพรวมของปัญญาประดิษฐ์ในจุลชีววิทยาเกษตร}
+\index{ปัญญาประดิษฐ์ (Artificial Intelligence)}
+
+\textbf{ปัญญาประดิษฐ์ (Artificial Intelligence: AI)} ในบริบทของจุลชีววิทยาการเกษตร หมายถึงการนำระบบคอมพิวเตอร์ที่สามารถ ``เรียนรู้'' จากข้อมูลขนาดใหญ่มาวิเคราะห์และตัดสินใจเกี่ยวกับระบบนิเวศจุลินทรีย์ในดิน น้ำ และพืช ซึ่งมีความซับซ้อนเกินกว่าที่นักวิจัยจะวิเคราะห์ด้วยวิธีสถิติดั้งเดิมได้อย่างครบถ้วน
+
+เทคโนโลยี AI ที่ประยุกต์ใช้ในจุลชีววิทยาเกษตรแบ่งออกเป็น 3 ระดับหลัก ดังนี้
+\begin{enumerate}
+    \item \textbf{Machine Learning แบบดั้งเดิม (Classical ML)} ได้แก่ Random Forest, Gradient Boosting, Support Vector Machine (SVM) และ k-Nearest Neighbors เหมาะสำหรับข้อมูลตาราง เช่น ข้อมูลสมบัติดิน ปริมาณธาตุอาหาร และผลการตรวจนับจุลินทรีย์
+    \item \textbf{การเรียนรู้เชิงลึก (Deep Learning)} ใช้โครงข่ายประสาทเทียมหลายชั้น เหมาะสำหรับข้อมูลที่มีโครงสร้างซับซ้อน เช่น ภาพถ่าย ลำดับเบส DNA และสัญญาณเวลาต่อเนื่อง
+    \item \textbf{Generative AI และ Foundation Models} ได้แก่ Large Language Models (LLM) และ Protein Language Models (PLM) ซึ่งสามารถสร้างความรู้ใหม่ ออกแบบโปรตีน และตอบคำถามวิทยาศาสตร์เชิงซับซ้อนได้
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.88]
+    \node at (6.5, 5.8) [font=\small\bfseries\color{agriGreen}]
+        {ระดับชั้นของปัญญาประดิษฐ์ในจุลชีววิทยาเกษตร};
+    \node (fm) [rectangle, rounded corners=10pt, draw=agriRed, fill=agriRed!10,
+        line width=2pt, minimum width=10cm, minimum height=1.2cm,
+        align=center, font=\small\bfseries] at (6.5, 4.5)
+        {Foundation Models / Generative AI --- LLM, Protein LM, AlphaFold 3};
+    \node (dl) [rectangle, rounded corners=10pt, draw=agriBlue, fill=agriBlue!10,
+        line width=2pt, minimum width=10cm, minimum height=1.2cm,
+        align=center, font=\small\bfseries] at (6.5, 3.0)
+        {การเรียนรู้เชิงลึก (Deep Learning) --- CNN, RNN, Transformer, GAN};
+    \node (ml) [rectangle, rounded corners=10pt, draw=agriGold, fill=yellow!15,
+        line width=2pt, minimum width=10cm, minimum height=1.2cm,
+        align=center, font=\small\bfseries] at (6.5, 1.5)
+        {Machine Learning แบบดั้งเดิม --- Random Forest, SVM, XGBoost, k-NN};
+    \node (data) [rectangle, rounded corners=8pt, draw=agriEarth, fill=agriEarth!15,
+        line width=2pt, minimum width=10cm, minimum height=1.0cm,
+        align=center, font=\small\bfseries] at (6.5, 0.2)
+        {ข้อมูลจุลชีววิทยาเกษตร (Omics, Image, Sensor, Soil Chemistry)};
+    \draw[-{Stealth[scale=1.3]}, line width=2pt, color=agriEarth] (data) -- (ml);
+    \draw[-{Stealth[scale=1.3]}, line width=2pt, color=agriGold]  (ml)   -- (dl);
+    \draw[-{Stealth[scale=1.3]}, line width=2pt, color=agriBlue]  (dl)   -- (fm);
+    \node at (12.5, 4.5) [align=left, font=\scriptsize\color{agriRed}]
+        {ออกแบบโปรตีน\\ตอบคำถาม\\ค้นพบสารออกฤทธิ์};
+    \node at (12.5, 3.0) [align=left, font=\scriptsize\color{agriBlue}]
+        {วินิจฉัยโรคพืช\\วิเคราะห์จีโนม\\ทำนายโครงสร้างโปรตีน};
+    \node at (12.5, 1.5) [align=left, font=\scriptsize\color{agriGold!80!black}]
+        {จัดกลุ่มดิน\\ทำนายการระบาด\\คาดการณ์ผลผลิต};
+\end{tikzpicture}
+\caption{ระดับชั้นของเทคโนโลยีปัญญาประดิษฐ์และการประยุกต์ใช้ในจุลชีววิทยาการเกษตร}
+\label{fig:ai_hierarchy}
+\end{figure}
+
+% ----------------------------------------------------------
+\section{Convolutional Neural Network กับการวินิจฉัยโรคพืช}
+\index{Convolutional Neural Network (CNN)}
+
+\textbf{Convolutional Neural Network (CNN)} เป็นสถาปัตยกรรมโครงข่ายประสาทเทียมที่ออกแบบมาเพื่อประมวลผลข้อมูลภาพโดยเฉพาะ โดยใช้ตัวกรองคณิตศาสตร์ (Convolutional Filter) สแกนผ่านพิกเซลของภาพเพื่อตรวจจับลักษณะเด่น (Feature Extraction) ตั้งแต่ขอบเส้น (Edge) ไปจนถึงรูปแบบซับซ้อน เช่น สีของแผล เนื้อสัมผัสใบพืชที่เปลี่ยนแปลง หรือลักษณะโคโลนีจุลินทรีย์ภายใต้กล้องจุลทรรศน์
+
+\subsection{การวินิจฉัยโรคพืชจากภาพถ่ายด้วย CNN}
+\index{การวินิจฉัยโรคพืชด้วย AI}
+
+งานวิจัยในยุคปัจจุบันได้นำโมเดล CNN ที่ผ่านการฝึกล่วงหน้า (Pre-trained Models) อาทิ \textbf{ResNet-50}, \textbf{EfficientNet}, \textbf{Vision Transformer (ViT)} มาประยุกต์ใช้ในการวินิจฉัยโรคพืชที่เกิดจากจุลินทรีย์ด้วยเทคนิค \textbf{Transfer Learning} ตัวอย่างการประยุกต์ใช้ในบริบทการเกษตรไทย ดังนี้
+\begin{itemize}
+    \item \textbf{โรคใบไหม้ทุเรียน (Phytophthora Leaf Blight)} โมเดล EfficientNet-B4 ที่ฝึกด้วยภาพใบทุเรียนจำนวน 8{,}000 ภาพ จำแนกระยะความรุนแรงได้ 5 ระดับ ด้วยความแม่นยำ 96.3\% บนอุปกรณ์ Raspberry Pi
+    \item \textbf{โรคแอนแทรคโนสมะม่วง (\textit{Colletotrichum gloeosporioides})} การผสมผสาน CNN กับ Hyperspectral Imaging ตรวจพบการติดเชื้อระยะ Latent ก่อนปรากฏอาการ 5--7 วัน
+    \item \textbf{โรคราแป้งมะเขือเทศ (Powdery Mildew)} โมเดล YOLOv8-seg วิเคราะห์ภาพโดรนและประเมินพื้นที่ติดเชื้อแบบ Real-time
+\end{itemize}
+
+\subsection{การวิเคราะห์ภาพจุลทรรศน์และโคโลนีจุลินทรีย์ด้วย AI}
+\index{การวิเคราะห์ภาพจุลทรรศน์ด้วย AI}
+
+\begin{itemize}
+    \item \textbf{การนับโคโลนีอัตโนมัติ (Automated Colony Counting)} โมเดล Mask R-CNN และ SAM (Segment Anything Model) นับโคโลนีบนจานเพาะเชื้อได้แม่นยำและเร็วกว่าการนับมือ 10--20 เท่า
+    \item \textbf{การจำแนกชนิดเชื้อราจากภาพ Microscopy} Vision Transformer จำแนกสปอร์ของ \textit{Phytophthora}, \textit{Fusarium}, \textit{Alternaria} จากภาพกล้องจุลทรรศน์ด้วยความแม่นยำมากกว่า 95\%
+    \item \textbf{การตรวจสอบคุณภาพหัวเชื้อจุลินทรีย์} CNN ตรวจสอบความบริสุทธิ์และปริมาณสปอร์ในผลิตภัณฑ์ Bio-stimulant ก่อนออกจำหน่าย
+\end{itemize}
+
+% ----------------------------------------------------------
+\section{Transformer และ Protein Language Models กับจีโนมิกส์จุลินทรีย์}
+\index{Transformer Model}
+
+\textbf{Transformer Architecture} ได้ถูกนำมาประยุกต์ใช้กับลำดับเบส DNA และกรดอะมิโน โดยถือว่าลำดับเบสทางชีวภาพเป็น ``ภาษา'' ที่มีไวยากรณ์และโครงสร้างความหมายเป็นของตนเอง
+
+\subsection{DNA Language Models และการวิเคราะห์จีโนมจุลินทรีย์}
+\index{DNA Language Model}
+
+โมเดล \textbf{DNABERT-2}, \textbf{Nucleotide Transformer}, และ \textbf{HyenaDNA} ฝึกด้วยจีโนมของสิ่งมีชีวิตหลายล้านสายพันธุ์ สามารถ ดังนี้
+\begin{itemize}
+    \item \textbf{ทำนายหน้าที่ยีนที่ไม่รู้จัก} จากจีโนมของจุลินทรีย์ดินที่สกัดด้วยเมตาเจโนมิกส์ ค้นพบยีนใหม่เกี่ยวกับการย่อยสลายสารพิษหรือการสังเคราะห์สารต้านจุลชีพ
+    \item \textbf{ทำนายโครงสร้างควบคุมยีน} ตรวจสอบ Promoter และ Enhancer ของยีนควบคุมการตรึงไนโตรเจน (\textit{nifH}) ในจุลินทรีย์ดิน
+    \item \textbf{วิเคราะห์การถ่ายทอดยีนในแนวราบ (HGT)} ติดตามการแพร่กระจายของยีนดื้อต่อสารกำจัดศัตรูพืชในประชากรจุลินทรีย์ดิน
+\end{itemize}
+
+\subsection{Protein Language Models และการออกแบบเอนไซม์ทางการเกษตร}
+\index{Protein Language Model}
+
+\textbf{Protein Language Models} เช่น \textbf{ESM-2} จาก Meta AI และ \textbf{AlphaFold 3} จาก Google DeepMind ทำนายโครงสร้างสามมิติของโปรตีนจากลำดับกรดอะมิโนได้แม่นยำสูง การประยุกต์ใช้ในจุลชีววิทยาเกษตร ดังนี้
+\begin{itemize}
+    \item \textbf{ออกแบบเอนไซม์ย่อยสลายไกลโฟเสทประสิทธิภาพสูง} ทำนายการกลายพันธุ์ที่ทำให้ EPSPS-lyase ย่อยสลายสารกำจัดวัชพืชได้เร็วและครบถ้วน ลดการสะสมสารพิษตกค้างในดิน
+    \item \textbf{ค้นหาสารต้านจุลชีพชนิดใหม่} วิเคราะห์โปรตีโอมของ \textit{Streptomyces} สวนผลไม้จันทบุรีเพื่อค้นหาเปปไทด์ยับยั้งเชื้อราก่อโรคพืชโดยเฉพาะ
+    \item \textbf{วิศวกรรมเอนไซม์ตรึงไนโตรเจน} เพิ่มประสิทธิภาพ Nitrogenase ใน \textit{Rhizobium} ให้ทนทานต่ออุณหภูมิสูงในเขตร้อน
+\end{itemize}
+
+\begin{definitionbox}{AlphaFold 3 กับการค้นพบสารชีวภัณฑ์ทางการเกษตร}
+\textbf{AlphaFold 3} (Google DeepMind, 2024) ทำนายโครงสร้างสามมิติของคอมเพล็กซ์โปรตีน-สารชีวโมเลกุลได้ในเวลาไม่กี่วินาที นักวิทยาศาสตร์เกษตรใช้ AlphaFold 3 วิเคราะห์ว่าสารสกัดจากจุลินทรีย์ดิน เช่น สาร Iturin จาก \textit{Bacillus subtilis} จะจับกับโปรตีนในผนังเซลล์เชื้อราก่อโรคพืชได้อย่างไร ก่อนนำมาทดสอบจริงในห้องปฏิบัติการ ลดระยะเวลาการพัฒนาชีวภัณฑ์จากหลายปีเหลือเพียงไม่กี่สัปดาห์
+\end{definitionbox}
+
+% ----------------------------------------------------------
+\section{Reinforcement Learning กับการเพิ่มประสิทธิภาพหัวเชื้อจุลินทรีย์}
+\index{Reinforcement Learning}
+
+\textbf{การเรียนรู้เสริม (Reinforcement Learning: RL)} เป็นกระบวนการที่ AI Agent เรียนรู้กลยุทธ์ที่ดีที่สุดจากการทดลองปฏิสัมพันธ์กับสภาพแวดล้อม โดยได้รับรางวัล (Reward) หรือโทษ (Penalty) ตามผลลัพธ์ การประยุกต์ใช้ในจุลชีววิทยาเกษตร ดังนี้
+\begin{enumerate}
+    \item \textbf{การเพิ่มประสิทธิภาพสูตรอาหารเลี้ยงเชื้อ (Fermentation Media Optimization)} RL Agent ปรับสัดส่วนคาร์บอน ไนโตรเจน แร่ธาตุ และ pH เพื่อเพิ่มการผลิตสารปฏิชีวนะหรือสารชีวภัณฑ์จากแบคทีเรียให้สูงสุด ภายใน 100--200 รอบจำลอง
+    \item \textbf{การออกแบบชุมชนจุลินทรีย์สังเคราะห์ (SynCom Design)} หาองค์ประกอบที่เหมาะสมของจุลินทรีย์ที่ทำงานร่วมกันในหัวเชื้อผสม (Consortium) ได้อย่างแม่นยำ
+    \item \textbf{การควบคุมการพ่นหัวเชื้อแม่นยำ} RL ควบคุมโดรนพ่นหัวเชื้อเฉพาะจุดตามพิกัด GPS ลดการใช้หัวเชื้อได้ 30--50\% ในขณะที่คงประสิทธิผลเท่าเดิม
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Explainable AI กับการตัดสินใจเชิงเกษตรที่โปร่งใส}
+\index{Explainable AI (XAI)}
+
+\textbf{ปัญญาประดิษฐ์อธิบายได้ (Explainable AI: XAI)} ทำให้เกษตรกรและนักวิจัยสามารถตรวจสอบได้ว่า AI ใช้ข้อมูลใดในการตัดสินใจ ซึ่งมีความสำคัญอย่างยิ่งก่อนนำคำแนะนำของ AI ไปปฏิบัติในแปลงจริง เทคนิค XAI ที่นิยมใช้ ดังนี้
+\begin{itemize}
+    \item \textbf{SHAP (SHapley Additive exPlanations)} วิเคราะห์ว่าตัวแปรใดมีอิทธิพลต่อการทำนายสูงสุด เช่น สรุปว่าปริมาณ \textit{Bacillus} และ pH ดิน เป็นสองปัจจัยหลักที่มีผลต่อสุขภาพดิน
+    \item \textbf{LIME (Local Interpretable Model-agnostic Explanations)} สร้างคำอธิบายรายกรณีเฉพาะ เช่น อธิบายว่าทำไม AI แนะนำหัวเชื้อ PGPR ชนิด A แทนชนิด B
+    \item \textbf{Grad-CAM (Gradient-weighted Class Activation Mapping)} แสดงบริเวณในภาพที่ CNN ให้ความสำคัญในการวินิจฉัยโรคพืช ช่วยนักพยาธิวิทยาพืชตรวจสอบความถูกต้อง
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.90]
+    \node (xai) [circle, draw=agriGreen, fill=agriMint, line width=2.5pt,
+        minimum size=2.5cm, align=center, font=\small\bfseries\color{agriGreen}]
+        at (6.5, 3.0) {Explainable\\AI (XAI)};
+    \node (shap) [rectangle, rounded corners=6pt, draw=agriBlue, fill=agriBlue!12,
+        line width=1.5pt, minimum width=3.2cm, minimum height=1.0cm,
+        align=center, font=\scriptsize\bfseries] at (2.5, 5.0)
+        {SHAP Values\\อิทธิพลของตัวแปร};
+    \node (lime) [rectangle, rounded corners=6pt, draw=agriGold, fill=yellow!15,
+        line width=1.5pt, minimum width=3.2cm, minimum height=1.0cm,
+        align=center, font=\scriptsize\bfseries] at (10.5, 5.0)
+        {LIME\\คำอธิบายรายกรณี};
+    \node (gradcam) [rectangle, rounded corners=6pt, draw=agriRed, fill=agriRed!10,
+        line width=1.5pt, minimum width=3.2cm, minimum height=1.0cm,
+        align=center, font=\scriptsize\bfseries] at (2.5, 1.0)
+        {Grad-CAM\\แผนที่ความสำคัญในภาพ};
+    \node (attn) [rectangle, rounded corners=6pt, draw=agriSlate, fill=agriSlate!10,
+        line width=1.5pt, minimum width=3.2cm, minimum height=1.0cm,
+        align=center, font=\scriptsize\bfseries] at (10.5, 1.0)
+        {Attention Map\\น้ำหนักลำดับ DNA};
+    \draw[{Stealth[scale=1.2]}-{Stealth[scale=1.2]}, line width=1.4pt, color=agriBlue]  (xai) -- (shap);
+    \draw[{Stealth[scale=1.2]}-{Stealth[scale=1.2]}, line width=1.4pt, color=agriGold]  (xai) -- (lime);
+    \draw[{Stealth[scale=1.2]}-{Stealth[scale=1.2]}, line width=1.4pt, color=agriRed]   (xai) -- (gradcam);
+    \draw[{Stealth[scale=1.2]}-{Stealth[scale=1.2]}, line width=1.4pt, color=agriSlate] (xai) -- (attn);
+    \node at (6.5, -0.4) [rectangle, rounded corners=6pt, draw=agriGreen, fill=agriMint,
+        line width=1.5pt, minimum width=9cm, minimum height=0.9cm,
+        align=center, font=\scriptsize\bfseries\color{agriGreen}]
+        {เป้าหมาย: เกษตรกรและนักวิจัยตรวจสอบการตัดสินใจของ AI ได้โปร่งใส};
+\end{tikzpicture}
+\caption{เทคนิค Explainable AI (XAI) ที่ประยุกต์ใช้ในจุลชีววิทยาการเกษตรเพื่อความโปร่งใสในการตัดสินใจ}
+\label{fig:xai_techniques}
+\end{figure}
+
+% ----------------------------------------------------------
+\section{Federated Learning กับเครือข่ายเกษตรอัจฉริยะ}
+\index{Federated Learning}
+
+\textbf{Federated Learning (FL)} เป็นเทคนิคการฝึกโมเดล AI ที่ข้อมูลยังคงอยู่ในอุปกรณ์ของเกษตรกรแต่ละราย โมเดลในอุปกรณ์เรียนรู้จากข้อมูลท้องถิ่น แล้วส่งเฉพาะ Model Weights มารวมกันที่เซิร์ฟเวอร์กลาง การประยุกต์ใช้ในจุลชีววิทยาเกษตร ดังนี้
+\begin{enumerate}
+    \item \textbf{เครือข่ายเฝ้าระวังโรคพืชระดับชาติ} เซ็นเซอร์ IoT ในแปลงทั่วประเทศฝึกโมเดลวินิจฉัยโรคพืชร่วมกันโดยไม่แบ่งปันภาพต้นทุน
+    \item \textbf{แพลตฟอร์มแบ่งปันโปรไฟล์ไมโครไบโอมดิน} ห้องปฏิบัติการและมหาวิทยาลัยร่วมพัฒนาโมเดลทำนายสุขภาพดินโดยไม่ต้องส่งข้อมูลเมตาเจโนมิกส์ขนาดมหาศาล
+    \item \textbf{ระบบแนะนำหัวเชื้อส่วนบุคคล} เกษตรกรได้รับคำแนะนำที่เหมาะสมกับดินของตนโดยเฉพาะ ขณะที่ระบบกลางเรียนรู้จากทุกแปลงโดยไม่ละเมิดความเป็นส่วนตัว
+\end{enumerate}
+
+\begin{casestudy}{Microbiome Foundation Model สำหรับเกษตรกรรมเขตร้อน}
+โครงการ \textbf{TropicMicroAI} (2025) พัฒนา Foundation Model สำหรับวิเคราะห์ไมโครไบโอมดินเขตร้อน ฝึกด้วยข้อมูลเมตาเจโนมิกส์จากดินสวนผลไม้และนาข้าวกว่า 15{,}000 ตัวอย่างจากมหาวิทยาลัยในไทย มาเลเซีย และอินโดนีเซีย ด้วยระบบ Federated Learning โมเดลทำนายดัชนีสุขภาพดิน (Soil Health Score) ในแปลงใหม่ได้ด้วยความแม่นยำ 91.7\% และระบุ Biomarker จุลินทรีย์ระดับสกุล (Genus) ของดินที่มีปัญหาได้อย่างแม่นยำ
+\end{casestudy}
+
+% ----------------------------------------------------------
+\section{Large Language Models กับการเข้าถึงความรู้จุลชีววิทยาเกษตร}
+\index{Large Language Model (LLM)}
+
+\textbf{Large Language Models (LLM)} เช่น \textbf{GPT-4o}, \textbf{Gemini} และโมเดลเฉพาะทาง เช่น \textbf{BioGPT}, \textbf{GeneGPT} เปลี่ยนแปลงวิธีที่นักวิจัยและเกษตรกรเข้าถึงความรู้ทางจุลชีววิทยาอย่างสิ้นเชิง การประยุกต์ใช้สำคัญ ดังนี้
+\begin{itemize}
+    \item \textbf{การสังเคราะห์วรรณกรรมวิชาการ} LLM ประมวลบทความวิจัยหลายร้อยชิ้นและสรุปผลการศึกษาในรูปแบบที่ต้องการภายในไม่กี่นาที
+    \item \textbf{ระบบผู้ช่วยวินิจฉัยโรคพืช (AI Plant Doctor)} เกษตรกรถ่ายภาพพืชผิดปกติ LLM Multimodal วิเคราะห์ภาพร่วมกับข้อมูลสภาพอากาศและดิน วินิจฉัยสาเหตุและแนะนำวิธีจัดการด้วยภาษาท้องถิ่น
+    \item \textbf{การออกแบบโปรโตคอลการทดลอง} LLM สร้างโปรโตคอลห้องปฏิบัติการจุลชีววิทยาโดยละเอียดพร้อมคาดการณ์ผลลัพธ์
+    \item \textbf{การแปลความรู้สู่เกษตรกร} แปลผลวิเคราะห์ไมโครไบโอมดินเป็นคำแนะนำการจัดการดินที่เกษตรกรเข้าใจได้ในทันที
+\end{itemize}
+
+% ----------------------------------------------------------
+\section{แนวโน้มอนาคตของ AI ในจุลชีววิทยาเกษตรไทย}
+\index{อนาคต AI ในจุลชีววิทยาเกษตร}
+
+ประเทศไทยมีโอกาสอันยิ่งใหญ่ในการใช้ AI ยกระดับห่วงโซ่คุณค่าทางการเกษตรตั้งแต่จุลินทรีย์ดินไปจนถึงผู้บริโภค แนวโน้มสำคัญในทศวรรษหน้า ดังนี้
+\begin{enumerate}
+    \item \textbf{Digital Soil Microbiome Twin} สร้างแบบจำลองดิจิทัลของระบบนิเวศจุลินทรีย์ดินแบบ Real-time เพื่อทดสอบผลกระทบก่อนปฏิบัติจริงในแปลง
+    \item \textbf{AI-Guided Microbial Strain Breeding} ใช้ Generative AI ออกแบบการกลายพันธุ์แบบมีทิศทาง (Directed Evolution) ใน PGPR ให้ทนทานต่อสภาพอากาศร้อนแห้งแล้งที่รุนแรงขึ้น
+    \item \textbf{Agentic AI สำหรับห้องปฏิบัติการอัตโนมัติ} AI ควบคุมหุ่นยนต์ดำเนินการทดลอง คัดเลือกสายพันธุ์ ปรับสูตรอาหาร และบันทึกผลโดยอัตโนมัติ เร่งการค้นพบหัวเชื้อชีวภาพรุ่นใหม่
+\end{enumerate}
+
+\begin{agribox}{ข้อพิจารณาด้านจริยธรรมในการใช้ AI ทางการเกษตร}
+\begin{itemize}
+    \item \textbf{ความลำเอียงของข้อมูล (Data Bias)} โมเดล AI ที่ฝึกด้วยข้อมูลดินยุโรปอาจไม่เหมาะกับดินเขตร้อนของไทย จำเป็นต้องสร้างฐานข้อมูลท้องถิ่น
+    \item \textbf{ทรัพย์สินทางปัญญาชีวภาพ} ข้อมูลไมโครไบโอมจากดินไทยมีคุณค่าทางเศรษฐกิจสูง ต้องมีกรอบกฎหมายคุ้มครองก่อนนำไปฝึก AI
+    \item \textbf{ความเท่าเทียมในการเข้าถึง} เกษตรกรรายย่อยและชุมชนท้องถิ่นควรได้รับประโยชน์จาก AI เช่นเดียวกับบรรษัทอุตสาหกรรมเกษตร
+\end{itemize}
+\end{agribox}
+
+\section*{คำถามทบทวนท้ายบทที่ 10}
+\addcontentsline{toc}{section}{คำถามทบทวนท้ายบทที่ 10}
+\begin{enumerate}
+    \item จงอธิบายความแตกต่างระหว่าง CNN, RNN และ Transformer Architecture พร้อมยกตัวอย่างการประยุกต์ใช้ในจุลชีววิทยาเกษตรของแต่ละประเภท
+    \item Explainable AI (XAI) มีความสำคัญต่อการยอมรับ AI ในภาคเกษตรกรรมอย่างไร จงอธิบายพร้อมยกตัวอย่างเทคนิค XAI ที่ใช้ได้จริง
+    \item Federated Learning แก้ปัญหาด้านความเป็นส่วนตัวของข้อมูลในการวิจัยจุลชีววิทยาเกษตรได้อย่างไร และมีข้อจำกัดอะไรบ้าง
+    \item หากท่านเป็นนักวิจัยจุลชีววิทยาเกษตร ท่านจะออกแบบโครงการวิจัยที่นำ AI มาผสมผสานกับงานด้าน PGPR หรือการควบคุมโรคพืชชีวภาพได้อย่างไร
+\end{enumerate}
+
+\clearpage
