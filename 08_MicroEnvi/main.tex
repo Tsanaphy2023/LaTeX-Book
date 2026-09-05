@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% 1. Master Style for Environmental Microbiology & Water Quality (RBRU Masterclass Standard)
+\usepackage{styles/micro_envi_style}
+
+% 2. Font configuration for XeLaTeX (Sarabun font)
+\usepackage{fontspec}
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. Hyperref Setup
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=waterDeepBlue,
+    citecolor=microEmerald,
+    urlcolor=oceanTeal,
+    filecolor=amberGold,
+    pdftitle={จุลชีววิทยาสิ่งแวดล้อมและการวิเคราะห์คุณภาพน้ำ - ผศ.ดร.จิรภัทร จันทมาลี และ ผศ.ดร.ชีวะ ทัศนา},
+    pdfauthor={ผศ.ดร.จิรภัทร จันทมาลี และ ผศ.ดร.ชีวะ ทัศนา}
+}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/cover}
+\input{frontmatter/title}
+\input{frontmatter/preface}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/syllabus}
+
+% สารบัญ
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+\mainmatter
+
+% บทเรียน 12 บท
+\input{chapters/ch01_lab_safety_basics}
+\input{chapters/ch02_microbial_dispersion}
+\input{chapters/ch03_environmental_survey}
+\input{chapters/ch04_microbial_staining}
+\input{chapters/ch05_microbial_morphology}
+\input{chapters/ch06_isolation_cultivation}
+\input{chapters/ch07_culture_media}
+\input{chapters/ch08_microbial_growth}
+\input{chapters/ch09_anaerobic_microbiology}
+\input{chapters/ch10_metabolism_biochemical}
+\input{chapters/ch11_microbial_control}
+\input{chapters/ch12_water_bioremediation_bioblock}
+
+\backmatter
+\input{backmatter/appendixA}
+\input{backmatter/appendixB}
+\input{backmatter/references}
+
+\clearpage
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+
+\input{backmatter/biography}
+
+\end{document}

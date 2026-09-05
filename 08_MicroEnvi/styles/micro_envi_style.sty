@@ -1,0 +1,242 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/micro_envi_style}[2026/09/05 RBRU Environmental Microbiology and Water Quality Style Standard]
+
+% ============================================================
+% 1. Page Geometry (มาตรฐาน มรภ.รำไพพรรณี)
+% ============================================================
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=1.5in,
+    bottom=1.0in,
+    left=1.5in,
+    right=1.0in,
+    headheight=38pt,
+    headsep=14pt,
+    footskip=0.5in
+}
+
+% 1.1 Thai Linebreak & Hyphenation for XeLaTeX
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 2pt minus 0.5pt
+\setlength{\emergencystretch}{2.5em}
+
+% 1.2 Paragraph Indentation (มาตรฐาน มรภ.รำไพพรรณี: 1 Tab = 1.25cm)
+\RequirePackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+
+% 1.3 Thai Academic Terminology
+\renewcommand{\chaptername}{บทที่}
+\renewcommand{\figurename}{ภาพที่}
+\renewcommand{\tablename}{ตารางที่}
+\renewcommand{\contentsname}{สารบัญ}
+\renewcommand{\listfigurename}{สารบัญภาพ}
+\renewcommand{\listtablename}{สารบัญตาราง}
+\renewcommand{\appendixname}{ภาคผนวก}
+\renewcommand{\bibname}{บรรณานุกรม}
+\renewcommand{\indexname}{ดัชนีสืบค้นคำสำคัญ}
+
+% ============================================================
+% 2. Math & Science Packages
+% ============================================================
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\RequirePackage{chemformula}
+
+% ============================================================
+% 3. Graphics, Tables, & Floats
+% ============================================================
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{thaisep}{\quad}
+\captionsetup{labelsep=thaisep}
+\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=waterNavy}, textfont={normalfont}, labelsep=thaisep}
+\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=waterNavy}, textfont={normalfont}, labelsep=thaisep}
+
+% ============================================================
+% 4. Color Palette (Environmental Microbiology & Clean Water)
+% ============================================================
+\RequirePackage[table,xcdraw]{xcolor}
+\definecolor{waterNavy}{HTML}{0B2545}
+\definecolor{waterDeepBlue}{HTML}{134074}
+\definecolor{oceanTeal}{HTML}{0E7490}
+\definecolor{microEmerald}{HTML}{047857}
+\definecolor{ecoAqua}{HTML}{0284C7}
+\definecolor{cleanSky}{HTML}{E0F2FE}
+\definecolor{mintSoft}{HTML}{ECFDF5}
+\definecolor{amberGold}{HTML}{D97706}
+\definecolor{crimsonAlert}{HTML}{BE123C}
+\definecolor{slateGrey}{HTML}{475569}
+\definecolor{charcoal}{HTML}{1E293B}
+\definecolor{softMist}{HTML}{F8FAFC}
+
+% ============================================================
+% 5. TikZ & Vector Graphics
+% ============================================================
+\RequirePackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, backgrounds, fit, patterns, decorations.pathmorphing}
+
+% ============================================================
+% 6. Custom Highlight Boxes (tcolorbox)
+% ============================================================
+\RequirePackage[most]{tcolorbox}
+
+% 6.1 Concept Highlight Box (มโนทัศน์สำคัญ)
+\newtcolorbox{conceptbox}[1][]{
+    enhanced,
+    colback=softMist,
+    colframe=oceanTeal,
+    coltitle=white,
+    fonttitle=\bfseries\normalsize,
+    title={#1},
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt,
+    before skip=10pt, after skip=10pt,
+    drop shadow={black!20}
+}
+
+% 6.2 Biosafety & Precaution Box (ข้อควรระวังและความปลอดภัยทางชีวภาพ)
+\newtcolorbox{safetybox}[1][ข้อควรระวังและความปลอดภัยทางชีวภาพ]{
+    enhanced,
+    colback=red!5!white,
+    colframe=crimsonAlert,
+    coltitle=white,
+    fonttitle=\bfseries\normalsize,
+    title={#1},
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt,
+    before skip=10pt, after skip=10pt,
+    drop shadow={black!20}
+}
+
+% 6.3 Laboratory Protocol Box (ขั้นตอนปฏิบัติการทดลอง)
+\newtcolorbox{labprotocolbox}[1][ขั้นตอนการทดลอง]{
+    enhanced,
+    colback=mintSoft,
+    colframe=microEmerald,
+    coltitle=white,
+    fonttitle=\bfseries\normalsize,
+    title={#1},
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt,
+    before skip=10pt, after skip=10pt,
+    drop shadow={black!20}
+}
+
+% 6.4 Environmental Case Study Box (กรณีศึกษาสิ่งแวดล้อมและบำบัดน้ำเสีย)
+\newtcolorbox{casebox}[1][กรณีศึกษาสิ่งแวดล้อมและนวัตกรรม]{
+    enhanced,
+    colback=cleanSky!35!white,
+    colframe=waterNavy,
+    coltitle=white,
+    fonttitle=\bfseries\normalsize,
+    title={#1},
+    arc=2mm,
+    boxrule=0.8pt,
+    leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt,
+    before skip=10pt, after skip=10pt,
+    drop shadow={black!20}
+}
+
+% ============================================================
+% 7. Section & Chapter Headings (มาตรฐาน มรภ.รำไพพรรณี)
+% ============================================================
+\RequirePackage{titlesec}
+\RequirePackage{needspace}
+
+% 7.1 Chapter Format
+\titleformat{\chapter}[display]
+    {\normalfont\Huge\bfseries\color{waterNavy}}
+    {\flushleft\Large\bfseries\color{oceanTeal}\chaptername\ \thechapter}
+    {8pt}
+    {\Huge\bfseries}
+    [\vspace{8pt}\color{oceanTeal}\rule{\textwidth}{1.5pt}\vspace{10pt}]
+
+\titlespacing*{\chapter}{0pt}{*2}{*3}
+
+% 7.2 Section Format
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{waterNavy}}
+    {\makebox[1.25cm][l]{\thesection}}
+    {0pt}
+    {}
+
+\titlespacing*{\section}{0pt}{14pt plus 3pt minus 2pt}{6pt plus 1pt minus 1pt}
+
+% 7.3 Subsection Format (ย่อหน้า 1.25cm)
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{waterDeepBlue}}
+    {\makebox[1.25cm][l]{\thesubsection}}
+    {0pt}
+    {}
+
+\titlespacing*{\subsection}{1.25cm}{10pt plus 2pt minus 2pt}{4pt plus 1pt minus 1pt}
+
+% 7.4 Subsubsection Format (ย่อหน้า 2.50cm)
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\bfseries\color{microEmerald}}
+    {\makebox[1.25cm][l]{\thesubsubsection}}
+    {0pt}
+    {}
+
+\titlespacing*{\subsubsection}{2.50cm}{8pt plus 2pt minus 1pt}{3pt plus 1pt minus 1pt}
+
+% ============================================================
+% 8. Running Headers & Footers (fancyhdr)
+% ============================================================
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{oceanTeal}\leaders\hrule height \headrulewidth\hfill}}
+
+\fancyhead[LE]{\small\bfseries\color{oceanTeal} \thepage \quad \textbar \quad จุลชีววิทยาสิ่งแวดล้อมและการวิเคราะห์คุณภาพน้ำ}
+\fancyhead[RO]{\small\bfseries\color{oceanTeal} \leftmark \quad \textbar \quad \thepage}
+\fancyfoot[C]{\small\color{slateGrey} มหาวิทยาลัยราชภัฏรำไพพรรณี}
+
+\renewcommand{\chaptermark}[1]{%
+    \markboth{%
+        \ifnum \c@secnumdepth >\m@ne
+            \if@mainmatter
+                \chaptertitlename\ \thechapter\quad
+            \fi
+        \fi
+        #1}{}%
+}
+
+% ============================================================
+% 9. Listings & Indexing
+% ============================================================
+\RequirePackage{listings}
+\lstset{
+    basicstyle=\small\ttfamily,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{softMist},
+    rulecolor=\color{slateGrey!40},
+    numbers=left,
+    numberstyle=\tiny\color{slateGrey},
+    tabsize=2
+}
+
+\RequirePackage{makeidx}
+\makeindex
+
+\endinput

@@ -1,0 +1,191 @@
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\noindent%
+\begin{tikzpicture}[remember picture, overlay]
+    % ============================================================
+    % 1. Color Palette: Deep Oceanic & Eco-Bioluminescence
+    % ============================================================
+    \definecolor{coverDark}{HTML}{061426}
+    \definecolor{coverMid}{HTML}{0B2545}
+    \definecolor{coverDeepBlue}{HTML}{134074}
+    \definecolor{coverTeal}{HTML}{0E7490}
+    \definecolor{coverCyan}{HTML}{06B6D4}
+    \definecolor{coverNeonCyan}{HTML}{38BDF8}
+    \definecolor{coverEmerald}{HTML}{10B981}
+    \definecolor{coverNeonGreen}{HTML}{34D399}
+    \definecolor{coverGold}{HTML}{F59E0B}
+    \definecolor{coverAmber}{HTML}{FBBF24}
+    
+    % Canvas background
+    \fill[coverDark] ($(current page.south west)+(-1,-1)$) rectangle ($(current page.north east)+(1,1)$);
+    
+    % Volumetric Ambient Glows (Aquatic Nebula)
+    \shade[inner color=coverDeepBlue!90!coverTeal, outer color=coverDark, opacity=0.60] 
+        ($(current page.north east)+(-3, -4)$) circle (11cm);
+    \shade[inner color=coverTeal!80!coverEmerald, outer color=coverDark, opacity=0.45] 
+        ($(current page.south west)+(3, 8)$) circle (12cm);
+    \shade[inner color=coverMid!85!coverCyan, outer color=coverDark, opacity=0.35] 
+        ($(current page.center)+(1, -4)$) circle (9cm);
+    \shade[inner color=coverEmerald!70!coverDark, outer color=coverDark, opacity=0.25] 
+        ($(current page.north west)+(4, -6)$) circle (7cm);
+
+    % ============================================================
+    % 2. 3D Perspective Waveform & Bio-Matrix Grid
+    % ============================================================
+    \begin{scope}[opacity=0.22]
+        \coordinate (VP) at ($(current page.center)+(0.5, -0.8)$);
+        \foreach \x in {-12,-9,...,12} {
+            \draw[coverTeal, line width=0.5pt] ($(current page.south)+(\x*1.1, -0.5)$) -- (VP);
+        }
+        \foreach \y in {0.05, 0.12, 0.22, 0.35, 0.52, 0.72, 0.95, 1.25, 1.65, 2.15, 2.8, 3.6, 4.6} {
+            \draw[coverCyan, line width=0.4pt] 
+                ($(VP)!{\y}!($(current page.south west)+(-2,-0.5)$)$) -- 
+                ($(VP)!{\y}!($(current page.south east)+(2,-0.5)$)$);
+        }
+    \end{scope}
+
+    % ============================================================
+    % 3. Central Vector Motif: Microbial Water Droplet & Biofilm Matrix
+    % ============================================================
+    \begin{scope}[shift={($(current page.center)+(0.0, -1.2)$)}]
+        % 3.1 Water Wave Rings (Acoustic & Capillary Waves)
+        \foreach \r in {2.2, 3.2, 4.2, 5.2} {
+            \draw[coverCyan, line width=0.8pt, opacity={0.65 - \r*0.1}] (0, 0) circle (\r cm);
+        }
+
+        % 3.2 Porous Bioblock Matrix (Isometric Lattice)
+        \begin{scope}[opacity=0.35]
+            \foreach \ix in {-3,-1,1,3} {
+                \foreach \iy in {-2,0,2} {
+                    \draw[coverEmerald, line width=0.6pt] (\ix*0.8, \iy*0.7) circle (0.35cm);
+                    \fill[coverNeonGreen!50!coverDark] (\ix*0.8, \iy*0.7) circle (0.2cm);
+                }
+            }
+        \end{scope}
+
+        % 3.3 Glowing Water Droplet & Microbial Cell Cluster
+        % Outer teardrop silhouette
+        \draw[line width=2.4pt, coverNeonCyan, fill=coverTeal!25!coverDark, fill opacity=0.45]
+            (0, 2.8) .. controls (1.8, 0.8) and (2.2, -1.6) .. 
+            (0, -2.6) .. controls (-2.2, -1.6) and (-1.8, 0.8) .. (0, 2.8);
+            
+        % Inner Bacillus & Coccus microbes
+        % Rod-shaped Bacillus cells
+        \draw[rotate around={35:(-0.7, -0.3)}, line width=1.5pt, coverEmerald, fill=coverNeonGreen!35!coverDark] 
+            (-1.3, -0.6) rectangle (-0.1, 0.0);
+        \fill[coverNeonGreen] (-0.7, -0.3) circle (2pt);
+        
+        \draw[rotate around={-25:(0.8, 0.4)}, line width=1.5pt, coverEmerald, fill=coverNeonGreen!35!coverDark] 
+            (0.2, 0.1) rectangle (1.4, 0.7);
+        \fill[coverNeonGreen] (0.8, 0.4) circle (2pt);
+
+        % Spherical Coccus clusters
+        \fill[coverAmber] (-0.3, 0.8) circle (4pt);
+        \fill[coverAmber!90!white] (0.2, 1.1) circle (4.5pt);
+        \fill[coverAmber] (0.0, 1.5) circle (3.5pt);
+        \fill[coverGold] (-0.4, 1.2) circle (3pt);
+
+        % Flagella filaments
+        \draw[coverNeonGreen, line width=0.9pt, domain=0:2.0, samples=50]
+            plot ({1.4 + 0.3*\x}, {0.7 + 0.25*sin(12*\x r)});
+        \draw[coverNeonGreen, line width=0.9pt, domain=0:1.8, samples=50]
+            plot ({-1.3 - 0.3*\x}, {-0.6 - 0.2*sin(12*\x r)});
+
+        % Chemical Bond & Electron Transport Node
+        \draw[dashed, line width=1.2pt, coverNeonCyan!80!white] (-0.7, -0.3) -- (0.0, 1.5) -- (0.8, 0.4) -- cycle;
+        \node[font=\footnotesize\bfseries\color{coverNeonCyan}, fill=coverDark!90!black, rounded corners=3pt, inner sep=2pt] at (0, -0.4) {$\text{BOD} \downarrow \quad \text{DO} \uparrow$};
+
+        % Water Surface Wave Ripple Stream
+        \draw[ultra thick, coverCyan, domain=-4.5:4.5, samples=150, opacity=0.85] 
+            plot (\x, {0.45*sin(3.5*\x r)*exp(-0.05*\x*\x)});
+    \end{scope}
+
+    % ============================================================
+    % 4. Top Header: Institutional Identity & Category Ribbon
+    % ============================================================
+    \node[anchor=north west, align=left] at ($(current page.north west)+(1.8, -1.5)$) {
+        {\fontsize{12.5pt}{16pt}\bfseries\color{coverGold} โครงการตำราวิชาการเฉลิมพระเกียรติ}\\[3pt]
+        {\fontsize{11pt}{15pt}\bfseries\color{white!92!coverGold} มหาวิทยาลัยราชภัฏรำไพพรรณี}\\[4pt]
+        {\fontsize{8.5pt}{12pt}\color{gray!35} RAMBHAI BARNI RAJABHAT UNIVERSITY ACADEMIC TEXTBOOK SERIES \quad \textbullet \quad 2026}
+    };
+
+    % Category Tag Ribbon
+    \node[anchor=north east, align=center, draw=coverTeal, fill=coverTeal!25!coverDark, rounded corners=2.5mm, line width=0.9pt, inner sep=6pt] at ($(current page.north east)+(-1.8, -1.5)$) {
+        {\fontsize{8.5pt}{11pt}\bfseries\color{coverNeonCyan} ENVIRONMENTAL MICROBIOLOGY \& WATER QUALITY}
+    };
+
+    % ============================================================
+    % 5. Main Title Card (Modern Floating Frosted Glass Card)
+    % ============================================================
+    \node[anchor=north west, align=left] at ($(current page.north west)+(1.8, -3.8)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=coverDark!80!coverMid,
+            colframe=coverNeonCyan!80!coverTeal,
+            arc=5mm,
+            boxrule=1.8pt,
+            leftrule=7mm,
+            width=17.4cm,
+            top=16pt,
+            bottom=16pt,
+            left=14pt,
+            right=14pt,
+            drop shadow={coverDark!95!black}
+        ]
+            {\fontsize{25pt}{31pt}\bfseries\color{white} จุลชีววิทยาสิ่งแวดล้อม}\\[6pt]
+            {\fontsize{21pt}{27pt}\bfseries\color{coverNeonCyan} และการวิเคราะห์คุณภาพน้ำ}\\[12pt]
+            {\fontsize{12.5pt}{16pt}\bfseries\color{coverAmber} Environmental Microbiology and Water Quality Analysis}\\[5pt]
+            {\fontsize{8.2pt}{11pt}\color{gray!20} Microbial Ecology \enspace\textbullet\enspace Laboratory Protocols \enspace\textbullet\enspace Bioblock Wastewater Remediation}
+        \end{tcolorbox}
+    };
+
+    % ============================================================
+    % 6. Author Profile Card (Bottom Left)
+    % ============================================================
+    \node[anchor=south west, align=left] at ($(current page.south west)+(1.8, 1.8)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=coverDark!95!black,
+            colframe=coverGold!85!white,
+            arc=3.5mm,
+            boxrule=1.4pt,
+            width=12.8cm,
+            top=10pt,
+            bottom=10pt,
+            left=14pt,
+            right=14pt,
+            drop shadow={black!70}
+        ]
+            {\fontsize{14pt}{18pt}\bfseries\color{white} ผศ.ดร.จิรภัทร จันทมาลี \quad \textbullet \quad ผศ.ดร.ชีวะ ทัศนา}\\[4pt]
+            {\fontsize{9.5pt}{13pt}\color{coverNeonCyan} วท.บ., วท.ม., ปร.ด. (จุลชีววิทยา) \quad \textbullet \quad วท.บ., วท.ม., ปร.ด. (ฟิสิกส์ประยุกต์)}\\[3pt]
+            {\fontsize{9pt}{13pt}\color{gray!30} สาขาวิชาจุลชีววิทยา และสาขาวิชาฟิสิกส์ คณะวิทยาศาสตร์และเทคโนโลยี\\มหาวิทยาลัยราชภัฏรำไพพรรณี}
+        \end{tcolorbox}
+    };
+
+    % ============================================================
+    % 7. Year & Masterclass Edition Stamp (Bottom Right)
+    % ============================================================
+    \node[anchor=south east, align=right] at ($(current page.south east)+(-1.8, 1.8)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=coverMid!90!coverDark,
+            colframe=coverGold,
+            arc=3mm,
+            boxrule=1.2pt,
+            width=4.1cm,
+            top=8pt,
+            bottom=8pt,
+            left=6pt,
+            right=6pt,
+            halign=center
+        ]
+            {\fontsize{18pt}{22pt}\bfseries\color{coverGold} พ.ศ. 2569}\\[2pt]
+            {\fontsize{9.5pt}{12pt}\bfseries\color{white} Masterclass Edition}\\[2pt]
+            {\fontsize{8pt}{10pt}\color{coverNeonCyan} First Edition}
+        \end{tcolorbox}
+    };
+
+\end{tikzpicture}
+\end{titlepage}
+\restoregeometry

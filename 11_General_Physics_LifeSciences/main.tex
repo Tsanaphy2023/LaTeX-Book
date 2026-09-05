@@ -1,0 +1,70 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% 1. Master Style for Fundamental Physics and Life Sciences (RBRU Masterclass Standard)
+\usepackage{styles/general_physics_style}
+
+% 2. Font configuration for XeLaTeX (Sarabun font)
+\usepackage{fontspec}
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. Hyperref Setup
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=physRoyalBlue,
+    citecolor=bioEmerald,
+    urlcolor=physCyan,
+    filecolor=physAmber,
+    pdftitle={ฟิสิกส์พื้นฐานและคู่มือปฏิบัติการสำหรับวิทยาศาสตร์ชีวภาพและสิ่งแวดล้อม - ผศ.ดร.ชีวะ ทัศนา},
+    pdfauthor={ผศ.ดร.ชีวะ ทัศนา}
+}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/cover}
+\input{frontmatter/title}
+\input{frontmatter/preface}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/syllabus}
+
+% สารบัญ
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+\mainmatter
+
+% บทเรียน 13 บท
+\input{chapters/ch01_units_measurement}
+\input{chapters/ch02_vectors}
+\input{chapters/ch03_kinematics}
+\input{chapters/ch04_newton_laws}
+\input{chapters/ch05_momentum_impulse}
+\input{chapters/ch06_equilibrium}
+\input{chapters/ch07_work_energy}
+\input{chapters/ch08_power_simple_machines}
+\input{chapters/ch09_heat_transfer}
+\input{chapters/ch10_thermodynamics_gases}
+\input{chapters/ch11_electrostatics}
+\input{chapters/ch12_current_electricity}
+\input{chapters/ch13_optics_radioactivity}
+
+\backmatter
+
+\input{backmatter/appendixA}
+\input{backmatter/appendixB}
+\input{backmatter/references}
+
+\clearpage
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+
+\input{backmatter/biography}
+
+\end{document}

@@ -25,3 +25,7 @@ texput.log
 
 # Standalone repositories
 my_skill2026/
+
+# Raw reference downloads (videos, archives, large datasets)
+**/source_docs/
+

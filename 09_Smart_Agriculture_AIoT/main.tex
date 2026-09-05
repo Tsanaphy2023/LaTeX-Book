@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% 1. Master Style for Smart Agriculture and AIoT (RBRU Masterclass Standard)
+\usepackage{styles/smart_agri_style}
+
+% 2. Font configuration for XeLaTeX (Sarabun font)
+\usepackage{fontspec}
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. Hyperref Setup
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=agriForest,
+    citecolor=agriEmerald,
+    urlcolor=aiotCyan,
+    filecolor=durianGold,
+    pdftitle={เกษตรอัจฉริยะและปัญญาประดิษฐ์เพื่อการจัดการสวนทุเรียนและคุณภาพดิน - ผศ.ดร.ชีวะ ทัศนา},
+    pdfauthor={ผศ.ดร.ชีวะ ทัศนา และคณะ}
+}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/cover}
+\input{frontmatter/title}
+\input{frontmatter/preface}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/syllabus}
+
+% สารบัญ
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+\mainmatter
+
+% บทเรียน 8 บท
+\input{chapters/ch01_intro_smart_agri_aiot}
+\input{chapters/ch02_durian_physics_growth}
+\input{chapters/ch03_agri_sensors_iot_lorawan}
+\input{chapters/ch04_smart_irrigation_control}
+\input{chapters/ch05_digital_soil_physics}
+\input{chapters/ch06_soil_ai_vision_analytics}
+\input{chapters/ch07_farm_dashboard_edge_ai}
+\input{chapters/ch08_field_case_studies_chanthaburi}
+
+\backmatter
+\input{backmatter/appendixA}
+\input{backmatter/appendixB}
+\input{backmatter/references}
+
+\clearpage
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+
+\input{backmatter/biography}
+
+\end{document}

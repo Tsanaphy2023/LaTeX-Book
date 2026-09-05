@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% 1. Master Style for Environmental Physics, PM2.5 and Biomass Energy (RBRU Masterclass Standard)
+\usepackage{styles/envi_biomass_style}
+
+% 2. Font configuration for XeLaTeX (Sarabun font)
+\usepackage{fontspec}
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. Hyperref Setup
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=carbonNavy,
+    citecolor=cleanGreen,
+    urlcolor=skyBlue,
+    filecolor=flameAmber,
+    pdftitle={ฟิสิกส์สิ่งแวดล้อม การตรวจวัด PM2.5 และนวัตกรรมพลังงานชีวมวล - ผศ.ดร.ชีวะ ทัศนา},
+    pdfauthor={ผศ.ดร.ชีวะ ทัศนา และคณะ}
+}
+
+\begin{document}
+
+\frontmatter
+\input{frontmatter/cover}
+\input{frontmatter/title}
+\input{frontmatter/preface}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/syllabus}
+
+% สารบัญ
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+\mainmatter
+
+% บทเรียน 8 บท
+\input{chapters/ch01_atmospheric_physics}
+\input{chapters/ch02_atmospheric_optics_mie}
+\input{chapters/ch03_smartphone_pm25_sensing}
+\input{chapters/ch04_deep_learning_pollution}
+\input{chapters/ch05_combustion_thermodynamics}
+\input{chapters/ch06_carbon_black_briquette}
+\input{chapters/ch07_pyrolysis_biooil_biochar}
+\input{chapters/ch08_tver_carbon_credits}
+
+\backmatter
+\input{backmatter/appendixA}
+\input{backmatter/appendixB}
+\input{backmatter/references}
+
+\clearpage
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+
+\input{backmatter/biography}
+
+\end{document}

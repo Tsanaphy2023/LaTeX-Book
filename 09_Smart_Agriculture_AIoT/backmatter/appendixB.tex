@@ -1,0 +1,18 @@
+\chapter{ข้อกำหนดทางเทคนิคสถาปัตยกรรมเครือข่าย LoRaWAN สำหรับสวนไม้ผล}
+\label{app:appendixB}
+
+\section{ตารางค่าพารามิเตอร์คลื่นวิทยุย่านความถี่ AS923}
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\textwidth}{p{0.35\textwidth} p{0.35\textwidth} X}
+\toprule
+\textbf{พารามิเตอร์} & \textbf{ค่ามาตรฐานสำหรับประเทศไทย} & \textbf{หมายเหตุ} \\
+\midrule
+ย่านความถี่ (Frequency Band) & 920.0 -- 925.0 MHz & กสทช. กำหนด \\
+Spreading Factor (SF) & SF7 ถึง SF12 & SF7 สำหรับโหนดใกล้, SF12 สำหรับโหนดไกล \\
+Bandwidth (BW) & 125 kHz & ความกว้างช่องสัญญาณมาตรฐาน \\
+กำลังส่งสูงสุด (Tx Power) & ไม่เกิน 16 dBm (40 mW) & เพื่อความปลอดภัยและอายุแบตเตอรี่ \\
+รอบการส่งข้อมูล (Duty Cycle) & ส่งทุก 10--15 นาที & ลดการชนกันของสัญญาณ \\
+\bottomrule
+\end{tabularx}
+\end{table}
