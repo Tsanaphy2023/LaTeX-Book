@@ -21,6 +21,15 @@
 % ป้องกัน overfull hbox และ orphan word ในตำราฟิสิกส์คณิตศาสตร์
 \setlength{\emergencystretch}{2.5em}
 
+% การควบคุมและป้องกัน Widow / Orphan lines และ Orphan headings
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+% ป้องกันการเกิด Orphan Headings และ Floats ลอยข้ามหัวข้อ
+\RequirePackage{needspace}
+\RequirePackage[section]{placeins}
+
 % 1.3 Paragraph Indentation (มาตรฐาน มรภ.รำไพพรรณี: 1 Tab = 1.25cm)
 \RequirePackage{indentfirst}
 \setlength{\parindent}{1.25cm}
@@ -350,17 +359,18 @@
 \titlespacing{\subsection}{1.25cm}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
 
 % Dynamic Paragraph Indentation Command Wrappers (RBRU Hierarchical Indentation)
+% พร้อมระบบป้องกัน Orphan Headings ด้วย \Needspace*
 \let\rbruorigchapter\chapter
 \renewcommand{\chapter}{\global\setlength{\parindent}{1.25cm}\rbruorigchapter}
 
 \let\rbruorigsection\section
-\renewcommand{\section}{\global\setlength{\parindent}{1.25cm}\rbruorigsection}
+\renewcommand{\section}{\Needspace*{8\baselineskip}\global\setlength{\parindent}{1.25cm}\rbruorigsection}
 
 \let\rbruorigsubsection\subsection
-\renewcommand{\subsection}{\global\setlength{\parindent}{2.50cm}\rbruorigsubsection}
+\renewcommand{\subsection}{\Needspace*{5\baselineskip}\global\setlength{\parindent}{2.50cm}\rbruorigsubsection}
 
 \let\rbruorigsubsubsection\subsubsection
-\renewcommand{\subsubsection}{\global\setlength{\parindent}{3.75cm}\rbruorigsubsubsection}
+\renewcommand{\subsubsection}{\Needspace*{3\baselineskip}\global\setlength{\parindent}{3.75cm}\rbruorigsubsubsection}
 
 % 6. Academic Boxes (tcolorbox)
 

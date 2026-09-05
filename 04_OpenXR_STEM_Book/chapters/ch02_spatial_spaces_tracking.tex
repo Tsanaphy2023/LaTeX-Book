@@ -128,7 +128,7 @@
 แกนหมุนคือแกน $+Y$ ดังนั้น $\mathbf{u} = (0, 1, 0)$ และมุมหมุนตามเข็มนาฬิกาคือ $\theta = -90^\circ$ หรือ $-\frac{\pi}{2}\text{ rad}$
 คำนวณองค์ประกอบของควอเทอร์เนียนหนึ่งหน่วย
 \begin{align}
-w &= \cos\left(-\frac{45^\circ}{}\right) = \cos(-45^\circ) = \frac{\sqrt{2}}{2} \\
+w &= \cos(-45^\circ) = \frac{\sqrt{2}}{2} \\
 \mathbf{v} &= (0, 1, 0) \sin(-45^\circ) = \left(0, -\frac{\sqrt{2}}{2}, 0\right)
 \end{align}
 ดังนั้น $\mathbf{q} = \left(\frac{\sqrt{2}}{2}, 0, -\frac{\sqrt{2}}{2}, 0\right)$ และ $\mathbf{q}^* = \left(\frac{\sqrt{2}}{2}, 0, \frac{\sqrt{2}}{2}, 0\right)$
@@ -139,6 +139,60 @@ w &= \cos\left(-\frac{45^\circ}{}\right) = \cos(-45^\circ) = \frac{\sqrt{2}}{2} 
 \end{equation}
 นั่นคือ ตำแหน่งใหม่ของหัววัดเซนเซอร์จะย้ายไปอยู่ที่ $x = 0\text{ m}, y = 0\text{ m}, z = 0.5\text{ m}$ ซึ่งสอดคล้องกับการหมุนทางกายภาพจริง
 \end{workedexamplebox}
+
+\subsection{การแปลงระบบพิกัดคาร์ทีเซียนและทรงกลมในระบบติดตาม 3 มิติ}
+
+ในการพัฒนาสภาพแวดล้อมเสมือนจริงและการติดตามวัตถุเชิงพื้นที่ การแปลงระหว่างระบบพิกัดคาร์ทีเซียน (Cartesian Coordinates) $(x, y, z)$ และระบบพิกัดทรงกลม (Spherical Coordinates) $(r, \theta, \phi)$ มีบทบาทสำคัญอย่างยิ่งต่อการตรวจจับทิศทางการชี้ของลำแสง (Pointer Ray Casting) จากมือผู้ใช้ ตลอดจนการจัดวางส่วนต่อประสานกับผู้ใช้แบบลอยตัวในลักษณะทรงกลม (Spherical HUD Menu) ที่รักษาระยะห่างคงที่รอบดวงตาหรือศีรษะ
+
+ความสัมพันธ์ในการแปลงจากระบบพิกัดคาร์ทีเซียนสามมิติไปสู่ระบบพิกัดทรงกลมในมาตรฐานกราฟิกคอมพิวเตอร์ (แกน $+Y$ อยู่ในแนวดิ่ง) แสดงได้ดังสมการ
+\begin{align}
+r &= \sqrt{x^2 + y^2 + z^2} \label{eq:spherical_r} \\
+\theta &= \arccos\left(\frac{y}{r}\right) \quad (0 \le \theta \le \pi) \label{eq:spherical_theta} \\
+\phi &= \operatorname{atan2}(z, x) \quad (-\pi < \phi \le \pi) \label{eq:spherical_phi}
+\end{align}
+โดยที่ $r$ คือระยะห่างในแนวรัศมีจากจุดกำเนิด $\theta$ คือมุมขั้ว (Polar Angle หรือ Zenith Angle) วัดเทียบกับแนวดิ่งแกน $+Y$ และ $\phi$ คือมุมทิศทางในระนาบแนวนอน (Azimuthal Angle) ในระนาบ $XZ$
+
+ในทางกลับกัน เมื่อต้องการแปลงจากพิกัดทรงกลมกลับสู่พิกัดคาร์ทีเซียนสำหรับการกำหนดตำแหน่งวัตถุในเอนจินกราฟิก สามารถคำนวณได้จาก
+\begin{align}
+x &= r \sin\theta \cos\phi \label{eq:cartesian_x} \\
+y &= r \cos\theta \label{eq:cartesian_y} \\
+z &= r \sin\theta \sin\phi \label{eq:cartesian_z}
+\end{align}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Axes
+    \draw[-{Stealth[scale=1.1]}, line width=1.2pt, slateGrey] (0,0,0) -- (4.2,0,0) node[anchor=north east]{$+X$};
+    \draw[-{Stealth[scale=1.1]}, line width=1.2pt, slateGrey] (0,0,0) -- (0,3.8,0) node[anchor=north west]{$+Y$};
+    \draw[-{Stealth[scale=1.1]}, line width=1.2pt, slateGrey] (0,0,0) -- (0,0,3.8) node[anchor=south east]{$+Z$};
+
+    % Target Vector P
+    \coordinate (P) at (2.8, 2.5, 2.0);
+    \coordinate (Pproj) at (2.8, 0, 2.0);
+
+    % Projection lines
+    \draw[dashed, slateGrey!80!white, line width=0.8pt] (P) -- (Pproj);
+    \draw[dashed, slateGrey!80!white, line width=0.8pt] (0,0,0) -- (Pproj);
+    \draw[dashed, slateGrey!80!white, line width=0.8pt] (Pproj) -- (2.8, 0, 0);
+    \draw[dashed, slateGrey!80!white, line width=0.8pt] (Pproj) -- (0, 0, 2.0);
+
+    % Ray r
+    \draw[-{Stealth[scale=1.2]}, line width=2.0pt, openxrTeal] (0,0,0) -- (P) node[above right]{\textbf{$\mathbf{P}(x, y, z)$}};
+    \node[midway, above left, color=openxrTeal] at (1.4, 1.4, 1.0) {$r$};
+
+    % Angle theta
+    \draw[->, line width=1.2pt, cyberPurple] (0,1.5,0) arc (90:50:1.5) node[midway, above right]{\textbf{$\theta$}};
+
+    % Angle phi in horizontal plane
+    \draw[->, line width=1.2pt, amberGlow] (1.2,0,0) arc (0:40:1.2) node[midway, below right]{\textbf{$\phi$}};
+
+    % Origin label
+    \fill[darkNavy] (0,0,0) circle (2.5pt) node[below left]{$\mathbf{O}$ (จุดเซนเซอร์)};
+\end{tikzpicture}
+\caption{การแปลงเรขาคณิตระหว่างระบบพิกัดคาร์ทีเซียนสามมิติและระบบพิกัดทรงกลมในสภาพแวดล้อม XR}
+\label{fig:cartesian_spherical}
+\end{figure}
 
 \begin{aipromptbox}[การคำนวณควอเทอร์เนียนและการสอดแทรกตำแหน่งเชิงมุม (SLERP) ด้วย AI]
 \textbf{วัตถุประสงค์:} สร้างฟังก์ชัน Python สำหรับการสอดแทรกตำแหน่งเชิงมุมอย่างราบรื่น (Spherical Linear Interpolation: SLERP) ระหว่างควอเทอร์เนียนสองค่า สำหรับใช้ในการปรับทิศทางการมองเห็นและหมุนเครื่องมือทดลองเสมือนในสภาพแวดล้อม XR\\
@@ -210,10 +264,87 @@ stage_space = xr.create_reference_space(session, create_info)
 print("Stage Space initialized successfully for Room-Scale STEM Lab.")
 \end{codebox}
 
+\subsection{ขั้นตอนวิธี Unprojection และการแมปพิกัดจอภาพ 2D สู่ปริภูมิ 3D}
+
+เมื่อผสานการทำงานระหว่างการตรวจจับวัตถุหรือมือผ่านกล้อง 2 มิติ (เช่น การใช้เว็บแคมร่วมกับโมเดลการประมวลผลภาพ) เพื่อควบคุมและวางตำแหน่งเครื่องมือทดลองในปริภูมิ 3 มิติ จำเป็นต้องมีขั้นตอนวิธี \textbf{Camera Unprojection} เพื่อย้อนการฉายภาพจากพิกัดระนาบจอภาพ $(x_s, y_s)$ ในหน่วยพิกเซล กลับไปเป็นลำแสงเวกเตอร์สามมิติในปริภูมิโลก (World Space)
+
+ขั้นตอนวิธีเริ่มต้นจากการแปลงพิกัดพิกเซลบนหน้าจอขนาดความกว้าง $W$ และความสูง $H$ ให้อยู่ในระบบพิกัดอุปกรณ์นอร์มัลไลซ์ (Normalized Device Coordinates: NDC) ในช่วง $[-1, 1]$
+\begin{align}
+x_{\text{ndc}} &= \frac{2 x_s}{W} - 1 \label{eq:ndc_x} \\
+y_{\text{ndc}} &= 1 - \frac{2 y_s}{H} \label{eq:ndc_y}
+\end{align}
+
+จากนั้นนำเวกเตอร์พิกัด $\mathbf{v}_{\text{ndc}} = (x_{\text{ndc}}, y_{\text{ndc}}, z_{\text{ndc}}, 1)^{\top}$ โดยเลือก $z_{\text{ndc}} = 1.0$ (ที่ระนาบตัดภาพด้านไกล หรือ Far Clipping Plane) คูณด้วยเมทริกซ์ผกผันของการฉายภาพและการมองเห็น $\mathbf{M}_{\text{inv}} = (\mathbf{P} \mathbf{V})^{-1}$
+\begin{equation}
+\mathbf{v}_{\text{world}} = (\mathbf{P} \mathbf{V})^{-1} \begin{pmatrix} x_{\text{ndc}} \\ y_{\text{ndc}} \\ 1.0 \\ 1.0 \end{pmatrix}
+\end{equation}
+เมื่อแปลงกลับจากพิกัดเอกพันธุ์ (Homogeneous Coordinates) โดยการหารด้วยองค์ประกอบ $w$ จะได้พิกัดปลายทาง $\mathbf{P}_{\text{far}}$ และสามารถคำนวณเวกเตอร์ทิศทางของลำแสงหนึ่งหน่วย $\mathbf{d}_{\text{ray}}$ จากตำแหน่งกล้อง $\mathbf{C}_{\text{cam}}$ ได้ดังนี้
+\begin{equation}
+\mathbf{d}_{\text{ray}} = \frac{\mathbf{P}_{\text{far}} - \mathbf{C}_{\text{cam}}}{\|\mathbf{P}_{\text{far}} - \mathbf{C}_{\text{cam}}\|}
+\end{equation}
+วัตถุเสมือนที่ระยะความลึก $d_{\text{depth}}$ จากตำแหน่งกล้องจึงมีพิกัด 3 มิติในโลกจำลองคือ
+\begin{equation}
+\mathbf{P}_{\text{target}} = \mathbf{C}_{\text{cam}} + d_{\text{depth}} \mathbf{d}_{\text{ray}}
+\end{equation}
+
+\subsection{การจัดการหน่วยความจำแบบ Zero-GC Vector Pooling สำหรับ 60 FPS}
+
+ในแอปพลิเคชันจำลองฟิสิกส์และการประมวลผลเชิงพื้นที่บนอุปกรณ์ XR หรือ WebXR ที่ต้องทำงานด้วยอัตราการเรนเดอร์ต่อเนื่อง 60 ถึง 120 เฟรมต่อวินาที ข้อผิดพลาดที่พบบ่อยในการเขียนโค้ดคือการสร้างอินสแตนซ์ของเวกเตอร์ใหม่ในทุกเฟรม เช่น \texttt{new Vector3()} ภายในฟังก์ชันการวนรอบเรนเดอร์ (Render Loop)
+
+การสร้างอ็อบเจกต์ชั่วคราวอย่างต่อเนื่องจะส่งผลให้ตัวเก็บขยะหน่วยความจำ (Garbage Collector: GC) ต้องหยุดการทำงานของระบบเป็นระยะสั้นๆ (GC Pause หรือ Jank) ทำให้เฟรมเรตตกและผู้ใช้เกิดอาการเวียนศีรษะจากภาพกระตุก (Cyber-sickness)
+
+แนวทางการแก้ไขตามมาตรฐานระดับมืออาชีพคือการใช้สถาปัตยกรรม \textbf{Zero-GC Vector Pooling} โดยการสร้างตัวแปรเวกเตอร์สำหรับทดเลขล่วงหน้า (Pre-allocated Scratch Vectors) ไว้นอกลูป แล้วนำกลับมาใช้ซ้ำ (Reuse) ตลอดการทำงาน ดังตัวอย่างโค้ดในตัวอย่างที่ 2.4
+
+\begin{codebox}[การประยุกต์ใช้ Unprojection และ Zero-GC Vector Pool ใน JavaScript/Three.js]
+// ประกาศ Pre-allocated Scratch Vectors ไว้นอก Render Loop เพื่อเลี่ยง GC Spikes
+const _camPos = new THREE.Vector3();
+const _vec = new THREE.Vector3();
+const _targetPos = new THREE.Vector3();
+
+function unprojectScreenToWorld(screenX, screenY, depth, camera, outPosition) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // 1. แปลงพิกเซลเป็น NDC (-1 ถึง +1)
+    const ndcX = (screenX / width) * 2 - 1;
+    const ndcY = -(screenY / height) * 2 + 1;
+
+    // 2. กำหนดค่าใน Scratch Vector แทนการ new Vector3
+    _vec.set(ndcX, ndcY, 0.5);
+
+    // 3. Unproject ด้วย Matrix ผกผันของ Camera
+    _vec.unproject(camera);
+
+    // 4. คำนวณเวกเตอร์ทิศทางรังสีจากตำแหน่งกล้อง
+    camera.getWorldPosition(_camPos);
+    _vec.sub(_camPos).normalize();
+
+    // 5. คำนวณตำแหน่ง 3D ที่ระยะ depth แล้วบันทึกลง outPosition (Zero-GC)
+    outPosition.copy(_camPos).addScaledVector(_vec, depth);
+    return outPosition;
+}
+
+// ใช้งานใน Render Loop:
+// unprojectScreenToWorld(hand2DX, hand2DY, 0.8, camera, virtualBeaker.position);
+\end{codebox}
+
+\subsection{การวิเคราะห์ความคลาดเคลื่อนและการถดถอยเชิงเส้นในการแปลงพิกัด}
+
+ในการทดลองสะเต็มศึกษา ข้อมูลพิกัดที่ได้จากการติดตามเซนเซอร์ย่อมมีความคลาดเคลื่อน (Noise) ปะปนอยู่เสมอ การตรวจสอบความสัมพันธ์เชิงเส้นระหว่างค่าพิกัดที่แท้จริง ($x$) กับค่าพิกัดที่อ่านได้จากระบบเซนเซอร์ ($y$) ทำได้ด้วยระเบียบวิธีถดถอยเชิงเส้นกำลังสองน้อยที่สุด (Least Squares Linear Regression) เพื่อหาความชัน $m$ และจุดตัดแกน $c$ ในสมการ $y = mx + c$
+\begin{align}
+m &= \frac{N \sum_{i=1}^N x_i y_i - \sum_{i=1}^N x_i \sum_{i=1}^N y_i}{N \sum_{i=1}^N x_i^2 - \left(\sum_{i=1}^N x_i\right)^2} \label{eq:linear_slope} \\
+c &= \frac{\sum_{i=1}^N y_i - m \sum_{i=1}^N x_i}{N} \label{eq:linear_intercept}
+\end{align}
+เมื่อค่าสัมประสิทธิ์การตัดสินใจ $R^2 \to 1.0$ แสดงว่าระบบแปลงพิกัดมีความแม่นยำสูงและมีความถูกต้องเชิงเรขาคณิต ซึ่งข้อมูลการวิเคราะห์นี้สามารถนำไปใช้ปรับเทียบ (Calibrate) อุปกรณ์ทดลองเสมือนได้อย่างเป็นระบบ
+
+\clearpage
+
 \section*{สรุปท้ายบทที่ 2}
 \addcontentsline{toc}{section}{สรุปท้ายบทที่ 2}
 
-ปริภูมิอ้างอิงสามมิติและคณิตศาสตร์ของควอเทอร์เนียนเป็นเสาหลักสำคัญของการประมวลผลเชิงพื้นที่ในมาตรฐาน OpenXR การใช้หน่วยวัดสากลและระบบพิกัดมือขวาช่วยให้การเชื่อมโยงข้อมูลเซนเซอร์กับการสร้างอุปกรณ์ทดลองทางฟิสิกส์เป็นไปอย่างแม่นยำ ป้องกันปัญหาการติดขัดของแกนหมุน และสร้างความพร้อมสำหรับการสร้างการปฏิสัมพันธ์ผ่านมือในบทต่อไป
+ปริภูมิอ้างอิงสามมิติและคณิตศาสตร์ของควอเทอร์เนียนเป็นเสาหลักสำคัญของการประมวลผลเชิงพื้นที่ในมาตรฐาน OpenXR การใช้หน่วยวัดสากลและระบบพิกัดมือขวาช่วยให้การเชื่อมโยงข้อมูลเซนเซอร์กับการสร้างอุปกรณ์ทดลองทางฟิสิกส์เป็นไปอย่างแม่นยำ การเข้าใจขั้นตอนวิธี Unprojection และการประยุกต์ใช้แนวคิด Zero-GC Vector Pooling เป็นหัวใจสำคัญในการคงประสิทธิภาพการทำงานที่ระดับ 60 ถึง 120 เฟรมต่อวินาที ป้องกันปัญหาการติดขัดของแกนหมุน และสร้างความพร้อมสำหรับการสร้างการปฏิสัมพันธ์ผ่านมือในบทต่อไป
+
+\clearpage
 
 \section*{แบบฝึกหัดท้ายบทที่ 2}
 \addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 2}
@@ -222,4 +353,6 @@ print("Stage Space initialized successfully for Room-Scale STEM Lab.")
     \item จงเปรียบเทียบข้อดีและข้อเสียของการแทนการหมุนสามมิติด้วยมุมออยเลอร์กับควอเทอร์เนียน พร้อมอธิบายปรากฏการณ์ Gimbal Lock
     \item วัตถุมีตำแหน่งเริ่มต้นที่ $\mathbf{p} = (1, 2, -3)$ ในปริภูมิ Local จงแปลงพิกัดเมื่อวัตถุถูกเลื่อนด้วยเวกเตอร์ $\mathbf{t} = (-1, 0, 2)$ และหมุนรอบแกน $+Z$ เป็นมุม $180^\circ$
     \item อธิบายหลักการทำงานของ Inside-Out Optical Tracking ในการกำจัดความคลาดเคลื่อนสะสมของเซนเซอร์ IMU
+    \item จุดบนหน้าจอความละเอียด $1920 \times 1080$ พิกเซล อยู่ที่พิกัด $(960, 540)$ จงคำนวณพิกัด Normalized Device Coordinates (NDC) ของจุดดังกล่าว
+    \item อธิบายสาเหตุที่การเรียกคำสั่งสร้างอ็อบเจกต์เวกเตอร์ใหม่ในทุกเฟรม ส่งผลเสียต่อประสบการณ์ใช้งานในระบบเสมือนจริง และอธิบายวิธีแก้ปัญหาด้วย Zero-GC Vector Pooling
 \end{enumerate}

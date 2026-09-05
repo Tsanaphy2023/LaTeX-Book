@@ -23,6 +23,15 @@
 % ป้องกัน orphan word ท้ายบรรทัด
 \setlength{\emergencystretch}{2.5em}
 
+% การควบคุมและป้องกัน Widow / Orphan lines และ Orphan headings
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+% ป้องกันการเกิด Orphan Headings และ Floats ลอยข้ามหัวข้อ
+\RequirePackage{needspace}
+\RequirePackage[section]{placeins}
+
 % 1.2 Paragraph Indentation (มาตรฐาน มรภ.รำไพพรรณี: 1 Tab = 1.25cm)
 \RequirePackage{indentfirst}
 \setlength{\parindent}{1.25cm}
@@ -191,7 +200,7 @@
     {}
     {0pt}
     {}
-\titlespacing{\subsection}{0pt}{12pt}{6pt}
+\titlespacing{\subsection}{1.25cm}{14pt plus 3pt minus 2pt}{6pt plus 2pt minus 1pt}
 
 \titleformat{\subsubsection}
     {\fontsize{13}{16}\bfseries\color{cyberPurple}}
@@ -203,7 +212,20 @@
     {}
     {0pt}
     {}
-\titlespacing{\subsubsection}{0pt}{10pt}{4pt}
+\titlespacing{\subsubsection}{2.50cm}{10pt plus 2pt minus 2pt}{4pt plus 1pt minus 1pt}
+
+% Command Wrappers ป้องกัน Orphan Headings และควบคุม parindent ตามระดับหัวข้อ
+\let\rbruorigchapter\chapter
+\renewcommand{\chapter}{\global\setlength{\parindent}{1.25cm}\rbruorigchapter}
+
+\let\rbruorigsection\section
+\renewcommand{\section}{\Needspace*{8\baselineskip}\global\setlength{\parindent}{1.25cm}\rbruorigsection}
+
+\let\rbruorigsubsection\subsection
+\renewcommand{\subsection}{\Needspace*{5\baselineskip}\global\setlength{\parindent}{2.50cm}\rbruorigsubsection}
+
+\let\rbruorigsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\Needspace*{3\baselineskip}\global\setlength{\parindent}{3.75cm}\rbruorigsubsubsection}
 
 % ============================================================
 % 6. Running Headers & Footers (fancyhdr — ตาม Microbiology)
