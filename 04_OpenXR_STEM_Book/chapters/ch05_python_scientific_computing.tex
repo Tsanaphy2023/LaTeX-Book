@@ -4,52 +4,48 @@
 \section*{แผนบริหารการสอนประจำบทที่ 5}
 \addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 5}
 
-\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
     \item สถาปัตยกรรมตัวเชื่อมต่อ PyOpenXR และการจัดการหน่วยความจำผ่าน ctypes
     \item การประมวลผลข้อมูลทางวิทยาศาสตร์สมรรถนะสูงด้วย NumPy และ Zero-Copy Buffers
     \item การแยกเธรดการคำนวณฟิสิกส์ออกจากเธรดการเรนเดอร์ภาพ (Multithreaded Architecture)
     \item การพล็อตข้อมูลและการแสดงผลสนามเวกเตอร์ทางฟิสิกส์แบบเรียลไทม์ในโลกเสมือน
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
     \item อธิบายกลไกการเชื่อมต่อระหว่าง Python C-API กับ OpenXR Native Loader ได้
     \item จัดการอาร์เรย์พิกัดสามมิติด้วย NumPy โดยไม่ต้องคัดลอกข้อมูลซ้ำซ้อนได้
     \item ออกแบบโครงสร้างมัลติเธรดเพื่อรักษาอัตราเฟรมภาพที่ 90 FPS ได้อย่างเสถียร
     \item สร้างระบบแสดงผลเส้นแรงแม่เหล็กและปริมาณฟิสิกส์สามมิติเชิงโต้ตอบได้
 \end{enumerate}
-\end{planbox}
 
 \newpage
 
-\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{กิจกรรมการเรียนการสอน}
+\begin{enumerate}
     \item การบรรยายโครงสร้าง PyOpenXR พร้อมการเขียนโค้ดสด (Live Coding Demonstration)
     \item กิจกรรมการคำนวณสนามไฟฟ้าและแม่เหล็กรอบขดลวดโซเลนอยด์ด้วย NumPy
     \item การฝึกออกแบบ Ring Buffer เพื่อถ่ายโอนข้อมูลระหว่างเธรดฟิสิกส์และเธรดเรนเดอร์
     \item การอภิปรายปัญหาและแนวทางแก้ไข Global Interpreter Lock (GIL) ในภาษา Python
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{สื่อการเรียนการสอน}
+\begin{enumerate}
     \item สไลด์บรรยายอิเล็กทรอนิกส์และเอกสารโค้ดมาตรฐานประจำบทที่ 5
     \item สภาพแวดล้อมเสมือน Python (Virtualenv) ที่ติดตั้ง PyOpenXR และ OpenGL
     \item ชุดข้อมูลการจำลองสนามเวกเตอร์และวิถีการเคลื่อนที่ของอนุภาค
     \item จอแสดงผลข้อมูลทางวิทยาศาสตร์แบบสามมิติ (3D Spatial Telemetry HUD)
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{การประเมินผล}
+\begin{enumerate}
     \item การตรวจประเมินโปรแกรมคำนวณและแสดงผลสนามแม่เหล็กสามมิติ
     \item การวัดประสิทธิภาพอัตราเฟรมและความหน่วงของระบบมัลติเธรดที่พัฒนา
     \item การทดสอบข้อเขียนเชิงสถาปัตยกรรมซอฟต์แวร์ทางวิทยาศาสตร์
 \end{enumerate}
-\end{planbox}
-\clearpage
+
+\newpage
 
 \section{สถาปัตยกรรม PyOpenXR และการเชื่อมต่อระดับลึก}
 

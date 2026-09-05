@@ -1,26 +1,37 @@
 \chapter*{แผนบริหารการสอนประจำวิชา}
 \addcontentsline{toc}{chapter}{แผนบริหารการสอนประจำวิชา}
 
-\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{ข้อมูลทั่วไปของรายวิชา}
+\begin{tcolorbox}[enhanced, colback=white, colframe=darkNavy, colbacktitle=darkNavy,
+    coltitle=white, fonttitle=\bfseries\normalsize,
+    title={ข้อมูลทั่วไปของรายวิชา},
+    arc=2mm, boxrule=0.8pt, leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt]
 \begin{tabularx}{\textwidth}{lX}
 \textbf{รหัสวิชา} & PHY4308 \\
 \textbf{ชื่อรายวิชา} & OpenXR และการประมวลผลเชิงพื้นที่เพื่อสะเต็มศึกษา \\
-& (OpenXR and Spatial Computing for STEM) \\
-
+ & (OpenXR and Spatial Computing for STEM) \\
 \textbf{จำนวนหน่วยกิต} & 3(2-2-5) หน่วยกิต (บรรยาย 2 ชั่วโมง ปฏิบัติการ 2 ชั่วโมง ศึกษาด้วยตนเอง 5 ชั่วโมง) \\
 \textbf{หลักสูตร} & วิทยาศาสตรบัณฑิต สาขาวิชาฟิสิกส์ประยุกต์ / นวัตกรรมเทคโนโลยีดิจิทัล \\
 \textbf{อาจารย์ผู้สอน} & ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา \\
 \textbf{ภาคการศึกษา/ชั้นปี} & ภาคการศึกษาที่ 1 ชั้นปีที่ 3 หรือ 4 \\
 \end{tabularx}
-\end{planbox}
+\end{tcolorbox}
 
-\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{คำอธิบายรายวิชา (Course Description)}
+\begin{tcolorbox}[enhanced, colback=openxrSoftBg, colframe=openxrTeal, colbacktitle=openxrTeal,
+    coltitle=white, fonttitle=\bfseries\normalsize,
+    title={คำอธิบายรายวิชา (Course Description)},
+    arc=2mm, boxrule=0.8pt, leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt, before skip=8pt]
 ศึกษาหลักการและสถาปัตยกรรมของมาตรฐานเปิด OpenXR ในการพัฒนาสภาพแวดล้อมเสมือนจริงข้ามแพลตฟอร์ม ระบบพิกัดสามมิติและปริภูมิอ้างอิงเชิงพื้นที่ การติดตามตำแหน่งและการหมุนแบบ 6 องศาอิสระ (6DoF) เทคนิคการตรวจจับและติดตามโครงกระดูกมือ 21 จุดร่วม (21-Joint Skeletal Hand Tracking) สำหรับการปฏิสัมพันธ์แบบไร้สัมผัส กลไกการคำนวณของเอนจินฟิสิกส์สำหรับการจำลองปรากฏการณ์ทางสะเต็ม (จลนศาสตร์ พลศาสตร์ การชน และสนามแรง) การเขียนโปรแกรมทางวิทยาศาสตร์ด้วยภาษา Python และ PyOpenXR การบูรณาการโมเดลปัญญาประดิษฐ์และคอมพิวเตอร์วิทัศน์ในการอนุมานท่าทาง การออกแบบและพัฒนาห้องปฏิบัติการวิทยาศาสตร์เสมือนจริง และการประเมินผลการเรียนรู้เชิงรุก
-\end{planbox}
+\end{tcolorbox}
 
-\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{วัตถุประสงค์การเรียนรู้ตามแนวทาง OBE}
+\begin{tcolorbox}[enhanced, colback=white, colframe=spatialBlue, colbacktitle=spatialBlue,
+    coltitle=white, fonttitle=\bfseries\normalsize,
+    title={วัตถุประสงค์การเรียนรู้ตามแนวทาง OBE},
+    arc=2mm, boxrule=0.8pt, leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt, before skip=8pt]
 เมื่อสิ้นสุดการเรียนการสอนรายวิชานี้ ผู้เรียนสามารถ
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\begin{enumerate}
     \item อธิบายสถาปัตยกรรม วงรอบการทำงาน และกลไกของมาตรฐาน OpenXR ได้อย่างถูกต้องตามหลักวิชาการ
     \item คำนวณและประยุกต์ใช้การแปลงพิกัดสามมิติ ควอเทอร์เนียน และเมทริกซ์การแปลงในปริภูมิ 6DoF ได้
     \item พัฒนาระบบปฏิสัมพันธ์เชิงพื้นที่ด้วยการตรวจจับโครงร่างมือ 21 จุดร่วมเพื่อควบคุมอุปกรณ์ทดลองเสมือนได้
@@ -28,9 +39,13 @@
     \item บูรณาการไลบรารี Python, PyOpenXR, และโมเดลปัญญาประดิษฐ์ในการประมวลผลข้อมูลการทดลองได้
     \item ออกแบบ สร้าง และประเมินห้องปฏิบัติการเสมือนจริงด้านสะเต็มศึกษาที่ทำงานข้ามแพลตฟอร์มได้
 \end{enumerate}
-\end{planbox}
+\end{tcolorbox}
 
-\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{โครงสร้างแผนการจัดการเรียนรู้รายสัปดาห์ (16 สัปดาห์)}
+\begin{tcolorbox}[enhanced, colback=white, colframe=rbruGold!80!black, colbacktitle=rbruGold!80!black,
+    coltitle=white, fonttitle=\bfseries\normalsize,
+    title={โครงสร้างแผนการจัดการเรียนรู้รายสัปดาห์ (16 สัปดาห์)},
+    arc=2mm, boxrule=0.8pt, leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt, before skip=8pt]
 \begin{tabularx}{\textwidth}{ccX}
 \toprule
 \textbf{สัปดาห์} & \textbf{บทที่} & \textbf{หัวข้อเนื้อหาและกิจกรรมการเรียนรู้} \\
@@ -46,15 +61,19 @@
 16 & - & นำเสนอโครงงานนวัตกรรมห้องทดลองเสมือนจริง และสอบวัดผลปลายภาค \\
 \bottomrule
 \end{tabularx}
-\end{planbox}
+\end{tcolorbox}
 
-\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{การวัดและประเมินผลการเรียนรู้}
-\begin{itemize}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\begin{tcolorbox}[enhanced, colback=white, colframe=darkSlate, colbacktitle=darkSlate,
+    coltitle=white, fonttitle=\bfseries\normalsize,
+    title={การวัดและประเมินผลการเรียนรู้},
+    arc=2mm, boxrule=0.8pt, leftrule=4mm,
+    top=8pt, bottom=8pt, left=10pt, right=10pt, before skip=8pt]
+\begin{itemize}
     \item การมีส่วนร่วมในชั้นเรียนและการเรียนรู้เชิงรุก (Class Participation \& Discussion) \hfill 10\%
     \item รายงานผลการทดลองและการเขียนโปรแกรมปฏิบัติการ (Laboratory \& Coding Tasks) \hfill 30\%
     \item การสอบวัดผลกลางภาค (Midterm Examination) \hfill 20\%
     \item โครงงานพัฒนานวัตกรรมห้องปฏิบัติการเสมือนจริงสะเต็มศึกษา (Term Project) \hfill 20\%
     \item การสอบวัดผลปลายภาค (Final Examination) \hfill 20\%
 \end{itemize}
-\end{planbox}
+\end{tcolorbox}
 \clearpage

@@ -4,52 +4,48 @@
 \section*{แผนบริหารการสอนประจำบทที่ 4}
 \addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 4}
 
-\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
     \item ระเบียบวิธีเชิงตัวเลขสำหรับการจำลองการเคลื่อนที่ (Euler, Verlet, and RK4)
     \item พลศาสตร์ของวัตถุแข็งเกร็ง แรงบิด และโมเมนต์ความเฉื่อยใน 3 มิติ
     \item ขั้นตอนวิธีตรวจจับการชนและการคำนวณการดลเพื่อตอบสนองการกระดอน
     \item การจำลองระบบการสั่น ระบบสปริงหน่วง และสนามความโน้มถ่วงในโลกเสมือน
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
     \item เปรียบเทียบความแม่นยำและความเสถียรของวิธี Euler, Verlet, และ RK4 ได้
     \item ประยุกต์กฎการเคลื่อนที่ของนิวตันในการอัปเดตตำแหน่งและความเร็วของวัตถุได้
     \item คำนวณการชนแบบยืดหยุ่นและไม่ยืดหยุ่นผ่านสมการการดล (Impulse Response) ได้
     \item พัฒนาเอนจินจำลองลูกตุ้มเพนดูลัมและสปริงที่สอดคล้องกับทฤษฎีทางฟิสิกส์ได้
 \end{enumerate}
-\end{planbox}
 
 \newpage
 
-\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{กิจกรรมการเรียนการสอน}
+\begin{enumerate}
     \item การบรรยายเชิงคณิตศาสตร์ฟิสิกส์และการสาธิตการสะสมความคลาดเคลื่อนเชิงตัวเลข
     \item กิจกรรมการเขียนโค้ดเปรียบเทียบวิถีโค้งของวัตถุภายใต้สนามโน้มถ่วง
     \item การทดลองจำลองการชนของมวลในระบบหนึ่งมิติและสองมิติในสภาพแวดล้อมเสมือน
     \item การวิเคราะห์ข้อมูลการสั่นแบบหน่วงเปรียบเทียบระหว่างแบบจำลองกับผลการคำนวณวิเคราะห์
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{สื่อการเรียนการสอน}
+\begin{enumerate}
     \item เอกสารประกอบการสอนและสไลด์สรุปสูตรฟิสิกส์เชิงคำนวณ
     \item โค้ดจำลอง Physics Loop ในภาษา Python (NumPy) และ WebAssembly
     \item กราฟแสดงการอนุรักษ์พลังงานกลรวมในระบบสปริงแบบเรียลไทม์
     \item แอปพลิเคชันจำลองการทดลองเสมือนจริงบนมาตรฐาน OpenXR
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{การประเมินผล}
+\begin{enumerate}
     \item การประเมินความถูกต้องของแบบจำลองฟิสิกส์ที่ผู้เรียนพัฒนา
     \item การตรวจรายงานการวิเคราะห์พลังงานและเสถียรภาพของตัวอินทิเกรตเชิงตัวเลข
     \item การทดสอบข้อเขียนเชิงทฤษฎีและปฏิบัติการคำนวณ
 \end{enumerate}
-\end{planbox}
-\clearpage
+
+\newpage
 
 \section{ระเบียบวิธีเชิงตัวเลขสำหรับการจำลองการเคลื่อนที่}
 

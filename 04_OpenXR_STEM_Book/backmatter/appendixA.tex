@@ -1,0 +1,49 @@
+\chapter{คู่มือติดตั้งและตั้งค่าสภาพแวดล้อม OpenXR}
+\label{app:A}
+
+\section*{ก.1 การติดตั้ง Monado OpenXR Runtime บน Linux/Ubuntu}
+
+Monado เป็น OpenXR Runtime แบบโอเพนซอร์สที่รองรับอุปกรณ์ XR หลากหลายประเภท เหมาะสำหรับการพัฒนาและทดสอบในสภาพแวดล้อมการศึกษา การติดตั้งทำตามขั้นตอนดังนี้
+
+\begin{codebox}[การติดตั้ง Monado OpenXR Runtime]
+# อัปเดต package และติดตั้ง dependencies
+sudo apt update && sudo apt install -y \
+    cmake build-essential libudev-dev libusb-1.0-0-dev \
+    libjpeg-dev libvulkan-dev glslang-tools \
+    libeigen3-dev libopenhmd-dev
+
+# Clone repository ของ Monado
+git clone https://gitlab.freedesktop.org/monado/monado.git
+cd monado && mkdir build && cd build
+
+# Build และติดตั้ง
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+sudo make install
+\end{codebox}
+
+\section*{ก.2 การติดตั้ง PyOpenXR และ OpenXR Python SDK}
+
+\begin{codebox}[การติดตั้ง Python OpenXR SDK]
+# ติดตั้ง pyopenxr ด้วย pip
+pip install pyopenxr numpy scipy matplotlib
+
+# ทดสอบการติดตั้ง
+python -c "import openxr; print('OpenXR version:', openxr.XR_CURRENT_API_VERSION)"
+\end{codebox}
+
+\section*{ก.3 ตัวแปรสภาพแวดล้อมที่จำเป็น}
+
+\begin{table}[H]
+\centering
+\caption{ตัวแปรสภาพแวดล้อมสำคัญสำหรับ OpenXR Development}
+\begin{tabularx}{\textwidth}{lY}
+\toprule
+\textbf{ตัวแปร} & \textbf{คำอธิบาย} \\
+\midrule
+\texttt{XR\_RUNTIME\_JSON} & พาธไปยัง active OpenXR runtime JSON \\
+\texttt{XR\_API\_LAYER\_PATH} & พาธไปยัง API Layers สำหรับ debugging \\
+\texttt{MONADO\_COMPOSITOR\_FORCE\_XCB} & บังคับใช้ XCB compositor บน Linux \\
+\bottomrule
+\end{tabularx}
+\end{table}

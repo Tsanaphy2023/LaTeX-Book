@@ -1,0 +1,107 @@
+\chapter{คลังโค้ด Python สำหรับ OpenXR STEM}
+\label{app:C}
+
+\section*{ค.1 Template พื้นฐาน OpenXR Session Loop}
+
+\begin{codebox}[OpenXR Session Loop Template ภาษา Python]
+import openxr as xr
+import numpy as np
+
+def create_openxr_session():
+    """สร้าง OpenXR Instance, System, และ Session"""
+    # สร้าง Instance
+    instance_info = xr.InstanceCreateInfo(
+        application_info=xr.ApplicationInfo(
+            application_name="STEM Lab",
+            application_version=xr.MAKE_VERSION(1, 0, 0),
+            engine_name="RBRU Physics Engine",
+            engine_version=xr.MAKE_VERSION(1, 0, 0),
+            api_version=xr.CURRENT_API_VERSION,
+        ),
+    )
+    instance = xr.create_instance(instance_info)
+    
+    # เลือก System (HMD)
+    system_id = xr.get_system(
+        instance,
+        xr.SystemGetInfo(form_factor=xr.FormFactor.HEAD_MOUNTED_DISPLAY)
+    )
+    return instance, system_id
+
+def run_frame_loop(session, action_set):
+    """วงรอบ Frame หลักสำหรับการเรนเดอร์ XR"""
+    while True:
+        # Poll system events
+        event = xr.poll_event(session.instance)
+        if event is None:
+            break
+        
+        # รอสถานะ Running
+        frame_state = xr.wait_frame(session)
+        xr.begin_frame(session)
+        
+        if frame_state.should_render:
+            # --- Render STEM virtual lab here ---
+            render_virtual_lab(session, frame_state.predicted_display_time)
+        
+        xr.end_frame(session, xr.FrameEndInfo(
+            display_time=frame_state.predicted_display_time,
+            environment_blend_mode=xr.EnvironmentBlendMode.OPAQUE,
+        ))
+\end{codebox}
+
+\section*{ค.2 การคำนวณ Pinch Distance สำหรับ Hand Interaction}
+
+\begin{codebox}[คำนวณ Pinch Gesture จาก 21-Joint Hand Data]
+def compute_pinch_distance(thumb_tip: np.ndarray, 
+                            index_tip: np.ndarray) -> float:
+    """คำนวณระยะระหว่างปลายนิ้วโป้งกับปลายนิ้วชี้"""
+    return float(np.linalg.norm(thumb_tip - index_tip))
+
+def is_pinching(joints: list, threshold: float = 0.025) -> bool:
+    """ตรวจสอบว่ากำลังจีบนิ้ว (Pinch) หรือไม่"""
+    # XR_HAND_JOINT_THUMB_TIP_EXT = 5
+    # XR_HAND_JOINT_INDEX_TIP_EXT = 10
+    thumb_pos = np.array(joints[5].pose.position)
+    index_pos = np.array(joints[10].pose.position)
+    dist = compute_pinch_distance(thumb_pos, index_pos)
+    return dist < threshold
+
+def detect_gestures(joints: list) -> dict:
+    """ตรวจจับท่าทางมือ: Pinch, Grasp, Point"""
+    return {
+        "pinch": is_pinching(joints, threshold=0.025),
+        "point": is_pointing(joints),
+        "grasp": is_grasping(joints),
+    }
+\end{codebox}
+
+\section*{ค.3 Physics Integrator สำหรับ Virtual STEM Lab}
+
+\begin{codebox}[RK4 Integrator สำหรับการจำลองฟิสิกส์เสมือน]
+import numpy as np
+from dataclasses import dataclass
+
+@dataclass
+class RigidBody:
+    mass: float
+    position: np.ndarray   # เวกเตอร์ตำแหน่ง [x, y, z]
+    velocity: np.ndarray   # เวกเตอร์ความเร็ว [vx, vy, vz]
+    force: np.ndarray      # แรงรวมที่กระทำ [Fx, Fy, Fz]
+
+def rk4_step(body: RigidBody, dt: float) -> RigidBody:
+    """อินทิเกรต 1 ก้าวด้วย Runge-Kutta อันดับ 4"""
+    def deriv(pos, vel):
+        acc = body.force / body.mass
+        return vel, acc
+    
+    k1_v, k1_a = deriv(body.position, body.velocity)
+    k2_v, k2_a = deriv(body.position + 0.5*dt*k1_v, body.velocity + 0.5*dt*k1_a)
+    k3_v, k3_a = deriv(body.position + 0.5*dt*k2_v, body.velocity + 0.5*dt*k2_a)
+    k4_v, k4_a = deriv(body.position + dt*k3_v, body.velocity + dt*k3_a)
+    
+    new_pos = body.position + (dt/6.0)*(k1_v + 2*k2_v + 2*k3_v + k4_v)
+    new_vel = body.velocity + (dt/6.0)*(k1_a + 2*k2_a + 2*k3_a + k4_a)
+    
+    return RigidBody(body.mass, new_pos, new_vel, body.force)
+\end{codebox}

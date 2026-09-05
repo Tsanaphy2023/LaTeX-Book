@@ -1,13 +1,12 @@
 \documentclass[12pt,a4paper,oneside]{book}
 
-% 1. Master Style for OpenXR STEM Book
+% 1. Master Style for OpenXR STEM Book (RBRU Masterclass — ตาม Microbiology Style)
 \usepackage{styles/openxr_stem_style}
+
 
 % 2. Font configuration for XeLaTeX (Sarabun font)
 \usepackage{fontspec}
-\defaultfontfeatures{Mapping=tex-text}
 \setmainfont{Sarabun}
-\setsansfont{Sarabun}
 \setmonofont{Sarabun}[Scale=0.9]
 
 % 3. Hyperref Setup
@@ -24,14 +23,14 @@
 
 \begin{document}
 
-% Frontmatter
 \frontmatter
 \input{frontmatter/cover}
-\include{frontmatter/title}
-\include{frontmatter/preface}
-\include{frontmatter/syllabus}
+\input{frontmatter/title}
+\input{frontmatter/preface}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/syllabus}
 
-% Table of Contents, Figures, Tables
+% สารบัญ
 \tableofcontents
 \clearpage
 \phantomsection
@@ -41,9 +40,11 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
+\clearpage
 
-% Mainmatter: 7 Core Chapters
 \mainmatter
+
+% บทเรียน 7 บท
 \include{chapters/ch01_openxr_foundations}
 \include{chapters/ch02_spatial_spaces_tracking}
 \include{chapters/ch03_hand_tracking_interaction}
@@ -52,16 +53,21 @@
 \include{chapters/ch06_ai_cv_spatial_intelligence}
 \include{chapters/ch07_advanced_stem_labs}
 
-% Appendix
+% ภาคผนวก
 \appendix
-\renewcommand{\thechapter}{ก}
-\include{backmatter/appendix}
+\include{backmatter/appendixA}
+\include{backmatter/appendixB}
+\include{backmatter/appendixC}
+\include{backmatter/appendixD}
 
-% Backmatter
+% ส่วนท้ายเล่ม
 \backmatter
-\include{backmatter/references}
-\clearpage
+\input{backmatter/references}
+
+% ดัชนีสืบค้นคำสำคัญ 2 ภาษา
 \printindex
-\include{backmatter/biography}
+
+% ประวัติผู้เขียน
+\input{backmatter/biography}
 
 \end{document}

@@ -1,7 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{styles/openxr_stem_style}[2026/09/05 OpenXR and Spatial Computing for STEM Education Style]
+\ProvidesPackage{styles/openxr_stem_style}[2026/09/05 OpenXR and Spatial Computing for STEM Education Style — RBRU Masterclass]
 
-% 1. Page Geometry (RBRU Standard: Left 1.5in, Top 1.5in, Right 1.0in, Bottom 1.0in)
+% ============================================================
+% 1. Page Geometry (มาตรฐาน มรภ.รำไพพรรณี)
+% ============================================================
 \RequirePackage{geometry}
 \geometry{
     a4paper,
@@ -9,7 +11,7 @@
     bottom=1.0in,
     left=1.5in,
     right=1.0in,
-    headheight=36pt,
+    headheight=43pt,
     headsep=12pt,
     footskip=0.5in
 }
@@ -17,14 +19,16 @@
 % 1.1 Thai Linebreak & Hyphenation for XeLaTeX
 \XeTeXlinebreaklocale "th"
 \XeTeXlinebreakskip = 0pt plus 2pt minus 0.5pt
+
+% ป้องกัน orphan word ท้ายบรรทัด
 \setlength{\emergencystretch}{2.5em}
 
-% 1.2 Paragraph Indentation (RBRU Standard: 1 Tab = 1.25cm)
+% 1.2 Paragraph Indentation (มาตรฐาน มรภ.รำไพพรรณี: 1 Tab = 1.25cm)
 \RequirePackage{indentfirst}
 \setlength{\parindent}{1.25cm}
-\setlength{\parskip}{4pt plus 1pt minus 1pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
 
-% 1.3 Thai Academic Terminology
+% 1.3 Thai Academic Terminology (มาตรฐานระเบียบวิชาการ มรภ.รำไพพรรณี)
 \renewcommand{\chaptername}{บทที่}
 \renewcommand{\figurename}{ภาพที่}
 \renewcommand{\tablename}{ตารางที่}
@@ -35,7 +39,9 @@
 \renewcommand{\bibname}{บรรณานุกรม}
 \renewcommand{\indexname}{ดัชนีสืบค้นคำสำคัญ}
 
-% 2. Math & Physics Packages
+% ============================================================
+% 2. Math & Science Packages
+% ============================================================
 \RequirePackage{amsmath,amssymb,amsfonts,mathtools}
 \allowdisplaybreaks
 \RequirePackage{bm}
@@ -44,7 +50,9 @@
 \RequirePackage{esint}
 \RequirePackage{enumitem}
 
+% ============================================================
 % 3. Graphics, TikZ, Tables & Floats
+% ============================================================
 \RequirePackage{graphicx}
 \RequirePackage{float}
 \RequirePackage{booktabs}
@@ -53,288 +61,187 @@
 \RequirePackage{colortbl}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcolumntype{Z}{>{\centering\arraybackslash}X}
+
 \RequirePackage{caption}
 \DeclareCaptionLabelSeparator{thaisep}{\quad}
 \captionsetup{labelsep=thaisep}
-\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=darkNavy}, textfont={normalfont}, labelsep=thaisep}
-\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=darkNavy}, textfont={normalfont}, labelsep=thaisep}
+\captionsetup[table]{position=top,  skip=6pt, labelfont={bf,color=spatialBlue}, textfont={normalfont}, labelsep=thaisep}
+\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=spatialBlue}, textfont={normalfont}, labelsep=thaisep}
 \renewcommand{\thetable}{\thechapter.\arabic{table}}
 \renewcommand{\thefigure}{\thechapter.\arabic{figure}}
 
-% 3.1 Indexing System
+% 3.1 Indexing System (ดัชนีสืบค้น 2 ภาษา)
 \RequirePackage{imakeidx}
 \makeindex[columns=2, title=ดัชนีสืบค้นคำสำคัญ, intoc]
 
 \RequirePackage{tikz}
 \usetikzlibrary{shapes,arrows.meta,positioning,calc,patterns,decorations.pathmorphing,decorations.pathreplacing,3d}
 
+% ============================================================
 % 4. Color Palette (OpenXR Spatial Computing & STEM Aesthetic)
+% ============================================================
 \RequirePackage{xcolor}
-\definecolor{openxrTeal}{HTML}{0D9488}
-\definecolor{spatialBlue}{HTML}{0284C7}
-\definecolor{cyberPurple}{HTML}{7C3AED}
-\definecolor{darkNavy}{HTML}{0A1128}
-\definecolor{emeraldActive}{HTML}{10B981}
-\definecolor{amberGlow}{HTML}{F59E0B}
-\definecolor{darkSlate}{HTML}{1E293B}
-\definecolor{slateGrey}{HTML}{4A5568}
-\definecolor{codeBackground}{HTML}{0F172A}
-\definecolor{rbruLightBg}{HTML}{F8FAFC}
-\definecolor{rbruNavy}{HTML}{002B49}
-\definecolor{rbruGold}{HTML}{C5A059}
-\definecolor{rbruGreen}{HTML}{2D68C4}
-\definecolor{rbruSlate}{HTML}{334155}
+\definecolor{openxrTeal}{HTML}{0D9488}       % Primary Teal / OpenXR Identity
+\definecolor{spatialBlue}{HTML}{0284C7}       % Sky / Spatial Blue
+\definecolor{cyberPurple}{HTML}{7C3AED}       % Purple / AI & Computation
+\definecolor{darkNavy}{HTML}{0A1128}          % Dark Navy Background
+\definecolor{emeraldActive}{HTML}{10B981}     % Emerald / Active States
+\definecolor{amberGlow}{HTML}{F59E0B}         % Amber / Gold Accent
+\definecolor{darkSlate}{HTML}{1E293B}         % Dark Slate
+\definecolor{slateGrey}{HTML}{4A5568}         % Neutral Grey
+\definecolor{codeBackground}{HTML}{0F172A}    % Code Background
+\definecolor{rbruLightBg}{HTML}{F8FAFC}       % Light Background
+\definecolor{rbruNavy}{HTML}{002B49}          % RBRU Navy
+\definecolor{rbruGold}{HTML}{C5A059}          % RBRU Gold
+\definecolor{openxrMint}{HTML}{CCFBF1}        % Mint Soft Background
+\definecolor{openxrSoftBg}{HTML}{F0FDFA}      % Pale Teal Background
 
-% 5. Chapter & Section Formatting
+% ============================================================
+% 5. Section & Chapter Formatting (ตาม Microbiology Style)
+% ============================================================
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{titlesec}
+\RequirePackage{setspace}
+\setstretch{1.2}
 
-% Dynamic Chapter Motif based on \value{chapter}
-\newcommand{\renderchaptermotif}{%
-    \ifcase\value{chapter}%
-        % Case 0 / Frontmatter & Backmatter
-        \begin{scope}[opacity=0.22]
-            \draw[cyan!60!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.2);
-            \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (0.8, 0.8) -- (5.2, 0.8) node[right, font=\scriptsize\bfseries\color{white}] {$x$};
-            \draw[-{Stealth[scale=1.1]}, white, line width=1.4pt] (0.8, 0.8) -- (0.8, 4.2) node[above, font=\scriptsize\bfseries\color{white}] {$y$};
-            \draw[amberGlow, line width=1.4pt, domain=0.8:6.4, samples=80] plot (\x, {2.2 + 0.9*sin(3.0*\x r)*exp(-0.1*(\x-3.2)*(\x-3.2))});
-            \draw[emeraldActive, line width=1.0pt, dashed] (3.4, 2.2) circle (1.8cm);
-            \draw[cyberPurple!80!white, line width=0.9pt] (3.4, 2.2) ellipse (2.5cm and 0.9cm);
-        \end{scope}
-    \or% Case 1: OpenXR Architecture & Spatial Foundations
-        \begin{scope}[opacity=0.28]
-            \draw[cyan!50!white, line width=0.4pt, step=0.5cm] (0.2, 0.2) grid (6.8, 5.0);
-            \draw[openxrTeal, line width=1.2pt, fill=openxrTeal!20] (1.0, 3.8) rectangle (5.8, 4.6);
-            \node[font=\scriptsize\bfseries\color{white}] at (3.4, 4.2) {OpenXR Application Layer};
-            \draw[-{Stealth[scale=1.0]}, white, line width=1.2pt] (3.4, 3.8) -- (3.4, 3.2);
-            \draw[spatialBlue, line width=1.2pt, fill=spatialBlue!20] (1.0, 2.4) rectangle (5.8, 3.2);
-            \node[font=\scriptsize\bfseries\color{white}] at (3.4, 2.8) {OpenXR Loader / API Layer};
-            \draw[-{Stealth[scale=1.0]}, white, line width=1.2pt] (3.4, 2.4) -- (3.4, 1.8);
-            \draw[cyberPurple, line width=1.2pt, fill=cyberPurple!20] (1.0, 1.0) rectangle (5.8, 1.8);
-            \node[font=\scriptsize\bfseries\color{white}] at (3.4, 1.4) {OpenXR Hardware Runtime Driver};
-            \fill[amberGlow] (0.6, 4.2) circle (2.5pt);
-            \fill[emeraldActive] (6.2, 1.4) circle (2.5pt);
-        \end{scope}
-    \or% Case 2: 3D Reference Spaces & 6DoF Tracking
-        \begin{scope}[opacity=0.28]
-            \draw[-{Stealth[scale=1.2]}, cyan, line width=1.5pt] (1.5, 1.5) -- (5.8, 1.5) node[right, font=\footnotesize\bfseries\color{cyan}] {$X$};
-            \draw[-{Stealth[scale=1.2]}, emeraldActive, line width=1.5pt] (1.5, 1.5) -- (1.5, 4.8) node[above, font=\footnotesize\bfseries\color{emeraldActive}] {$Y$};
-            \draw[-{Stealth[scale=1.2]}, amberGlow, line width=1.5pt] (1.5, 1.5) -- (0.4, 0.4) node[below left, font=\footnotesize\bfseries\color{amberGlow}] {$Z$};
-            \draw[cyberPurple, line width=1.3pt] (3.6, 3.0) circle (1.2cm);
-            \draw[-{Stealth[scale=1.0]}, cyberPurple, line width=1.3pt] (4.8, 3.0) arc (0:120:1.2cm);
-            \draw[openxrTeal, line width=1.1pt, dashed] (3.6, 3.0) ellipse (1.6cm and 0.6cm);
-            \draw[spatialBlue, line width=1.0pt] (3.1, 2.5) rectangle (4.1, 3.5);
-            \draw[spatialBlue, line width=1.0pt] (3.1, 3.5) -- (3.5, 3.9) -- (4.5, 3.9) -- (4.1, 3.5);
-            \draw[spatialBlue, line width=1.0pt] (4.5, 3.9) -- (4.5, 2.9) -- (4.1, 2.5);
-        \end{scope}
-    \or% Case 3: 21-Joint Skeletal Hand Tracking
-        \begin{scope}[opacity=0.28]
-            \fill[white] (3.4, 0.8) circle (3pt) node[below, font=\tiny\color{white}] {Wrist};
-            \fill[openxrTeal] (3.4, 1.8) circle (2.5pt);
-            \draw[white, line width=1.0pt] (3.4, 0.8) -- (3.4, 1.8);
-            \fill[amberGlow] (2.2, 1.5) circle (2.2pt);
-            \fill[amberGlow] (1.6, 2.0) circle (2.2pt);
-            \fill[amberGlow] (1.2, 2.5) circle (2.2pt);
-            \draw[amberGlow, line width=1.0pt] (3.4, 1.8) -- (2.2, 1.5) -- (1.6, 2.0) -- (1.2, 2.5);
-            \fill[cyan] (2.6, 2.6) circle (2.2pt);
-            \fill[cyan] (2.5, 3.4) circle (2.2pt);
-            \fill[cyan] (2.4, 4.2) circle (2.2pt);
-            \draw[cyan, line width=1.0pt] (3.4, 1.8) -- (2.6, 2.6) -- (2.5, 3.4) -- (2.4, 4.2);
-            \fill[emeraldActive] (3.4, 2.8) circle (2.2pt);
-            \fill[emeraldActive] (3.4, 3.7) circle (2.2pt);
-            \fill[emeraldActive] (3.4, 4.5) circle (2.2pt);
-            \draw[emeraldActive, line width=1.0pt] (3.4, 1.8) -- (3.4, 2.8) -- (3.4, 3.7) -- (3.4, 4.5);
-            \fill[cyberPurple] (4.2, 2.6) circle (2.2pt);
-            \fill[cyberPurple] (4.3, 3.4) circle (2.2pt);
-            \fill[cyberPurple] (4.4, 4.1) circle (2.2pt);
-            \draw[cyberPurple, line width=1.0pt] (3.4, 1.8) -- (4.2, 2.6) -- (4.3, 3.4) -- (4.4, 4.1);
-            \fill[spatialBlue] (4.8, 2.2) circle (2.2pt);
-            \fill[spatialBlue] (5.1, 2.9) circle (2.2pt);
-            \fill[spatialBlue] (5.3, 3.5) circle (2.2pt);
-            \draw[spatialBlue, line width=1.0pt] (3.4, 1.8) -- (4.8, 2.2) -- (5.1, 2.9) -- (5.3, 3.5);
-            \draw[amberGlow, dashed, line width=1.0pt] (1.2, 2.5) -- (2.4, 4.2);
-            \node[font=\tiny\bfseries\color{amberGlow}] at (1.8, 3.5) {Pinch};
-        \end{scope}
-    \or% Case 4: Physics Engine & STEM Simulation
-        \begin{scope}[opacity=0.28]
-            \foreach \x in {0.8, 2.0, 3.2, 4.4, 5.6} {
-                \draw[-{Stealth[scale=0.8]}, cyan!70!white, line width=0.8pt] (\x, 4.8) -- (\x, 4.0);
-            }
-            \node[font=\scriptsize\color{cyan}] at (6.2, 4.4) {$\vec{g}$};
-            \draw[white, line width=1.2pt] (1.0, 1.0) -- (6.0, 1.0);
-            \draw[amberGlow, line width=1.3pt, fill=amberGlow!30] (1.5, 1.0) rectangle (2.7, 2.2);
-            \draw[decoration={aspect=0.4, segment length=3mm, amplitude=3mm, coil}, decorate, spatialBlue, line width=1.2pt] (2.7, 1.6) -- (4.5, 1.6);
-            \draw[emeraldActive, line width=1.3pt, fill=emeraldActive!30] (4.5, 1.0) rectangle (5.7, 2.2);
-            \draw[-{Stealth[scale=1.1]}, cyberPurple, line width=1.4pt] (2.1, 2.2) -- (2.1, 3.2) node[above, font=\tiny\bfseries\color{white}] {$\vec{F}_{\text{norm}}$};
-        \end{scope}
-    \or% Case 5: Python & PyOpenXR Scientific Computing
-        \begin{scope}[opacity=0.28]
-            \draw[openxrTeal!60!white, line width=0.4pt, step=0.6cm] (0.4, 0.4) grid (6.4, 4.8);
-            \draw[spatialBlue, line width=2.0pt] (2.2, 2.8) arc (90:270:0.9cm) -- (3.8, 1.0) arc (-90:90:0.9cm) -- cycle;
-            \draw[amberGlow, line width=2.0pt] (4.2, 2.4) arc (-90:90:0.9cm) -- (2.6, 4.2) arc (90:270:0.9cm) -- cycle;
-            \fill[white] (2.6, 3.3) circle (2pt);
-            \fill[white] (3.8, 1.9) circle (2pt);
-            \draw[emeraldActive, line width=1.3pt] (0.8, 1.5) -- (1.6, 2.2) -- (2.4, 1.8) -- (3.2, 3.5) -- (4.0, 2.8) -- (4.8, 4.0) -- (5.8, 3.2);
-        \end{scope}
-    \or% Case 6: AI & Computer Vision Spatial Intelligence
-        \begin{scope}[opacity=0.28]
-            \draw[cyberPurple, line width=1.1pt, fill=cyberPurple!20] (0.8, 1.2) rectangle (2.2, 4.2);
-            \draw[spatialBlue, line width=1.1pt, fill=spatialBlue!25] (2.6, 1.6) rectangle (3.8, 3.8);
-            \draw[openxrTeal, line width=1.1pt, fill=openxrTeal!30] (4.2, 2.0) rectangle (5.0, 3.4);
-            \draw[-{Stealth[scale=0.9]}, white, line width=0.9pt] (2.2, 2.7) -- (2.6, 2.7);
-            \draw[-{Stealth[scale=0.9]}, white, line width=0.9pt] (3.8, 2.7) -- (4.2, 2.7);
-            \fill[emeraldActive] (5.8, 3.4) circle (3pt) node[right, font=\tiny\bfseries\color{emeraldActive}] {Grasp};
-            \fill[amberGlow] (5.8, 2.7) circle (3pt) node[right, font=\tiny\bfseries\color{amberGlow}] {Pinch};
-            \fill[cyan] (5.8, 2.0) circle (3pt) node[right, font=\tiny\bfseries\color{cyan}] {Point};
-            \draw[white, line width=0.5pt] (5.0, 2.7) -- (5.8, 3.4);
-            \draw[white, line width=0.5pt] (5.0, 2.7) -- (5.8, 2.7);
-            \draw[white, line width=0.5pt] (5.0, 2.7) -- (5.8, 2.0);
-        \end{scope}
-    \or% Case 7: Advanced Virtual STEM Laboratory Frameworks
-        \begin{scope}[opacity=0.28]
-            \draw[white, line width=1.2pt] (0.6, 1.5) -- (6.2, 1.5);
-            \draw[amberGlow, line width=1.4pt, fill=amberGlow!30] (0.8, 1.5) rectangle (1.4, 2.7);
-            \draw[-{Stealth[scale=1.1]}, red!90!white, line width=1.6pt] (1.4, 2.1) -- (3.2, 2.1);
-            \draw[cyan!80!white, line width=1.5pt, fill=cyan!30] (3.2, 2.1) ellipse (0.25cm and 1.2cm);
-            \draw[red!90!white, line width=1.4pt] (3.2, 2.1) -- (5.0, 2.1);
-            \draw[red!90!white, line width=1.4pt] (3.2, 2.7) -- (5.0, 2.1);
-            \draw[red!90!white, line width=1.4pt] (3.2, 1.5) -- (5.0, 2.1);
-            \fill[amberGlow] (5.0, 2.1) circle (3pt) node[below right, font=\tiny\bfseries\color{amberGlow}] {Focus};
-            \draw[emeraldActive, line width=1.6pt] (5.8, 1.2) -- (5.8, 3.0);
-        \end{scope}
-    \else
-        \begin{scope}[opacity=0.22]
-            \draw[cyan!60!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.2);
-            \draw[amberGlow, line width=1.2pt] (3.4, 2.7) circle (1.8cm);
-        \end{scope}
-    \fi
-}
-
-% Chapter Banner Box
+% กล่องหัวบทวิชาการ OpenXR (Chapter Banner Box — ชิดขวา เหมือน Microbiology)
 \newtcolorbox{chapterbannerbox}{
     enhanced,
+    width=\textwidth,
+    arc=6pt,
+    boxrule=1pt,
+    colframe=openxrTeal!90!black,
+    interior style={left color=darkNavy!98!black, right color=darkNavy!85!darkSlate},
     colback=darkNavy,
-    colframe=openxrTeal,
-    arc=4mm,
-    boxrule=1.5pt,
-    leftrule=6mm,
-    top=12pt,
-    bottom=12pt,
-    left=16pt,
-    right=16pt,
-    shadow={3mm}{-3mm}{0mm}{black!70},
-    underlay={%
+    borderline east={4pt}{0pt}{amberGlow},
+    top=16pt, bottom=16pt, left=16pt, right=20pt,
+    drop shadow=black!15,
+    underlay={
         \begin{tcbclipinterior}
-            \begin{scope}[shift={($(interior.south east)+(-6.8, 0.2)$)}]
-                \renderchaptermotif
+            \begin{scope}[opacity=0.20]
+                % กริดเชิงพื้นที่ (Spatial Grid Motif)
+                \draw[openxrTeal!60!white, line width=0.4pt, step=0.5cm] (0.2, 0.2) grid (6.8, 5.0);
+                % แกนพิกัด XYZ
+                \draw[-{Stealth[scale=1.1]}, cyan!70!white, line width=1.2pt] (0.8, 0.8) -- (5.0, 0.8);
+                \draw[-{Stealth[scale=1.1]}, emeraldActive!80!white, line width=1.2pt] (0.8, 0.8) -- (0.8, 4.5);
+                \draw[-{Stealth[scale=1.1]}, amberGlow!80!white, line width=1.2pt] (0.8, 0.8) -- (0.2, 0.2);
+                % วงรีวงโคจร 6DoF
+                \draw[cyberPurple!70!white, line width=1.0pt] (3.5, 2.8) ellipse (2.0cm and 0.7cm);
+                \draw[spatialBlue!70!white, line width=1.0pt, rotate around={60:(3.5,2.8)}] (3.5, 2.8) ellipse (2.0cm and 0.7cm);
             \end{scope}
         \end{tcbclipinterior}
     }
 }
 
+% รูปแบบหัวบท (ชิดขวา เหมือน microbiology_style)
 \newcommand{\openxrchapterbanner}[1]{%
     \begin{chapterbannerbox}
-        \raggedright
-        {\color{amberGlow}\bfseries\large\chaptername\ \thechapter\par}
+        \raggedleft
+        {\fontsize{44}{50}\selectfont\bfseries\color{white} \chaptername\ \thechapter\par}
         \vspace{6pt}
-        {\color{white}\bfseries\LARGE #1\par}
+        {\color{amberGlow}\rule{0.50\textwidth}{2pt}\par}
+        \vspace{6pt}
+        {\fontsize{25}{31}\selectfont\bfseries\color{white} #1\par}
     \end{chapterbannerbox}
 }
 
 \newcommand{\openxrunnumberedchapterbanner}[1]{%
     \begin{chapterbannerbox}
-        \raggedright
-        {\color{white}\bfseries\LARGE #1\par}
+        \raggedleft
+        \vspace{4pt}
+        {\fontsize{28}{34}\selectfont\bfseries\color{white} #1\par}
+        \vspace{4pt}
     \end{chapterbannerbox}
 }
 
-% Title Formatting for Chapter (No top/bottom extra blank pages)
-\titlespacing*{\chapter}{0pt}{0pt}{12pt}
 \titleformat{\chapter}[block]
   {\normalfont}
   {}
   {0pt}
   {\openxrchapterbanner}
-  [\global\setlength{\parindent}{1.25cm}]
 
 \titleformat{name=\chapter,numberless}[block]
   {\normalfont}
   {}
   {0pt}
   {\openxrunnumberedchapterbanner}
-  [\global\setlength{\parindent}{1.25cm}]
 
-% Section & Subsection Formatting (RBRU Standards: Left 0cm / 1.25cm)
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
+
+% การจัดรูปแบบ Section และ Subsection (ตาม microbiology_style: fontsize + makebox)
 \titleformat{\section}
-  {\normalfont\Large\bfseries\color{darkNavy}}
-  {\makebox[1.25cm][l]{\thesection}}
-  {0pt}
-  {}
-  [\global\setlength{\parindent}{1.25cm}]
-
+    {\fontsize{18}{22}\bfseries\color{spatialBlue}}
+    {\makebox[1.25cm][l]{\thesection}}
+    {0pt}
+    {}
 \titleformat{name=\section,numberless}
-  {\normalfont\Large\bfseries\color{darkNavy}}
-  {}
-  {0pt}
-  {}
-  [\global\setlength{\parindent}{1.25cm}]
-
-\titlespacing*{\section}{0cm}{14pt plus 2pt minus 2pt}{6pt}
+    {\fontsize{18}{22}\bfseries\color{spatialBlue}}
+    {}
+    {0pt}
+    {}
+\titlespacing{\section}{0pt}{16pt}{8pt}
 
 \titleformat{\subsection}
-  {\normalfont\large\bfseries\color{spatialBlue}}
-  {\makebox[1.25cm][l]{\thesubsection}}
-  {0pt}
-  {}
-  [\global\setlength{\parindent}{2.50cm}]
-
+    {\fontsize{15}{18}\bfseries\color{openxrTeal}}
+    {\makebox[1.25cm][l]{\thesubsection}}
+    {0pt}
+    {}
 \titleformat{name=\subsection,numberless}
-  {\normalfont\large\bfseries\color{spatialBlue}}
-  {}
-  {0pt}
-  {}
-  [\global\setlength{\parindent}{2.50cm}]
-
-\titlespacing*{\subsection}{1.25cm}{10pt plus 2pt minus 2pt}{4pt}
+    {\fontsize{15}{18}\bfseries\color{openxrTeal}}
+    {}
+    {0pt}
+    {}
+\titlespacing{\subsection}{0pt}{12pt}{6pt}
 
 \titleformat{\subsubsection}
-  {\normalfont\normalsize\bfseries\color{openxrTeal}}
-  {\makebox[1.0cm][l]{\thesubsubsection}}
-  {0pt}
-  {}
-  [\global\setlength{\parindent}{3.75cm}]
-
+    {\fontsize{13}{16}\bfseries\color{cyberPurple}}
+    {\makebox[1.25cm][l]{\thesubsubsection}}
+    {0pt}
+    {}
 \titleformat{name=\subsubsection,numberless}
-  {\normalfont\normalsize\bfseries\color{openxrTeal}}
-  {}
-  {0pt}
-  {}
-  [\global\setlength{\parindent}{3.75cm}]
+    {\fontsize{13}{16}\bfseries\color{cyberPurple}}
+    {}
+    {0pt}
+    {}
+\titlespacing{\subsubsection}{0pt}{10pt}{4pt}
 
-\titlespacing*{\subsubsection}{2.50cm}{8pt plus 2pt minus 2pt}{3pt}
-
-% 6. Running Headers and Footers (fancyhdr) - Without Trailing Dots
+% ============================================================
+% 6. Running Headers & Footers (fancyhdr — ตาม Microbiology)
+% ============================================================
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{darkSlate}\leftmark}
-\fancyhead[R]{\small\color{darkSlate}\rightmark}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\footrulewidth}{0pt}
-\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter\quad #1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{openxrTeal}\leaders\hrule height \headrulewidth\hfill}}
+
+\fancyhead[LE]{\small\bfseries\color{openxrTeal} \thepage \quad \textbar \quad OpenXR และการประมวลผลเชิงพื้นที่เพื่อสะเต็มศึกษา}
+\fancyhead[RO]{\small\bfseries\color{openxrTeal} \leftmark \quad \textbar \quad \thepage}
+\fancyfoot[C]{\small\color{slateGrey} มหาวิทยาลัยราชภัฏรำไพพรรณี}
+
+% Custom Chapter Mark ไม่มีจุดปะ
+\renewcommand{\chaptermark}[1]{%
+    \markboth{%
+        \ifnum \c@secnumdepth >\m@ne
+            \if@mainmatter
+                \chaptertitlename\ \thechapter\quad
+            \fi
+        \fi
+        #1%
+    }{}%
+}
 
 \fancypagestyle{plain}{
     \fancyhf{}
-    \fancyfoot[C]{\small\thepage}
     \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{0pt}
+    \fancyfoot[C]{\small\bfseries\color{openxrTeal} \thepage}
 }
 
-% 7. Custom Academic Environments
-% 7.1 Modular Planbox for Instructional Management Plan
-\newtcolorbox{planbox}[2][]{
+% ============================================================
+% 7. Academic Environments (กล่องสาระสำคัญ OpenXR STEM)
+% ============================================================
+
+% 7.1 กล่องแผนบริหารการสอน (Lesson Plan Box — ครอบทุกส่วน)
+\newtcolorbox{lessonplanbox}{
     enhanced,
     breakable,
     colback=white,
@@ -342,64 +249,77 @@
     colbacktitle=darkNavy,
     coltitle=white,
     fonttitle=\bfseries\normalsize,
-    title={#2},
-    arc=1.5mm,
+    title={แผนบริหารการสอน},
+    arc=2mm,
     boxrule=0.8pt,
-    leftrule=3.5mm,
-    top=3pt,
-    bottom=3pt,
-    left=6pt,
-    right=6pt,
-    before skip=3.5pt,
-    after skip=3.5pt,
-    #1
+    leftrule=4mm,
+    top=8pt,
+    bottom=8pt,
+    left=10pt,
+    right=10pt,
+    before skip=10pt,
+    after skip=10pt
 }
 
-% 7.2 STEM Concept Box
-\newtcolorbox{stemconceptbox}[2][]{
+% 7.2 กล่องมโนทัศน์สำคัญ OpenXR (Concept Box)
+\newtcolorbox{stemconceptbox}[1]{
     enhanced,
-    breakable,
-    colback=rbruLightBg,
+    colback=openxrSoftBg,
     colframe=openxrTeal,
-    colbacktitle=openxrTeal,
-    coltitle=white,
-    fonttitle=\bfseries\normalsize,
-    title={\textbf{มโนทัศน์สำคัญ (Key Concept):} #2},
-    arc=2mm,
-    boxrule=1.0pt,
-    leftrule=4mm,
-    top=6pt,
-    bottom=6pt,
-    left=8pt,
-    right=8pt,
-    before skip=8pt,
-    after skip=8pt,
-    #1
+    fonttitle=\bfseries\color{white},
+    title={\small มโนทัศน์สำคัญ (Key Concept) \quad #1},
+    arc=4pt,
+    boxrule=1pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
 }
 
-% 7.3 Worked Example Box
-\newtcolorbox{workedexamplebox}[2][]{
+% 7.3 กล่องตัวอย่างการคำนวณและการจำลอง (Worked Example Box)
+\newtcolorbox{workedexamplebox}[1]{
     enhanced,
-    breakable,
-    colback=white,
+    colback=spatialBlue!5!white,
     colframe=spatialBlue,
-    colbacktitle=spatialBlue,
-    coltitle=white,
-    fonttitle=\bfseries\normalsize,
-    title={\textbf{ตัวอย่างการคำนวณและการจำลอง:} #2},
-    arc=2mm,
-    boxrule=1.0pt,
-    leftrule=4mm,
-    top=6pt,
-    bottom=6pt,
-    left=8pt,
-    right=8pt,
-    before skip=8pt,
-    after skip=8pt,
-    #1
+    fonttitle=\bfseries\color{white},
+    title={\small ตัวอย่างการคำนวณและการจำลอง \quad #1},
+    arc=4pt,
+    boxrule=1pt,
+    borderline west={4pt}{0pt}{amberGlow},
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
 }
 
-% 7.4 Code Listing Box (Verbatim tcblisting)
+% 7.4 กล่องการประยุกต์ใช้งาน STEM (STEM Application Box)
+\newtcolorbox{stemappbox}[1]{
+    enhanced,
+    colback=openxrMint,
+    colframe=emeraldActive!90!black,
+    fonttitle=\bfseries\color{white},
+    title={\small การประยุกต์ใช้งานสะเต็มศึกษา \quad #1},
+    arc=4pt,
+    boxrule=1.2pt,
+    borderline west={4pt}{0pt}{openxrTeal},
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
+}
+
+% 7.5 กล่องคำเตือนและข้อควรระวัง (Warning Box)
+\newtcolorbox{warningbox}[1]{
+    enhanced,
+    colback=cyberPurple!5!white,
+    colframe=cyberPurple!85!black,
+    fonttitle=\bfseries\color{white},
+    title={\small ข้อควรระวังและจุดสำคัญ \quad #1},
+    arc=4pt,
+    boxrule=1.2pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    drop shadow=black!8,
+    before skip=12pt, after skip=12pt
+}
+
+% 7.6 กล่องโค้ด Python / AI Prompt (Code Box)
 \RequirePackage{listings}
 \definecolor{codeKw}{HTML}{7C3AED}
 \definecolor{codeStr}{HTML}{0D9488}
@@ -440,7 +360,7 @@
     listing style=openxrcode
 }
 
-% 7.5 AI Engineering Prompt Box (Production AI Workflow)
+% 7.7 กล่อง AI Engineering Prompt
 \newtcolorbox{aipromptbox}[1][AI Engineering Prompt]{
     enhanced,
     breakable,
@@ -463,4 +383,3 @@
 }
 
 \endinput
-

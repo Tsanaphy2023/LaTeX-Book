@@ -1,0 +1,52 @@
+\chapter{ตารางสูตรคณิตศาสตร์และฟิสิกส์สำหรับ XR}
+\label{app:B}
+
+\section*{ข.1 สูตรควอเทอร์เนียนและการแปลงพิกัด}
+
+\begin{table}[H]
+\centering
+\caption{สูตรสำคัญในการคำนวณ 3D Spatial Transform}
+\begin{tabularx}{\textwidth}{lY}
+\toprule
+\textbf{การดำเนินการ} & \textbf{สูตร / นิพจน์} \\
+\midrule
+ความยาวควอเทอร์เนียน & $|q| = \sqrt{w^2 + x^2 + y^2 + z^2}$ \\
+Conjugate & $q^* = (w, -x, -y, -z)$ \\
+Inverse & $q^{-1} = q^* / |q|^2$ \\
+การคูณควอเทอร์เนียน & $(q_1 q_2)_w = w_1w_2 - \mathbf{v}_1\cdot\mathbf{v}_2$ \\
+การหมุน Vector ด้วย Quaternion & $\mathbf{v'} = q \mathbf{v} q^{-1}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{ข.2 สูตรกลศาสตร์นิวตันสำหรับ Physics Simulation}
+
+\begin{table}[H]
+\centering
+\caption{สมการกลศาสตร์พื้นฐานในการจำลอง 3D Physics}
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+\textbf{หัวข้อ} & \textbf{สมการ} & \textbf{ตัวแปร} \\
+\midrule
+กฎข้อ 2 ของนิวตัน & $\mathbf{F} = m\mathbf{a}$ & $m$ = มวล, $\mathbf{a}$ = ความเร่ง \\
+วิธี Euler & $\mathbf{v}_{n+1} = \mathbf{v}_n + \mathbf{a}\Delta t$ & $\Delta t$ = ขนาดก้าวเวลา \\
+วิธี Verlet & $\mathbf{x}_{n+1} = 2\mathbf{x}_n - \mathbf{x}_{n-1} + \mathbf{a}\Delta t^2$ & \\
+แรงสปริง & $F = -k(x - x_0) - b\dot{x}$ & $k$ = ค่าคงตัวสปริง \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{ข.3 เมทริกซ์การฉายภาพ OpenXR (Projection Matrix)}
+
+\noindent เมทริกซ์การฉายภาพ Perspective Projection ที่ใช้ใน XR rendering สำหรับ eye frustum:
+
+\begin{equation}
+P = \begin{pmatrix}
+\frac{2n}{r-l} & 0 & \frac{r+l}{r-l} & 0 \\
+0 & \frac{2n}{t-b} & \frac{t+b}{t-b} & 0 \\
+0 & 0 & -\frac{f+n}{f-n} & -\frac{2fn}{f-n} \\
+0 & 0 & -1 & 0
+\end{pmatrix}
+\end{equation}
+
+โดยที่ $l, r, b, t$ คือขอบซ้าย ขวา ล่าง บน ของ frustum และ $n, f$ คือระยะ near plane และ far plane

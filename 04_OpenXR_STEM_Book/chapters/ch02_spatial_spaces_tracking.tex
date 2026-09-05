@@ -1,55 +1,56 @@
 \chapter{ปริภูมิพิกัด 3 มิติ และการติดตามการเคลื่อนที่ 6 องศาอิสระ}
 \label{chap:ch02}
+\index{ปริภูมิสามมิติ (3D Space)}
+\index{การติดตาม 6DoF (6-DoF Tracking)}
+\index{ควอเทอร์นียัน (Quaternion)}
 
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 2
+% ==========================================================
 \section*{แผนบริหารการสอนประจำบทที่ 2}
 \addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 2}
 
-\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
     \item ระบบพิกัดสามมิติและปริภูมิอ้างอิงเชิงพื้นที่ในมาตรฐาน OpenXR
     \item การแปลงพิกัดวัตถุแข็งเกร็งด้วยเวกเตอร์การเลื่อนตำแหน่งและเมทริกซ์การหมุน
-    \item คณิตศาสตร์ของควอเทอร์เนียนสำหรับการหมุนสามมิติที่ไร้การติดขัดของแกน
     \item สถาปัตยกรรมการตรวจจับและติดตามตำแหน่ง 6 องศาอิสระ (6DoF)
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
     \item จำแนกคุณลักษณะและความแตกต่างของ View, Local, และ Stage Reference Spaces ได้
     \item คำนวณการแปลงตำแหน่งและการหมุนในปริภูมิสามมิติด้วยควอเทอร์เนียนได้ถูกต้อง
     \item อธิบายหลักการหลอมรวมสัญญาณเซนเซอร์สำหรับการติดตามแบบ 6DoF ได้
     \item ประยุกต์ใช้การแปลงพิกัดในการวางตำแหน่งเครื่องมือทดลองเสมือนได้อย่างแม่นยำ
 \end{enumerate}
-\end{planbox}
 
 \newpage
 
-\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{กิจกรรมการเรียนการสอน}
+\begin{enumerate}
     \item การบรรยายหลักการทางเรขาคณิตสามมิติและการสาธิตการหมุนด้วยควอเทอร์เนียน
     \item กิจกรรมการคำนวณเวกเตอร์ตำแหน่งและการแปลงพิกัดของอุปกรณ์ทดลองเสมือน
     \item การฝึกเขียนโปรแกรมกำหนดปริภูมิอ้างอิงและอ่านค่าพิกัด 6DoF ผ่าน OpenXR
     \item การทดลองจำลองปัญหาการติดขัดของแกนหมุน (Gimbal Lock) และการแก้ไขด้วยควอเทอร์เนียน
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{สื่อการเรียนการสอน}
+\begin{enumerate}
     \item สไลด์บรรยายอิเล็กทรอนิกส์และเอกสารประกอบการสอนประจำบทที่ 2
     \item แบบจำลองเชิงภาพสามมิติแสดงปริภูมิพิกัดและมุมออยเลอร์
     \item โค้ดตัวอย่างการสร้าง Reference Space ในภาษา Python และ C++
     \item ระบบจำลองเซนเซอร์ติดตามตำแหน่งเสมือน (OpenXR Mock Tracking)
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{การประเมินผล}
+\begin{enumerate}
     \item การตรวจแบบฝึกหัดคำนวณการคูณควอเทอร์เนียนและการแปลงพิกัดสามมิติ
     \item การประเมินผลงานโค้ดการสร้าง Spatial Anchor สำหรับอุปกรณ์ทดลองเสมือน
     \item การทดสอบความเข้าใจย่อยประจำสัปดาห์
 \end{enumerate}
-\end{planbox}
-\clearpage
+
+\newpage
 
 \section{ปริภูมิอ้างอิงเชิงพื้นที่ใน OpenXR}
 

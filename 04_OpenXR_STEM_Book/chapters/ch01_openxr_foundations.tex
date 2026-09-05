@@ -1,55 +1,55 @@
 \chapter{พื้นฐานสถาปัตยกรรม OpenXR และระบบประมวลผลเชิงพื้นที่สำหรับสะเต็มศึกษา}
 \label{chap:ch01}
+\index{OpenXR}
+\index{สะเต็มศึกษา (STEM Education)}
+\index{สถาปัตยกรรม OpenXR}
 
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 1
+% ==========================================================
 \section*{แผนบริหารการสอนประจำบทที่ 1}
 \addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 1}
 
-\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
     \item วิวัฒนาการของเทคโนโลยีความเป็นจริงขยายและความท้าทายในสะเต็มศึกษา
     \item โครงสร้างสถาปัตยกรรมมาตรฐานเปิด OpenXR และลำดับชั้นการทำงาน
     \item การจัดการวงรอบชีวิตของระบบ (Instance, System, Session, and Frame Loop)
     \item การประยุกต์ใช้การประมวลผลเชิงพื้นที่ในการสร้างห้องทดลองวิทยาศาสตร์เสมือนจริง
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
     \item อธิบายปัญหาความแตกแยกของระบบและบทบาทของมาตรฐาน OpenXR ได้ถูกต้อง
     \item จำแนกหน้าที่ของ Application Layer, Loader, และ Runtime ได้อย่างแม่นยำ
     \item วิเคราะห์สถานะและการเปลี่ยนสถานะในวงรอบ Session และ Frame Loop ได้
     \item สรุปประโยชน์ของ OpenXR ในการพัฒนาสื่อการเรียนรู้สะเต็มศึกษาข้ามแพลตฟอร์มได้
 \end{enumerate}
-\end{planbox}
 
-\newpage
-
-\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{กิจกรรมการเรียนการสอน}
+\begin{enumerate}
     \item การบรรยายเชิงปฏิสัมพันธ์พร้อมการสาธิตการทำงานของ OpenXR Architecture
     \item กิจกรรมการวิเคราะห์เปรียบเทียบสถาปัตยกรรม Proprietary SDK กับ OpenXR Standard
     \item การฝึกปฏิบัติติดตั้งและกำหนดค่าสภาพแวดล้อมจำลอง Monado และ OpenXR Loader
     \item การอภิปรายกลุ่มย่อยเกี่ยวกับการนำเทคโนโลยีเชิงพื้นที่ไปใช้แก้ปัญหาการทดลองจริง
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{สื่อการเรียนการสอน}
+\begin{enumerate}
     \item เอกสารคำสอนและสไลด์บรรยายอิเล็กทรอนิกส์ประจำบทที่ 1
     \item แผนผังสถาปัตยกรรม OpenXR Specification จาก Khronos Group
     \item ชุดทดสอบ Monado OpenXR Runtime และแอปพลิเคชันตัวอย่าง Hello XR
     \item ระบบการจัดการเรียนรู้ดิจิทัล (LMS) สำหรับการส่งงานและอภิปรายผล
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{การประเมินผล}
+\begin{enumerate}
     \item การประเมินความรู้ผ่านแบบทดสอบย่อยเชิงมโนทัศน์ประจำบทที่ 1
     \item การประเมินผลการฝึกปฏิบัติการติดตั้งและทดสอบ OpenXR Runtime
     \item การประเมินการมีส่วนร่วมในการอภิปรายและการตอบคำถามในชั้นเรียน
 \end{enumerate}
-\end{planbox}
-\clearpage
+
+\newpage
 
 \section{วิวัฒนาการและความท้าทายในสะเต็มศึกษา}
 

@@ -4,52 +4,48 @@
 \section*{แผนบริหารการสอนประจำบทที่ 3}
 \addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 3}
 
-\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
     \item สถาปัตยกรรมส่วนขยายการติดตามมือ (XR\_EXT\_hand\_tracking)
     \item ลำดับชั้นกระดูกและพิกัดข้อต่อมือ 21 จุดร่วมในมาตรฐานสากล
     \item คณิตศาสตร์การอนุมานท่าทางมือ (Gesture Heuristics: Pinch, Grasp, Point)
     \item การออกแบบการปฏิสัมพันธ์แบบไร้สัมผัสกับอุปกรณ์วิทยาศาสตร์เสมือนจริง
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
     \item อธิบายกลไกของส่วนขยาย XR\_EXT\_hand\_tracking ใน OpenXR ได้
     \item ระบุตำแหน่งและความสัมพันธ์ของข้อต่อมือ 21 จุดร่วมได้อย่างถูกต้อง
     \item เขียนขั้นตอนวิธีคำนวณระยะหยิบจับ (Pinch Distance) และการจับยึดวัตถุได้
     \item พัฒนาระบบโต้ตอบเพื่อปรับตั้งค่าเครื่องมือทดลองเสมือนจริงได้อย่างราบรื่น
 \end{enumerate}
-\end{planbox}
 
 \newpage
 
-\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{กิจกรรมการเรียนการสอน}
+\begin{enumerate}
     \item การบรรยายเชิงทฤษฎีพร้อมสาธิตการตรวจจับข้อต่อมือแบบสด (Live 3D Hand Mesh)
     \item กิจกรรมฝึกเขียนโปรแกรมอ่านพิกัดปลายนิ้วชี้และนิ้วหัวแม่มือ
     \item การทดลองจำลองการปรับหมุนสเกลไมโครมิเตอร์เสมือนด้วยการจีบนิ้ว
     \item การอภิปรายเรื่องเทคนิค Zero-GC เพื่อรักษาอัตราเฟรมคงที่ที่ 60 FPS
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{สื่อการเรียนการสอน}
+\begin{enumerate}
     \item สไลด์บรรยายอิเล็กทรอนิกส์และแผนภาพกายวิภาคข้อต่อมือ 21 จุดร่วม
     \item สคริปต์ตัวอย่างการใช้งาน OpenXR Hand Tracking และ MediaPipe Hands
     \item ชุดทดสอบอุปกรณ์เสมือนจริง (Virtual Vernier Caliper \& Optical Slider)
     \item วิดีโอสาธิตการจับถืออุปกรณ์เคมีและฟิสิกส์ในห้องแล็บเสมือนจริง
 \end{enumerate}
-\end{planbox}
 
-\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
-\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+\noindent\textbf{การประเมินผล}
+\begin{enumerate}
     \item การประเมินผลงานโค้ดตรวจจับท่าทางมือจีบ (Pinch Gesture Recognition)
     \item การประเมินความถูกต้องในการเชื่อมต่อลำดับกระดูกมือเข้ากับวัตถุเสมือน
     \item การทดสอบข้อเขียนและแบบฝึกหัดท้ายบท
 \end{enumerate}
-\end{planbox}
-\clearpage
+
+\newpage
 
 \section{ส่วนขยายการติดตามมือและโครงสร้างข้อต่อ}
 
