@@ -1,0 +1,155 @@
+\chapter{การบูรณาการปัญญาประดิษฐ์และคอมพิวเตอร์วิทัศน์ในห้องปฏิบัติการเสมือน}
+\label{chap:ch06}
+
+\section*{แผนบริหารการสอนประจำบทที่ 6}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 6}
+
+\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สถาปัตยกรรมคอมพิวเตอร์วิทัศน์สำหรับการอนุมานตำแหน่งมือและวัตถุทางกายภาพ
+    \item โครงข่ายประสาทเทียมน้ำหนักเบาสำหรับการจำแนกท่าทางมือในห้องทดลอง
+    \item การกำจัดสัญญาณรบกวนและการกระตุกของพิกัดด้วยตัวกรองคัลมานและวันยูโรฟิลเตอร์
+    \item ระบบผู้ช่วยสอนอัจฉริยะ (Intelligent Tutoring System: ITS) ในสภาพแวดล้อมเสมือน
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item อธิบายหลักการทำงานของโมเดลตรวจจับจุดสำคัญ (Landmark Detection) ได้
+    \item พัฒนาโมเดลจำแนกท่าทางภาษามือทางวิทยาศาสตร์ด้วยพิกัด 21 จุดร่วมได้
+    \item ประยุกต์ใช้ One-Euro Filter และ Kalman Filter ในการทำให้เส้นทางการเคลื่อนที่ราบเรียบได้
+    \item ออกแบบกลไกประเมินพฤติกรรมการทดลองของผู้เรียนแบบอัตโนมัติด้วย AI ได้
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การบรรยายหลักการ Machine Learning และ Edge Inference บนอุปกรณ์แว่น XR
+    \item กิจกรรมการฝึกอบรมโมเดลจำแนกท่าทาง (Gesture Classifier) ด้วยข้อมูลพิกัดมือ
+    \item การทดลองเปรียบเทียบความลื่นไหลของพิกัดก่อนและหลังการกรองด้วย One-Euro Filter
+    \item การอภิปรายกรณีศึกษาการใช้ AI วิเคราะห์ความปลอดภัยและข้อผิดพลาดในการทดลองเคมี
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สไลด์บรรยายอิเล็กทรอนิกส์และเอกสารประกอบการสอนประจำบทที่ 6
+    \item ชุดข้อมูลท่าทางมือเชิงวิทยาศาสตร์ (Scientific Hand Gesture Dataset)
+    \item โมเดล TensorFlow Lite และ ONNX Runtime ที่ได้รับการปรับแต่งให้เหมาะกับ Edge XR
+    \item แอปพลิเคชันจำลองห้องแล็บอัจฉริยะพร้อมระบบแจ้งเตือนข้อผิดพลาดแบบเรียลไทม์
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การประเมินความแม่นยำ (Accuracy \& F1-Score) ของโมเดลจำแนกท่าทางที่ผู้เรียนพัฒนา
+    \item การตรวจรายงานการปรับแต่งค่าสัมประสิทธิ์ตัวกรองสัญญาณรบกวน
+    \item การทดสอบภาคปฏิบัติในการบูรณาการระบบ AI เข้ากับลูป OpenXR
+\end{enumerate}
+\end{planbox}
+\clearpage
+
+\section{คอมพิวเตอร์วิทัศน์และการตรวจจับจุดสำคัญ}
+
+การเชื่อมโลกกายภาพเข้ากับโลกเสมือนจริงในสะเต็มศึกษาต้องอาศัยการตรวจจับที่แม่นยำ ทั้งการตรวจจับตำแหน่งข้อต่อมือของผู้เรียน และการตรวจจับตำแหน่งอุปกรณ์ทดลองจริงในห้องเรียน เช่น มาร์กเกอร์ หรือบีกเกอร์แก้ว เทคโนโลยีการเรียนรู้เชิงลึก (Deep Learning) ได้เข้ามาทดแทนวิธีการดั้งเดิมด้วยการอนุมานตำแหน่งสามมิติผ่านภาพจากกล้อง RGB/IR
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    % Input Image
+    \draw[darkNavy, line width=1.2pt, fill=darkNavy!10] (0,0) rectangle (2.5, 3.2);
+    \node at (1.25, 1.6) {\textbf{ภาพถ่ายจากกล้อง}};
+    \node[font=\tiny] at (1.25, 0.8) {$128 \times 128 \times 3$};
+
+    % Palm Detector CNN
+    \draw[->, line width=1.3pt] (2.5, 1.6) -- (3.5, 1.6);
+    \draw[spatialBlue, line width=1.2pt, fill=spatialBlue!15] (3.5, 0.4) rectangle (6.0, 2.8);
+    \node at (4.75, 1.8) {\textbf{Palm Detector}};
+    \node[font=\tiny] at (4.75, 1.1) {กรอบล้อมรอบฝ่ามือ};
+
+    % Landmark 3D Regressor
+    \draw[->, line width=1.3pt] (6.0, 1.6) -- (7.0, 1.6);
+    \draw[openxrTeal, line width=1.2pt, fill=openxrTeal!20] (7.0, 0.2) rectangle (10.2, 3.0);
+    \node at (8.6, 2.0) {\textbf{Hand Landmark CNN}};
+    \node[font=\tiny] at (8.6, 1.3) {พิกัด 21 จุด $(x, y, z)$};
+    \node[font=\tiny] at (8.6, 0.7) {ความมั่นใจ $p \in [0, 1]$};
+
+    % Output Skeleton
+    \draw[->, line width=1.3pt] (10.2, 1.6) -- (11.2, 1.6);
+    \draw[amberGlow, line width=1.2pt, fill=amberGlow!20] (11.2, 0.5) rectangle (13.5, 2.7);
+    \node at (12.35, 1.8) {\textbf{3D Skeleton}};
+    \node[font=\tiny] at (12.35, 1.1) {สู่ OpenXR Loop};
+\end{tikzpicture}
+\caption{ขั้นตอนการทำงานของสถาปัตยกรรมโครงข่ายประสาทเทียมตรวจจับโครงร่างมือแบบสองขั้นตอน}
+\label{fig:cv_hand_pipeline}
+\end{figure}
+
+\section{การกำจัดสัญญาณรบกวนด้วยตัวกรองวันยูโร}
+
+ข้อมูลพิกัดที่ได้จากคอมพิวเตอร์วิทัศน์มักมีสัญญาณรบกวนความถี่สูง (Jitter) ซึ่งทำให้มือสั่นในโลกเสมือน หากใช้ตัวกรองความถี่ต่ำทั่วไป (Low-Pass Filter) จะทำให้เกิดความหน่วง (Lag) ขณะเคลื่อนที่เร็ว จึงนิยมใช้ \textbf{1€ Filter (One-Euro Filter)} ซึ่งปรับความถี่ตัด (Cutoff Frequency $f_c$) ตามความเร็วของการเคลื่อนที่โดยอัตโนมัติ
+
+\begin{equation}
+f_c = f_{c,\text{min}} + \beta |\dot{x}|
+\end{equation}
+โดยที่ $f_{c,\text{min}}$ คือความถี่ตัดขั้นต่ำสำหรับกำจัดความสั่นไหวขณะมืออยู่นิ่ง และ $\beta$ คือสัมประสิทธิ์ตอบสนองความเร็วขณะมือเคลื่อนไหว ตัวประกอบการปรับเรียบคำนวณจาก
+\begin{equation}
+\alpha = \frac{1}{1 + \frac{\tau}{\Delta t}} = \frac{1}{1 + \frac{1}{2\pi f_c \Delta t}}
+\end{equation}
+และค่าตำแหน่งที่ผ่านการกรองคำนวณได้จาก
+\begin{equation}
+\hat{x}_k = \alpha x_k + (1 - \alpha)\hat{x}_{k-1}
+\end{equation}
+
+\begin{workedexamplebox}{การคำนวณตัวประกอบการปรับเรียบในสภาวะมืออยู่นิ่ง}
+ในการทดลองหยิบหลอดทดลองเสมือน กำหนดให้ระบบทำงานที่อัตรา $60\text{ FPS}$ ($\Delta t = \frac{1}{60}\text{ s}$) พารามิเตอร์ของ One-Euro Filter กำหนดค่า $f_{c,\text{min}} = 1.0\text{ Hz}$ และ $\beta = 0.005$ ขณะที่มืออยู่นิ่งความเร็วเฉลี่ยมีค่าต่ำมาก ($\dot{x} \approx 0$) จงคำนวณความถี่ตัด $f_c$ และตัวประกอบการปรับเรียบ $\alpha$
+
+\textbf{วิธีทำ:}
+เมื่อ $\dot{x} \approx 0$ จะได้ความถี่ตัดเท่ากับความถี่ขั้นต่ำ
+\begin{equation}
+f_c = 1.0 + 0.005(0) = 1.0\text{ Hz}
+\end{equation}
+คำนวณค่าเวลาคงที่ (Time Constant $\tau$)
+\begin{equation}
+\tau = \frac{1}{2\pi f_c} = \frac{1}{2\pi (1.0)} \approx 0.1592\text{ s}
+\end{equation}
+คำนวณตัวประกอบการปรับเรียบ $\alpha$
+\begin{equation}
+\alpha = \frac{1}{1 + \frac{\tau}{\Delta t}} = \frac{1}{1 + \frac{0.1592}{0.01667}} = \frac{1}{1 + 9.55} = \frac{1}{10.55} \approx 0.0948
+\end{equation}
+เนื่องจากค่า $\alpha \approx 0.095$ มีค่าน้อย ระบบจะให้น้ำหนักกับค่าตำแหน่งเดิมในอดีตถึง $1 - \alpha \approx 90.5\%$ ทำให้ความสั่นไหวของพิกัดมือถูกกำจัดออกไปอย่างสมบูรณ์ ส่งผลให้หลอดทดลองเสมือนอยู่นิ่งสนิทอย่างมั่นคง
+\end{workedexamplebox}
+
+\section{ระบบผู้ช่วยสอนอัจฉริยะในห้องแล็บเสมือน}
+
+การนำโมเดลภาษาขนาดใหญ่ (LLM) และการตรวจจับพฤติกรรมมารวมกับ OpenXR ช่วยสร้างระบบผู้ช่วยสอนอัจฉริยะ (Intelligent Virtual Tutor) ที่สามารถให้คำแนะนำแก่นักเรียนแบบเฉพาะบุคคล ดังแสดงในตารางที่ 6.1
+
+\begin{table}[htbp]
+\centering
+\caption{บทบาทของระบบปัญญาประดิษฐ์ในห้องปฏิบัติการสะเต็มศึกษาเสมือนจริง}
+\label{tab:ai_roles}
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+\textbf{โมดูลปัญญาประดิษฐ์} & \textbf{กลไกการทำงาน} & \textbf{ประโยชน์ต่อการเรียนรู้ของผู้เรียน} \\
+\midrule
+การตรวจจับความผิดพลาด & วิเคราะห์ลำดับขั้นตอนการต่อวงจรไฟฟ้า & ป้องกันการลัดวงจรและแจ้งเตือนก่อนเกิดความเสียหาย \\
+การให้คำแนะนำเชิงบริบท & อนุมานเจตนาของผู้เรียนจากทิศทางสายตา & อธิบายสูตรคณิตศาสตร์ที่เกี่ยวข้องกับอุปกรณ์ที่กำลังมอง \\
+การประเมินทักษะปฏิบัติการ & วัดความนิ่งและความแม่นยำในการหยิบจับ & ประเมินทักษะทางกายภาพ (Psychomotor Domain) อัตโนมัติ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{สรุปท้ายบทที่ 6}
+\addcontentsline{toc}{section}{สรุปท้ายบทที่ 6}
+
+การผสานคอมพิวเตอร์วิทัศน์และปัญญาประดิษฐ์เข้ากับระบบ OpenXR ช่วยยกระดับห้องปฏิบัติการเสมือนจากการเป็นเพียงภาพจำลอง ให้กลายเป็นสภาพแวดล้อมการเรียนรู้อัจฉริยะ การใช้ตัวกรองสัญญาณรบกวนที่มีประสิทธิภาพช่วยขจัดปัญหาความสั่นไหวของมือ ขณะที่โมเดลปัญญาประดิษฐ์ช่วยตรวจจับและให้คำแนะนำแก่นักเรียนแบบเรียลไทม์ พร้อมสำหรับการพัฒนาโครงงานสะเต็มขั้นสูงในบทต่อไป
+
+\section*{แบบฝึกหัดท้ายบทที่ 6}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 6}
+
+\begin{enumerate}
+    \item จงอธิบายกลไกที่ทำให้ One-Euro Filter สามารถลดอาการสั่นไหวขณะมืออยู่นิ่ง แต่ไม่ก่อให้เกิดความหน่วงขณะมือเคลื่อนที่อย่างรวดเร็ว
+    \item ออกแบบสถาปัตยกรรมโครงข่ายประสาทเทียมแบบ Multi-Layer Perceptron (MLP) สำหรับจำแนกท่าทางมือ 5 รูปแบบจากเวกเตอร์พิกัด 21 จุดร่วม
+    \item อภิปรายประโยชน์ของการใช้ระบบผู้ช่วยสอนอัจฉริยะ (Intelligent Virtual Tutor) ในการเรียนการสอนสะเต็มศึกษาในศตวรรษที่ 21
+\end{enumerate}

@@ -1,0 +1,170 @@
+\chapter{การพัฒนาและการประยุกต์ใช้ห้องปฏิบัติการเสมือนสะเต็มศึกษาขั้นสูง}
+\label{chap:ch07}
+
+\section*{แผนบริหารการสอนประจำบทที่ 7}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 7}
+
+\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สถาปัตยกรรมการออกแบบห้องปฏิบัติการทัศนศาสตร์เสมือน (Virtual Optics Bench)
+    \item การจำลองปรากฏการณ์คลื่นนิ่งและการแทรกสอด (Wave Interference Simulator)
+    \item ห้องปฏิบัติการวงจรอิเล็กทรอนิกส์และออสซิลโลสโคปเชิงพื้นที่สามมิติ
+    \item การสร้างระบบจำลองวงโคจรระบบดาวคู่ทางดาราศาสตร์ฟิสิกส์และการเผยแพร่ข้ามแพลตฟอร์ม
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item พัฒนาระบบคำนวณการหักเหของแสงและการสร้างภาพด้วยเลนส์แบบเรียลไทม์ได้
+    \item สร้างแบบจำลองการซ้อนทับของคลื่นสองมิติในถังคลื่นเสมือนจริงได้
+    \item ออกแบบเครื่องมือวัดทางอิเล็กทรอนิกส์เชิงพื้นที่ที่เชื่อมโยงกับทฤษฎีวงจร RLC ได้
+    \item บูรณาการและส่งมอบ (Deploy) แอปพลิเคชันห้องทดลองเสมือนสู่แพลตฟอร์มสากลได้
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การสัมมนาเชิงปฏิบัติการวิเคราะห์สถาปัตยกรรมห้องทดลองวิทยาศาสตร์เสมือนจริง
+    \item โครงงานกลุ่มพัฒนาห้องปฏิบัติการเสมือนจริงตามหัวข้อสะเต็มศึกษาที่กำหนด
+    \item การทดสอบประสิทธิภาพการทำงานข้ามแพลตฟอร์ม (WebXR, PC VR, และ Standalone XR)
+    \item การนำเสนอผลงานโครงงานและการประเมินความพึงพอใจของผู้ใช้งาน
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item เอกสารคู่มือการพัฒนาโครงงานสะเต็มศึกษาเสมือนจริงขั้นสูง
+    \item ชุดโมเดลสามมิติอุปกรณ์วิทยาศาสตร์ความละเอียดสูง (PBR Scientific Assets)
+    \item รหัสต้นฉบับโครงงานห้องปฏิบัติการทัศนศาสตร์ คลื่น และวงจรไฟฟ้า
+    \item แพลตฟอร์มคลาวด์สำหรับโฮสต์และเผยแพร่ WebXR ผ่าน GitHub Pages CDN
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การประเมินโครงงานพัฒนานวัตกรรมห้องปฏิบัติการเสมือนจริง (Term Project Rubrics)
+    \item การทดสอบการทำงานของระบบข้ามแพลตฟอร์มโดยปราศจากข้อผิดพลาด
+    \item การประเมินทักษะการสื่อสารและการนำเสนอผลงานทางวิชาการ
+\end{enumerate}
+\end{planbox}
+\clearpage
+
+\section{ห้องปฏิบัติการทัศนศาสตร์เสมือนจริง}
+
+การทดลองทัศนศาสตร์เป็นหนึ่งในตัวอย่างคลาสสิกที่ได้รับประโยชน์อย่างมหาศาลจากเทคโนโลยี XR เนื่องจากผู้เรียนสามารถมองเห็นลำแสงเลเซอร์ (Ray Tracing) และเส้นแนวแกนทัศน์ได้อย่างชัดเจนในมิติสามมิติ ซึ่งในการทดลองจริงไม่สามารถมองเห็นเส้นทางเดินแสงได้อย่างชัดเจนหากไม่มีควันหรือฝุ่นละออง
+
+\subsection{สมการช่างทำเลนส์และการหักเหของแสง}
+
+การคำนวณทางเดินแสงผ่านเลนส์บางสอดคล้องกับสมการช่างทำเลนส์ (Lensmaker's Equation)
+\begin{equation}
+\frac{1}{f} = (n - 1)\left(\frac{1}{R_1} - \frac{1}{R_2}\right)
+\end{equation}
+และความสัมพันธ์ระหว่างระยะวัตถุ $s$ ระยะภาพ $s'$ และความยาวโฟกัส $f$ เป็นไปตามสมการเกาส์เซียน
+\begin{equation}
+\frac{1}{s} + \frac{1}{s'} = \frac{1}{f}
+\end{equation}
+โดยมีกำลังขยายขวาง (Transverse Magnification)
+\begin{equation}
+m = -\frac{s'}{s} = \frac{y'}{y}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Optical Axis
+    \draw[darkNavy, line width=1.0pt, dashed] (-4.5,0) -- (5.5,0) node[right]{\textbf{แกนมุขสำคัญ}};
+
+    % Lens Plane
+    \draw[spatialBlue, ultra thick] (0,-2.5) -- (0,2.5);
+    \draw[spatialBlue, line width=1.5pt, fill=spatialBlue!25] (0,0) ellipse (0.3cm and 2.5cm);
+    \node[spatialBlue, above] at (0, 2.5) {\textbf{เลนส์นูน}};
+
+    % Focal Points
+    \fill[amberGlow] (-2.5,0) circle (3pt) node[below]{\textbf{$F$}};
+    \fill[amberGlow] (2.5,0) circle (3pt) node[below]{\textbf{$F'$}};
+
+    % Object Arrow
+    \draw[-{Stealth}, line width=2.0pt, openxrTeal] (-4.0,0) -- (-4.0,1.8) node[above]{\textbf{วัตถุ ($y$)}};
+    \node[below] at (-4.0,0) {$-s$};
+
+    % Principal Rays
+    % Ray 1: Parallel to axis then through focal point
+    \draw[red!90!black, line width=1.3pt] (-4.0,1.8) -- (0,1.8) -- (4.0,-1.2);
+    % Ray 2: Through optical center
+    \draw[emeraldActive, line width=1.3pt] (-4.0,1.8) -- (0,0) -- (4.0,-1.8);
+    % Ray 3: Through front focus then parallel
+    \draw[cyberPurple, line width=1.3pt] (-4.0,1.8) -- (-2.5,0) -- (0,-1.8) -- (4.0,-1.8);
+
+    % Image Arrow
+    \draw[-{Stealth}, line width=2.0pt, red!80!black] (3.33,0) -- (3.33,-1.5) node[below]{\textbf{ภาพจริง ($y'$)}};
+    \node[above] at (3.33,0) {$s'$};
+\end{tikzpicture}
+\caption{การติดตามรังสีแสงสามมิติในระบบจำลองทัศนศาสตร์เสมือนจริง}
+\label{fig:virtual_optics}
+\end{figure}
+
+\begin{workedexamplebox}{การคำนวณตำแหน่งและลักษณะภาพในห้องทดลองเสมือน}
+วางวัตถุไว้ที่ระยะห่าง $s = 30.0\text{ cm}$ ด้านหน้าเลนส์นูนที่มีความยาวโฟกัส $f = 10.0\text{ cm}$ จงคำนวณระยะภาพ $s'$ กำลังขยาย $m$ และระบุชนิดของภาพที่จะต้องสร้างขึ้นในเอนจินกราฟิกส์
+
+\textbf{วิธีทำ:}
+จากสมการของเลนส์บาง
+\begin{align}
+\frac{1}{s'} &= \frac{1}{f} - \frac{1}{s} = \frac{1}{10.0} - \frac{1}{30.0} = \frac{3 - 1}{30.0} = \frac{2}{30.0} = \frac{1}{15.0}\text{ cm}^{-1} \\
+s' &= +15.0\text{ cm}
+\end{align}
+คำนวณกำลังขยาย
+\begin{equation}
+m = -\frac{s'}{s} = -\frac{15.0}{30.0} = -0.5
+\end{equation}
+ผลลัพธ์แสดงว่าภาพที่เกิดขึ้นเป็น \textbf{ภาพจริง (Real Image)} อยู่หลังเลนส์ที่ระยะ $15.0\text{ cm}$ มีลักษณะ \textbf{หัวกลับ} ($m < 0$) และมีขนาดเป็น \textbf{ครึ่งหนึ่งของวัตถุจริง} ($|m| = 0.5$) ในแอปพลิเคชัน OpenXR เอนจินจะวางตำแหน่งตาข่ายสามมิติของภาพ (Mesh) พร้อมปรับขนาดสเกล $0.5$ เท่าและหมุนแกน $180^\circ$ โดยอัตโนมัติ
+\end{workedexamplebox}
+
+\section{การจำลองวงโคจรระบบดาวคู่ทางดาราศาสตร์ฟิสิกส์}
+
+ในการศึกษาขั้นสูง การประยุกต์ OpenXR ร่วมกับแบบจำลองทางดาราศาสตร์ฟิสิกส์ เช่น การโคจรของระบบดาวคู่แบบแตะกัน (Contact Binary Stars) สอดคล้องกับงานวิจัยของ ทัศนา และคณะ ในการวิเคราะห์การถ่ายเทมวลและพลังงานผ่านผิวสมศักดิ์ของโรช (Roche Equipotential Surfaces)
+
+\begin{equation}
+\Phi(\mathbf{r}) = -\frac{G M_1}{r_1} - \frac{G M_2}{r_2} - \frac{1}{2}\omega^2 (x^2 + y^2)
+\end{equation}
+การจำลองแบบสามมิติช่วยให้นักศึกษาสามารถหมุนสังเกตจุดลากรองจ์ (Lagrange Points $L_1, L_2, L_3, L_4, L_5$) และการบิดเบี้ยวของชั้นบรรยากาศดาวในสภาพแวดล้อมเสมือนจริงได้อย่างลึกซึ้ง
+
+\begin{table}[htbp]
+\centering
+\caption{เมทริกซ์การประยุกต์ใช้ห้องปฏิบัติการเสมือนจริงในสาขาวิชาต่าง ๆ}
+\label{tab:stem_matrices}
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+\textbf{สาขาวิชา} & \textbf{ปรากฏการณ์ที่จำลองใน XR} & \textbf{การปฏิสัมพันธ์ของผู้เรียนผ่าน OpenXR} \\
+\midrule
+ฟิสิกส์ทัศนศาสตร์ & ทางเดินแสง การหักเห การสะท้อนกลับหมด & ใช้มือเลื่อนตำแหน่งเลนส์ กระจก และฉากรับภาพ \\
+ฟิสิกส์คลื่น & การแทรกสอดสองมิติ และคลื่นนิ่งในท่อ & ปรับความถี่และความยาวคลื่นด้วยปุ่มหมุนเสมือน \\
+วิศวกรรมไฟฟ้า & วงจรเรโซแนนซ์ RLC และสัญญาณความถี่ & ใช้สายวัดต่อจุดวงจรและสังเกตกราฟออสซิลโลสโคป \\
+ดาราศาสตร์ฟิสิกส์ & วงโคจรเคปเลอร์ และระบบดาวคู่แบบแตะกัน & ปรับอัตราส่วนมวลและมุมเอียงของการสังเกต \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{การเผยแพร่และการส่งมอบสู่แพลตฟอร์มสากล}
+
+เพื่อให้สื่อการเรียนรู้สะเต็มศึกษาที่สร้างขึ้นสามารถเข้าถึงได้อย่างกว้างขวาง สถาปัตยกรรม OpenXR รองรับการคอมไพล์และส่งมอบข้ามระบบ (Cross-Platform Deployment)
+\begin{enumerate}
+    \item \textbf{Standalone Headsets (Android XR / Meta Quest / Pico):} คอมไพล์เป็น APK ผ่าน Android NDK และ OpenXR Loader
+    \item \textbf{PC VR (Windows / Linux Monado):} รันผ่าน Direct-to-Device Mode ด้วยประสิทธิภาพกราฟิกสูงสุด
+    \item \textbf{WebXR via Global CDN:} รันบนเว็บเบราว์เซอร์ผ่านมาตรฐาน W3C WebXR Device API โดยไม่ต้องติดตั้งโปรแกรมเพิ่มเติม
+\end{enumerate}
+
+\section*{สรุปท้ายบทที่ 7}
+\addcontentsline{toc}{section}{สรุปท้ายบทที่ 7}
+
+การพัฒนาห้องปฏิบัติการเสมือนจริงขั้นสูงด้วยมาตรฐาน OpenXR และการประมวลผลเชิงพื้นที่เป็นการหลอมรวมองค์ความรู้ด้านวิทยาศาสตร์ คณิตศาสตร์ การเขียนโปรแกรม และการออกแบบปฏิสัมพันธ์เข้าด้วยกันอย่างสมบูรณ์ ช่วยทลายข้อจำกัดของการทดลองในห้องแล็บจริง เปิดโอกาสให้นักเรียนทุกคนสามารถเข้าถึงการทดลองทางวิทยาศาสตร์ระดับสูงได้อย่างเท่าเทียม ปลอดภัย และเกิดการเรียนรู้อย่างยั่งยืน
+
+\section*{แบบฝึกหัดท้ายบทที่ 7}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 7}
+
+\begin{enumerate}
+    \item จงออกแบบขั้นตอนวิธีในการคำนวณตำแหน่งและทิศทางของรังสีแสงหักเหผ่านเลนส์เว้าในปริภูมิสามมิติ
+    \item อธิบายความหมายทางกายภาพของจุดลากรองจ์ $L_1$ ในระบบดาวคู่ และยกตัวอย่างว่าการจำลองสามมิติช่วยให้เข้าใจปรากฏการณ์นี้ดีขึ้นอย่างไร
+    \item เสนอแนวทางการออกแบบห้องปฏิบัติการเสมือนจริงสำหรับโรงเรียนที่ขาดแคลนอุปกรณ์ฮาร์ดแวร์แว่น XR ราคาแพง
+\end{enumerate}

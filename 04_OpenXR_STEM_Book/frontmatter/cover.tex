@@ -1,0 +1,120 @@
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\noindent%
+\begin{tikzpicture}[remember picture, overlay]
+    % 1. Background Palette
+    \definecolor{coverDark}{HTML}{060A17}
+    \definecolor{coverMid}{HTML}{0B1528}
+    \definecolor{coverTeal}{HTML}{0D9488}
+    \definecolor{coverCyan}{HTML}{00E5FF}
+    \definecolor{coverPurple}{HTML}{7C3AED}
+    \definecolor{coverGold}{HTML}{FBBF24}
+    \definecolor{coverEmerald}{HTML}{10B981}
+    
+    % Canvas background
+    \fill[coverDark] ($(current page.south west)+(-1.5,-1.5)$) rectangle ($(current page.north east)+(1.5,1.5)$);
+    
+    % Ambient glowing energy
+    \shade[inner color=coverMid!90!coverTeal, outer color=coverDark, opacity=0.45] 
+        ($(current page.north east)+(-3, -5)$) circle (10cm);
+    \shade[inner color=coverMid!85!coverPurple, outer color=coverDark, opacity=0.40] 
+        ($(current page.south west)+(3, 7)$) circle (11cm);
+    \shade[inner color=coverMid!80!coverGold, outer color=coverDark, opacity=0.25] 
+        ($(current page.center)+(1, -2)$) circle (8.5cm);
+
+    % 2. 3D Spatial Grid & Holographic Perspective
+    \begin{scope}[opacity=0.18]
+        \foreach \x in {-10,-8,...,10} {
+            \draw[coverCyan, thin] ($(current page.center)+(\x, -15)$) -- ($(current page.center)+(\x*0.35, 15)$);
+        }
+        \foreach \y in {-14,-11,...,14} {
+            \draw[coverTeal, thin] ($(current page.center)+(-11, \y)$) to[out=10, in=190] ($(current page.center)+(11, \y+0.5)$);
+        }
+    \end{scope}
+
+    % 3. Central OpenXR & STEM Graphic Motif: Spatial Coordinates, Hand Rig & Molecules
+    \begin{scope}[shift={($(current page.center)+(0.5, -1.8)$)}]
+        % Spatial Hologram Cube
+        \draw[ultra thick, coverCyan, opacity=0.6] (-2.5, -1.5) rectangle (2.5, 1.5);
+        \draw[very thick, coverPurple, opacity=0.5] (-2.5, 1.5) -- (-1.2, 2.7) -- (3.8, 2.7) -- (2.5, 1.5);
+        \draw[very thick, coverPurple, opacity=0.5] (3.8, 2.7) -- (3.8, -0.3) -- (2.5, -1.5);
+        
+        % 6DoF Orbit Rings
+        \draw[very thick, coverGold, opacity=0.65, rotate=25] (0,0) ellipse (4.8cm and 1.8cm);
+        \draw[thick, coverEmerald, opacity=0.55, rotate=-35] (0,0) ellipse (4.2cm and 1.5cm);
+        
+        % 21-Joint Skeletal Hand Abstract Overlay
+        \draw[white, thick, opacity=0.8] (0, -2.5) -- (0, -1.2);
+        \foreach \ang in {-40, -20, 0, 20, 40} {
+            \draw[coverCyan, thick, opacity=0.85] (0, -1.2) -- ({1.8*sin(\ang)}, {1.8*cos(\ang)-0.2});
+            \fill[coverGold] ({1.8*sin(\ang)}, {1.8*cos(\ang)-0.2}) circle (3pt);
+        }
+        \fill[white] (0, -1.2) circle (3.5pt);
+        \fill[coverTeal] (0, -2.5) circle (4pt);
+        
+        % STEM Wave function & Ray
+        \draw[ultra thick, coverCyan, domain=-3.8:3.8, samples=120, opacity=0.85] 
+            plot (\x, {0.6*sin(3.5*\x r)*exp(-0.08*\x*\x)});
+    \end{scope}
+
+    % 4. Top Header Banner
+    \node[anchor=north west, align=left] at ($(current page.north west)+(2.0, -2.2)$) {
+        {\fontsize{13pt}{16pt}\sffamily\bfseries\color{coverGold} โครงการตำราวิชาการเฉลิมพระเกียรติ มหาวิทยาลัยราชภัฏรำไพพรรณี}\\[4pt]
+        {\fontsize{10pt}{13pt}\sffamily\color{gray!30} RAMBHAI BARNI RAJABHAT UNIVERSITY ACADEMIC TEXTBOOK SERIES}
+    };
+
+    % 5. Main Title & Subtitle
+    \node[anchor=west, align=left] at ($(current page.north west)+(2.0, -6.5)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=coverMid!90!coverDark,
+            colframe=coverTeal,
+            arc=4mm,
+            boxrule=1.8pt,
+            leftrule=6mm,
+            width=17.2cm,
+            top=16pt,
+            bottom=16pt,
+            left=18pt,
+            right=18pt,
+            shadow={4mm}{-4mm}{0mm}{black!80}
+        ]
+            {\fontsize{24pt}{30pt}\sffamily\bfseries\color{white} การศึกษาและการจำลองเชิงสะเต็ม}\\[6pt]
+            {\fontsize{21pt}{27pt}\sffamily\bfseries\color{coverCyan} ด้วยมาตรฐาน OpenXR และการประมวลผลเชิงพื้นที่}\\[12pt]
+            {\fontsize{12pt}{16pt}\sffamily\bfseries\color{coverGold} OpenXR and Spatial Computing for STEM Education}\\[4pt]
+            {\fontsize{10pt}{14pt}\sffamily\color{gray!20} A Comprehensive Framework for 3D Interaction, Hand Tracking, Physics Engines, and Intelligent Virtual Labs}
+        \end{tcolorbox}
+    };
+
+    % 6. Author Profile & Credentials
+    \node[anchor=south west, align=left] at ($(current page.south west)+(2.0, 2.5)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=coverDark!95!black,
+            colframe=coverGold!80!white,
+            arc=3mm,
+            boxrule=1.2pt,
+            width=12.5cm,
+            top=10pt,
+            bottom=10pt,
+            left=14pt,
+            right=14pt
+        ]
+            {\fontsize{15pt}{19pt}\sffamily\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}\\[4pt]
+            {\fontsize{10pt}{14pt}\sffamily\color{coverCyan} วท.บ. (ฟิสิกส์ คอมพิวเตอร์และอิเล็กทรอนิกส์)}\\[2pt]
+            {\fontsize{10pt}{14pt}\sffamily\color{coverCyan} วท.ม. (ฟิสิกส์ประยุกต์)}\\[2pt]
+            {\fontsize{10pt}{14pt}\sffamily\color{coverCyan} ปร.ด. (ฟิสิกส์ประยุกต์)}\\[4pt]
+            {\fontsize{9pt}{12pt}\sffamily\color{gray!30} สาขาวิชาฟิสิกส์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี}
+        \end{tcolorbox}
+    };
+
+    % 7. Year & Release
+    \node[anchor=south east, align=right] at ($(current page.south east)+(-2.0, 2.5)$) {
+        {\fontsize{20pt}{24pt}\sffamily\bfseries\color{coverGold} พ.ศ. 2569}\\[2pt]
+        {\fontsize{11pt}{14pt}\sffamily\color{gray!30} Masterclass Edition}
+    };
+
+\end{tikzpicture}
+\end{titlepage}
+\restoregeometry

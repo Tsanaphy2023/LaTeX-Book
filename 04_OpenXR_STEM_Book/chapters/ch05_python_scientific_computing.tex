@@ -1,0 +1,159 @@
+\chapter{การประมวลผลทางวิทยาศาสตร์และการควบคุมสะเต็มด้วย Python และ PyOpenXR}
+\label{chap:ch05}
+
+\section*{แผนบริหารการสอนประจำบทที่ 5}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 5}
+
+\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สถาปัตยกรรมตัวเชื่อมต่อ PyOpenXR และการจัดการหน่วยความจำผ่าน ctypes
+    \item การประมวลผลข้อมูลทางวิทยาศาสตร์สมรรถนะสูงด้วย NumPy และ Zero-Copy Buffers
+    \item การแยกเธรดการคำนวณฟิสิกส์ออกจากเธรดการเรนเดอร์ภาพ (Multithreaded Architecture)
+    \item การพล็อตข้อมูลและการแสดงผลสนามเวกเตอร์ทางฟิสิกส์แบบเรียลไทม์ในโลกเสมือน
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item อธิบายกลไกการเชื่อมต่อระหว่าง Python C-API กับ OpenXR Native Loader ได้
+    \item จัดการอาร์เรย์พิกัดสามมิติด้วย NumPy โดยไม่ต้องคัดลอกข้อมูลซ้ำซ้อนได้
+    \item ออกแบบโครงสร้างมัลติเธรดเพื่อรักษาอัตราเฟรมภาพที่ 90 FPS ได้อย่างเสถียร
+    \item สร้างระบบแสดงผลเส้นแรงแม่เหล็กและปริมาณฟิสิกส์สามมิติเชิงโต้ตอบได้
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การบรรยายโครงสร้าง PyOpenXR พร้อมการเขียนโค้ดสด (Live Coding Demonstration)
+    \item กิจกรรมการคำนวณสนามไฟฟ้าและแม่เหล็กรอบขดลวดโซเลนอยด์ด้วย NumPy
+    \item การฝึกออกแบบ Ring Buffer เพื่อถ่ายโอนข้อมูลระหว่างเธรดฟิสิกส์และเธรดเรนเดอร์
+    \item การอภิปรายปัญหาและแนวทางแก้ไข Global Interpreter Lock (GIL) ในภาษา Python
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สไลด์บรรยายอิเล็กทรอนิกส์และเอกสารโค้ดมาตรฐานประจำบทที่ 5
+    \item สภาพแวดล้อมเสมือน Python (Virtualenv) ที่ติดตั้ง PyOpenXR และ OpenGL
+    \item ชุดข้อมูลการจำลองสนามเวกเตอร์และวิถีการเคลื่อนที่ของอนุภาค
+    \item จอแสดงผลข้อมูลทางวิทยาศาสตร์แบบสามมิติ (3D Spatial Telemetry HUD)
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การตรวจประเมินโปรแกรมคำนวณและแสดงผลสนามแม่เหล็กสามมิติ
+    \item การวัดประสิทธิภาพอัตราเฟรมและความหน่วงของระบบมัลติเธรดที่พัฒนา
+    \item การทดสอบข้อเขียนเชิงสถาปัตยกรรมซอฟต์แวร์ทางวิทยาศาสตร์
+\end{enumerate}
+\end{planbox}
+\clearpage
+
+\section{สถาปัตยกรรม PyOpenXR และการเชื่อมต่อระดับลึก}
+
+ภาษา Python เป็นภาษาหลักในการคำนวณทางวิทยาศาสตร์และปัญญาประดิษฐ์ การผสานพลังของ Python เข้ากับมาตรฐาน OpenXR ผ่านแพ็กเกจ \texttt{pyopenxr} ช่วยให้นักวิจัยและนักการศึกษาสามารถนำโมเดลคณิตศาสตร์ที่ซับซ้อนมาแสดงผลเชิงพื้นที่ได้อย่างรวดเร็ว
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[node distance=1.6cm, auto]
+    % Boxes
+    \node (py) [rectangle, rounded corners, draw=spatialBlue, fill=spatialBlue!15, line width=1.2pt, minimum width=10cm, minimum height=1.1cm] {\textbf{Python Application Layer} (Scientific Simulation, NumPy, SciPy)};
+    \node (ctypes) [rectangle, rounded corners, draw=openxrTeal, fill=openxrTeal!15, line width=1.2pt, minimum width=10cm, minimum height=1.1cm, below of=py] {\textbf{PyOpenXR Binding Layer} (Ctypes FFI / Zero-Copy Memory Views)};
+    \node (native) [rectangle, rounded corners, draw=darkNavy, fill=darkNavy!15, line width=1.2pt, minimum width=10cm, minimum height=1.1cm, below of=ctypes] {\textbf{Native OpenXR Loader} (\texttt{libopenxr\_loader.so} / \texttt{.dll})};
+    \node (gpu) [rectangle, rounded corners, draw=amberGlow, fill=amberGlow!15, line width=1.2pt, minimum width=10cm, minimum height=1.1cm, below of=native] {\textbf{Hardware Graphics \& XR Runtime} (OpenGL / Vulkan Swapchains)};
+
+    % Arrows
+    \draw [->, line width=1.3pt, spatialBlue] (py) -- (ctypes) node[midway, right, font=\footnotesize]{Direct Pointer Access};
+    \draw [->, line width=1.3pt, openxrTeal] (ctypes) -- (native) node[midway, right, font=\footnotesize]{C-ABI Function Calls};
+    \draw [->, line width=1.3pt, darkNavy] (native) -- (gpu) node[midway, right, font=\footnotesize]{Stereoscopic Frame Submission};
+\end{tikzpicture}
+\caption{สถาปัตยกรรมการเชื่อมต่อของ PyOpenXR ผ่าน ctypes FFI สู่รันไทม์ระดับฮาร์ดแวร์}
+\label{fig:pyopenxr_pipeline}
+\end{figure}
+
+\section{การคำนวณสมรรถนะสูงและการจัดการบัฟเฟอร์}
+
+ความท้าทายหลักของการใช้ภาษา Python คือความเร็วในการวนลูป ดังนั้น การคำนวณตำแหน่งอนุภาคหรือสนามเวกเตอร์ต้องกระทำผ่านเวกเตอร์ไรเซชัน (Vectorization) ของ NumPy และส่งผ่านข้อมูลไปยัง GPU บัฟเฟอร์โดยตรงโดยไม่ผ่านการคัดลอก (Zero-Copy Transfer)
+
+\begin{table}[htbp]
+\centering
+\caption{การเปรียบเทียบเวลาในการประมวลผลสนามเวกเตอร์ 10,000 จุดในภาษา Python}
+\label{tab:python_performance}
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+\textbf{วิธีการเขียนโปรแกรม} & \textbf{เวลาในการประมวลผล (ms)} & \textbf{อัตราเฟรมสูงสุดที่ทำได้ (FPS)} \\
+\midrule
+Python Standard For-loop & 145.2 ms & $\sim 6.8\text{ FPS}$ (กระตุกรุนแรง) \\
+NumPy Vectorized Array & 2.1 ms & $> 90\text{ FPS}$ (ลื่นไหลระดับสากล) \\
+NumPy + Numba JIT Compilation & 0.6 ms & $> 120\text{ FPS}$ (สมรรถนะสูงสุด) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{workedexamplebox}{การคำนวณสนามแม่เหล็กแบบเวกเตอร์รอบเส้นลวดนำกระแสไฟฟ้า}
+เส้นลวดยาวตรงวางตัวอยู่ตามแนวแกน $Z$ และมีกระแสไฟฟ้า $I = 10\text{ A}$ ไหลในทิศทาง $+Z$ จงเขียนฟังก์ชันเวกเตอร์คำนวณเวกเตอร์สนามแม่เหล็ก $\mathbf{B}$ ที่จุดพิกัด $\mathbf{r} = (x, y, 0)$ และคำนวณค่าสนามแม่เหล็กที่จุด $(0.05, 0.05, 0)\text{ m}$
+
+\textbf{วิธีทำ:}
+ตามกฎของบิโอต์-ซาวารต์และกฎของแอมแปร์ สนามแม่เหล็กจากเส้นลวดตรงยาวมีขนาด
+\begin{equation}
+B = \frac{\mu_0 I}{2\pi r}
+\end{equation}
+โดยที่ $\mu_0 = 4\pi \times 10^{-7}\text{ T}\cdot\text{m/A}$ และ $r = \sqrt{x^2 + y^2}$ เวกเตอร์หนึ่งหน่วยในแนวสัมผัสคือ $\hat{\boldsymbol{\phi}} = \left(-\frac{y}{r}, \frac{x}{r}, 0\right)$
+ดังนั้น เวกเตอร์สนามแม่เหล็กในพิกัดคาร์ทีเซียนคำนวณได้จาก
+\begin{equation}
+\mathbf{B}(x, y) = \frac{\mu_0 I}{2\pi (x^2 + y^2)} (-y\hat{\mathbf{i}} + x\hat{\mathbf{j}})
+\end{equation}
+ที่จุด $(0.05, 0.05, 0)\text{ m}$:
+\begin{align}
+r^2 &= (0.05)^2 + (0.05)^2 = 0.0025 + 0.0025 = 0.0050\text{ m}^2 \\
+B_{\text{scale}} &= \frac{(4\pi \times 10^{-7})(10)}{2\pi (0.0050)} = \frac{2 \times 10^{-6}}{0.0050} = 4.0 \times 10^{-4}\text{ T}
+\end{align}
+จะได้เวกเตอร์สนามแม่เหล็ก
+\begin{equation}
+\mathbf{B} = 4.0 \times 10^{-4} (-0.05\hat{\mathbf{i}} + 0.05\hat{\mathbf{j}}) / \sqrt{0.0050} \approx (-2.83\times 10^{-5}\hat{\mathbf{i}} + 2.83\times 10^{-5}\hat{\mathbf{j}})\text{ T}
+\end{equation}
+ข้อมูลเวกเตอร์นี้สามารถถูกเรนเดอร์เป็นลูกศร 3 มิติในโลกเสมือนจริงของ OpenXR เพื่อให้ผู้เรียนเห็นทิศทางการวนของสนามแม่เหล็กได้อย่างชัดเจน
+\end{workedexamplebox}
+
+\section{สถาปัตยกรรมแบบแยกเธรดการประมวลผล}
+
+เพื่อให้การเรนเดอร์ภาพผ่าน OpenXR ไม่ถูกรบกวนจากการคำนวณทางวิทยาศาสตร์ที่มีความซับซ้อน เราต้องแยกวงรอบการทำงานออกเป็น 2 เธรดหลัก ได้แก่
+\begin{enumerate}
+    \item \textbf{Physics Simulation Thread:} คำนวณสมการอนุพันธ์ การเคลื่อนที่ของอนุภาค และการตรวจจับการชน โดยทำงานด้วยความถี่คงที่ (Fixed Timestep เช่น $\Delta t = 0.01\text{ s}$)
+    \item \textbf{XR Rendering Thread:} ทำหน้าที่รับข้อมูลพิกัดล่าสุดผ่านโครงสร้างหน่วยความจำแบบล็อกอิสระ (Lock-Free Shared Memory) และส่งเฟรมภาพไปยังอุปกรณ์แสดงผลด้วยความถี่ของฮาร์ดแวร์ ($90\text{ Hz}$)
+\end{enumerate}
+
+\begin{codebox}[การจำลองสนามเวกเตอร์ความเร็วสูงด้วย NumPy ใน PyOpenXR]
+import numpy as np
+
+def compute_magnetic_field_grid(current, grid_x, grid_y):
+    # grid_x, grid_y เป็น 2D NumPy Arrays
+    mu_0 = 4.0 * np.pi * 1e-7
+    r_squared = grid_x**2 + grid_y**2
+    # ป้องกันการหารด้วยศูนย์ที่จุดแกนลวด
+    r_squared = np.maximum(r_squared, 1e-6)
+
+    factor = (mu_0 * current) / (2.0 * np.pi * r_squared)
+    Bx = -factor * grid_y
+    By = factor * grid_x
+    Bz = np.zeros_like(Bx)
+
+    # ส่งคืนอาร์เรย์สามมิติสำหรับเรนเดอร์ใน OpenXR
+    return np.stack([Bx, By, Bz], axis=-1)
+\end{codebox}
+
+\section*{สรุปท้ายบทที่ 5}
+\addcontentsline{toc}{section}{สรุปท้ายบทที่ 5}
+
+การผสานพลังระหว่างภาษา Python และมาตรฐาน OpenXR เปิดขอบฟ้าใหม่ให้กับการศึกษาสะเต็มศึกษา ด้วยการใช้ความสามารถในการคำนวณเมทริกซ์และเวกเตอร์ของ NumPy ร่วมกับสถาปัตยกรรมมัลติเธรด นักพัฒนาสามารถสร้างห้องปฏิบัติการเสมือนจริงที่คำนวณสมการฟิสิกส์ได้อย่างแม่นยำ พร้อมทั้งแสดงผลข้อมูลทางวิทยาศาสตร์แบบสามมิติได้อย่างลื่นไหลและมีประสิทธิภาพสูงสุด
+
+\section*{แบบฝึกหัดท้ายบทที่ 5}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 5}
+
+\begin{enumerate}
+    \item จงอธิบายบทบาทของ ctypes ในการเชื่อมต่อระหว่างฟังก์ชันของ PyOpenXR กับไลบรารีภาษา C ของ OpenXR Loader
+    \item เพราะเหตุใดการเขียนโปรแกรมคำนวณตำแหน่งอนุภาค 10,000 ตัวด้วย For-loop ปกติใน Python จึงไม่สามารถใช้ในงาน OpenXR แบบเรียลไทม์ได้
+    \item ออกแบบผังการทำงาน (Flowchart) ของสถาปัตยกรรมมัลติเธรดที่แยกเธรดการคำนวณฟิสิกส์ออกจากเธรดการเรนเดอร์ภาพของ OpenXR
+\end{enumerate}

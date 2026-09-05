@@ -1,0 +1,178 @@
+\chapter{การจำลองฟิสิกส์เชิงสะเต็มในโลกเสมือนจริง}
+\label{chap:ch04}
+
+\section*{แผนบริหารการสอนประจำบทที่ 4}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 4}
+
+\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item ระเบียบวิธีเชิงตัวเลขสำหรับการจำลองการเคลื่อนที่ (Euler, Verlet, and RK4)
+    \item พลศาสตร์ของวัตถุแข็งเกร็ง แรงบิด และโมเมนต์ความเฉื่อยใน 3 มิติ
+    \item ขั้นตอนวิธีตรวจจับการชนและการคำนวณการดลเพื่อตอบสนองการกระดอน
+    \item การจำลองระบบการสั่น ระบบสปริงหน่วง และสนามความโน้มถ่วงในโลกเสมือน
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item เปรียบเทียบความแม่นยำและความเสถียรของวิธี Euler, Verlet, และ RK4 ได้
+    \item ประยุกต์กฎการเคลื่อนที่ของนิวตันในการอัปเดตตำแหน่งและความเร็วของวัตถุได้
+    \item คำนวณการชนแบบยืดหยุ่นและไม่ยืดหยุ่นผ่านสมการการดล (Impulse Response) ได้
+    \item พัฒนาเอนจินจำลองลูกตุ้มเพนดูลัมและสปริงที่สอดคล้องกับทฤษฎีทางฟิสิกส์ได้
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การบรรยายเชิงคณิตศาสตร์ฟิสิกส์และการสาธิตการสะสมความคลาดเคลื่อนเชิงตัวเลข
+    \item กิจกรรมการเขียนโค้ดเปรียบเทียบวิถีโค้งของวัตถุภายใต้สนามโน้มถ่วง
+    \item การทดลองจำลองการชนของมวลในระบบหนึ่งมิติและสองมิติในสภาพแวดล้อมเสมือน
+    \item การวิเคราะห์ข้อมูลการสั่นแบบหน่วงเปรียบเทียบระหว่างแบบจำลองกับผลการคำนวณวิเคราะห์
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item เอกสารประกอบการสอนและสไลด์สรุปสูตรฟิสิกส์เชิงคำนวณ
+    \item โค้ดจำลอง Physics Loop ในภาษา Python (NumPy) และ WebAssembly
+    \item กราฟแสดงการอนุรักษ์พลังงานกลรวมในระบบสปริงแบบเรียลไทม์
+    \item แอปพลิเคชันจำลองการทดลองเสมือนจริงบนมาตรฐาน OpenXR
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การประเมินความถูกต้องของแบบจำลองฟิสิกส์ที่ผู้เรียนพัฒนา
+    \item การตรวจรายงานการวิเคราะห์พลังงานและเสถียรภาพของตัวอินทิเกรตเชิงตัวเลข
+    \item การทดสอบข้อเขียนเชิงทฤษฎีและปฏิบัติการคำนวณ
+\end{enumerate}
+\end{planbox}
+\clearpage
+
+\section{ระเบียบวิธีเชิงตัวเลขสำหรับการจำลองการเคลื่อนที่}
+
+หัวใจสำคัญของห้องปฏิบัติการเสมือนจริงทางสะเต็มศึกษาคือความถูกต้องแม่นยำของกฎฟิสิกส์ที่ควบคุมวัตถุ ในคอมพิวเตอร์ การแก้สมการเชิงอนุพันธ์ของการเคลื่อนที่ $\mathbf{F} = m\frac{d^2\mathbf{x}}{dt^2}$ ต้องอาศัยระเบียบวิธีเชิงตัวเลข (Numerical Integrators)
+
+\subsection{วิธีออยเลอร์แบบดั้งเดิมและแบบกึ่งชัดแจ้ง}
+
+วิธีออยเลอร์แบบชัดแจ้ง (Explicit Euler) ทำการประมาณค่าตำแหน่งและความเร็วในก้าวเวลา $\Delta t$ ถัดไป ดังนี้
+\begin{align}
+\mathbf{x}_{n+1} &= \mathbf{x}_n + \mathbf{v}_n \Delta t \\
+\mathbf{v}_{n+1} &= \mathbf{v}_n + \mathbf{a}_n \Delta t
+\end{align}
+แม้วิธีนี้จะคำนวณง่าย แต่มีข้อเสียร้ายแรงคือพลังงานของระบบจะไม่ได้รับการอนุรักษ์ และมักเกิดการระเบิดเชิงตัวเลข (Numerical Explosion) ในระบบที่มีการสั่น จึงนิยมใช้วิธีออยเลอร์กึ่งชัดแจ้ง (Semi-Implicit Euler หรือ Symplectic Euler) แทน
+\begin{align}
+\mathbf{v}_{n+1} &= \mathbf{v}_n + \mathbf{a}_n \Delta t \\
+\mathbf{x}_{n+1} &= \mathbf{x}_n + \mathbf{v}_{n+1} \Delta t
+\end{align}
+
+\subsection{วิธีแวร์เลต์และความเร็วแวร์เลต์}
+
+วิธีแวร์เลต์ (Verlet Integration) เป็นระเบียบวิธีที่นิยมใช้อย่างแพร่หลายในเอนจินฟิสิกส์ เนื่องจากมีความเสถียรสูงและอนุรักษ์พลังงานในระบบอนุรักษ์ได้อย่างยอดเยี่ยม
+\begin{equation}
+\mathbf{x}_{n+1} = 2\mathbf{x}_n - \mathbf{x}_{n-1} + \mathbf{a}_n \Delta t^2
+\end{equation}
+ส่วนวิธี Velocity Verlet ช่วยให้สามารถคำนวณความเร็วพร้อมกันได้ในแต่ละก้าวเวลา
+\begin{align}
+\mathbf{x}_{n+1} &= \mathbf{x}_n + \mathbf{v}_n \Delta t + \frac{1}{2}\mathbf{a}_n \Delta t^2 \\
+\mathbf{v}_{n+1} &= \mathbf{v}_n + \frac{1}{2}(\mathbf{a}_n + \mathbf{a}_{n+1})\Delta t
+\end{align}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Axes
+    \draw[-{Stealth}, line width=1.2pt] (0,0) -- (6.5,0) node[right]{เวลา $t$};
+    \draw[-{Stealth}, line width=1.2pt] (0,-2.2) -- (0,2.5) node[above]{การกระจัด $x(t)$};
+
+    % Analytical exact curve
+    \draw[darkNavy, line width=1.4pt, domain=0:6.0, samples=100] plot (\x, {1.8*cos(2.0*\x r)});
+    \node[darkNavy, font=\small] at (5.0, 2.2) {\textbf{ผลเฉลยวิเคราะห์ (Exact)}};
+
+    % Explicit Euler Divergence
+    \draw[red!80!black, dashed, line width=1.3pt, domain=0:5.5, samples=12] plot (\x, {1.8*exp(0.12*\x)*cos(2.0*\x r)});
+    \node[red!80!black, font=\small] at (5.5, -1.8) {\textbf{Explicit Euler (แกว่งเกินและสูญเสียเสถียรภาพ)}};
+
+    % Symplectic / Verlet
+    \draw[emeraldActive, dotted, line width=1.5pt, domain=0:6.0, samples=20] plot (\x, {1.8*cos(2.02*\x r)});
+    \node[emeraldActive, font=\small] at (2.5, -2.4) {\textbf{Verlet / Symplectic (อนุรักษ์พลังงาน)}};
+\end{tikzpicture}
+\caption{การเปรียบเทียบเสถียรภาพเชิงตัวเลขระหว่างวิธี Explicit Euler และวิธี Verlet ในระบบการสั่นฮาร์มอนิกอย่างง่าย}
+\label{fig:numerical_stability}
+\end{figure}
+
+\section{การตรวจจับการชนและการคำนวณแรงดล}
+
+ในการจำลองสะเต็ม วัตถุเสมือนต้องสามารถชนและสะท้อนกลับตามกฎการอนุรักษ์โมเมนตัม การชนระหว่างวัตถุสองชิ้นที่มีมวล $m_1, m_2$ และความเร็วก่อนชน $\mathbf{v}_1, \mathbf{v}_2$ สามารถคำนวณได้จากขนาดของการดล $J$ ตามแนวตั้งฉากของการชน $\mathbf{n}$
+
+\begin{equation}
+J = \frac{-(1 + e)(\mathbf{v}_1 - \mathbf{v}_2)\cdot \mathbf{n}}{\frac{1}{m_1} + \frac{1}{m_2}}
+\end{equation}
+โดยที่ $e \in [0, 1]$ คือสัมประสิทธิ์การคืนตัว (Coefficient of Restitution) ความเร็วหลังการชนคำนวณได้จาก
+\begin{align}
+\mathbf{v}_1' &= \mathbf{v}_1 + \frac{J}{m_1}\mathbf{n} \\
+\mathbf{v}_2' &= \mathbf{v}_2 - \frac{J}{m_2}\mathbf{n}
+\end{align}
+
+\begin{workedexamplebox}{การคำนวณการชนยืดหยุ่นของลูกกลมโลหะสองลูกบนรางเอียงเสมือน}
+ลูกกลมโลหะ $A$ มวล $m_A = 0.2\text{ kg}$ เคลื่อนที่ด้วยความเร็ว $\mathbf{v}_A = (1.5, 0, 0)\text{ m/s}$ เข้าชนลูกกลม $B$ มวล $m_B = 0.3\text{ kg}$ ซึ่งหยุดนิ่งอยู่กับที่ ($\mathbf{v}_B = (0, 0, 0)\text{ m/s}$) หากการชนเป็นการชนแบบยืดหยุ่นสมบูรณ์ ($e = 1.0$) โดยเวกเตอร์แนวตั้งฉากของการชนคือ $\mathbf{n} = (1, 0, 0)$ จงหาความเร็วของลูกกลมทั้งสองหลังการชน
+
+\textbf{วิธีทำ:}
+คำนวณความเร็วสัมพัทธ์ในแนวตั้งฉาก
+\begin{equation}
+(\mathbf{v}_A - \mathbf{v}_B)\cdot \mathbf{n} = (1.5 - 0)(1) = 1.5\text{ m/s}
+\end{equation}
+คำนวณผลรวมส่วนกลับของมวล
+\begin{equation}
+\frac{1}{m_A} + \frac{1}{m_B} = \frac{1}{0.2} + \frac{1}{0.3} = 5.0 + 3.333 = 8.333\text{ kg}^{-1}
+\end{equation}
+คำนวณขนาดของการดล $J$
+\begin{equation}
+J = \frac{-(1 + 1.0)(1.5)}{8.333} = \frac{-3.0}{8.333} \approx -0.360\text{ N}\cdot\text{s}
+\end{equation}
+คำนวณความเร็วหลังการชนของลูกกลมแต่ละลูก
+\begin{align}
+\mathbf{v}_A' &= (1.5, 0, 0) + \frac{-0.360}{0.2}(1, 0, 0) = (1.5 - 1.80, 0, 0) = (-0.30, 0, 0)\text{ m/s} \\
+\mathbf{v}_B' &= (0, 0, 0) - \frac{-0.360}{0.3}(1, 0, 0) = (0 + 1.20, 0, 0) = (1.20, 0, 0)\text{ m/s}
+\end{align}
+ผลลัพธ์แสดงว่าลูกกลม $A$ สะท้อนถอยหลังด้วยความเร็ว $0.30\text{ m/s}$ ขณะที่ลูกกลม $B$ เคลื่อนที่ไปข้างหน้าด้วยความเร็ว $1.20\text{ m/s}$ ตรงตามกฎการอนุรักษ์โมเมนตัมและพลังงานกล
+\end{workedexamplebox}
+
+\section{การจำลองระบบสปริงหน่วงและการสั่นพ้อง}
+
+ระบบมวล-สปริงแบบมีตัวหน่วง (Damped Harmonic Oscillator) สอดคล้องกับสมการอนุพันธ์อันดับสอง
+\begin{equation}
+m\frac{d^2 x}{dt^2} + c\frac{dx}{dt} + kx = F_{\text{ext}}(t)
+\end{equation}
+โดยที่ $k$ คือค่านิจสปริง และ $c$ คือสัมประสิทธิ์ความหน่วง ในการจำลองเชิงสะเต็ม ผู้เรียนสามารถปรับเปลี่ยนอัตราส่วนความหน่วง $\zeta = \frac{c}{2\sqrt{mk}}$ เพื่อสังเกตปรากฏการณ์กวัดแกว่งแบบต่าง ๆ ได้แก่ สั่นหน่วงน้อย (Underdamped, $\zeta < 1$), สั่นหน่วงวิกฤต (Critically Damped, $\zeta = 1$), และสั่นหน่วงเกิน (Overdamped, $\zeta > 1$) ดังแสดงในตารางที่ 4.1
+
+\begin{table}[htbp]
+\centering
+\caption{สภาวะการเคลื่อนที่ของระบบมวลสปริงแบบมีตัวหน่วงในห้องปฏิบัติการเสมือน}
+\label{tab:damping_states}
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+\textbf{สภาวะความหน่วง} & \textbf{เงื่อนไขพารามิเตอร์} & \textbf{พฤติกรรมทางกายภาพที่สังเกตได้} \\
+\midrule
+หน่วงน้อย (Underdamped) & $\zeta < 1.0$ & มีการแกว่งสลับไปมาโดยแอมพลิจูดลดลงแบบเอกซ์โพเนนเชียล \\
+หน่วงวิกฤต (Critical) & $\zeta = 1.0$ & มวลกลับคืนสู่จุดสมดุลเร็วที่สุดโดยไม่มีการแกว่งข้ามศูนย์ \\
+หน่วงเกิน (Overdamped) & $\zeta > 1.0$ & มวลเคลื่อนที่เข้าสู่จุดสมดุลอย่างช้า ๆ เนื่องจากแรงต้านทานสูงมาก \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{สรุปท้ายบทที่ 4}
+\addcontentsline{toc}{section}{สรุปท้ายบทที่ 4}
+
+เอนจินฟิสิกส์ที่มีความเที่ยงตรงสูงเป็นหัวใจของการเรียนรู้สะเต็มศึกษาในโลกเสมือนจริง การเลือกใช้ระเบียบวิธีอินทิเกรตเชิงตัวเลขที่เหมาะสม เช่น Velocity Verlet ร่วมกับการคำนวณการชนด้วยแรงดล ช่วยสร้างสภาพแวดล้อมการทดลองที่ถูกต้องตามทฤษฎีทางวิทยาศาสตร์ เปิดโอกาสให้ผู้เรียนสามารถทดลองและสังเกตผลได้อย่างแม่นยำ
+
+\section*{แบบฝึกหัดท้ายบทที่ 4}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 4}
+
+\begin{enumerate}
+    \item จงอธิบายเหตุผลทางฟิสิกส์ว่าทำไมวิธี Explicit Euler จึงทำให้พลังงานรวมของระบบมวล-สปริงเพิ่มขึ้นอย่างต่อเนื่องเมื่อเวลาผ่านไป
+    \item กำหนดให้ลูกบอลยางมวล $0.1\text{ kg}$ ตกกระทบพื้นเสมือนด้วยความเร็ว $4.0\text{ m/s}$ และกระดอนขึ้นด้วยความเร็ว $3.2\text{ m/s}$ จงคำนวณสัมประสิทธิ์การคืนตัว $e$ และขนาดของการดล $J$ ที่พื้นกระทำต่อลูกบอล
+    \item เขียนโปรแกรมจำลองการสั่นแบบหน่วงวิกฤต ($\zeta = 1.0$) ด้วยวิธี Semi-Implicit Euler ในภาษา Python
+\end{enumerate}

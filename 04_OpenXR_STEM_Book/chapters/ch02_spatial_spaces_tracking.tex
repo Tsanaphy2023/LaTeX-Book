@@ -1,0 +1,175 @@
+\chapter{ปริภูมิพิกัด 3 มิติ และการติดตามการเคลื่อนที่ 6 องศาอิสระ}
+\label{chap:ch02}
+
+\section*{แผนบริหารการสอนประจำบทที่ 2}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 2}
+
+\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item ระบบพิกัดสามมิติและปริภูมิอ้างอิงเชิงพื้นที่ในมาตรฐาน OpenXR
+    \item การแปลงพิกัดวัตถุแข็งเกร็งด้วยเวกเตอร์การเลื่อนตำแหน่งและเมทริกซ์การหมุน
+    \item คณิตศาสตร์ของควอเทอร์เนียนสำหรับการหมุนสามมิติที่ไร้การติดขัดของแกน
+    \item สถาปัตยกรรมการตรวจจับและติดตามตำแหน่ง 6 องศาอิสระ (6DoF)
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item จำแนกคุณลักษณะและความแตกต่างของ View, Local, และ Stage Reference Spaces ได้
+    \item คำนวณการแปลงตำแหน่งและการหมุนในปริภูมิสามมิติด้วยควอเทอร์เนียนได้ถูกต้อง
+    \item อธิบายหลักการหลอมรวมสัญญาณเซนเซอร์สำหรับการติดตามแบบ 6DoF ได้
+    \item ประยุกต์ใช้การแปลงพิกัดในการวางตำแหน่งเครื่องมือทดลองเสมือนได้อย่างแม่นยำ
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การบรรยายหลักการทางเรขาคณิตสามมิติและการสาธิตการหมุนด้วยควอเทอร์เนียน
+    \item กิจกรรมการคำนวณเวกเตอร์ตำแหน่งและการแปลงพิกัดของอุปกรณ์ทดลองเสมือน
+    \item การฝึกเขียนโปรแกรมกำหนดปริภูมิอ้างอิงและอ่านค่าพิกัด 6DoF ผ่าน OpenXR
+    \item การทดลองจำลองปัญหาการติดขัดของแกนหมุน (Gimbal Lock) และการแก้ไขด้วยควอเทอร์เนียน
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สไลด์บรรยายอิเล็กทรอนิกส์และเอกสารประกอบการสอนประจำบทที่ 2
+    \item แบบจำลองเชิงภาพสามมิติแสดงปริภูมิพิกัดและมุมออยเลอร์
+    \item โค้ดตัวอย่างการสร้าง Reference Space ในภาษา Python และ C++
+    \item ระบบจำลองเซนเซอร์ติดตามตำแหน่งเสมือน (OpenXR Mock Tracking)
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การตรวจแบบฝึกหัดคำนวณการคูณควอเทอร์เนียนและการแปลงพิกัดสามมิติ
+    \item การประเมินผลงานโค้ดการสร้าง Spatial Anchor สำหรับอุปกรณ์ทดลองเสมือน
+    \item การทดสอบความเข้าใจย่อยประจำสัปดาห์
+\end{enumerate}
+\end{planbox}
+\clearpage
+
+\section{ปริภูมิอ้างอิงเชิงพื้นที่ใน OpenXR}
+
+ในระบบประมวลผลเชิงพื้นที่ วัตถุเสมือนทุกชิ้นต้องมีจุดอ้างอิงตำแหน่งในปริภูมิสามมิติ มาตรฐาน OpenXR กำหนดประเภทของปริภูมิอ้างอิง (Reference Space Types) ไว้อย่างชัดเจนเพื่อรองรับสถานการณ์การใช้งานที่แตกต่างกัน ดังแสดงในตารางที่ 2.1
+
+\begin{table}[htbp]
+\centering
+\caption{คุณลักษณะของปริภูมิอ้างอิงหลักในมาตรฐาน OpenXR}
+\label{tab:openxr_spaces}
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+\textbf{ชื่อปริภูมิอ้างอิง} & \textbf{จุดกำเนิดและทิศทางอ้างอิง} & \textbf{กรณีการใช้งานในสะเต็มศึกษา} \\
+\midrule
+\texttt{VIEW} & จุดกึ่งกลางระหว่างดวงตาทั้งสองข้างของกล้อง & การแสดงผล HUD หรือเมนูที่ติดตามสายตาผู้เรียน \\
+\texttt{LOCAL} & จุดเริ่มต้นตำแหน่งของศีรษะขณะเริ่มทำงาน & การทดลองในท่านั่ง โต๊ะทดลองหน้าผู้เรียน \\
+\texttt{STAGE} & กึ่งกลางพื้นที่ห้องบนพื้นราบจริง (Room-scale) & การเดินสำรวจห้องปฏิบัติการเสมือนจริงขนาดใหญ่ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{stemconceptbox}{ปริภูมิพิกัดมือขวา (Right-Handed Coordinate System)}
+มาตรฐาน OpenXR กำหนดให้ใช้ระบบพิกัดมือขวาในหน่วยเมตร (SI Unit) โดยแกน $+X$ ชี้ไปทางขวา แกน $+Y$ ชี้ขึ้นด้านบนในแนวดิ่ง และแกน $+Z$ ชี้ออกมาทางด้านหลัง (ซึ่งทำให้แกน $-Z$ ชี้ตรงไปข้างหน้าในทิศทางการมอง) ความสม่ำเสมอของหน่วยวัดทางฟิสิกส์นี้ช่วยให้การคำนวณสมการการเคลื่อนที่และการจำลองแรงทำได้อย่างตรงไปตรงมา
+\end{stemconceptbox}
+
+\section{การแปลงทางเรขาคณิตและควอเทอร์เนียน}
+
+การระบุตำแหน่งและการวางตัวของวัตถุเสมือนในปริภูมิสามมิติประกอบด้วยเวกเตอร์การเลื่อนตำแหน่ง $\mathbf{p} = (x, y, z)^{\top}$ และการหมุน ซึ่งสามารถแทนได้ด้วยควอเทอร์เนียน $\mathbf{q}$
+
+\subsection{นิยามของควอเทอร์เนียน}
+
+ควอเทอร์เนียนเป็นโครงสร้างพีชคณิต 4 มิติที่ประกอบด้วยส่วนสเกลาร์และส่วนเวกเตอร์
+\begin{equation}
+\mathbf{q} = w + x\mathbf{i} + y\mathbf{j} + z\mathbf{k} = (w, \mathbf{v})
+\end{equation}
+โดยที่หน่วยจินตภาพสอดคล้องกับกฎของแฮมิลตัน
+\begin{equation}
+\mathbf{i}^2 = \mathbf{j}^2 = \mathbf{k}^2 = \mathbf{i}\mathbf{j}\mathbf{k} = -1
+\end{equation}
+
+เมื่อต้องการหมุนเวกเตอร์ตำแหน่ง $\mathbf{p}$ รอบแกนหมุนหนึ่งหน่วย $\mathbf{u} = (u_x, u_y, u_z)$ เป็นมุม $\theta$ เราสร้างควอเทอร์เนียนหนึ่งหน่วย (Unit Quaternion) ได้ดังนี้
+\begin{equation}
+\mathbf{q} = \cos\left(\frac{\theta}{2}\right) + \mathbf{u}\sin\left(\frac{\theta}{2}\right)
+\end{equation}
+และการหมุนเวกเตอร์ทำได้ผ่านการคูณแบบสังยุค (Conjugate Multiplication)
+\begin{equation}
+\mathbf{p}' = \mathbf{q} \mathbf{p} \mathbf{q}^*
+\end{equation}
+โดยที่ $\mathbf{q}^* = (w, -\mathbf{v})$ คือควอเทอร์เนียนสังยุค
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    % 3D Coordinate System
+    \draw[-{Stealth[scale=1.2]}, line width=1.5pt, openxrTeal] (0,0,0) -- (4,0,0) node[anchor=north east]{$+X$ (ขวา)};
+    \draw[-{Stealth[scale=1.2]}, line width=1.5pt, emeraldActive] (0,0,0) -- (0,3.5,0) node[anchor=north west]{$+Y$ (บน)};
+    \draw[-{Stealth[scale=1.2]}, line width=1.5pt, spatialBlue] (0,0,0) -- (0,0,4) node[anchor=south east]{$+Z$ (หลัง)};
+
+    % Rotation Axis u
+    \draw[-{Stealth[scale=1.3]}, line width=1.8pt, amberGlow] (0,0,0) -- (2.5,3.0,1.5) node[above right]{\textbf{แกนหมุน $\mathbf{u}$}};
+
+    % Arc of rotation theta
+    \draw[->, line width=1.4pt, cyberPurple] (2.2, 1.8, 1.3) arc (20:200:0.8cm) node[midway, above]{\textbf{มุมหมุน $\theta$}};
+
+    % Apparatus placement point
+    \fill[darkNavy] (2.0, 1.2, 0.5) circle (3pt) node[below right]{\textbf{อุปกรณ์ทดลอง $\mathbf{p}'$}};
+\end{tikzpicture}
+\caption{การหมุนตำแหน่งของอุปกรณ์ทดลองในปริภูมิสามมิติด้วยแกนหมุนหนึ่งหน่วยและมุมหมุน}
+\label{fig:quaternion_rotation}
+\end{figure}
+
+\begin{workedexamplebox}{การคำนวณการหมุนตำแหน่งหัววัดเซนเซอร์ด้วยควอเทอร์เนียน}
+กำหนดให้เซนเซอร์วัดสนามแม่เหล็กติดตั้งอยู่ที่ตำแหน่งเริ่มต้น $\mathbf{p} = (0.5, 0, 0)\text{ m}$ ในปริภูมิห้องปฏิบัติการ เมื่อผู้ใช้หมุนโต๊ะทดลองรอบแกน $+Y$ ในแนวตั้งเป็นมุม $\theta = 90^\circ$ ตามเข็มนาฬิกาเมื่อมองจากด้านบน จงหาพิกัดตำแหน่งใหม่ $\mathbf{p}'$ ของเซนเซอร์
+
+\textbf{วิธีทำ:}
+แกนหมุนคือแกน $+Y$ ดังนั้น $\mathbf{u} = (0, 1, 0)$ และมุมหมุนตามเข็มนาฬิกาคือ $\theta = -90^\circ$ หรือ $-\frac{\pi}{2}\text{ rad}$
+คำนวณองค์ประกอบของควอเทอร์เนียนหนึ่งหน่วย
+\begin{align}
+w &= \cos\left(-\frac{45^\circ}{}\right) = \cos(-45^\circ) = \frac{\sqrt{2}}{2} \\
+\mathbf{v} &= (0, 1, 0) \sin(-45^\circ) = \left(0, -\frac{\sqrt{2}}{2}, 0\right)
+\end{align}
+ดังนั้น $\mathbf{q} = \left(\frac{\sqrt{2}}{2}, 0, -\frac{\sqrt{2}}{2}, 0\right)$ และ $\mathbf{q}^* = \left(\frac{\sqrt{2}}{2}, 0, \frac{\sqrt{2}}{2}, 0\right)$
+
+เมื่อทำการคูณ $\mathbf{p}' = \mathbf{q} \mathbf{p} \mathbf{q}^*$ โดยมอง $\mathbf{p} = (0, 0.5, 0, 0)$ จะได้
+\begin{equation}
+\mathbf{p}' = (0, 0, 0, 0.5)\text{ m}
+\end{equation}
+นั่นคือ ตำแหน่งใหม่ของหัววัดเซนเซอร์จะย้ายไปอยู่ที่ $x = 0\text{ m}, y = 0\text{ m}, z = 0.5\text{ m}$ ซึ่งสอดคล้องกับการหมุนทางกายภาพจริง
+\end{workedexamplebox}
+
+\section{การติดตามการเคลื่อนที่ 6 องศาอิสระ}
+
+การติดตามแบบ 6DoF (Six Degrees of Freedom) ประกอบด้วยการเคลื่อนที่เชิงเส้น 3 ทิศทาง ($X, Y, Z$) และการหมุนเชิงมุม 3 ทิศทาง (Yaw, Pitch, Roll) ในอุปกรณ์ XR สมัยใหม่ การติดตามอาศัยการหลอมรวมสัญญาณเซนเซอร์ (Sensor Fusion) ระหว่างหน่วยวัดความเฉื่อย (Inertial Measurement Unit: IMU) ที่ทำงานด้วยความถี่สูง ($>1000\text{ Hz}$) ร่วมกับกล้องติดตามทัศนวิสัยภายนอกสู่ภายใน (Inside-Out Optical Tracking) ที่ทำงานด้วยความถี่ $60\text{ Hz}$ เพื่อขจัดปัญหาการเลื่อนไถลสะสม (Drift Elimination)
+
+\begin{codebox}[การสร้างปริภูมิอ้างอิง Stage ใน OpenXR ด้วยภาษา Python]
+import openxr as xr
+
+# กำหนดพารามิเตอร์การสร้าง Reference Space
+create_info = xr.ReferenceSpaceCreateInfo(
+    reference_space_type=xr.ReferenceSpaceType.STAGE,
+    pose_in_reference_space=xr.Posef(
+        orientation=xr.Quaternionf(0.0, 0.0, 0.0, 1.0),
+        position=xr.Vector3f(0.0, 0.0, 0.0)
+    )
+)
+
+# สร้าง Spatial Reference Space จากเซสชัน
+stage_space = xr.create_reference_space(session, create_info)
+print("Stage Space initialized successfully for Room-Scale STEM Lab.")
+\end{codebox}
+
+\section*{สรุปท้ายบทที่ 2}
+\addcontentsline{toc}{section}{สรุปท้ายบทที่ 2}
+
+ปริภูมิอ้างอิงสามมิติและคณิตศาสตร์ของควอเทอร์เนียนเป็นเสาหลักสำคัญของการประมวลผลเชิงพื้นที่ในมาตรฐาน OpenXR การใช้หน่วยวัดสากลและระบบพิกัดมือขวาช่วยให้การเชื่อมโยงข้อมูลเซนเซอร์กับการสร้างอุปกรณ์ทดลองทางฟิสิกส์เป็นไปอย่างแม่นยำ ป้องกันปัญหาการติดขัดของแกนหมุน และสร้างความพร้อมสำหรับการสร้างการปฏิสัมพันธ์ผ่านมือในบทต่อไป
+
+\section*{แบบฝึกหัดท้ายบทที่ 2}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 2}
+
+\begin{enumerate}
+    \item จงเปรียบเทียบข้อดีและข้อเสียของการแทนการหมุนสามมิติด้วยมุมออยเลอร์กับควอเทอร์เนียน พร้อมอธิบายปรากฏการณ์ Gimbal Lock
+    \item วัตถุมีตำแหน่งเริ่มต้นที่ $\mathbf{p} = (1, 2, -3)$ ในปริภูมิ Local จงแปลงพิกัดเมื่อวัตถุถูกเลื่อนด้วยเวกเตอร์ $\mathbf{t} = (-1, 0, 2)$ และหมุนรอบแกน $+Z$ เป็นมุม $180^\circ$
+    \item อธิบายหลักการทำงานของ Inside-Out Optical Tracking ในการกำจัดความคลาดเคลื่อนสะสมของเซนเซอร์ IMU
+\end{enumerate}

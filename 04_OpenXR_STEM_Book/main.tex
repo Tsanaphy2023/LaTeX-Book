@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% 1. Master Style for OpenXR STEM Book
+\usepackage{styles/openxr_stem_style}
+
+% 2. Font configuration for XeLaTeX (Sarabun font)
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. Hyperref Setup
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=spatialBlue,
+    citecolor=cyberPurple,
+    urlcolor=spatialBlue,
+    filecolor=emeraldActive,
+    pdftitle={การศึกษาและการจำลองเชิงสะเต็มด้วยมาตรฐาน OpenXR และการประมวลผลเชิงพื้นที่ - ผศ.ดร.ชีวะ ทัศนา},
+    pdfauthor={ผศ.ดร.ชีวะ ทัศนา}
+}
+
+\begin{document}
+
+% Frontmatter
+\frontmatter
+\input{frontmatter/cover}
+\include{frontmatter/title}
+\include{frontmatter/preface}
+\include{frontmatter/syllabus}
+
+% Table of Contents, Figures, Tables
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+% Mainmatter: 7 Core Chapters
+\mainmatter
+\include{chapters/ch01_openxr_foundations}
+\include{chapters/ch02_spatial_spaces_tracking}
+\include{chapters/ch03_hand_tracking_interaction}
+\include{chapters/ch04_physics_engine_simulation}
+\include{chapters/ch05_python_scientific_computing}
+\include{chapters/ch06_ai_cv_spatial_intelligence}
+\include{chapters/ch07_advanced_stem_labs}
+
+% Appendix
+\appendix
+\renewcommand{\thechapter}{ก}
+\include{backmatter/appendix}
+
+% Backmatter
+\backmatter
+\include{backmatter/references}
+\clearpage
+\printindex
+\include{backmatter/biography}
+
+\end{document}

@@ -1,0 +1,202 @@
+\chapter{การโต้ตอบเชิงพื้นที่และการตรวจจับโครงร่างมือ 21 จุดร่วม}
+\label{chap:ch03}
+
+\section*{แผนบริหารการสอนประจำบทที่ 3}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 3}
+
+\begin{planbox}[colframe=darkNavy, colbacktitle=darkNavy]{1. หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สถาปัตยกรรมส่วนขยายการติดตามมือ (XR\_EXT\_hand\_tracking)
+    \item ลำดับชั้นกระดูกและพิกัดข้อต่อมือ 21 จุดร่วมในมาตรฐานสากล
+    \item คณิตศาสตร์การอนุมานท่าทางมือ (Gesture Heuristics: Pinch, Grasp, Point)
+    \item การออกแบบการปฏิสัมพันธ์แบบไร้สัมผัสกับอุปกรณ์วิทยาศาสตร์เสมือนจริง
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=openxrTeal, colbacktitle=openxrTeal]{2. วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item อธิบายกลไกของส่วนขยาย XR\_EXT\_hand\_tracking ใน OpenXR ได้
+    \item ระบุตำแหน่งและความสัมพันธ์ของข้อต่อมือ 21 จุดร่วมได้อย่างถูกต้อง
+    \item เขียนขั้นตอนวิธีคำนวณระยะหยิบจับ (Pinch Distance) และการจับยึดวัตถุได้
+    \item พัฒนาระบบโต้ตอบเพื่อปรับตั้งค่าเครื่องมือทดลองเสมือนจริงได้อย่างราบรื่น
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=spatialBlue, colbacktitle=spatialBlue]{3. วิธีสอนและกิจกรรมการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การบรรยายเชิงทฤษฎีพร้อมสาธิตการตรวจจับข้อต่อมือแบบสด (Live 3D Hand Mesh)
+    \item กิจกรรมฝึกเขียนโปรแกรมอ่านพิกัดปลายนิ้วชี้และนิ้วหัวแม่มือ
+    \item การทดลองจำลองการปรับหมุนสเกลไมโครมิเตอร์เสมือนด้วยการจีบนิ้ว
+    \item การอภิปรายเรื่องเทคนิค Zero-GC เพื่อรักษาอัตราเฟรมคงที่ที่ 60 FPS
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. สื่อการเรียนการสอน}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item สไลด์บรรยายอิเล็กทรอนิกส์และแผนภาพกายวิภาคข้อต่อมือ 21 จุดร่วม
+    \item สคริปต์ตัวอย่างการใช้งาน OpenXR Hand Tracking และ MediaPipe Hands
+    \item ชุดทดสอบอุปกรณ์เสมือนจริง (Virtual Vernier Caliper \& Optical Slider)
+    \item วิดีโอสาธิตการจับถืออุปกรณ์เคมีและฟิสิกส์ในห้องแล็บเสมือนจริง
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=darkSlate, colbacktitle=darkSlate]{5. การวัดและประเมินผล}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item การประเมินผลงานโค้ดตรวจจับท่าทางมือจีบ (Pinch Gesture Recognition)
+    \item การประเมินความถูกต้องในการเชื่อมต่อลำดับกระดูกมือเข้ากับวัตถุเสมือน
+    \item การทดสอบข้อเขียนและแบบฝึกหัดท้ายบท
+\end{enumerate}
+\end{planbox}
+\clearpage
+
+\section{ส่วนขยายการติดตามมือและโครงสร้างข้อต่อ}
+
+การปฏิสัมพันธ์ในห้องปฏิบัติการเสมือนจริงที่เป็นธรรมชาติสูงสุดคือการใช้มือเปล่าของผู้เรียนโดยไม่ต้องพึ่งพาคอนโทรลเลอร์ มาตรฐาน OpenXR รองรับความสามารถนี้ผ่านส่วนขยายทางการ \texttt{XR\_EXT\_hand\_tracking} ซึ่งทำหน้าที่รายงานพิกัดและทิศทางการหมุนของข้อต่อมือในระดับมิลลิเมตร
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Wrist
+    \fill[darkNavy] (0, 0) circle (4pt) node[below=4pt]{\textbf{ข้อมือ (Wrist)}};
+
+    % Metacarpals & Joints
+    % Thumb
+    \draw[line width=1.5pt, amberGlow] (0,0) -- (-1.2, 0.8) -- (-2.0, 1.6) -- (-2.6, 2.4);
+    \fill[amberGlow] (-1.2, 0.8) circle (3pt);
+    \fill[amberGlow] (-2.0, 1.6) circle (3pt);
+    \fill[amberGlow] (-2.6, 2.4) circle (3.5pt) node[left]{\textbf{ปลายนิ้วหัวแม่มือ}};
+
+    % Index
+    \draw[line width=1.5pt, openxrTeal] (0,0) -- (-0.8, 1.8) -- (-0.9, 3.0) -- (-1.0, 4.2) -- (-1.1, 5.2);
+    \fill[openxrTeal] (-0.8, 1.8) circle (3pt);
+    \fill[openxrTeal] (-0.9, 3.0) circle (3pt);
+    \fill[openxrTeal] (-1.0, 4.2) circle (3pt);
+    \fill[openxrTeal] (-1.1, 5.2) circle (3.5pt) node[above]{\textbf{ปลายนิ้วชี้}};
+
+    % Middle
+    \draw[line width=1.5pt, emeraldActive] (0,0) -- (0.0, 2.0) -- (0.0, 3.4) -- (0.0, 4.6) -- (0.0, 5.8);
+    \fill[emeraldActive] (0.0, 2.0) circle (3pt);
+    \fill[emeraldActive] (0.0, 3.4) circle (3pt);
+    \fill[emeraldActive] (0.0, 4.6) circle (3pt);
+    \fill[emeraldActive] (0.0, 5.8) circle (3.5pt) node[above]{\textbf{ปลายนิ้วกลาง}};
+
+    % Ring
+    \draw[line width=1.5pt, cyberPurple] (0,0) -- (0.8, 1.8) -- (0.9, 3.1) -- (1.0, 4.3) -- (1.1, 5.3);
+    \fill[cyberPurple] (0.8, 1.8) circle (3pt);
+    \fill[cyberPurple] (0.9, 3.1) circle (3pt);
+    \fill[cyberPurple] (1.0, 4.3) circle (3pt);
+    \fill[cyberPurple] (1.1, 5.3) circle (3.5pt) node[above]{\textbf{ปลายนิ้วนาง}};
+
+    % Little
+    \draw[line width=1.5pt, spatialBlue] (0,0) -- (1.5, 1.4) -- (1.8, 2.5) -- (2.0, 3.5) -- (2.2, 4.4);
+    \fill[spatialBlue] (1.5, 1.4) circle (3pt);
+    \fill[spatialBlue] (1.8, 2.5) circle (3pt);
+    \fill[spatialBlue] (2.0, 3.5) circle (3pt);
+    \fill[spatialBlue] (2.2, 4.4) circle (3.5pt) node[right]{\textbf{ปลายนิ้วก้อย}};
+
+    % Pinch Line
+    \draw[dashed, line width=1.4pt, red!80!black] (-2.6, 2.4) -- (-1.1, 5.2) node[midway, above left]{\textbf{ระยะจีบ $d_{\text{pinch}}$}};
+\end{tikzpicture}
+\caption{โครงสร้างลำดับชั้นกระดูกมือ 21 จุดร่วมและการวัดระยะทางจีบเพื่อการปฏิสัมพันธ์}
+\label{fig:hand_skeleton}
+\end{figure}
+
+ตามข้อกำหนดของ OpenXR ข้อต่อมือหลัก 21 จุดร่วม (และส่วนขยายปลีกย่อยรวม 26 จุด) ประกอบด้วยลำดับข้อต่อสำคัญ 5 นิ้ว ได้แก่ นิ้วหัวแม่มือ (Thumb), นิ้วชี้ (Index), นิ้วกลาง (Middle), นิ้วนาง (Ring), และนิ้วก้อย (Little) โดยแต่ละนิ้วประกอบด้วยข้อมือส่วนโคน (Metacarpal), ข้อกลาง (Proximal/Intermediate), ข้อปลาย (Distal), และปลายนิ้ว (Tip)
+
+\section{คณิตศาสตร์การอนุมานท่าทางมือ}
+
+ในการควบคุมเครื่องมือทดลองเสมือนจริง ท่าทางพื้นฐานที่สำคัญที่สุดคือการจีบนิ้ว (Pinch Gesture) เพื่อหยิบจับวัตถุขนาดเล็กหรือปรับหมุนปุ่มลูกบิด และการกำมือ (Grasp Gesture) เพื่อยกเคลื่อนย้ายอุปกรณ์ขนาดใหญ่
+
+\subsection{การคำนวณระยะการจีบนิ้ว}
+
+ระยะห่างแบบยูคลิดระหว่างปลายนิ้วหัวแม่มือ $\mathbf{p}_{\text{thumb}}$ และปลายนิ้วชี้ $\mathbf{p}_{\text{index}}$ คำนวณได้จาก
+\begin{equation}
+d_{\text{pinch}} = \|\mathbf{p}_{\text{thumb}} - \mathbf{p}_{\text{index}}\| = \sqrt{(x_t - x_i)^2 + (y_t - y_i)^2 + (z_t - z_i)^2}
+\end{equation}
+สถานะการจีบนิ้ว $S_{\text{pinch}}$ ถูกกำหนดด้วยฟังก์ชันฮิสเทอรีซิส (Hysteresis Thresholding) เพื่อป้องกันการสั่นไหวของสถานะที่จุดขอบเขต
+\begin{equation}
+S_{\text{pinch}}(t) = 
+\begin{cases} 
+\text{TRUE} & \text{ถ้า } d_{\text{pinch}} \le d_{\text{enter}} \\
+\text{FALSE} & \text{ถ้า } d_{\text{pinch}} \ge d_{\text{exit}} \\
+S_{\text{pinch}}(t-\Delta t) & \text{ในกรณีอื่น}
+\end{cases}
+\end{equation}
+โดยทั่วไปกำหนดค่าเกณฑ์ $d_{\text{enter}} = 0.025\text{ m}$ ($2.5\text{ cm}$) และ $d_{\text{exit}} = 0.035\text{ m}$ ($3.5\text{ cm}$)
+
+\begin{workedexamplebox}{การคำนวณสถานะการหยิบเลนส์นูนบนรางทัศนศาสตร์เสมือน}
+พิกัดสามมิติของปลายนิ้วชี้คือ $\mathbf{p}_i = (0.12, 0.95, -0.40)\text{ m}$ และปลายนิ้วหัวแม่มือคือ $\mathbf{p}_t = (0.10, 0.94, -0.38)\text{ m}$ จงคำนวณระยะห่างระหว่างปลายนิ้ว และตรวจสอบว่าระบบตรวจพบการจีบนิ้วเพื่อหยิบยึดเลนส์นูนหรือไม่ เมื่อกำหนดเกณฑ์การเริ่มจีบ $d_{\text{enter}} = 0.025\text{ m}$
+
+\textbf{วิธีทำ:}
+คำนวณความแตกต่างของแต่ละแกนพิกัด
+\begin{align}
+\Delta x &= 0.12 - 0.10 = 0.02\text{ m} \\
+\Delta y &= 0.95 - 0.94 = 0.01\text{ m} \\
+\Delta z &= -0.40 - (-0.38) = -0.02\text{ m}
+\end{align}
+คำนวณระยะห่างยูคลิด
+\begin{align}
+d &= \sqrt{(0.02)^2 + (0.01)^2 + (-0.02)^2} \notag \\
+  &= \sqrt{0.0004 + 0.0001 + 0.0004} = \sqrt{0.0009} = 0.030\text{ m}
+\end{align}
+เนื่องจาก $d = 0.030\text{ m} = 3.0\text{ cm}$ ซึ่งมีค่ามากกว่าเกณฑ์การเริ่มจีบ $d_{\text{enter}} = 0.025\text{ m}$ ดังนั้น ระบบจะตัดสินว่าผู้เรียนยังไม่ได้เริ่มจับยึดเลนส์นูน วัตถุจะยังคงวางอยู่บนรางทัศนศาสตร์ตามเดิม
+\end{workedexamplebox}
+
+\section{วิศวกรรมลูปแบบไร้ขยะหน่วยความจำ}
+
+ในการแสดงผลเชิงพื้นที่แบบ 60 ถึง 90 FPS การจัดสรรหน่วยความจำใหม่ซ้ำซากในทุก ๆ เฟรมจะส่งผลให้ระบบ Garbage Collector (GC) ทำงานและหยุดการทำงานชั่วขณะ (Micro-Stutters) ซึ่งทำลายความต่อเนื่องของการทดลอง นักพัฒนาต้องใช้หลักการ Zero-GC Loop Engineering โดยการสร้างโครงสร้างเวกเตอร์และตัวแปรคำนวณไว้ภายนอกลูปการเรนเดอร์ ดังแสดงในตารางที่ 3.1
+
+\begin{table}[htbp]
+\centering
+\caption{แนวทางปฏิบัติในการจัดการหน่วยความจำสำหรับลูปคำนวณการติดตามมือ}
+\label{tab:zero_gc_rules}
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+\textbf{การกระทำที่ควรหลีกเลี่ยง} & \textbf{ผลกระทบต่อระบบ} & \textbf{แนวทางแก้ไขที่ถูกต้อง (Zero-GC)} \\
+\midrule
+สร้าง \texttt{new Vector3()} ในลูป & เกิดขยะอ็อบเจกต์ 90 ตัว/วินาที & จองตัวแปรเวกเตอร์ระดับโกลบอลเพียงครั้งเดียว \\
+ต่อสตริงแสดงผล HUD ซ้ำ ๆ & เพิ่มภาระ Heap Memory & ใช้ Fixed-length Buffers หรือ Text Node เดียว \\
+จัดสรรอาร์เรย์พิกัดใหม่ทุกเฟรม & อัตราเฟรมแกว่งและกระตุก & เขียนทับค่าลงใน TypedArray (Float32Array) เดิม \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{codebox}[การคำนวณระยะจีบนิ้วแบบ Zero-GC ในภาษา Python]
+import numpy as np
+
+class HandPinchDetector:
+    def __init__(self, enter_threshold=0.025, exit_threshold=0.035):
+        self.enter_th = enter_threshold
+        self.exit_th = exit_threshold
+        self.is_pinching = False
+        # จองบัฟเฟอร์หน่วยความจำล่วงหน้าเพื่อหลีกเลี่ยง GC
+        self._diff = np.zeros(3, dtype=np.float32)
+
+    def update(self, thumb_tip_pos, index_tip_pos):
+        # คำนวณแบบ In-place บนอาร์เรย์เดิม
+        np.subtract(thumb_tip_pos, index_tip_pos, out=self._diff)
+        dist = np.linalg.norm(self._diff)
+
+        if not self.is_pinching and dist <= self.enter_th:
+            self.is_pinching = True
+        elif self.is_pinching and dist >= self.exit_th:
+            self.is_pinching = False
+
+        return self.is_pinching, dist
+\end{codebox}
+
+\section*{สรุปท้ายบทที่ 3}
+\addcontentsline{toc}{section}{สรุปท้ายบทที่ 3}
+
+การตรวจจับโครงร่างมือ 21 จุดร่วมตามมาตรฐาน OpenXR มอบมิติใหม่ของการเรียนรู้สะเต็มศึกษา ช่วยให้ผู้เรียนสามารถควบคุม ปรับแต่ง และหยิบจับอุปกรณ์วิทยาศาสตร์ได้อย่างเป็นธรรมชาติ การประยุกต์ใช้คณิตศาสตร์ของระยะห่างแบบฮิสเทอรีซิสร่วมกับหลักการ Zero-GC ช่วยสร้างประสบการณ์ที่แม่นยำและเสถียร พร้อมสำหรับการเชื่อมต่อเข้ากับเอนจินฟิสิกส์ในบทต่อไป
+
+\section*{แบบฝึกหัดท้ายบทที่ 3}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 3}
+
+\begin{enumerate}
+    \item จงอธิบายบทบาทของฟังก์ชันฮิสเทอรีซิสในการตรวจจับท่าทางการจีบนิ้ว และวิเคราะห์ผลกระทบหากใช้ค่าเกณฑ์ตัดสินเพียงค่าเดียว
+    \item เขียนสมการคำนวณจุดกึ่งกลาง (Centroid) ของฝ่ามือโดยอ้างอิงจากตำแหน่งข้อต่อโคนนิ้วทั้งห้าจุด
+    \item เพราะเหตุใดวิศวกรรมลูปแบบไร้ขยะหน่วยความจำ (Zero-GC Loop Engineering) จึงมีความจำเป็นอย่างยิ่งในการพัฒนาแอปพลิเคชันเสมือนจริงบนอุปกรณ์เคลื่อนที่
+\end{enumerate}

@@ -1,0 +1,43 @@
+\chapter{คู่มือการติดตั้งและการพัฒนาสภาพแวดล้อม OpenXR}
+\label{chap:appendix_a}
+
+\section{การติดตั้ง OpenXR Software Development Kit (SDK)}
+
+การพัฒนาแอปพลิเคชันบนมาตรฐาน OpenXR ต้องอาศัยการติดตั้งตัวโหลด (OpenXR Loader) และเฮดเดอร์ไฟล์มาตรฐานจาก Khronos Group
+
+\subsection{การติดตั้งบนระบบปฏิบัติการ Linux (Ubuntu / Debian)}
+บนระบบปฏิบัติการ Linux สามารถติดตั้งผ่านตัวจัดการแพ็กเกจได้โดยตรง
+\begin{codebox}[คำสั่งติดตั้ง OpenXR SDK และ Monado Runtime บน Ubuntu]
+sudo apt-get update
+sudo apt-get install -y libopenxr-dev openxr-layer-apidump
+sudo apt-get install -y monado-cli monado-gui
+\end{codebox}
+
+\subsection{การติดตั้งบนระบบปฏิบัติการ Windows}
+สำหรับระบบปฏิบัติการ Windows สามารถดาวน์โหลด OpenXR SDK ผ่าน vcpkg หรือติดตั้งผ่าน Windows Mixed Reality Portal และ Meta Quest Link ซึ่งจะมี OpenXR Loader และ Runtime มาพร้อมกับระบบปฏิบัติการ
+
+\section{การกำหนดค่าสภาพแวดล้อม Python และ PyOpenXR}
+
+ในการทำปฏิบัติการตามตำราเล่มนี้ แนะนำให้สร้างสภาพแวดล้อมเสมือนของ Python (Virtual Environment) เพื่อป้องกันความขัดแย้งของแพ็กเกจ
+
+\begin{codebox}[การสร้างสภาพแวดล้อมและติดตั้งไลบรารีที่จำเป็น]
+# 1. สร้างสภาพแวดล้อมเสมือน
+python3 -m venv openxr_stem_env
+source openxr_stem_env/bin/activate
+
+# 2. ปรับปรุง pip และติดตั้งแพ็กเกจหลัก
+pip install --upgrade pip
+pip install pyopenxr numpy scipy matplotlib
+pip install PyOpenGL PyOpenGL_accelerate glfw
+pip install mediapipe opencv-python
+\end{codebox}
+
+\section{การตรวจสอบความพร้อมของรันไทม์ด้วยคำสั่ง CLI}
+
+หลังจากติดตั้งเสร็จสมบูรณ์ สามารถใช้คำสั่ง \texttt{hello\_xr} หรือคำสั่งทดสอบเพื่อตรวจสอบว่าระบบสามารถตรวจพบ OpenXR Runtime ได้อย่างถูกต้อง
+\begin{codebox}[การทดสอบรันไทม์ผ่านคำสั่ง hello\_xr]
+hello_xr -g OpenGL
+\end{codebox}
+
+หากระบบแสดงหน้าต่างสามมิติพร้อมคิวบ์หมุน แสดงว่าการติดตั้ง OpenXR Loader และ Graphic Swapchain ทำงานได้อย่างสมบูรณ์และพร้อมสำหรับการพัฒนาห้องปฏิบัติการเสมือนจริงในบทเรียนต่าง ๆ
+\clearpage
