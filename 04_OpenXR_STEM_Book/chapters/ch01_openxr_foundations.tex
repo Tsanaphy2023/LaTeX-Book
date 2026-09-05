@@ -139,8 +139,45 @@
 
 ในการศึกษาฟิสิกส์และวิทยาศาสตร์กายภาพ มาตรฐาน OpenXR ช่วยให้นักเรียนสามารถมองเห็นเส้นแรงแม่เหล็กที่ตามองไม่เห็น สามารถใช้มือหยิบจับอนุภาคในระดับอะตอม หรือสังเกตวิวัฒนาการของระบบดาวคู่ได้อย่างเป็นรูปธรรม สอดคล้องกับงานวิจัยของ ทัศนา และคณะ ในการใช้แบบจำลองทางคณิตศาสตร์และการคำนวณเชิงตัวเลขเพื่ออธิบายปรากฏการณ์ทางกายภาพที่มีความซับซ้อนสูง ซึ่งการจำลองแบบเสมือนจริงช่วยยกระดับการรับรู้ของผู้เรียนได้อย่างมีนัยสำคัญ
 
+\begin{aipromptbox}[การสร้างสเกเลตันโค้ด OpenXR Minimal Session ด้วย AI]
+\textbf{บริบทและเป้าหมาย:} สร้างโค้ดเริ่มต้นเชื่อมต่อ OpenXR Loader และเริ่ม Session สำหรับแอปพลิเคชันสะเต็มศึกษา\\
+\textbf{CLEAR Prompting Template (คัดลอกนำไปใช้งานได้ทันที):}
+\begin{lstlisting}[style=openxrcode]
+Act as an expert Khronos OpenXR Systems Engineer.
+Goal: Write a production-grade Python script using pyopenxr for a STEM Virtual Lab that:
+1. Initializes an XrInstance with application name "STEM_Spatial_Lab" version 1.0.
+2. Checks available extensions and enables XR_KHR_opengl_enable and XR_EXT_hand_tracking.
+3. Retrieves the system ID for XR_FORM_FACTOR_HEAD_MOUNTED_DISPLAY.
+4. Creates an XrSession and manages the state machine (READY, SYNCHRONIZED, FOCUSED).
+5. Implements an explicit 90 FPS frame loop with error handling and clean resource destruction.
+Output: Complete executable Python code with informative English/Thai comments.
+\end{lstlisting}
+\end{aipromptbox}
+
+\begin{codebox}[การตรวจสอบส่วนขยายที่รองรับใน OpenXR Runtime ด้วย Python]
+import openxr as xr
+
+def check_openxr_runtime():
+    # ตรวจสอบส่วนขยายทั้งหมดที่รันไทม์รองรับ
+    extensions = xr.enumerate_instance_extension_properties()
+    print(f"ตรวจพบส่วนขยายทั้งหมด {len(extensions)} รายการ:")
+    for ext in extensions:
+        print(f" - {ext.extension_name} (v{ext.extension_version})")
+
+    # ตรวจสอบส่วนขยายจำเป็นสำหรับสะเต็มศึกษา
+    required = ["XR_KHR_opengl_enable", "XR_EXT_hand_tracking"]
+    for req in required:
+        supported = any(ext.extension_name == req for ext in extensions)
+        status = "พร้อมใช้งาน" if supported else "ไม่รองรับ"
+        print(f"ส่วนขยาย {req}: {status}")
+
+if __name__ == "__main__":
+    check_openxr_runtime()
+\end{codebox}
+
 \section*{สรุปท้ายบทที่ 1}
 \addcontentsline{toc}{section}{สรุปท้ายบทที่ 1}
+
 
 มาตรฐาน OpenXR ได้สร้างรากฐานสำคัญสำหรับการพัฒนาเทคโนโลยีความเป็นจริงขยาย ด้วยการสร้างสถาปัตยกรรมที่เป็นเอกภาพระหว่างแอปพลิเคชันและฮาร์ดแวร์ การทำความเข้าใจโครงสร้าง วงรอบชีวิตของระบบ และข้อจำกัดด้านเวลาในการเรนเดอร์ เป็นขั้นตอนแรกที่จำเป็นอย่างยิ่งในการออกแบบและพัฒนาห้องทดลองวิทยาศาสตร์และสะเต็มศึกษาเสมือนจริงที่มีประสิทธิภาพสูงในบทเรียนถัดไป
 

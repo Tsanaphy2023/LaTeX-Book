@@ -437,10 +437,30 @@
     leftrule=3.5mm,
     pad at break=2mm,
     listing only,
-    listing options={
-        style=openxrcode
-    }
+    listing style=openxrcode
 }
 
+% 7.5 AI Engineering Prompt Box (Production AI Workflow)
+\newtcolorbox{aipromptbox}[1][AI Engineering Prompt]{
+    enhanced,
+    breakable,
+    colback=codeBackground,
+    colframe=cyberPurple,
+    colbacktitle=cyberPurple!90!black,
+    coltitle=white,
+    fonttitle=\bfseries\small,
+    title={\textbf{พรอมพ์ปัญญาประดิษฐ์เชิงปฏิบัติการ (AI Engineering Prompt):}\quad #1},
+    arc=2.5mm,
+    boxrule=1.0pt,
+    leftrule=4.5mm,
+    top=6pt,
+    bottom=6pt,
+    left=8pt,
+    right=8pt,
+    before skip=8pt,
+    after skip=8pt,
+    drop shadow=cyberPurple!25
+}
 
 \endinput
+

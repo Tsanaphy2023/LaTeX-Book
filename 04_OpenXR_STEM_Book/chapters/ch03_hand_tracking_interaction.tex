@@ -163,6 +163,17 @@ d &= \sqrt{(0.02)^2 + (0.01)^2 + (-0.02)^2} \notag \\
 \end{tabularx}
 \end{table}
 
+\begin{aipromptbox}[การสร้างระบบตรวจจับท่าทางมือแบบ Zero-GC ด้วย AI]
+\textbf{วัตถุประสงค์:} ออกแบบคลาสสำหรับตรวจจับท่าทางการหยิบจับ (Pinch \& Grab) จากพิกัดข้อต่อมือ 21 จุดร่วมที่มีประสิทธิภาพสูง ปราศจากการจัดสรรหน่วยความจำใหม่ในลูปการเรนเดอร์ (Zero Garbage Collection)\\
+\textbf{โครงสร้าง CLEAR Prompt:}
+\begin{itemize}[topsep=1pt, itemsep=1pt, leftmargin=1.2em]
+    \item \textbf{Context (บริบท):} ระบบโต้ตอบกับเครื่องมือวิทยาศาสตร์ใน OpenXR บนอุปกรณ์ Standalone ที่มีทรัพยากรหน่วยความจำจำกัด
+    \item \textbf{Logic (ตรรกะ):} ใช้กลไก Hysteresis Thresholding เพื่อป้องกันการสั่นไหว พร้อมคำนวณเวกเตอร์ระยะห่างแบบ In-place บน \texttt{Float32Array} หรือ \texttt{np.ndarray} ที่จองล่วงหน้า
+    \item \textbf{Expectation (ผลลัพธ์ที่ต้องการ):} คลาส Python หรือ JavaScript สำหรับติดตามสถานะ \texttt{PINCH\_START}, \texttt{PINCHING}, \texttt{PINCH\_END} พร้อมส่งพิกัดกึ่งกลางการหยิบจับ
+    \item \textbf{Action \& Restriction (ข้อกำหนด):} ห้ามสร้าง Object หรือ Array ใหม่ในเมท็อด \texttt{update()} อย่างเด็ดขาด และต้องรักษาอัตราการคำนวณที่ $90\text{ FPS}$ ($< 1\text{ ms}$ ต่อเฟรม)
+\end{itemize}
+\end{aipromptbox}
+
 \begin{codebox}[การคำนวณระยะจีบนิ้วแบบ Zero-GC ในภาษา Python]
 import numpy as np
 

@@ -139,6 +139,55 @@ w &= \cos\left(-\frac{45^\circ}{}\right) = \cos(-45^\circ) = \frac{\sqrt{2}}{2} 
 นั่นคือ ตำแหน่งใหม่ของหัววัดเซนเซอร์จะย้ายไปอยู่ที่ $x = 0\text{ m}, y = 0\text{ m}, z = 0.5\text{ m}$ ซึ่งสอดคล้องกับการหมุนทางกายภาพจริง
 \end{workedexamplebox}
 
+\begin{aipromptbox}[การคำนวณควอเทอร์เนียนและการสอดแทรกตำแหน่งเชิงมุม (SLERP) ด้วย AI]
+\textbf{วัตถุประสงค์:} สร้างฟังก์ชัน Python สำหรับการสอดแทรกตำแหน่งเชิงมุมอย่างราบรื่น (Spherical Linear Interpolation: SLERP) ระหว่างควอเทอร์เนียนสองค่า สำหรับใช้ในการปรับทิศทางการมองเห็นและหมุนเครื่องมือทดลองเสมือนในสภาพแวดล้อม XR\\
+\textbf{โครงสร้าง CLEAR Prompt:}
+\begin{itemize}[topsep=1pt, itemsep=1pt, leftmargin=1.2em]
+    \item \textbf{Context (บริบท):} ระบบจำลองฟิสิกส์เชิงพื้นที่บน OpenXR ต้องการการหมุนโมเดล 3 มิติแบบนุ่มนวล ไม่กระตุก
+    \item \textbf{Logic (ตรรกะ):} ใช้นิยามการสอดแทรกบนผิวทรงกลม 4 มิติ $\mathbf{q}(t) = \frac{\sin((1-t)\Omega)}{\sin\Omega}\mathbf{q}_0 + \frac{\sin(t\Omega)}{\sin\Omega}\mathbf{q}_1$ พร้อมจัดการกรณีดอทโปรดักต์ติดลบ (Shortest Path)
+    \item \textbf{Expectation (ผลลัพธ์ที่ต้องการ):} ฟังก์ชัน Python คลาส \texttt{Quaternion} พร้อมเมท็อด \texttt{slerp(q1, q2, t)} ที่รองรับ NumPy array และมี Unit test ตรวจสอบความถูกต้องที่ $t=0, 0.5, 1.0$
+    \item \textbf{Action \& Restriction (ข้อกำหนด):} ห้ามใช้ external library อื่นนอกจาก \texttt{numpy} และต้องนอร์มัลไลซ์ผลลัพธ์ให้เป็น Unit Quaternion เสมอ
+\end{itemize}
+\end{aipromptbox}
+
+\begin{codebox}[การสอดแทรกการหมุนสามมิติด้วย SLERP ในภาษา Python]
+import numpy as np
+
+def quaternion_slerp(q0, q1, t):
+    """
+    คำนวณการสอดแทรกเชิงมุมทรงกลม (SLERP) ระหว่างควอเทอร์เนียน q0 และ q1
+    พารามิเตอร์: q0, q1 ในรูปแบบ [x, y, z, w], t ในช่วง [0.0, 1.0]
+    """
+    q0 = np.array(q0, dtype=np.float64) / np.linalg.norm(q0)
+    q1 = np.array(q1, dtype=np.float64) / np.linalg.norm(q1)
+    
+    # คำนวณ Dot Product ระหว่างสองควอเทอร์เนียน
+    dot = np.dot(q0, q1)
+    
+    # หาก Dot Product ติดลบ ให้กลับเครื่องหมายเพื่อเลือกเส้นทางที่สั้นที่สุด
+    if dot < 0.0:
+        q1 = -q1
+        dot = -dot
+        
+    # หากมุมชิดกันมาก (dot > 0.9995) ให้ใช้ Linear Interpolation แทนเพื่อป้องกันหารด้วยศูนย์
+    if dot > 0.9995:
+        result = q0 + t * (q1 - q0)
+        return result / np.linalg.norm(result)
+        
+    theta_0 = np.arccos(np.clip(dot, -1.0, 1.0))
+    theta = theta_0 * t
+    q2 = q1 - q0 * dot
+    q2 = q2 / np.linalg.norm(q2)
+    
+    return q0 * np.cos(theta) + q2 * np.sin(theta)
+
+# ตัวอย่างการทดสอบ: หมุนจาก 0 องศา ไป 90 องศารอบแกน Y ที่ t = 0.5 (45 องศา)
+q_start = [0.0, 0.0, 0.0, 1.0]
+q_end = [0.0, np.sin(np.pi/4), 0.0, np.cos(np.pi/4)]
+q_mid = quaternion_slerp(q_start, q_end, 0.5)
+print(f"Interpolated Quaternion at t=0.5: {np.round(q_mid, 4)}")
+\end{codebox}
+
 \section{การติดตามการเคลื่อนที่ 6 องศาอิสระ}
 
 การติดตามแบบ 6DoF (Six Degrees of Freedom) ประกอบด้วยการเคลื่อนที่เชิงเส้น 3 ทิศทาง ($X, Y, Z$) และการหมุนเชิงมุม 3 ทิศทาง (Yaw, Pitch, Roll) ในอุปกรณ์ XR สมัยใหม่ การติดตามอาศัยการหลอมรวมสัญญาณเซนเซอร์ (Sensor Fusion) ระหว่างหน่วยวัดความเฉื่อย (Inertial Measurement Unit: IMU) ที่ทำงานด้วยความถี่สูง ($>1000\text{ Hz}$) ร่วมกับกล้องติดตามทัศนวิสัยภายนอกสู่ภายใน (Inside-Out Optical Tracking) ที่ทำงานด้วยความถี่ $60\text{ Hz}$ เพื่อขจัดปัญหาการเลื่อนไถลสะสม (Drift Elimination)

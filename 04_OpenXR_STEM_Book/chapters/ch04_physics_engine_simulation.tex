@@ -163,6 +163,58 @@ m\frac{d^2 x}{dt^2} + c\frac{dx}{dt} + kx = F_{\text{ext}}(t)
 \end{tabularx}
 \end{table}
 
+\begin{aipromptbox}[การสร้างเอนจินฟิสิกส์ระบบสปริงหน่วงด้วยระเบียบวิธีเชิงตัวเลขด้วย AI]
+\textbf{วัตถุประสงค์:} พัฒนาโปรแกรมจำลองฟิสิกส์สำหรับระบบมวล-สปริงแบบมีตัวหน่วง (Damped Harmonic Oscillator) ที่มีความแม่นยำสูงด้วยระเบียบวิธี Velocity Verlet พร้อมวิเคราะห์การอนุรักษ์พลังงานกลรวม\\
+\textbf{โครงสร้าง CLEAR Prompt:}
+\begin{itemize}[topsep=1pt, itemsep=1pt, leftmargin=1.2em]
+    \item \textbf{Context (บริบท):} โมดูลการทดลองฟิสิกส์เสมือนจริงบน OpenXR ต้องการคำนวณการเคลื่อนที่ของมวลและแรงดึงกลับแบบเรียลไทม์
+    \item \textbf{Logic (ตรรกะ):} แก้สมการ $m\ddot{x} + c\dot{x} + kx = 0$ ด้วย Velocity Verlet อัปเดต $x(t+\Delta t)$ และ $v(t+\Delta t)$ พร้อมคำนวณพลังงานจลน์ $E_k = \frac{1}{2}mv^2$ และพลังงานศักย์ยืดหยุ่น $E_p = \frac{1}{2}kx^2$
+    \item \textbf{Expectation (ผลลัพธ์ที่ต้องการ):} คลาส Python \texttt{SpringDamperSimulator} ที่มีเมท็อด \texttt{step(dt)} และคืนค่าสถานะพิกัดพร้อมพลังงานรวม
+    \item \textbf{Action \& Restriction (ข้อกำหนด):} ต้องรองรับการเปลี่ยนค่าคงที่สปริง $k$ และสัมประสิทธิ์หน่วง $c$ ขณะรัน และมีตัวอย่างโค้ดรันแสดงผล 5 ก้าวเวลา
+\end{itemize}
+\end{aipromptbox}
+
+\begin{codebox}[การจำลองระบบมวลสปริงหน่วงด้วยวิธี Velocity Verlet ในภาษา Python]
+import numpy as np
+
+class SpringDamperSimulator:
+    def __init__(self, mass=1.0, k=50.0, c=0.5, x0=0.2, v0=0.0):
+        self.m = mass
+        self.k = k
+        self.c = c
+        self.x = x0
+        self.v = v0
+        self.a = self._compute_accel(self.x, self.v)
+
+    def _compute_accel(self, x, v):
+        # F = -kx - cv => a = F/m
+        return (-self.k * x - self.c * v) / self.m
+
+    def step(self, dt):
+        # ขั้นที่ 1: อัปเดตตำแหน่งด้วย Velocity Verlet
+        self.x += self.v * dt + 0.5 * self.a * (dt ** 2)
+        
+        # ขั้นที่ 2: ประมาณความเร็วกึ่งก้าวเพื่อหาความเร่งใหม่
+        v_half = self.v + 0.5 * self.a * dt
+        a_new = self._compute_accel(self.x, v_half)
+        
+        # ขั้นที่ 3: อัปเดตความเร็วเต็มก้าว
+        self.v = v_half + 0.5 * a_new * dt
+        self.a = a_new
+        
+        # คำนวณพลังงานรวม (Mechanical Energy)
+        e_kinetic = 0.5 * self.m * (self.v ** 2)
+        e_potential = 0.5 * self.k * (self.x ** 2)
+        return self.x, self.v, e_kinetic + e_potential
+
+# ตัวอย่างการทำงานที่ก้าวเวลา dt = 0.01 วินาที (100 Hz)
+sim = SpringDamperSimulator(mass=0.5, k=20.0, c=0.2, x0=0.1)
+print(f"Initial: x={sim.x:.4f} m, v={sim.v:.4f} m/s")
+for step_idx in range(1, 6):
+    x, v, e_total = sim.step(dt=0.01)
+    print(f"Step {step_idx}: x={x:.4f} m, v={v:.4f} m/s, E_total={e_total:.5f} J")
+\end{codebox}
+
 \section*{สรุปท้ายบทที่ 4}
 \addcontentsline{toc}{section}{สรุปท้ายบทที่ 4}
 

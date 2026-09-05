@@ -155,6 +155,48 @@ m = -\frac{s'}{s} = -\frac{15.0}{30.0} = -0.5
     \item \textbf{WebXR via Global CDN:} รันบนเว็บเบราว์เซอร์ผ่านมาตรฐาน W3C WebXR Device API โดยไม่ต้องติดตั้งโปรแกรมเพิ่มเติม
 \end{enumerate}
 
+\begin{aipromptbox}[การสร้างห้องทดลองทัศนศาสตร์เสมือนจริง WebXR แบบ Standalone ด้วย AI]
+\textbf{วัตถุประสงค์:} สร้างไฟล์ HTML/JavaScript แบบ Standalone ชิ้นเดียว (Single-file WebXR Application) สำหรับจำลองการติดตามรังสีแสงผ่านเลนส์นูน (Ray Tracing) แบบ 3 มิติ ที่สามารถเปิดรันบนเบราว์เซอร์ของแว่น XR ได้ทันทีโดยไม่ต้องพึ่งพาเซิร์ฟเวอร์ภายนอก\\
+\textbf{โครงสร้าง CLEAR Prompt:}
+\begin{itemize}[topsep=1pt, itemsep=1pt, leftmargin=1.2em]
+    \item \textbf{Context (บริบท):} ระบบห้องทดลองฟิสิกส์เสมือนจริงสำหรับโรงเรียนมัธยมศึกษาและมหาวิทยาลัยที่รองรับมาตรฐาน W3C WebXR
+    \item \textbf{Logic (ตรรกะ):} ใช้ Three.js ผ่าน CDN สร้างรางทัศนศาสตร์ เลนส์นูนบาง และฉากรับภาพ คำนวณรังสี 3 เส้นหลัก (ขนานแกน, ผ่านจุดกึ่งกลางเลนส์, ผ่านจุดโฟกัส) ด้วยสมการเกาส์เซียน $\frac{1}{s} + \frac{1}{s'} = \frac{1}{f}$
+    \item \textbf{Expectation (ผลลัพธ์ที่ต้องการ):} โค้ด HTML สมบูรณ์ที่มีปุ่ม "Enter VR", ตัวเลื่อน (Sliders) ปรับระยะวัตถุ $s$ และความยาวโฟกัส $f$ พร้อมแสดงค่าระยะภาพ $s'$ และกำลังขยาย $m$ บนจอ HUD
+    \item \textbf{Action \& Restriction (ข้อกำหนด):} ห้ามใช้ npm หรือ build tool อื่น ต้องรันได้ทันทีเมื่อบันทึกเป็น \texttt{index.html} และรักษาอัตราเฟรมคงที่ที่ 60 FPS
+\end{itemize}
+\end{aipromptbox}
+
+\begin{codebox}[ระบบติดตามรังสีแสงผ่านเลนส์นูน 3 มิติในภาษา JavaScript (Three.js)]
+// ฟังก์ชันคำนวณและอัปเดตเส้นทางเดินแสงในห้องทดลองเสมือน
+function updateOpticsBench(objectDist, focalLength, objectHeight) {
+    // คำนวณระยะภาพตามสมการ 1/s' = 1/f - 1/s
+    const invImageDist = (1.0 / focalLength) - (1.0 / objectDist);
+    const imageDist = 1.0 / invImageDist;
+    const magnification = -imageDist / objectDist;
+    const imageHeight = objectHeight * magnification;
+
+    // จุดพิกัดสำคัญ (x=0 คือตำแหน่งเลนส์, แนวแกน Z คือแกนมุขสำคัญ)
+    const pObjTip = new THREE.Vector3(0, objectHeight, -objectDist);
+    const pLensCenter = new THREE.Vector3(0, 0, 0);
+    const pLensHit = new THREE.Vector3(0, objectHeight, 0);
+    const pFocusBack = new THREE.Vector3(0, 0, focalLength);
+    const pImgTip = new THREE.Vector3(0, imageHeight, imageDist);
+
+    // รังสีที่ 1: ขนานแกนมุขสำคัญ แล้วหักเหผ่านจุดโฟกัสด้านหลังสู่ปลายภาพ
+    const ray1Points = [pObjTip, pLensHit, pImgTip];
+    // รังสีที่ 2: วิ่งตรงผ่านกึ่งกลางเลนส์โดยไม่หักเห
+    const ray2Points = [pObjTip, pLensCenter, pImgTip];
+
+    return {
+        imageDist: imageDist.toFixed(2),
+        magnification: magnification.toFixed(2),
+        isReal: imageDist > 0,
+        ray1: ray1Points,
+        ray2: ray2Points
+    };
+}
+\end{codebox}
+
 \section*{สรุปท้ายบทที่ 7}
 \addcontentsline{toc}{section}{สรุปท้ายบทที่ 7}
 

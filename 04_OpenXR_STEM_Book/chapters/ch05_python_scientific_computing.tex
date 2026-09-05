@@ -125,6 +125,17 @@ B_{\text{scale}} &= \frac{(4\pi \times 10^{-7})(10)}{2\pi (0.0050)} = \frac{2 \t
     \item \textbf{XR Rendering Thread:} ทำหน้าที่รับข้อมูลพิกัดล่าสุดผ่านโครงสร้างหน่วยความจำแบบล็อกอิสระ (Lock-Free Shared Memory) และส่งเฟรมภาพไปยังอุปกรณ์แสดงผลด้วยความถี่ของฮาร์ดแวร์ ($90\text{ Hz}$)
 \end{enumerate}
 
+\begin{aipromptbox}[การสร้างท่อส่งข้อมูลวิทยาศาสตร์ NumPy สู่ GPU Buffer แบบ Zero-Copy ด้วย AI]
+\textbf{วัตถุประสงค์:} ออกแบบท่อส่งข้อมูล (Data Pipeline) ในภาษา Python ที่คำนวณสนามเวกเตอร์ 3 มิติด้วย NumPy และส่งต่อไปยัง OpenGL/Vulkan Vertex Buffer Object (VBO) โดยตรงผ่านตัวชี้หน่วยความจำ (Zero-Copy Transfer)\\
+\textbf{โครงสร้าง CLEAR Prompt:}
+\begin{itemize}[topsep=1pt, itemsep=1pt, leftmargin=1.2em]
+    \item \textbf{Context (บริบท):} การแสดงผลเส้นแรงแม่เหล็กและอนุภาค 50,000 จุดบน OpenXR แบบเรียลไทม์ที่ 90 FPS ในภาษา Python
+    \item \textbf{Logic (ตรรกะ):} ใช้ \texttt{numpy.ndarray.ctypes.data} เพื่อเข้าถึงที่อยู่หน่วยความจำจริง และผูกเข้ากับ \texttt{glBufferSubData} โดยไม่ผ่านการแปลงชนิดข้อมูลซ้ำ
+    \item \textbf{Expectation (ผลลัพธ์ที่ต้องการ):} ฟังก์ชัน Python \texttt{update\_vector\_field\_vbo(vbo\_id, positions, vectors)} พร้อมตัวอย่างการวัดเวลาดำเนินการระดับไมโครวินาที
+    \item \textbf{Action \& Restriction (ข้อกำหนด):} หน่วยความจำต้องเรียงลำดับแบบ C-contiguous (\texttt{order='C'}) และข้อมูลต้องเป็นชนิด \texttt{np.float32} เท่านั้น
+\end{itemize}
+\end{aipromptbox}
+
 \begin{codebox}[การจำลองสนามเวกเตอร์ความเร็วสูงด้วย NumPy ใน PyOpenXR]
 import numpy as np
 
