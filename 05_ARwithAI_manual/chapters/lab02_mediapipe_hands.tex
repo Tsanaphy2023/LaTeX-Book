@@ -1,0 +1,122 @@
+% =========================================================================
+% ปฏิบัติการที่ 2: วิทัศน์คอมพิวเตอร์และการตรวจจับโครงร่างมือ
+% =========================================================================
+
+\chapter{วิทัศน์คอมพิวเตอร์และการตรวจจับโครงร่างมือ}
+\label{ch:lab02}
+
+\noindent{\large\bfseries\color{cyberblue} การประมวลผลวิดีโอสตรีมสดและสกัดพิกัดมือ 21 จุดร่วมด้วย MediaPipe Hands}
+
+\vspace{0.4cm}
+
+\begin{labobjectivebox}{วิทัศน์คอมพิวเตอร์และการตรวจจับโครงร่างมือ}
+\textbf{วัตถุประสงค์การเรียนรู้}
+\begin{enumerate}[leftmargin=1.8cm, itemsep=2pt]
+    \item เข้าใจทฤษฎีโครงข่ายประสาทเทียมตรวจจับจุดสำคัญของมือ (Hand Landmark Topology)
+    \item สามารถเชื่อมต่อสตรีมวิดีโอสดจากเว็บแคมเข้าสู่ไปป์ไลน์ MediaPipe Hands
+    \item สามารถสกัดและวาดจุดพิกัด 21 ตำแหน่งลงบนผืนผ้าใบแบบเรียลไทม์
+\end{enumerate}
+
+\vspace{4pt}
+\textbf{เครื่องมือและอุปกรณ์จำเป็น} \enspace เว็บแคมความละเอียด 720p ขึ้นไป, MediaPipe Hands API (@mediapipe/camera\_utils, @mediapipe/hands)
+\end{labobjectivebox}
+
+\section{หลักการและทฤษฎีพื้นฐาน}
+
+เทคโนโลยีการตรวจจับโครงกระดูกมือ (Hand Pose Estimation) ของ MediaPipe อาศัยแบบจำลองการเรียนรู้เชิงลึกแบบสองขั้นตอน (Two-stage Deep Learning Pipeline) ได้แก่:
+1. โมเดลตรวจจับฝ่ามือ (Palm Detector Model): ทำหน้าที่ค้นหาขอบเขตของฝ่ามือจากภาพวิดีโอทั้งภาพ (Bounding Box Detection) ซึ่งเป็นขั้นตอนที่ตรวจจับได้ง่ายเนื่องจากฝ่ามือมีลักษณะสัณฐานคงที่และบดบังตัวเองน้อยกว่านิ้วมือ
+2. โมเดลจุดสังเกตสำคัญ (Hand Landmark Model): เมื่อทราบตำแหน่งฝ่ามือ โมเดลจะตัดภาพเฉพาะบริเวณมือมาประมวลผล เพื่อพยากรณ์พิกัด 3 มิติ $(x, y, z)$ ของจุดร่วมทั้ง 21 จุดสำคัญ (Landmarks) บนมืออย่างแม่นยำ
+
+พิกัด $x$ และ $y$ จะถูกปรับให้เป็นสเกลมาตรฐานสัมพัทธ์ $[0.0, 1.0]$ ตามความกว้างและความสูงของภาพ ส่วนพิกัด $z$ แสดงความลึกสัมพัทธ์ (Relative Depth) โดยมีจุดอ้างอิงอยู่ที่ข้อมือ (Landmark 0: Wrist) ซึ่งจุดสำคัญเหล่านี้ถูกจัดกลุ่มเป็น 5 นิ้ว ได้แก่ นิ้วหัวแม่มือ (Landmarks 1-4), นิ้วชี้ (Landmarks 5-8), นิ้วกลาง (Landmarks 9-12), นิ้วนาง (Landmarks 13-16) และนิ้วก้อย (Landmarks 17-20)
+
+\begin{conceptbox}{สาระสำคัญของปฏิบัติการที่ 2}
+การเข้าใจโครงสร้างทางคณิตศาสตร์และการประมวลผลเชิงพื้นที่ ช่วยให้นักศึกษาสามารถออกแบบระบบเสมือนจริงที่ตอบสนองต่อผู้ใช้งานได้อย่างเป็นธรรมชาติและแม่นยำสูง ทั้งยังสามารถต่อยอดสู่การพัฒนาแอปพลิเคชันทางวิทยาศาสตร์และอุตสาหกรรมได้อย่างมีประสิทธิภาพ
+\end{conceptbox}
+
+\section{ขั้นตอนการปฏิบัติการและการทดลอง}
+
+ให้นักศึกษาดำเนินการสร้างไฟล์โครงการและเขียนคำสั่งตามลำดับขั้นตอนต่อไปนี้ โดยตรวจสอบความถูกต้องของไลบรารีที่เรียกใช้งานและเส้นทางไฟล์
+
+\begin{codebox}{โครงสร้างโค้ดหลักของปฏิบัติการที่ 2}
+\begin{lstlisting}[language=HTML]
+// กำหนดค่าและเริ่มต้นใช้งาน MediaPipe Hands
+const videoElement = document.getElementById('webcam-video');
+const canvasElement = document.getElementById('output-canvas');
+const canvasCtx = canvasElement.getContext('2d');
+
+const hands = new Hands({
+    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+});
+
+hands.setOptions({
+    maxNumHands: 2,
+    modelComplexity: 1,
+    minDetectionConfidence: 0.7,
+    minTrackingConfidence: 0.7
+});
+
+hands.onResults((results) => {
+    canvasCtx.save();
+    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+    if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+            // วาดเส้นเชื่อมต่อกระดูกและจุดพิกัด 21 ตำแหน่ง
+            drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {color: '#06b6d4', lineWidth: 3});
+            drawLandmarks(canvasCtx, landmarks, {color: '#f59e0b', lineWidth: 1, radius: 4});
+            
+            // สกัดพิกัดปลายนิ้วชี้ (Landmark 8) และนิ้วโป้ง (Landmark 4)
+            const indexTip = landmarks[8];
+            const thumbTip = landmarks[4];
+            console.log(`Index: (${indexTip.x.toFixed(3)}, ${indexTip.y.toFixed(3)}, ${indexTip.z.toFixed(3)})`);
+        }
+    }
+    canvasCtx.restore();
+});
+
+const camera = new Camera(videoElement, {
+    onFrame: async () => { await hands.send({image: videoElement}); },
+    width: 1280, height: 720
+});
+camera.start();
+\end{lstlisting}
+\end{codebox}
+
+\section{การทดสอบระบบและการบันทึกผล}
+
+เมื่อรันโปรแกรมบนเซิร์ฟเวอร์จำลอง (Local Development Server) ให้ทำการทดสอบการทำงานตามเกณฑ์ประเมินในตารางต่อไปนี้ พร้อมบันทึกผลการสังเกตการณ์ลงในรายงานผลการทดลอง
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c X c Y}
+\toprule
+\textbf{ลำดับ} & \textbf{รายการทดสอบและพฤติกรรมที่คาดหวัง} & \textbf{เกณฑ์ผ่าน} & \textbf{ผลการทดสอบ} \\
+\midrule
+1 & การเริ่มต้นระบบและการเข้าถึงสิทธิ์ฮาร์ดแวร์ & ภายใน 3 วินาที & ผ่าน / ไม่ผ่าน \\
+2 & ความเสถียรของการตรวจจับและการคำนวณพิกัด & อัตราความแม่นยำ $> 90\%$ & ผ่าน / ไม่ผ่าน \\
+3 & อัตราการแสดงผลกราฟิกต่อเนื่อง (Framerate) & ไม่ต่ำกว่า 55 FPS & ผ่าน / ไม่ผ่าน \\
+4 & การตอบสนองต่อปฏิสัมพันธ์เชิงพื้นที่ & ความหน่วง $< 40$ ms & ผ่าน / ไม่ผ่าน \\
+\bottomrule
+\end{tabularx}
+\caption{ตารางประเมินผลการทำงานของระบบในปฏิบัติการที่ 2}
+\label{tab:eval_lab02}
+\end{table}
+
+\section{ภารกิจท้าทายและการต่อยอด}
+
+\begin{activitybox}{กิจกรรมส่งเสริมทักษะขั้นสูง}
+ให้นักศึกษาเขียนโปรแกรมเพิ่มเติมเพื่อจำแนกมือซ้ายและมือขวาจากข้อมูล `results.multiHandedness` และแสดงข้อความระบุชื่อมือพร้อมค่าความเชื่อมั่น (Confidence Score) บนผืนผ้าใบ
+\end{activitybox}
+
+\section{คำถามท้ายการทดลอง}
+
+ให้นักศึกษาตอบคำถามเชิงวิเคราะห์ต่อไปนี้ลงในสมุดบันทึกปฏิบัติการ
+
+\begin{enumerate}[leftmargin=1.8cm, itemsep=6pt]
+    \item เหตุใดสถาปัตยกรรมของ MediaPipe จึงเลือกใช้การตรวจจับฝ่ามือก่อนการพยากรณ์จุดสำคัญ 21 จุดแทนการค้นหานิ้วมือโดยตรง
+    \item พิกัดแกน $z$ ที่รายงานโดยโมเดลจุดสังเกตสำคัญของ MediaPipe มีความหมายทางกายภาพอย่างไรและอ้างอิงกับจุดใด
+    \item หากสภาพแสงในห้องทดลองมีความสว่างน้อย จะส่งผลต่อค่า minDetectionConfidence และอัตราการกระตุกของเฟรมอย่างไร
+\end{enumerate}
+

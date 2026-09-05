@@ -1,0 +1,221 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/ar_ai_manual_style}[2026/09/05 RBRU Masterclass AR with AI Manual Style]
+
+% =========================================================================
+% 1. Page Geometry (RBRU Standard: Left/Top 1.5in, Right/Bottom 1.0in)
+% =========================================================================
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    inner=1.5in,
+    top=1.5in,
+    outer=1.0in,
+    bottom=1.0in,
+    headheight=18pt,
+    headsep=12pt,
+    footskip=24pt
+}
+
+% =========================================================================
+% 2. Indentation & Typography (RBRU 1 Tab = 1.25cm)
+% =========================================================================
+\RequirePackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+% =========================================================================
+% 3. Core Packages
+% =========================================================================
+\RequirePackage{amsmath,amssymb,amsfonts}
+\RequirePackage{fontspec}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta,shadows,positioning,fadings}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{enumitem}
+\RequirePackage{listings}
+\RequirePackage{caption}
+\RequirePackage{hyperref}
+
+% =========================================================================
+% 4. Color Palette (Cyber Hologram & AR Spatial Theme)
+% =========================================================================
+\definecolor{cyberdark}{HTML}{030712}
+\definecolor{cyberblue}{HTML}{0284C7}
+\definecolor{cybercyan}{HTML}{06B6D4}
+\definecolor{cyberpurple}{HTML}{7C3AED}
+\definecolor{cyberemerald}{HTML}{059669}
+\definecolor{cybergold}{HTML}{D97706}
+\definecolor{cardbg}{HTML}{F8FAFC}
+\definecolor{cardborder}{HTML}{CBD5E1}
+
+% =========================================================================
+% 5. Section & Chapter Formatting (RBRU Alignment)
+% =========================================================================
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\color{cyberblue}}
+{\raggedright\Large\textbf{ปฏิบัติการที่ \thechapter}}
+{8pt}
+{\Huge\bfseries\color{cyberdark}}[\vspace{6pt}\titlerule\vspace{12pt}]
+
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{cyberblue}}
+{\makebox[1.25cm][l]{\thesection}}
+{0pt}
+{}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{cyberdark}}
+{\makebox[1.25cm][l]{\thesubsection}}
+{0pt}
+{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries\color{cyberdark}}
+{\makebox[1.25cm][l]{\thesubsubsection}}
+{0pt}
+{}
+
+\titlespacing*{\section}{0pt}{14pt}{8pt}
+\titlespacing*{\subsection}{0pt}{10pt}{6pt}
+\titlespacing*{\subsubsection}{0pt}{8pt}{4pt}
+
+% =========================================================================
+% 6. Running Headers & Footers
+% =========================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\color{gray}\textsf{\thepage\quad\textbar\quad คู่มือปฏิบัติการการพัฒนา AR ร่วมกับปัญญาประดิษฐ์}}
+\fancyhead[RO]{\small\color{gray}\textsf{\leftmark\quad\textbar\quad\thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{cardborder}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\chaptermark}[1]{\markboth{ปฏิบัติการที่ \thechapter\ #1}{}}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\small\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% =========================================================================
+% 7. Custom TColorBox Environments
+% =========================================================================
+% Lab Objective & Tools Box
+\newtcolorbox{labobjectivebox}[1]{
+    enhanced,
+    breakable,
+    colback=cyberblue!5,
+    colframe=cyberblue,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={\small\textbf{วัตถุประสงค์และเครื่องมือปฏิบัติการ \enspace\textbar\enspace #1}},
+    boxrule=1pt,
+    arc=4pt,
+    leftrule=5mm,
+    top=8pt,
+    bottom=8pt,
+    left=12pt,
+    right=12pt,
+    boxsep=0pt,
+    before skip=12pt,
+    after skip=12pt
+}
+
+% Code Listing Box
+\newtcolorbox{codebox}[1]{
+    enhanced,
+    breakable,
+    colback=gray!8,
+    colframe=cyberdark!80,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={\small\textbf{ซอร์สโค้ดการทดลอง \enspace\textbar\enspace #1}},
+    boxrule=0.8pt,
+    arc=3pt,
+    leftrule=4mm,
+    top=8pt,
+    bottom=8pt,
+    left=10pt,
+    right=10pt,
+    boxsep=0pt,
+    before skip=10pt,
+    after skip=10pt
+}
+
+% Core Concept Box
+\newtcolorbox{conceptbox}[1]{
+    enhanced,
+    breakable,
+    colback=cyberpurple!5,
+    colframe=cyberpurple!80,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={\small\textbf{หลักการสำคัญทางวิชาการ \enspace\textbar\enspace #1}},
+    boxrule=0.8pt,
+    arc=3pt,
+    leftrule=4mm,
+    top=8pt,
+    bottom=8pt,
+    left=10pt,
+    right=10pt,
+    boxsep=0pt,
+    before skip=10pt,
+    after skip=10pt
+}
+
+% Hands-on Activity Challenge Box
+\newtcolorbox{activitybox}[1]{
+    enhanced,
+    breakable,
+    colback=cyberemerald!5,
+    colframe=cyberemerald,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    title={\small\textbf{ภารกิจท้าทายเชิงปฏิบัติ \enspace\textbar\enspace #1}},
+    boxrule=0.8pt,
+    arc=3pt,
+    leftrule=4mm,
+    top=8pt,
+    bottom=8pt,
+    left=10pt,
+    right=10pt,
+    boxsep=0pt,
+    before skip=10pt,
+    after skip=10pt
+}
+
+% =========================================================================
+% 8. Listings Setting for Code
+% =========================================================================
+\lstset{
+    basicstyle=\small\ttfamily,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=none,
+    keywordstyle=\color{cyberblue}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{cybergold},
+    tabsize=2
+}
+
+% =========================================================================
+% 9. Table & Captions Setting
+% =========================================================================
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\captionsetup[table]{position=top, skip=6pt, labelfont={bf}, textfont={normalfont}}
+\captionsetup[figure]{position=bottom, skip=6pt, labelfont={bf}, textfont={normalfont}}
+
+\endinput

@@ -1,0 +1,121 @@
+% =========================================================================
+% ปฏิบัติการที่ 5: การประยุกต์โมเดล Machine Learning บนเบราว์เซอร์
+% =========================================================================
+
+\chapter{การประยุกต์โมเดล Machine Learning บนเบราว์เซอร์}
+\label{ch:lab05}
+
+\noindent{\large\bfseries\color{cyberblue} การผสานโมเดลจำแนกภาพ Teachable Machine และ TensorFlow.js สู่ฉากเสมือน}
+
+\vspace{0.4cm}
+
+\begin{labobjectivebox}{การประยุกต์โมเดล Machine Learning บนเบราว์เซอร์}
+\textbf{วัตถุประสงค์การเรียนรู้}
+\begin{enumerate}[leftmargin=1.8cm, itemsep=2pt]
+    \item เข้าใจกระบวนการฝึกโมเดลจำแนกภาพถ่ายด้วย Google Teachable Machine
+    \item สามารถแปลงและโหลดโมเดล TensorFlow.js เข้าสู่หน่วยความจำเบราว์เซอร์
+    \item สามารถเชื่อมโยงผลการพยากรณ์คลาส (Class Prediction) เข้ากับการเปลี่ยนสถานะของวัตถุเสมือน 3 มิติ
+\end{enumerate}
+
+\vspace{4pt}
+\textbf{เครื่องมือและอุปกรณ์จำเป็น} \enspace Google Teachable Machine (Image Project), TensorFlow.js (@tensorflow/tfjs), ชุดภาพถ่ายตัวอย่าง
+\end{labobjectivebox}
+
+\section{หลักการและทฤษฎีพื้นฐาน}
+
+การผสานปัญญาประดิษฐ์เข้ากับเทคโนโลยีเสมือนจริงบนเว็บเบราว์เซอร์ทำได้อย่างมีประสิทธิภาพสูงด้วย TensorFlow.js ซึ่งใช้ประโยชน์จาก WebGL หรือ WebGPU ในการคำนวณแบบขนานบนหน่วยประมวลผลกราฟิก (GPU) ของอุปกรณ์โดยตรง ทำให้ไม่ต้องพึ่งพาเซิร์ฟเวอร์ภายนอก (Zero Server Latency) และรักษาความเป็นส่วนตัวของข้อมูลผู้ใช้งาน
+
+ในปฏิบัติการนี้ ผู้เรียนจะฝึกแบบจำลองโครงข่ายประสาทเทียมแบบคอนโวลูชัน (Convolutional Neural Network: CNN) ที่ผ่านการเรียนรู้ถ่ายโอน (Transfer Learning) จาก MobileNet ผ่านแพลตฟอร์ม Google Teachable Machine เพื่อจำแนกประเภทวัตถุทางวิทยาศาสตร์ เช่น ตัวอย่างแร่ธาตุ ตัวอย่างใบไม้ หรือการแสดงท่าทางพิเศษ ผลลัพธ์จากการพยากรณ์จะอยู่ในรูปของเวกเตอร์ความน่าจะเป็นแบบซอฟต์แมกซ์ (Softmax Probability Vector):
+\begin{equation}
+P(C_i \mid \mathbf{x}) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}
+\end{equation}
+เมื่อคลาสใดมีค่าความน่าจะเป็นสูงสุดเกินเกณฑ์ความเชื่อมั่นที่กำหนด ระบบจะเรียกใช้ฟังก์ชันควบคุมโมเดล 3 มิติเพื่อแสดงข้อมูลสารสนเทศ แอนิเมชัน หรือป้ายกำกับโฮโลกราฟิกที่สอดคล้องกัน
+
+\begin{conceptbox}{สาระสำคัญของปฏิบัติการที่ 5}
+การเข้าใจโครงสร้างทางคณิตศาสตร์และการประมวลผลเชิงพื้นที่ ช่วยให้นักศึกษาสามารถออกแบบระบบเสมือนจริงที่ตอบสนองต่อผู้ใช้งานได้อย่างเป็นธรรมชาติและแม่นยำสูง ทั้งยังสามารถต่อยอดสู่การพัฒนาแอปพลิเคชันทางวิทยาศาสตร์และอุตสาหกรรมได้อย่างมีประสิทธิภาพ
+\end{conceptbox}
+
+\section{ขั้นตอนการปฏิบัติการและการทดลอง}
+
+ให้นักศึกษาดำเนินการสร้างไฟล์โครงการและเขียนคำสั่งตามลำดับขั้นตอนต่อไปนี้ โดยตรวจสอบความถูกต้องของไลบรารีที่เรียกใช้งานและเส้นทางไฟล์
+
+\begin{codebox}{โครงสร้างโค้ดหลักของปฏิบัติการที่ 5}
+\begin{lstlisting}[language=HTML]
+// การโหลดและรันโมเดล Teachable Machine บนเบราว์เซอร์
+const MODEL_URL = './my_model/';
+let model, maxPredictions;
+
+async function initAIModel() {
+    const modelURL = MODEL_URL + 'model.json';
+    const metadataURL = MODEL_URL + 'metadata.json';
+
+    // โหลดโมเดลผ่านไลบรารี tmImage
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+    console.log(`โมเดลโหลดสำเร็จ: รองรับ ${maxPredictions} คลาส`);
+}
+
+async function predictFrame(videoElement) {
+    const prediction = await model.predict(videoElement);
+    
+    for (let i = 0; i < maxPredictions; i++) {
+        const className = prediction[i].className;
+        const probability = prediction[i].probability.toFixed(2);
+        
+        // หากตรวจพบวัตถุเป้าหมายด้วยความแม่นยำมากกว่า 85%
+        if (probability > 0.85) {
+            triggerARResponse(className);
+        }
+    }
+}
+
+function triggerARResponse(detectedClass) {
+    // ปรับเปลี่ยนสีและหมุนโมเดลตามคลาสที่ AI ตรวจพบ
+    if (detectedClass === "Mineral_Quartz") {
+        cube.material.color.setHex(0x38bdf8);
+        cube.scale.set(1.5, 1.5, 1.5);
+    } else if (detectedClass === "Mineral_Pyrite") {
+        cube.material.color.setHex(0xf59e0b);
+        cube.scale.set(1.0, 1.0, 1.0);
+    }
+}
+\end{lstlisting}
+\end{codebox}
+
+\section{การทดสอบระบบและการบันทึกผล}
+
+เมื่อรันโปรแกรมบนเซิร์ฟเวอร์จำลอง (Local Development Server) ให้ทำการทดสอบการทำงานตามเกณฑ์ประเมินในตารางต่อไปนี้ พร้อมบันทึกผลการสังเกตการณ์ลงในรายงานผลการทดลอง
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c X c Y}
+\toprule
+\textbf{ลำดับ} & \textbf{รายการทดสอบและพฤติกรรมที่คาดหวัง} & \textbf{เกณฑ์ผ่าน} & \textbf{ผลการทดสอบ} \\
+\midrule
+1 & การเริ่มต้นระบบและการเข้าถึงสิทธิ์ฮาร์ดแวร์ & ภายใน 3 วินาที & ผ่าน / ไม่ผ่าน \\
+2 & ความเสถียรของการตรวจจับและการคำนวณพิกัด & อัตราความแม่นยำ $> 90\%$ & ผ่าน / ไม่ผ่าน \\
+3 & อัตราการแสดงผลกราฟิกต่อเนื่อง (Framerate) & ไม่ต่ำกว่า 55 FPS & ผ่าน / ไม่ผ่าน \\
+4 & การตอบสนองต่อปฏิสัมพันธ์เชิงพื้นที่ & ความหน่วง $< 40$ ms & ผ่าน / ไม่ผ่าน \\
+\bottomrule
+\end{tabularx}
+\caption{ตารางประเมินผลการทำงานของระบบในปฏิบัติการที่ 5}
+\label{tab:eval_lab05}
+\end{table}
+
+\section{ภารกิจท้าทายและการต่อยอด}
+
+\begin{activitybox}{กิจกรรมส่งเสริมทักษะขั้นสูง}
+ให้นักศึกษาฝึกสอนโมเดล Teachable Machine ด้วยภาพถ่ายการแสดงสัญลักษณ์มือ 3 แบบ (OK, Peace, Thumbs Up) และเขียนเงื่อนไขเพื่อเปลี่ยนรูปแบบแสงไฟและระบบเสียงสังเคราะห์ในฉาก WebAR ตามสัญลักษณ์ที่ตรวจจับได้
+\end{activitybox}
+
+\section{คำถามท้ายการทดลอง}
+
+ให้นักศึกษาตอบคำถามเชิงวิเคราะห์ต่อไปนี้ลงในสมุดบันทึกปฏิบัติการ
+
+\begin{enumerate}[leftmargin=1.8cm, itemsep=6pt]
+    \item จงอธิบายข้อดีของการใช้ Transfer Learning บน MobileNet สำหรับการประมวลผลบนเบราว์เซอร์
+    \item เหตุใดการรันโมเดล AI ผ่าน WebGL Shader จึงมีความเร็วสูงกว่าการคำนวณผ่าน JavaScript เอนจินแบบเดิม
+    \item หากภาพวิดีโอมีพื้นหลังซับซ้อน จะส่งผลต่อค่าความน่าจะเป็นในสมการ Softmax อย่างไร และมีวิธีแก้ปัญหาในขั้นตอนการเตรียมข้อมูลอย่างไร
+\end{enumerate}
+

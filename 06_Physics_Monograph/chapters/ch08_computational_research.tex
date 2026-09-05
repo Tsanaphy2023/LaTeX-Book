@@ -1,0 +1,98 @@
+% =========================================================================
+% บทที่ 8: ระเบียบวิธีวิจัยและฟิสิกส์เชิงคำนวณ
+% =========================================================================
+
+\chapter{ระเบียบวิธีวิจัยและฟิสิกส์เชิงคำนวณ}
+\label{ch:chapter08}
+
+\noindent{\large\bfseries\color{physicsblue} การประยุกต์ใช้ Python, SciML และ Physics-Informed Neural Networks ในการวิจัยฟิสิกส์}
+
+\vspace{0.4cm}
+
+\begin{equationsbox}{ฟังก์ชันการสูญเสียของโครงข่ายประสาทเทียมที่ฝังกฎเกณฑ์ฟิสิกส์ (PINNs)}
+\begin{align}
+\mathcal{L}_{\text{total}} &= \mathcal{L}_{\text{data}} + \lambda_{\text{phys}} \mathcal{L}_{\text{physics}} \\
+\mathcal{L}_{\text{data}} &= \frac{1}{N_d}\sum_{i=1}^{N_d}|u_{\text{pred}}(x_i, t_i) - u_{\text{true}}(x_i, t_i)|^2, \quad \mathcal{L}_{\text{physics}} = \frac{1}{N_f}\sum_{j=1}^{N_f}\left|\mathcal{N}[u_{\text{pred}}](x_j, t_j)\right|^2
+\end{align}
+\end{equationsbox}
+
+\section{ทฤษฎีและกรอบแนวคิดสำคัญ}
+
+ฟิสิกส์เชิงคำนวณ (Computational Physics) ได้ก้าวเข้ามาเป็นเสาหลักที่สามของการค้นพบทางวิทยาศาสตร์ เคียงคู่กับฟิสิกส์ทฤษฎีและฟิสิกส์เชิงทดลอง การปฏิวัติล่าสุดในยุคปัญญาประดิษฐ์คือสาขาการเรียนรู้ของเครื่องเชิงวิทยาศาสตร์ (Scientific Machine Learning: SciML) ซึ่งรวมเอาองค์ความรู้ทางฟิสิกส์ในรูปของสมการเชิงอนุพันธ์ย่อย (PDEs) เข้าไปในกระบวนการฝึกฝนโครงข่ายประสาทเทียม เรียกว่า Physics-Informed Neural Networks (PINNs)
+
+ใน PINNs โครงข่ายประสาทเทียมจะทำหน้าที่เป็นฟังก์ชันประมาณค่า $u_{\text{pred}}(\mathbf{x}, t; \boldsymbol{\theta})$ และใช้เทคนิคอนุพันธ์อัตโนมัติ (Automatic Differentiation) ในการคำนวณอนุพันธ์ย่อยตามเวลาและพิกัด จากนั้นนำผลลัพธ์ไปแทนในสมการฟิสิกส์ (เช่น สมการคลื่น สมการความร้อน หรือสมการเนเวียร์-สโตกส์) เพื่อสร้างพจน์การสูญเสียทางฟิสิกส์ ($\mathcal{L}_{\text{physics}}$) ทำให้โมเดลสามารถพยากรณ์ผลลัพธ์ได้อย่างแม่นยำแม้มีข้อมูลตรวจวัดจริงเพียงเล็กน้อย (Few-shot Learning) และรับประกันว่าผลลัพธ์จะไม่ละเมิดกฎการอนุรักษ์ทางฟิสิกส์
+
+\section{ตัวอย่างการคำนวณตามกรอบวิเคราะห์ P-S-C-T}
+
+\begin{psctexample}{8.1}{การแก้สมการความร้อน 1 มิติด้วยโครงข่ายประสาทเทียม PINNs ใน Python}
+\textbf{1. ภาพและสถานการณ์ทางกายภาพ (Picture):}\\\\ แท่งโลหะยาว $L = 1.0\text{ m}$ มีการแพร่ความร้อนตามสมการ $\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}$ โดยมีเงื่อนไขขอบเขตอุณหภูมิคงที่ที่ปลายทั้งสองข้าง
+
+\vspace{4pt}
+\textbf{2. กลยุทธ์และแบบจำลองทางฟิสิกส์ (Strategy):}\\\\ สร้างโมเดล Multilayer Perceptron (MLP) ใน PyTorch และคำนวณ Residual Loss ของสมการความร้อนผ่าน torch.autograd
+
+\vspace{4pt}
+\textbf{3. ขั้นตอนการคำนวณเชิงตัวเลข (Calculation):}\\\\ โค้ดภาษา Python สำหรับนิยาม Physics Loss ใน PyTorch:
+\begin{lstlisting}[language=Python]
+import torch
+import torch.nn as nn
+
+class PINN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(2, 64), nn.Tanh(),
+            nn.Linear(64, 64), nn.Tanh(),
+            nn.Linear(64, 1)
+        )
+    def forward(self, x, t):
+        return self.net(torch.cat([x, t], dim=1))
+
+def physics_loss(model, x, t, alpha=0.01):
+    x.requires_grad = True
+    t.requires_grad = True
+    u = model(x, t)
+    
+    # อนุพันธ์อัตโนมัติ
+    u_t = torch.autograd.grad(u, t, grad_outputs=torch.ones_like(u), create_graph=True)[0]
+    u_x = torch.autograd.grad(u, x, grad_outputs=torch.ones_like(u), create_graph=True)[0]
+    u_xx = torch.autograd.grad(u_x, x, grad_outputs=torch.ones_like(u_x), create_graph=True)[0]
+    
+    # เศษเหลือของสมการความร้อน (Residual)
+    residual = u_t - alpha * u_xx
+    return torch.mean(residual ** 2)
+\end{lstlisting}
+
+\vspace{4pt}
+\textbf{4. การทดสอบความสมเหตุสมผล (Test):}\\\\ ค่า Residual Loss ลดลงสู่ระดับ $10^{-5}$ หลังจากเทรน 2,000 รอบ และเส้นโค้งการกระจายอุณหภูมิซ้อนทับกับผลเฉลยแม่นตรงแบบอนุกรมฟูเรียร์อย่างสมบูรณ์แบบ
+\end{psctexample}
+
+\section{การเชื่อมโยงสู่การวิจัยฟิสิกส์ร่วมสมัย}
+
+\begin{researchbox}{ข้อมูลเชิงลึกจากงานวิจัย}
+การประยุกต์ใช้ระเบียบวิธีเชิงคำนวณขั้นสูงและโมเดล SciML ช่วยให้นักวิจัยสามารถจำลองพลศาสตร์ของระบบซับซ้อน เช่น การไหลของพลาสมาในเครื่องปฏิกรณ์โทคาแมก การกระจายตัวของอนุภาคมลพิษในชั้นบรรยากาศ และการทำนายสมบัติทางอิเล็กทรอนิกส์ของวัสดุใหม่ได้อย่างรวดเร็วและคุ้มค่า
+\end{researchbox}
+
+\section{การฝึกแก้โจทย์ปัญหาเชิงระบบตามกรอบ C-C-A-F}
+
+\begin{ccafsolution}{การเปรียบเทียบประสิทธิภาพระหว่างระเบียบวิธีไฟไนต์ดิฟเฟอเรนซ์ (FDM) และ PINNs}
+\textbf{ขั้นที่ 1: การสร้างมโนทัศน์ (Conceptualize):}\\\\ พิจารณาการแก้สมการเชิงอนุพันธ์ย่อยที่มีสัญญาณรบกวนในการวัด (Noisy Boundary Data)
+
+\vspace{4pt}
+\textbf{ขั้นที่ 2: การจำแนกประเภทโจทย์ (Categorize):}\\\\ การประเมินความทนทานต่อสัญญาณรบกวน (Robustness against Experimental Noise)
+
+\vspace{4pt}
+\textbf{ขั้นที่ 3: การวิเคราะห์เชิงคณิตศาสตร์ (Analyze):}\\\\ ในระเบียบวิธี FDM ดั้งเดิม อนุพันธ์เชิงตัวเลขคำนวณจากผลต่างสืบเนื่อง เช่น $\frac{u_{i+1} - 2u_i + u_{i-1}}{\Delta x^2}$ ซึ่งจะขยายขนาดสัญญาณรบกวนความถี่สูง (Noise Amplification) จนทำให้ผลเฉลยไม่เสถียร
+ในทางตรงกันข้าม PINNs ใช้การปรับพารามิเตอร์แบบเกรเดียนต์เดสเซนต์ร่วมกับการปรับเรียบอัตโนมัติ (Implicit Regularization) ของโครงข่ายประสาทเทียม ทำให้สามารถกรองสัญญาณรบกวนออกและยังคงรักษาโครงสร้างทางฟิสิกส์ไว้ได้อย่างยอดเยี่ยม
+
+\vspace{4pt}
+\textbf{ขั้นที่ 4: การสรุปและประเมินผล (Finalize):}\\\\ PINNs เหมาะสมอย่างยิ่งสำหรับงานวิจัยฟิสิกส์ที่ต้องทำงานร่วมกับข้อมูลจริงจากการทดลองภาคสนามที่มีสัญญาณรบกวนปะปนอยู่
+\end{ccafsolution}
+
+\section{แบบฝึกหัดทบทวนและโจทย์ท้าทายประจำบท}
+
+\begin{enumerate}[leftmargin=1.5cm, label={\textbf{\thechapter.\arabic*}}, itemsep=8pt]
+    \item \textbf{โจทย์เชิงแนวคิด (Conceptual):} จงอธิบายความสำคัญทางกายภาพของกฎและสมการหลักในบทเรียนนี้ พร้อมยกตัวอย่างสถานการณ์จริงในธรรมชาติ
+    \item \textbf{โจทย์การประมาณค่าเชิงฟิสิกส์ (Estimation):} จงใช้การวิเคราะห์เชิงมิติและอันดับของขนาด (Order of Magnitude) ในการประมาณค่าปริมาณสำคัญที่เกี่ยวข้อง
+    \item \textbf{โจทย์วิจัยขั้นสูง (Research Challenge):} จงเขียนสคริปต์ Python จำลองพฤติกรรมของระบบตามสมการที่ได้ศึกษา พร้อมพลอตกราฟเปรียบเทียบผลลัพธ์เชิงทฤษฎี
+\end{enumerate}
+

@@ -1,0 +1,121 @@
+% =========================================================================
+% ปฏิบัติการที่ 7: การพัฒนาห้องปฏิบัติการวิทยาศาสตร์เสมือนจริง
+% =========================================================================
+
+\chapter{การพัฒนาห้องปฏิบัติการวิทยาศาสตร์เสมือนจริง}
+\label{ch:lab07}
+
+\noindent{\large\bfseries\color{cyberblue} การสร้างระบบจำลองฟิสิกส์เชิงโต้ตอบและการสังเคราะห์เสียงประกอบด้วย Web Audio API}
+
+\vspace{0.4cm}
+
+\begin{labobjectivebox}{การพัฒนาห้องปฏิบัติการวิทยาศาสตร์เสมือนจริง}
+\textbf{วัตถุประสงค์การเรียนรู้}
+\begin{enumerate}[leftmargin=1.8cm, itemsep=2pt]
+    \item เข้าใจการผสานสมการอนุพันธ์ทางฟิสิกส์เข้าสู่วงรอบการเรนเดอร์กราฟิก 3 มิติ
+    \item สามารถพัฒนาแบบจำลองการแกว่งของลูกตุ้มนาฬิกาแบบไม่เชิงเส้น (Non-linear Pendulum)
+    \item สามารถสังเคราะห์เสียงตอบสนองแบบเรียลไทม์ด้วย Web Audio API โดยไม่ต้องโหลดไฟล์เสียงภายนอก
+\end{enumerate}
+
+\vspace{4pt}
+\textbf{เครื่องมือและอุปกรณ์จำเป็น} \enspace Three.js, Web Audio API (AudioContext, OscillatorNode, GainNode)
+\end{labobjectivebox}
+
+\section{หลักการและทฤษฎีพื้นฐาน}
+
+การสร้างห้องปฏิบัติการวิทยาศาสตร์เสมือนจริง (Virtual STEM Lab) ต้องการความสมจริงทั้งด้านทัศนศาสตร์ กลศาสตร์ และสวนศาสตร์ (Acoustics) ในแบบจำลองลูกตุ้มอย่างง่าย พิกัดเชิงมุม $\theta(t)$ ถูกควบคุมด้วยสมการเชิงอนุพันธ์อันดับสอง:
+\begin{equation}
+\frac{d^2\theta}{dt^2} + \frac{b}{m}\frac{d\theta}{dt} + \frac{g}{L}\sin\theta = 0
+\end{equation}
+โดยที่ $L$ คือความยาวเชือก, $g$ คือความเร่งโน้มถ่วง และ $b$ คือสัมประสิทธิ์ความเสียดทานของอากาศ การแก้สมการนี้ทำได้ในวงรอบการเรนเดอร์ด้วยระเบียบวิธีออยเลอร์-โครเมอร์ (Euler-Cromer Method)
+
+ด้านเสียงตอบสนอง Web Audio API ช่วยสร้างเสียงสังเคราะห์ผ่านวงจรออสซิลเลเตอร์ดิจิทัล (OscillatorNode) โดยสามารถปรับเปลี่ยนความถี่ฮาร์มอนิก ($f$) และอัตราขยายสัญญาณ (Gain) ได้ทันทีตามพลังงานจลน์ของลูกตุ้ม ทำให้ผู้เรียนรับรู้ถึงการชนหรือการเคลื่อนที่ด้วยประสาทสัมผัสคู่ (Multimodal Sensory Feedback)
+
+\begin{conceptbox}{สาระสำคัญของปฏิบัติการที่ 7}
+การเข้าใจโครงสร้างทางคณิตศาสตร์และการประมวลผลเชิงพื้นที่ ช่วยให้นักศึกษาสามารถออกแบบระบบเสมือนจริงที่ตอบสนองต่อผู้ใช้งานได้อย่างเป็นธรรมชาติและแม่นยำสูง ทั้งยังสามารถต่อยอดสู่การพัฒนาแอปพลิเคชันทางวิทยาศาสตร์และอุตสาหกรรมได้อย่างมีประสิทธิภาพ
+\end{conceptbox}
+
+\section{ขั้นตอนการปฏิบัติการและการทดลอง}
+
+ให้นักศึกษาดำเนินการสร้างไฟล์โครงการและเขียนคำสั่งตามลำดับขั้นตอนต่อไปนี้ โดยตรวจสอบความถูกต้องของไลบรารีที่เรียกใช้งานและเส้นทางไฟล์
+
+\begin{codebox}{โครงสร้างโค้ดหลักของปฏิบัติการที่ 7}
+\begin{lstlisting}[language=HTML]
+// ระบบจำลองฟิสิกส์ลูกตุ้มและการสังเคราะห์เสียง
+let theta = Math.PI / 4; // มุมเริ่มต้น 45 องศา
+let omega = 0.0;         // ความเร็วเชิงมุม
+const g = 9.81, L = 2.0, b = 0.05, dt = 0.016;
+
+// เริ่มต้นระบบเสียง Web Audio API
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSpatialSound(frequency, duration) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+    
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+}
+
+function updatePhysics() {
+    // ระเบียบวิธี Euler-Cromer
+    const alpha = -(g / L) * Math.sin(theta) - b * omega;
+    omega += alpha * dt;
+    theta += omega * dt;
+
+    // อัปเดตตำแหน่งลูกตุ้มใน Three.js
+    pendulumBob.position.x = L * Math.sin(theta);
+    pendulumBob.position.y = -L * Math.cos(theta);
+
+    // ส่งเสียงสังเคราะห์เมื่อลูกตุ้มแกว่งผ่านจุดต่ำสุด (ความเร็วสูงสุด)
+    if (Math.abs(theta) < 0.02 && Math.abs(omega) > 0.5) {
+        playSpatialSound(440 + Math.abs(omega) * 50, 0.15);
+    }
+}
+\end{lstlisting}
+\end{codebox}
+
+\section{การทดสอบระบบและการบันทึกผล}
+
+เมื่อรันโปรแกรมบนเซิร์ฟเวอร์จำลอง (Local Development Server) ให้ทำการทดสอบการทำงานตามเกณฑ์ประเมินในตารางต่อไปนี้ พร้อมบันทึกผลการสังเกตการณ์ลงในรายงานผลการทดลอง
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c X c Y}
+\toprule
+\textbf{ลำดับ} & \textbf{รายการทดสอบและพฤติกรรมที่คาดหวัง} & \textbf{เกณฑ์ผ่าน} & \textbf{ผลการทดสอบ} \\
+\midrule
+1 & การเริ่มต้นระบบและการเข้าถึงสิทธิ์ฮาร์ดแวร์ & ภายใน 3 วินาที & ผ่าน / ไม่ผ่าน \\
+2 & ความเสถียรของการตรวจจับและการคำนวณพิกัด & อัตราความแม่นยำ $> 90\%$ & ผ่าน / ไม่ผ่าน \\
+3 & อัตราการแสดงผลกราฟิกต่อเนื่อง (Framerate) & ไม่ต่ำกว่า 55 FPS & ผ่าน / ไม่ผ่าน \\
+4 & การตอบสนองต่อปฏิสัมพันธ์เชิงพื้นที่ & ความหน่วง $< 40$ ms & ผ่าน / ไม่ผ่าน \\
+\bottomrule
+\end{tabularx}
+\caption{ตารางประเมินผลการทำงานของระบบในปฏิบัติการที่ 7}
+\label{tab:eval_lab07}
+\end{table}
+
+\section{ภารกิจท้าทายและการต่อยอด}
+
+\begin{activitybox}{กิจกรรมส่งเสริมทักษะขั้นสูง}
+ให้นักศึกษาเพิ่มปฏิสัมพันธ์ให้ผู้ใช้สามารถใช้ท่าทางนิ้วมือ (Pinch) จับลูกตุ้มแล้วลากไปวางที่มุมใดๆ เพื่อปล่อยให้แกว่งใหม่ พร้อมคำนวณและแสดงค่าพลังงานรวมของระบบ (ศักย์ + จลน์) แบบเรียลไทม์
+\end{activitybox}
+
+\section{คำถามท้ายการทดลอง}
+
+ให้นักศึกษาตอบคำถามเชิงวิเคราะห์ต่อไปนี้ลงในสมุดบันทึกปฏิบัติการ
+
+\begin{enumerate}[leftmargin=1.8cm, itemsep=6pt]
+    \item เหตุใดระเบียบวิธี Euler-Cromer จึงมีความเสถียรด้านพลังงานสูงกว่าระเบียบวิธี Euler ดั้งเดิมในการจำลองการสั่นแบบฮาร์มอนิก
+    \item การสังเคราะห์เสียงด้วย Web Audio API มีข้อได้เปรียบอย่างไรเมื่อเทียบกับการเล่นไฟล์เสียงแบบ MP3/WAV ในงานความจริงเสมือน
+    \item จงอธิบายแนวทางการคำนวณเวกเตอร์ความเร่งหนีศูนย์กลางที่เกิดขึ้นกับมวลลูกตุ้ม
+\end{enumerate}
+

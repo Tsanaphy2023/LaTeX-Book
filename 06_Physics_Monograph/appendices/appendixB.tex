@@ -1,0 +1,42 @@
+\chapter*{ภาคผนวก ข: เอกลักษณ์แคลคูลัสเวกเตอร์และตัวดำเนินการ}
+\addcontentsline{toc}{chapter}{ภาคผนวก ข: เอกลักษณ์แคลคูลัสเวกเตอร์และตัวดำเนินการ}
+
+รวบรวมเอกลักษณ์สำคัญของพีชคณิตและแคลคูลัสเวกเตอร์ เพื่อประโยชน์ในการวิเคราะห์สมการเชิงอนุพันธ์ย่อยในทฤษฎีสนามแม่เหล็กไฟฟ้าและกลศาสตร์ควอนตัม
+
+\vspace{0.4cm}
+\section*{1. เอกลักษณ์เวกเตอร์พื้นฐาน}
+\begin{align}
+\mathbf{A} \cdot (\mathbf{B} \times \mathbf{C}) &= \mathbf{B} \cdot (\mathbf{C} \times \mathbf{A}) = \mathbf{C} \cdot (\mathbf{A} \times \mathbf{B}) \\
+\mathbf{A} \times (\mathbf{B} \times \mathbf{C}) &= (\mathbf{A} \cdot \mathbf{C})\mathbf{B} - (\mathbf{A} \cdot \mathbf{B})\mathbf{C}
+\end{align}
+
+\vspace{0.2cm}
+\section*{2. อนุพันธ์อันดับหนึ่งของผลคูณ}
+\begin{align}
+\nabla(fg) &= f\nabla g + g\nabla f \\
+\nabla(\mathbf{A} \cdot \mathbf{B}) &= \mathbf{A} \times (\nabla \times \mathbf{B}) + \mathbf{B} \times (\nabla \times \mathbf{A}) + (\mathbf{A} \cdot \nabla)\mathbf{B} + (\mathbf{B} \cdot \nabla)\mathbf{A} \\
+\nabla \cdot (f\mathbf{A}) &= f(\nabla \cdot \mathbf{A}) + \mathbf{A} \cdot \nabla f \\
+\nabla \cdot (\mathbf{A} \times \mathbf{B}) &= \mathbf{B} \cdot (\nabla \times \mathbf{A}) - \mathbf{A} \cdot (\nabla \times \mathbf{B}) \\
+\nabla \times (f\mathbf{A}) &= f(\nabla \times \mathbf{A}) + (\nabla f) \times \mathbf{A} \\
+\nabla \times (\mathbf{A} \times \mathbf{B}) &= (\mathbf{B} \cdot \nabla)\mathbf{A} - (\mathbf{A} \cdot \nabla)\mathbf{B} + \mathbf{A}(\nabla \cdot \mathbf{B}) - \mathbf{B}(\nabla \cdot \mathbf{A})
+\end{align}
+
+\vspace{0.2cm}
+\section*{3. อนุพันธ์อันดับสองและทฤษฎีบทอินทิกรัล}
+\begin{align}
+\nabla \times (\nabla f) &= 0 \quad (\text{Curl of Gradient is Zero}) \\
+\nabla \cdot (\nabla \times \mathbf{A}) &= 0 \quad (\text{Divergence of Curl is Zero}) \\
+\nabla \times (\nabla \times \mathbf{A}) &= \nabla(\nabla \cdot \mathbf{A}) - \nabla^2 \mathbf{A}
+\end{align}
+
+\vspace{0.2cm}
+\noindent\textbf{ทฤษฎีบทไดเวอร์เจนซ์ (Divergence Theorem):}
+\begin{equation}
+\iiint_V (\nabla \cdot \mathbf{A}) \, dV = \iint_S \mathbf{A} \cdot d\mathbf{S}
+\end{equation}
+
+\vspace{0.2cm}
+\noindent\textbf{ทฤษฎีบทของสโตกส์ (Stokes' Theorem):}
+\begin{equation}
+\iint_S (\nabla \times \mathbf{A}) \cdot d\mathbf{S} = \oint_C \mathbf{A} \cdot d\mathbf{r}
+\end{equation}

@@ -1,0 +1,109 @@
+% =========================================================================
+% ปฏิบัติการที่ 8: การคอมไพล์และติดตั้งบนอุปกรณ์พกพาและแว่น XR
+% =========================================================================
+
+\chapter{การคอมไพล์และติดตั้งบนอุปกรณ์พกพาและแว่น XR}
+\label{ch:lab08}
+
+\noindent{\large\bfseries\color{cyberblue} การห่อหุ้มเว็บแอปพลิเคชันเป็น Android APK และการทดสอบประสิทธิภาพเชิงลึก}
+
+\vspace{0.4cm}
+
+\begin{labobjectivebox}{การคอมไพล์และติดตั้งบนอุปกรณ์พกพาและแว่น XR}
+\textbf{วัตถุประสงค์การเรียนรู้}
+\begin{enumerate}[leftmargin=1.8cm, itemsep=2pt]
+    \item เข้าใจสถาปัตยกรรมการแปลงเว็บแอปพลิเคชันไฮบริดสู่แอปเนทีฟด้วย Capacitor / Cordova
+    \item สามารถกำหนดค่าสิทธิ์การเข้าถึงกล้องและเซนเซอร์ในไฟล์ AndroidManifest.xml
+    \item สามารถคอมไพล์ สร้างไฟล์ APK และติดตั้งเพื่อทดสอบบนสมาร์ทโฟนหรือแว่นสวมศีรษะ XR
+\end{enumerate}
+
+\vspace{4pt}
+\textbf{เครื่องมือและอุปกรณ์จำเป็น} \enspace Node.js, Capacitor CLI, Android Studio / Gradle Build Tools, อุปกรณ์ Android สำหรับทดสอบ
+\end{labobjectivebox}
+
+\section{หลักการและทฤษฎีพื้นฐาน}
+
+แม้ว่า WebAR จะมีความยืดหยุ่นสูงในการเข้าถึงผ่านเบราว์เซอร์ แต่ในสถานการณ์ที่ต้องการประสิทธิภาพสูงสุด การเข้าถึงฮาร์ดแวร์โดยตรงโดยไม่มีแถบควบคุมของเบราว์เซอร์ (Fullscreen Immersive Experience) หรือการติดตั้งในโรงเรียนที่ไม่มีการเชื่อมต่ออินเทอร์เน็ต การห่อหุ้มเว็บแอปพลิเคชัน (Web Packaging) เข้าสู่รูปแบบแอปพลิเคชันเนทีฟ (Native APK) จึงเป็นแนวทางมาตรฐานที่นิยมใช้
+
+สถาปัตยกรรมของ Capacitor หรือ Cordova ทำงานโดยการฝังส่วนประกอบ WebView ประสิทธิภาพสูงลงในแอปเนทีฟ และเปิดสะพานเชื่อมต่อคำสั่งจาวาสคริปต์ (JavaScript Bridge) ช่วยให้โค้ด WebGL และ MediaPipe เดิมสามารถเข้าถึงกล้องหลัง กล้องหน้า และเซนเซอร์วัดการหมุน (IMU) ของอุปกรณ์ได้อย่างรวดเร็ว
+
+ขั้นตอนสำคัญประกอบด้วยการกำหนดค่าความปลอดภัยและการขอสิทธิ์การใช้งานกล้องในไฟล์ \texttt{AndroidManifest.xml} การปรับแต่งตัวแปรใน \texttt{capacitor.config.json} เพื่อเปิดใช้งานการเร่งความเร็วด้วยฮาร์ดแวร์ (Hardware Acceleration) และการคอมไพล์ด้วยคำสั่ง \texttt{gradlew assembleDebug} เพื่อให้ได้ไฟล์ติดตั้ง \texttt{.apk} ที่พร้อมใช้งาน
+
+\begin{conceptbox}{สาระสำคัญของปฏิบัติการที่ 8}
+การเข้าใจโครงสร้างทางคณิตศาสตร์และการประมวลผลเชิงพื้นที่ ช่วยให้นักศึกษาสามารถออกแบบระบบเสมือนจริงที่ตอบสนองต่อผู้ใช้งานได้อย่างเป็นธรรมชาติและแม่นยำสูง ทั้งยังสามารถต่อยอดสู่การพัฒนาแอปพลิเคชันทางวิทยาศาสตร์และอุตสาหกรรมได้อย่างมีประสิทธิภาพ
+\end{conceptbox}
+
+\section{ขั้นตอนการปฏิบัติการและการทดลอง}
+
+ให้นักศึกษาดำเนินการสร้างไฟล์โครงการและเขียนคำสั่งตามลำดับขั้นตอนต่อไปนี้ โดยตรวจสอบความถูกต้องของไลบรารีที่เรียกใช้งานและเส้นทางไฟล์
+
+\begin{codebox}{โครงสร้างโค้ดหลักของปฏิบัติการที่ 8}
+\begin{lstlisting}[language=HTML]
+<!-- การกำหนดสิทธิ์การใช้งานกล้องใน AndroidManifest.xml -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="th.ac.rbru.ar.aimotion">
+
+    <!-- สิทธิ์การเข้าถึงกล้องและอินเทอร์เน็ต -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:label="AR AI Lab RBRU"
+        android:theme="@style/AppTheme.NoActionBar">
+        
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
+\end{lstlisting}
+\end{codebox}
+
+\section{การทดสอบระบบและการบันทึกผล}
+
+เมื่อรันโปรแกรมบนเซิร์ฟเวอร์จำลอง (Local Development Server) ให้ทำการทดสอบการทำงานตามเกณฑ์ประเมินในตารางต่อไปนี้ พร้อมบันทึกผลการสังเกตการณ์ลงในรายงานผลการทดลอง
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{c X c Y}
+\toprule
+\textbf{ลำดับ} & \textbf{รายการทดสอบและพฤติกรรมที่คาดหวัง} & \textbf{เกณฑ์ผ่าน} & \textbf{ผลการทดสอบ} \\
+\midrule
+1 & การเริ่มต้นระบบและการเข้าถึงสิทธิ์ฮาร์ดแวร์ & ภายใน 3 วินาที & ผ่าน / ไม่ผ่าน \\
+2 & ความเสถียรของการตรวจจับและการคำนวณพิกัด & อัตราความแม่นยำ $> 90\%$ & ผ่าน / ไม่ผ่าน \\
+3 & อัตราการแสดงผลกราฟิกต่อเนื่อง (Framerate) & ไม่ต่ำกว่า 55 FPS & ผ่าน / ไม่ผ่าน \\
+4 & การตอบสนองต่อปฏิสัมพันธ์เชิงพื้นที่ & ความหน่วง $< 40$ ms & ผ่าน / ไม่ผ่าน \\
+\bottomrule
+\end{tabularx}
+\caption{ตารางประเมินผลการทำงานของระบบในปฏิบัติการที่ 8}
+\label{tab:eval_lab08}
+\end{table}
+
+\section{ภารกิจท้าทายและการต่อยอด}
+
+\begin{activitybox}{กิจกรรมส่งเสริมทักษะขั้นสูง}
+ให้นักศึกษาทำตามขั้นตอนการ Build APK และติดตั้งลงบนสมาร์ทโฟนของตนเองผ่านสาย USB ด้วยคำสั่ง adb install พร้อมบันทึกภาพหน้าจอขณะทดสอบการตรวจจับมือและตรวจวัดอัตราการแสดงผล FPS จริงบนอุปกรณ์
+\end{activitybox}
+
+\section{คำถามท้ายการทดลอง}
+
+ให้นักศึกษาตอบคำถามเชิงวิเคราะห์ต่อไปนี้ลงในสมุดบันทึกปฏิบัติการ
+
+\begin{enumerate}[leftmargin=1.8cm, itemsep=6pt]
+    \item จงอธิบายบทบาทของ Android WebView ในการประมวลผลโค้ด Three.js และ MediaPipe
+    \item เหตุใดจึงต้องกำหนดคุณสมบัติ android:hardwareAccelerated="true" ในการพัฒนาแอปพลิเคชันความจริงเสริม
+    \item หากเปิดแอปพลิเคชันแล้วพบหน้าจอสีดำ ไม่ปรากฏภาพจากกล้อง ควรตรวจสอบจุดบกพร่องใดเป็นอันดับแรก
+\end{enumerate}
+

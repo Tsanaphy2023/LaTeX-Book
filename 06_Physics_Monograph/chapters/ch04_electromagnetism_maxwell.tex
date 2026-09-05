@@ -1,0 +1,89 @@
+% =========================================================================
+% บทที่ 4: ทฤษฎีสนามแม่เหล็กไฟฟ้าและสมการแมกซ์เวลล์
+% =========================================================================
+
+\chapter{ทฤษฎีสนามแม่เหล็กไฟฟ้าและสมการแมกซ์เวลล์}
+\label{ch:chapter04}
+
+\noindent{\large\bfseries\color{physicsblue} สมการแมกซ์เวลล์ในรูปอนุพันธ์ การอนุรักษ์ประจุ และสมการคลื่นแม่เหล็กไฟฟ้า}
+
+\vspace{0.4cm}
+
+\begin{equationsbox}{สมการแมกซ์เวลล์สี่ข้อในสุญญากาศ}
+\begin{align}
+\nabla \cdot \mathbf{E} &= \frac{\rho}{\epsilon_0}, \quad \nabla \cdot \mathbf{B} = 0 \\
+\nabla \times \mathbf{E} &= -\frac{\partial \mathbf{B}}{\partial t}, \quad \nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0\epsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\end{align}
+\end{equationsbox}
+
+\section{ทฤษฎีและกรอบแนวคิดสำคัญ}
+
+ทฤษฎีแม่เหล็กไฟฟ้าคลาสสิกของเจมส์ เคลิร์ก แมกซ์เวลล์ เป็นหนึ่งในความสำเร็จอันยิ่งใหญ่ที่สุดในประวัติศาสตร์ฟิสิกส์ ซึ่งรวบรวมปรากฏการณ์ไฟฟ้า แม่เหล็ก และแสงสว่าง เข้าสู่กรอบทฤษฎีหนึ่งเดียวผ่านสมการเชิงอนุพันธ์ย่อยสี่ข้อ
+
+สมการข้อแรก กฎของเกาส์สำหรับสนามไฟฟ้า แสดงว่าประจุไฟฟ้าเป็นแหล่งกำเนิดของสนามไฟฟ้า สมการข้อที่สอง กฎของเกาส์สำหรับสนามแม่เหล็ก ยืนยันว่าไม่มีขั้วแม่เหล็กเดี่ยว (No Magnetic Monopoles) สมการข้อที่สาม กฎการเหนี่ยวนำของฟาราเดย์ บ่งบอกว่าสนามแม่เหล็กที่เปลี่ยนแปลงตามเวลาจะเหนี่ยวนำให้เกิดสนามไฟฟ้าวน และสมการข้อที่สี่ กฎของแอมแปร์-แมกซ์เวลล์ ซึ่งแมกซ์เวลล์ได้เพิ่มพจน์กระแสการกระจัด (Displacement Current: $\mathbf{J}_D = \epsilon_0 \partial\mathbf{E}/\partial t$) เข้าไปเพื่อให้สอดคล้องกับสมการความต่อเนื่องของการอนุรักษ์ประจุ ($\nabla \cdot \mathbf{J} + \partial\rho/\partial t = 0$)
+
+\section{ตัวอย่างการคำนวณตามกรอบวิเคราะห์ P-S-C-T}
+
+\begin{psctexample}{4.1}{การอนุพัทธ์สมการคลื่นแม่เหล็กไฟฟ้าและความเร็วแสงในสุญญากาศ}
+\textbf{1. ภาพและสถานการณ์ทางกายภาพ (Picture):}\\\\ พิจารณาปริภูมิอิสระที่ปราศจากประจุอิสระ ($\rho = 0$) และกระแสอิสระ ($\mathbf{J} = 0$)
+
+\vspace{4pt}
+\textbf{2. กลยุทธ์และแบบจำลองทางฟิสิกส์ (Strategy):}\\\\ นำตัวดำเนินการ $\nabla \times$ กระทำกับสมการกฎของฟาราเดย์ แล้วใช้เอกลักษณ์เวกเตอร์ $\nabla \times (\nabla \times \mathbf{E}) = \nabla(\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E}$
+
+\vspace{4pt}
+\textbf{3. ขั้นตอนการคำนวณเชิงตัวเลข (Calculation):}\\\\ จากกฎของฟาราเดย์:
+\begin{equation}
+\nabla \times (\nabla \times \mathbf{E}) = -\frac{\partial}{\partial t}(\nabla \times \mathbf{B})
+\end{equation}
+แทนค่า $\nabla \cdot \mathbf{E} = 0$ และแทน $\nabla \times \mathbf{B} = \mu_0\epsilon_0 \frac{\partial \mathbf{E}}{\partial t}$:
+\begin{equation}
+-\nabla^2 \mathbf{E} = -\mu_0\epsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2} \implies \nabla^2 \mathbf{E} - \mu_0\epsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2} = 0
+\end{equation}
+นี่คือสมการคลื่น 3 มิติ (3D Wave Equation) ซึ่งความเร็วคลื่นคำนวณได้เป็น:
+\begin{equation}
+c = \frac{1}{\sqrt{\mu_0\epsilon_0}} = \frac{1}{\sqrt{(4\pi \times 10^{-7})(8.854 \times 10^{-12})}} \approx 2.998 \times 10^8\text{ m/s}
+\end{equation}
+ซึ่งตรงกับอัตราเร็วของแสงที่วัดได้จากการทดลองอย่างสมบูรณ์แบบ
+
+\vspace{4pt}
+\textbf{4. การทดสอบความสมเหตุสมผล (Test):}\\\\ สมการแสดงว่าคลื่นแม่เหล็กไฟฟ้าเป็นคลื่นตามขวาง (Transverse Waves) โดยเวกเตอร์ $\mathbf{E}$, $\mathbf{B}$ และทิศทางคลื่น $\mathbf{k}$ ตั้งฉากซึ่งกันและกันเสมอ
+\end{psctexample}
+
+\section{การเชื่อมโยงสู่การวิจัยฟิสิกส์ร่วมสมัย}
+
+\begin{researchbox}{ข้อมูลเชิงลึกจากงานวิจัย}
+ในการวิจัยวัสดุศาสตร์และแม่เหล็กระดับนาโน อันตรกิริยาระหว่างสนามแม่เหล็กไฟฟ้ากับสปินของอิเล็กตรอนในสารกึ่งตัวนำและฉนวนทรานสิชันเมทัลออกไซด์ (เช่น $\text{MnO}$ และ $\text{NiO}$) นำไปสู่การพัฒนาเทคโนโลยีสปินทรอนิกส์ (Spintronics) และหน่วยความจำแม่เหล็ก MRAM สมัยใหม่
+\end{researchbox}
+
+\section{การฝึกแก้โจทย์ปัญหาเชิงระบบตามกรอบ C-C-A-F}
+
+\begin{ccafsolution}{การวิเคราะห์เวกเตอร์พอยน์ติงและการส่งผ่านพลังงานในสายส่งโคแอกเชียล}
+\textbf{ขั้นที่ 1: การสร้างมโนทัศน์ (Conceptualize):}\\\\ สายส่งร่วมแกน (Coaxial Cable) ประกอบด้วยตัวนำทรงกระบอกด้านในรัศมี $a$ และตัวนำด้านนอกรัศมี $b$ มีกระแส $I$ และความต่างศักย์ $V$
+
+\vspace{4pt}
+\textbf{ขั้นที่ 2: การจำแนกประเภทโจทย์ (Categorize):}\\\\ การส่งผ่านพลังงานและโมเมนตัมแม่เหล็กไฟฟ้า (Electromagnetic Energy Transport)
+
+\vspace{4pt}
+\textbf{ขั้นที่ 3: การวิเคราะห์เชิงคณิตศาสตร์ (Analyze):}\\\\ สนามไฟฟ้าระหว่างตัวนำ: $E(r) = \frac{V}{\ln(b/a)}\frac{1}{r}$ (ทิศในแนวรัศมี)
+สนามแม่เหล็กระหว่างตัวนำ: $B(r) = \frac{\mu_0 I}{2\pi}\frac{1}{r}$ (ทิศในแนววงกลม)
+เวกเตอร์พอยน์ติง (Poynting Vector) คำนวณได้เป็น:
+\begin{equation}
+\mathbf{S} = \frac{1}{\mu_0}(\mathbf{E} \times \mathbf{B}) = \frac{VI}{2\pi \ln(b/a) r^2} \mathbf{\hat{z}}
+\end{equation}
+หาปริพันธ์ฟลักซ์พลังงานผ่านพื้นที่หน้าตัดระหว่างรัศมี $a$ ถึง $b$:
+\begin{equation}
+P = \int \mathbf{S}\cdot d\mathbf{A} = \int_{a}^{b} \frac{VI}{2\pi \ln(b/a) r^2} (2\pi r dr) = VI
+\end{equation}
+
+\vspace{4pt}
+\textbf{ขั้นที่ 4: การสรุปและประเมินผล (Finalize):}\\\\ พลังงานไฟฟ้าไม่ได้ไหลอยู่ภายในเนื้อโลหะ แต่ถูกส่งผ่านทางสนามแม่เหล็กไฟฟ้าในช่องว่างระหว่างตัวนำด้วยกำลังงาน $P = VI$
+\end{ccafsolution}
+
+\section{แบบฝึกหัดทบทวนและโจทย์ท้าทายประจำบท}
+
+\begin{enumerate}[leftmargin=1.5cm, label={\textbf{\thechapter.\arabic*}}, itemsep=8pt]
+    \item \textbf{โจทย์เชิงแนวคิด (Conceptual):} จงอธิบายความสำคัญทางกายภาพของกฎและสมการหลักในบทเรียนนี้ พร้อมยกตัวอย่างสถานการณ์จริงในธรรมชาติ
+    \item \textbf{โจทย์การประมาณค่าเชิงฟิสิกส์ (Estimation):} จงใช้การวิเคราะห์เชิงมิติและอันดับของขนาด (Order of Magnitude) ในการประมาณค่าปริมาณสำคัญที่เกี่ยวข้อง
+    \item \textbf{โจทย์วิจัยขั้นสูง (Research Challenge):} จงเขียนสคริปต์ Python จำลองพฤติกรรมของระบบตามสมการที่ได้ศึกษา พร้อมพลอตกราฟเปรียบเทียบผลลัพธ์เชิงทฤษฎี
+\end{enumerate}
+

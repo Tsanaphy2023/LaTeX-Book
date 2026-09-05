@@ -1,0 +1,63 @@
+\documentclass[11pt,a4paper,openany]{book}
+
+% 1. เรียกใช้แพ็กเกจสไตล์มาตรฐาน Monograph
+\usepackage{preamble/physics_monograph_style}
+
+% 2. การกำหนดฟอนต์ภาษาไทย (Sarabun System Font)
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. การกำหนด Metadata สำหรับไฟล์ PDF
+\hypersetup{
+    pdftitle={เอกสารคำสอนและคู่มือวิจัยฟิสิกส์ระดับมหาวิทยาลัย},
+    pdfauthor={ผศ.ดร.ชีวะ ทัศนา},
+    pdfsubject={University Physics Monograph and Research Methodology},
+    pdfkeywords={Advanced Mechanics, Electromagnetism, Quantum Mechanics, Solid State Physics, LSDA+U, PINNs},
+    colorlinks=true,
+    linkcolor=physicsblue,
+    citecolor=purple,
+    urlcolor=goldamber
+}
+
+\begin{document}
+
+% =========================================================================
+% ส่วนหน้าเล่ม (Frontmatter)
+% =========================================================================
+\frontmatter
+
+\include{cover/cover}
+\include{frontmatter/title}
+\include{frontmatter/preface}
+\include{frontmatter/acknowledgements}
+\include{frontmatter/syllabus}
+
+\tableofcontents
+\newpage
+
+% =========================================================================
+% เนื้อหาหลัก (Mainmatter: 8 บท)
+% =========================================================================
+\mainmatter
+
+\include{chapters/ch01_units_uncertainty}
+\include{chapters/ch02_advanced_dynamics}
+\include{chapters/ch03_potential_stability}
+\include{chapters/ch04_electromagnetism_maxwell}
+\include{chapters/ch05_wave_optics_lasers}
+\include{chapters/ch06_quantum_mechanics_atomic}
+\include{chapters/ch07_solid_state_magnetic}
+\include{chapters/ch08_computational_research}
+
+% =========================================================================
+% ส่วนท้ายเล่ม (Backmatter)
+% =========================================================================
+\backmatter
+
+\include{appendices/appendixA}
+\include{appendices/appendixB}
+\include{bibliography/references}
+\include{backmatter/biography}
+
+\end{document}

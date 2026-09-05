@@ -1,0 +1,26 @@
+\chapter*{ภาคผนวก ข: ชุดคำสั่งและฟังก์ชัน API ที่สำคัญ}
+\addcontentsline{toc}{chapter}{ภาคผนวก ข: ชุดคำสั่งและฟังก์ชัน API ที่สำคัญ}
+
+รวบรวมฟังก์ชันและเมธอดสำคัญสำหรับเอนจิน Three.js, MediaPipe Hands และ Web Audio API เพื่อให้นักศึกษาใช้เป็นคู่มืออ้างอิงอย่างรวดเร็วในการพัฒนาโครงงาน
+
+\vspace{0.4cm}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{>{\ttfamily\small}p{3.8cm} >{\ttfamily\small}p{4.2cm} X}
+\toprule
+\textbf{ไลบรารี / ออบเจกต์} & \textbf{ฟังก์ชัน / คำสั่ง} & \textbf{หน้าที่การทำงานและคำอธิบาย} \\
+\midrule
+THREE.Raycaster & setFromCamera(coords, cam) & กำหนดจุดกำเนิดและเวกเตอร์ทิศทางรังสีจากพิกัด NDC ผ่านกล้อง \\
+THREE.Raycaster & intersectObjects(objects) & ค้นหาและคืนค่าอาร์เรย์ของวัตถุที่มีการตัดกับลำแสงเรียงตามระยะทาง \\
+THREE.Vector3 & distanceTo(other) & คำนวณระยะทางแบบยูคลิดระหว่างเวกเตอร์สองจุดในปริภูมิ 3 มิติ \\
+THREE.Vector3 & lerp(target, alpha) & คำนวณการประมาณค่าเชิงเส้นระหว่างสองเวกเตอร์เพื่อปรับเรียบการเคลื่อนที่ \\
+MediaPipe.Hands & setOptions(options) & กำหนดค่าพารามิเตอร์ของโมเดล เช่น จำนวนมือสูงสุด และเกณฑ์ความเชื่อมั่น \\
+MediaPipe.Hands & send(\{image: video\}) & ส่งเฟรมภาพสดเข้าสู่ไปป์ไลน์เพื่อทำการอนุมานและประมวลผล \\
+AudioContext & createOscillator() & สร้างตัวกำเนิดสัญญาณเสียงคลื่นไซน์ สามเหลี่ยม หรือสี่เหลี่ยม \\
+AudioContext & createGain() & สร้างโหนดควบคุมระดับความดังและการลดทอนสัญญาณเสียง \\
+\bottomrule
+\end{tabularx}
+\caption{รายการคำสั่ง API สำคัญสำหรับการพัฒนา WebAR และเสียงเชิงพื้นที่}
+\label{tab:api_reference}
+\end{table}

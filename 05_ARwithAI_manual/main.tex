@@ -1,0 +1,63 @@
+\documentclass[11pt,a4paper,openany]{book}
+
+% 1. เรียกใช้แพ็กเกจสไตล์มาตรฐาน มรภ.รำไพพรรณี
+\usepackage{styles/ar_ai_manual_style}
+
+% 2. การกำหนดฟอนต์ภาษาไทย (Sarabun System Font)
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. การกำหนด Metadata สำหรับไฟล์ PDF
+\hypersetup{
+    pdftitle={คู่มือปฏิบัติการการพัฒนาเทคโนโลยีความจริงเสริมร่วมกับปัญญาประดิษฐ์},
+    pdfauthor={ผศ.ดร.ชีวะ ทัศนา},
+    pdfsubject={Laboratory Manual for Augmented Reality with Artificial Intelligence},
+    pdfkeywords={WebAR, MediaPipe Hands, Three.js, Computer Vision, Spatial Computing, TensorFlow.js},
+    colorlinks=true,
+    linkcolor=cyberblue,
+    citecolor=cyberpurple,
+    urlcolor=cybergold
+}
+
+\begin{document}
+
+% =========================================================================
+% ส่วนหน้าเล่ม (Frontmatter)
+% =========================================================================
+\frontmatter
+
+\include{frontmatter/cover}
+\include{frontmatter/title}
+\include{frontmatter/preface}
+\include{frontmatter/acknowledgements}
+\include{frontmatter/syllabus}
+
+\tableofcontents
+\newpage
+
+% =========================================================================
+% เนื้อหาหลัก (Mainmatter: 8 ปฏิบัติการ)
+% =========================================================================
+\mainmatter
+
+\include{chapters/lab01_webar_frameworks}
+\include{chapters/lab02_mediapipe_hands}
+\include{chapters/lab03_spatial_gestures}
+\include{chapters/lab04_interactive_3d_raycasting}
+\include{chapters/lab05_browser_ml_teachable}
+\include{chapters/lab06_ai_iot_integration}
+\include{chapters/lab07_stem_virtual_lab}
+\include{chapters/lab08_mobile_xr_deployment}
+
+% =========================================================================
+% ส่วนท้ายเล่ม (Backmatter)
+% =========================================================================
+\backmatter
+
+\include{backmatter/appendixA}
+\include{backmatter/appendixB}
+\include{backmatter/references}
+\include{backmatter/biography}
+
+\end{document}

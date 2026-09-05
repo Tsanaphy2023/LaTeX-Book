@@ -1,0 +1,165 @@
+% =========================================================================
+% Book 06: Cover Page (Classical & Quantum Field Monograph - TikZ 100% Vector)
+% =========================================================================
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+\noindent
+\begin{tikzpicture}[remember picture, overlay]
+    % 1. Deep Royal Blueprint Background
+    \fill[physicsnavy] (current page.south west) rectangle (current page.north east);
+    
+    % Radial aura & Quantum energy glow
+    \shade[inner color=quantumcyan!30, outer color=physicsnavy] 
+        ($(current page.center)+(0,-1)$) circle (8.5cm);
+    \shade[inner color=physicsblue!40, outer color=physicsnavy] 
+        ($(current page.north east)+(-3,-3)$) circle (6.5cm);
+    \shade[inner color=goldamber!20, outer color=physicsnavy] 
+        ($(current page.south west)+(3,3)$) circle (5.5cm);
+
+    % 2. Precision Engineering & Blueprint Grid
+    \begin{scope}
+        \clip (current page.south west) rectangle (current page.north east);
+        \foreach \x in {0, 1.25, ..., 22} {
+            \draw[quantumcyan!15, line width=0.3pt] (\x, 0) -- (\x, 30);
+        }
+        \foreach \y in {0, 1.25, ..., 30} {
+            \draw[quantumcyan!15, line width=0.3pt] (0, \y) -- (22, \y);
+        }
+        \foreach \x in {0, 5, ..., 20} {
+            \draw[quantumcyan!30, line width=0.6pt] (\x, 0) -- (\x, 30);
+        }
+        \foreach \y in {0, 5, ..., 30} {
+            \draw[quantumcyan!30, line width=0.6pt] (0, \y) -- (22, \y);
+        }
+    \end{scope}
+
+    % 3. Top Institutional Banner & Category Ribbon
+    \node[anchor=north west, inner sep=0] at ($(current page.north west)+(1.8, -1.5)$) {
+        \begin{tabular}{@{}l@{}}
+            {\large\bfseries\color{goldamber} โครงการตำราวิชาการเฉลิมพระเกียรติ} \\
+            {\normalsize\bfseries\color{white} มหาวิทยาลัยราชภัฏรำไพพรรณี} \\
+            {\scriptsize\color{gray!50}\textsf{RAMBHAI BARNI RAJABHAT UNIVERSITY MONOGRAPH SERIES \enspace\textbullet\enspace 2026}}
+        \end{tabular}
+    };
+
+    \node[anchor=north east] at ($(current page.north east)+(-1.8, -1.5)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=physicsnavy!90,
+            colframe=quantumcyan,
+            boxrule=1pt,
+            arc=3pt,
+            width=6.0cm,
+            halign=center,
+            valign=center,
+            top=4pt, bottom=4pt, left=4pt, right=4pt
+        ]
+            {\scriptsize\bfseries\sffamily\color{quantumcyan} ADVANCED PHYSICS \& RESEARCH} \\
+            {\tiny\bfseries\color{white}\textsf{UNIVERSITY MONOGRAPH FRAMEWORK}}
+        \end{tcolorbox}
+    };
+
+    % 4. Main Title Floating Glass Card
+    \node[anchor=north, inner sep=0] at ($(current page.north)+(0, -3.8)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=physicsnavy!85,
+            colframe=quantumcyan,
+            boxrule=1.2pt,
+            arc=6pt,
+            width=17.4cm,
+            drop fuzzy shadow=quantumcyan!40,
+            leftrule=6mm,
+            top=14pt,
+            bottom=14pt,
+            left=18pt,
+            right=18pt
+        ]
+            {\Huge\bfseries\color{white} เอกสารคำสอนและคู่มือวิจัย}\\[6pt]
+            {\Huge\bfseries\color{goldamber} ฟิสิกส์ระดับมหาวิทยาลัย}\\[8pt]
+            {\large\bfseries\color{quantumcyan!90} University Physics Monograph and Research Methodology}\\[6pt]
+            {\small\color{gray!40}\textsf{Advanced Mechanics \enspace\textbullet\enspace Electromagnetism \enspace\textbullet\enspace Modern Physics \& SciML}}
+        \end{tcolorbox}
+    };
+
+    % 5. Central Graphic: Maxwell Field Lines, Quantum Orbitals & Vector Triad
+    \begin{scope}[shift={($(current page.center)+(0, -2.0)$)}]
+        % Concentric Wavefronts & Resonance Circles
+        \draw[quantumcyan!40, dashed, line width=0.8pt] (0, 0) circle (4.6cm);
+        \draw[physicsblue!60, line width=1.2pt] (0, 0) circle (3.4cm);
+        \draw[goldamber!50, dashed, line width=0.6pt] (0, 0) circle (2.0cm);
+
+        % Maxwell Dipole Field Lines (Smooth Beziers)
+        \foreach \angle in {30, 60, 120, 150, 210, 240, 300, 330} {
+            \draw[quantumcyan!70, line width=1.0pt, -{Stealth[length=2.5mm]}]
+                (0, 0) .. controls +(\angle:3.5cm) and +(\angle+60:3.5cm) .. (0, 0);
+        }
+
+        % Rotating Gimbal Orbitals (Euler Angles)
+        \draw[quantumcyan, line width=1.2pt] (0, 0) ellipse (4.2cm and 1.3cm);
+        \draw[rotate=60, goldamber, line width=1.2pt] (0, 0) ellipse (4.2cm and 1.3cm);
+        \draw[rotate=-60, white!80, line width=1.2pt] (0, 0) ellipse (4.2cm and 1.3cm);
+
+        % Quantum Wavepacket Function (Sinusoidal Envelope)
+        \draw[color=cyan!90, line width=1.5pt, domain=-3.5:3.5, samples=120] 
+            plot (\x, {0.9 * exp(-\x*\x/3.0) * cos(6.28*\x r)});
+
+        % 3D Vector Triad Axes (X, Y, Z)
+        \draw[-{Stealth[length=3.5mm]}, line width=2pt, color=crimsonred] (0,0) -- (1.6, -0.9) node[right, font=\footnotesize\bfseries] {$\mathbf{\hat{x}}$};
+        \draw[-{Stealth[length=3.5mm]}, line width=2pt, color=quantumcyan] (0,0) -- (2.0, 0.9) node[above right, font=\footnotesize\bfseries] {$\mathbf{\hat{y}}$};
+        \draw[-{Stealth[length=3.5mm]}, line width=2pt, color=goldamber] (0,0) -- (0, 2.4) node[above, font=\footnotesize\bfseries] {$\mathbf{\hat{z}}$};
+
+        % Central Core Sensor Badge
+        \node at (0, 0) [
+            draw=goldamber,
+            fill=physicsnavy,
+            regular polygon,
+            regular polygon sides=6,
+            inner sep=6pt,
+            line width=1.2pt
+        ] {
+            \begin{tabular}{c}
+                {\tiny\bfseries\color{quantumcyan} MAXWELL \& SCHRÖDINGER} \\
+                {\tiny\color{white} RESEARCH FRAMEWORK}
+            \end{tabular}
+        };
+    \end{scope}
+
+    % 6. Author Info Card & Edition Badge
+    \node[anchor=south west, inner sep=0] at ($(current page.south west)+(1.8, 1.2)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=physicsnavy!85,
+            colframe=goldamber,
+            boxrule=1pt,
+            arc=4pt,
+            width=11.6cm,
+            top=8pt, bottom=8pt, left=12pt, right=12pt
+        ]
+            {\normalsize\bfseries\color{white} ผศ.ดร.ชีวะ ทัศนา \enspace\textbullet\enspace คณาจารย์สาขาวิชาฟิสิกส์}\\[3pt]
+            {\footnotesize\color{goldamber} วท.บ., วท.ม., ปร.ด. (ฟิสิกส์ประยุกต์) \enspace\textbullet\enspace ผู้เชี่ยวชาญฟิสิกส์เชิงคำนวณและวัสดุแม่เหล็ก}\\[2pt]
+            {\scriptsize\color{gray!40} สาขาวิชาฟิสิกส์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี}
+        \end{tcolorbox}
+    };
+
+    \node[anchor=south east, inner sep=0] at ($(current page.south east)+(-1.8, 1.2)$) {
+        \begin{tcolorbox}[
+            enhanced,
+            colback=physicsnavy!85,
+            colframe=quantumcyan,
+            boxrule=1pt,
+            arc=4pt,
+            width=4.8cm,
+            halign=center,
+            valign=center,
+            top=8pt, bottom=8pt, left=6pt, right=6pt
+        ]
+            {\Large\bfseries\color{goldamber} พ.ศ. 2569}\\[2pt]
+            {\small\bfseries\color{white} Masterclass Edition}\\[1pt]
+            {\tiny\color{gray!50} Monograph Series}
+        \end{tcolorbox}
+    };
+\end{tikzpicture}
+\restoregeometry
+\end{titlepage}
