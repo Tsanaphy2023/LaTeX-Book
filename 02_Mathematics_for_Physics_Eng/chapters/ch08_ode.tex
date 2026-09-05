@@ -8,17 +8,59 @@
 \index{RC Circuit Transient}
 \index{Time Constant}
 
-\begin{chapterobjectives}
-Upon mastering this chapter, students will be able to:
-\begin{enumerate}
-    \item Classify ordinary differential equations by order, degree, and linearity.
-    \item Solve separable, homogeneous, exact, and linear first-order differential equations analytically.
-    \item Construct and apply integrating factors $\mu(x) = \exp\left(\int P(x)\,dx\right)$ to solve general linear ODEs.
-    \item Formulate dynamical initial-value problems for charging capacitors ($RC$), energizing inductors ($RL$), and thermal relaxation.
-    \item Model nonlinear atmospheric drag (quadratic air resistance) and calculate terminal velocities.
-    \item Implement adaptive numerical ODE solvers using Python's \texttt{scipy.integrate.solve\_ivp}.
+% ==========================================================
+% Chapter 8 Instructional Management Plan & Syllabus
+% ==========================================================
+\section*{Chapter 8 Instructional Management Plan}
+\addcontentsline{toc}{section}{Chapter 8 Instructional Management Plan}
+
+\begin{planbox}[colframe=rbruNavy, colbacktitle=rbruNavy]{1. Chapter Topics and Core Content}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Classification and General Structure of ODEs
+    \item Fundamental Analytical Solution Methods
+    \item Physical Applications: Atmospheric Drag and Terminal Velocity
+    \item Worked Examples: RC Circuits and Radioactive Decay
+    \item Summary of Key Formulas and Chapter Exercises
 \end{enumerate}
-\end{chapterobjectives}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGreen, colbacktitle=rbruGreen]{2. Behavioral Learning Objectives (OBE)}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Classify differential equations by order, linearity, and initial conditions.
+    \item Solve separable, linear with integrating factors, and exact differential equations.
+    \item Model mechanical free-fall under drag and transient charging in RC circuits.
+    \item Solve initial-value problems numerically using SciPy \texttt{solve\_ivp}.
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=rbruNavy!85!black, colbacktitle=rbruNavy!85!black]{3. Teaching Methods and Instructional Activities}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Lecture on slope fields, integrating factors, and existence-uniqueness theorems.
+    \item Workshop deriving transient responses of electric circuits and Newton's law of cooling.
+    \item Computational laboratory implementing Euler and Runge-Kutta numerical solvers in Python.
+    \item Case study on velocity limits and aerodynamic drag in skydiving physics.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. Instructional Media and Educational Technology}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Course textbook: Chapter 8 First-Order Ordinary Differential Equations.
+    \item Visual slope field plots and dynamic direction field generators.
+    \item Python scripts using SciPy \texttt{odeint} and \texttt{solve\_ivp}.
+    \item Homework worksheets and analytical differential equation drills.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruSlate, colbacktitle=rbruSlate]{5. Measurement and Learning Assessment}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Formative in-class assessment on integrating factor calculations.
+    \item Weekly problem set grading on physical modeling and terminal velocity ODEs.
+    \item Chapter 8 diagnostic quiz testing analytical solutions and numerical modeling.
+\end{enumerate}
+\end{planbox}
+\clearpage
 
 \section{Classification and General Structure of ODEs}
 In dynamical systems, Newton's second law $\vec{F} = m\frac{d^2\vec{r}}{dt^2}$, radioactive decay $\frac{dN}{dt} = -\lambda N$, and circuit laws are formulated as differential equations relating an unknown function to its derivatives.

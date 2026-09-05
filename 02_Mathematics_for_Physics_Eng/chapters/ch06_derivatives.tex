@@ -8,17 +8,59 @@
 \index{Lagrange Multipliers}
 \index{Thermodynamic Potentials}
 
-\begin{chapterobjectives}
-Upon mastering this chapter, students will be able to:
-\begin{enumerate}
-    \item Compute partial derivatives and verify Clairaut's theorem for mixed second-order derivatives.
-    \item Construct total differentials and distinguish exact differentials from inexact differentials in thermodynamics.
-    \item Apply the multivariable chain rule to moving frames and coordinate transformations.
-    \item Calculate directional derivatives, normal vectors, and tangent planes to level surfaces.
-    \item Locate and classify unconstrained critical points using the Hessian determinant test.
-    \item Solve constrained physical optimization problems using the method of Lagrange multipliers.
+% ==========================================================
+% Chapter 6 Instructional Management Plan & Syllabus
+% ==========================================================
+\section*{Chapter 6 Instructional Management Plan}
+\addcontentsline{toc}{section}{Chapter 6 Instructional Management Plan}
+
+\begin{planbox}[colframe=rbruNavy, colbacktitle=rbruNavy]{1. Chapter Topics and Core Content}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Partial Derivatives and Clairaut's Symmetry Theorem
+    \item Total Differentials and Thermodynamic State Functions
+    \item Directional Derivatives and Tangent Planes
+    \item Constrained Optimization: Method of Lagrange Multipliers
+    \item Summary of Key Formulas and Chapter Exercises
 \end{enumerate}
-\end{chapterobjectives}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGreen, colbacktitle=rbruGreen]{2. Behavioral Learning Objectives (OBE)}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Compute partial derivatives and verify Clairaut's mixed partial symmetry theorem.
+    \item Formulate total differentials and identify exact differentials in thermodynamics.
+    \item Determine directional derivatives and tangent planes to 3D scalar surfaces.
+    \item Solve constrained physical optimization problems using Lagrange multipliers.
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=rbruNavy!85!black, colbacktitle=rbruNavy!85!black]{3. Teaching Methods and Instructional Activities}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Theoretical lecture on multivariable surfaces, gradients, and directional slopes.
+    \item Problem-solving workshop on chain rules and thermodynamic Maxwell relations.
+    \item Computational lab generating 3D surface and contour plots with Python.
+    \item Collaborative analysis of constrained energy minimization using Lagrange multipliers.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. Instructional Media and Educational Technology}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Course textbook: Chapter 6 Multivariable Differential Calculus.
+    \item Interactive 3D visual slides of saddle points, local extrema, and tangent planes.
+    \item Python scripts for gradient vector field visualizations and contour plots.
+    \item Homework worksheets on thermodynamic differentials and optimization.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruSlate, colbacktitle=rbruSlate]{5. Measurement and Learning Assessment}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Formative evaluation of in-class problem solving and concept checks.
+    \item Homework grading on directional derivatives and Lagrange multiplier constraints.
+    \item Chapter 6 diagnostic quiz on multivariable differentiation and physical extrema.
+\end{enumerate}
+\end{planbox}
+\clearpage
 
 \section{Partial Derivatives and Clairaut's Symmetry Theorem}
 Physical fields in classical mechanics, thermodynamics, and electromagnetism depend on multiple spatial and temporal coordinates $(x, y, z, t)$. For a scalar function $f(x, y)$, the \textbf{partial derivative} with respect to $x$ measures the rate of change while holding $y$ strictly constant:

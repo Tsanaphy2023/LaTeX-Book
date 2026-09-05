@@ -9,17 +9,59 @@
 \index{Resonance}
 \index{Quality Factor}
 
-\begin{chapterobjectives}
-Upon mastering this chapter, students will be able to:
-\begin{enumerate}
-    \item Solve homogeneous linear second-order ODEs with constant coefficients using the characteristic auxiliary equation.
-    \item Classify and physically interpret the three distinct damping regimes: overdamped, critically damped, and underdamped.
-    \item Find particular solutions to inhomogeneous ODEs using undetermined coefficients and variation of parameters.
-    \item Analyze driven mechanical and electrical oscillators, deriving the amplitude magnification and phase lag curves.
-    \item Calculate the resonance frequency, resonance peak height, and bandwidth in terms of the Quality factor ($Q$).
-    \item Compute and simulate damped and driven multi-frequency resonances numerically in Python.
+% ==========================================================
+% Chapter 9 Instructional Management Plan & Syllabus
+% ==========================================================
+\section*{Chapter 9 Instructional Management Plan}
+\addcontentsline{toc}{section}{Chapter 9 Instructional Management Plan}
+
+\begin{planbox}[colframe=rbruNavy, colbacktitle=rbruNavy]{1. Chapter Topics and Core Content}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Homogeneous Linear Second-Order ODEs with Constant Coefficients
+    \item The Damped Harmonic Oscillator and Three Dynamic Regimes
+    \item Driven Oscillations, Resonance, and Quality Factor
+    \item Worked Examples: Shock Absorbers and RLC Resonance
+    \item Summary of Key Formulas and Chapter Exercises
 \end{enumerate}
-\end{chapterobjectives}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGreen, colbacktitle=rbruGreen]{2. Behavioral Learning Objectives (OBE)}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Solve homogeneous second-order linear ODEs via characteristic auxiliary equations.
+    \item Analyze and physically classify the three damping regimes: overdamped, critically damped, and underdamped.
+    \item Calculate steady-state amplitude, phase lag, and resonance frequency in driven systems.
+    \item Quantify resonance sharpness and power dissipation using the Quality factor ($Q$).
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=rbruNavy!85!black, colbacktitle=rbruNavy!85!black]{3. Teaching Methods and Instructional Activities}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Lecture on characteristic equations, complex roots, and phase portrait analysis.
+    \item Workshop deriving amplitude resonance curves and power absorption profiles.
+    \item Python computational laboratory simulating damped-driven oscillators and phase space spirals.
+    \item Historical case study on structural resonance (Tacoma Narrows Bridge collapse).
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. Instructional Media and Educational Technology}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Course textbook: Chapter 9 Second-Order Linear Differential Equations \& Oscillations.
+    \item Dynamic resonance curve animations and interactive phase space trajectories.
+    \item Python SciPy scripts for numerical integration of nonlinear driven pendulums.
+    \item Comprehensive problem sets and worked engineering application examples.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruSlate, colbacktitle=rbruSlate]{5. Measurement and Learning Assessment}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Formative evaluation of in-class phase space trajectory classifications.
+    \item Homework assignment on driven oscillator amplitude response and Quality factor ($Q$).
+    \item Chapter 9 summative diagnostic examination on second-order ODEs and resonance.
+\end{enumerate}
+\end{planbox}
+\clearpage
 
 \section{Homogeneous Linear Second-Order ODEs with Constant Coefficients}
 Second-order differential equations are central to physics because Newton's second law $\vec{F} = m\frac{d^2\vec{x}}{dt^2}$, wave equations $\nabla^2 \psi = \frac{1}{v^2}\frac{\partial^2 \psi}{\partial t^2}$, and Schrödinger's equation are all of second order.

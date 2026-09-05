@@ -8,17 +8,59 @@
 \index{Gauss's Divergence Theorem}
 \index{Maxwell's Equations}
 
-\begin{chapterobjectives}
-Upon mastering this chapter, students will be able to:
-\begin{enumerate}
-    \item Evaluate multiple integrals over general domains using Fubini's theorem.
-    \item Perform coordinate transformations in multivariable integrals using the Jacobian determinant.
-    \item Calculate line integrals of vector fields along specified paths and surface fluxes through arbitrary surfaces.
-    \item State, prove, and apply Green's theorem, Stokes' circulation theorem, and Gauss's Divergence theorem.
-    \item Connect differential and integral formulations of physical laws (Maxwell's equations, continuity equation).
-    \item Implement numerical multiple integration algorithms in Python.
+% ==========================================================
+% Chapter 7 Instructional Management Plan & Syllabus
+% ==========================================================
+\section*{Chapter 7 Instructional Management Plan}
+\addcontentsline{toc}{section}{Chapter 7 Instructional Management Plan}
+
+\begin{planbox}[colframe=rbruNavy, colbacktitle=rbruNavy]{1. Chapter Topics and Core Content}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Multiple Integrals and the Jacobian Transformation
+    \item Line and Surface Integrals in Physics
+    \item The Fundamental Theorems of Vector Integral Calculus
+    \item Worked Examples: Gauss's Divergence and Stokes' Theorems
+    \item Summary of Key Formulas and Chapter Exercises
 \end{enumerate}
-\end{chapterobjectives}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGreen, colbacktitle=rbruGreen]{2. Behavioral Learning Objectives (OBE)}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Transform variables in double and triple integrals using the Jacobian determinant.
+    \item Compute line integrals for work and circulation along spatial trajectories.
+    \item Apply Gauss's Divergence theorem to relate volume divergence to surface flux.
+    \item Apply Stokes' theorem to relate surface vorticity to closed-path circulation.
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=rbruNavy!85!black, colbacktitle=rbruNavy!85!black]{3. Teaching Methods and Instructional Activities}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Lecture on line, surface, and volume integrals and integral theorem unifications.
+    \item Workshop calculating Jacobian scaling factors across curvilinear coordinates.
+    \item Computational lab computing numerical multiple integrals with SciPy integrate.
+    \item Group seminar connecting vector integral theorems to Maxwell's field equations.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. Instructional Media and Educational Technology}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Course textbook: Chapter 7 Multiple Integrals \& Field Theorems.
+    \item 3D visual animations of flux penetrating closed Gaussian surfaces.
+    \item SciPy Python integration scripts for multi-dimensional volume integrals.
+    \item Analytical problem sets and integral vector calculus study guides.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruSlate, colbacktitle=rbruSlate]{5. Measurement and Learning Assessment}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item In-class problem solving and conceptual checks on boundary orientations.
+    \item Grading of homework problem sets on flux integrals and Stokes' circulation.
+    \item Chapter 7 diagnostic quiz covering integral transformation theorems.
+\end{enumerate}
+\end{planbox}
+\clearpage
 
 \section{Multiple Integrals and the Jacobian Transformation}
 Physical quantities such as total mass $M = \iiint \rho(\vec{r})\,dV$, center of mass $\vec{r}_{\text{cm}} = \frac{1}{M}\iiint \vec{r}\rho\,dV$, and moments of inertia require integration over two- and three-dimensional spatial manifolds.

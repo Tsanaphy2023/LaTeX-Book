@@ -11,16 +11,59 @@
 \index{Conservative Fields}
 \index{Lorentz Force}
 
-\begin{chapterobjectives}
-Upon mastering this chapter, students will be able to:
-\begin{enumerate}
-    \item Perform sophisticated algebraic manipulations with dot, cross, and triple vector products.
-    \item Compute and physically interpret gradient ($\nabla$), divergence ($\nabla \cdot$), and curl ($\nabla \times$) in Cartesian and curvilinear geometries.
-    \item Evaluate conservative vector fields, construct scalar potential functions, and test for irrotational and solenoidal conditions.
-    \item Formulate vector identities essential for electrodynamics, continuum mechanics, and fluid dynamics.
-    \item Visualize vector fields and streamline topologies computationally using scientific Python.
+% ==========================================================
+% Chapter 2 Instructional Management Plan & Syllabus
+% ==========================================================
+\section*{Chapter 2 Instructional Management Plan}
+\addcontentsline{toc}{section}{Chapter 2 Instructional Management Plan}
+
+\begin{planbox}[colframe=rbruNavy, colbacktitle=rbruNavy]{1. Chapter Topics and Core Content}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Vector Algebra and Triple Products
+    \item Differential Field Operators: Gradient, Divergence, and Curl
+    \item Conservative Vector Fields and Potential Theory
+    \item Worked Examples and Electrodynamic Applications
+    \item Summary of Key Formulas and Chapter Exercises
 \end{enumerate}
-\end{chapterobjectives}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGreen, colbacktitle=rbruGreen]{2. Behavioral Learning Objectives (OBE)}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Perform algebraic operations with dot, cross, and scalar/vector triple products.
+    \item Calculate and physically interpret gradient ($\nabla$), divergence ($\nabla \cdot$), and curl ($\nabla \times$).
+    \item Construct scalar potentials for conservative fields and verify solenoidal conditions.
+    \item Apply vector differential identities to electromagnetic fields and fluid dynamics.
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=rbruNavy!85!black, colbacktitle=rbruNavy!85!black]{3. Teaching Methods and Instructional Activities}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Interactive lecture analyzing spatial gradients, flux divergence, and circulation curl.
+    \item Analytical workshops deriving fundamental vector differential identities.
+    \item Computational simulation lab visualizing 2D/3D vector fields and streamlines with Python.
+    \item Problem-based learning applying potential theory to electrostatic and gravitational fields.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. Instructional Media and Educational Technology}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Course textbook: Chapter 2 Vector Analysis \& Differential Field Operators.
+    \item Multimedia lecture slides featuring field contour maps and curl vortex animations.
+    \item Python scripts for vector field quiver plots using Matplotlib and NumPy.
+    \item Online problem sets and interactive vector algebra modules.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruSlate, colbacktitle=rbruSlate]{5. Measurement and Learning Assessment}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Formative assessment through classroom response questions and vector identity proofs.
+    \item Evaluation of weekly homework problem sets on field operators and potential theory.
+    \item Chapter 2 diagnostic quiz covering analytical calculations and physical field interpretations.
+\end{enumerate}
+\end{planbox}
+\clearpage
 
 \section{Vector Algebra and Triple Products}
 Physical quantities characterized by both magnitude and spatial orientation are represented mathematically as vectors. In three-dimensional Euclidean space, let $\vec{A} = A_x\hat{i} + A_y\hat{j} + A_z\hat{k}$ and $\vec{B} = B_x\hat{i} + B_y\hat{j} + B_z\hat{k}$.

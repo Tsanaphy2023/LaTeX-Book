@@ -9,17 +9,59 @@
 \index{Coupled Oscillators}
 \index{Inertia Tensor}
 
-\begin{chapterobjectives}
-Upon mastering this chapter, students will be able to:
-\begin{enumerate}
-    \item Perform matrix operations, evaluate determinants, and construct matrix inverses.
-    \item Classify symmetric, orthogonal, Hermitian, and unitary transformation matrices.
-    \item Formulate and solve the secular eigenvalue problem $\det(\mathbf{A} - \lambda\mathbf{I}) = 0$.
-    \item Diagonalize linear operators and construct similarity transformation matrices.
-    \item Apply matrix techniques to physical problems: coupled oscillators, normal modes, moment of inertia tensors, and quantum mechanical observables.
-    \item Solve large eigenvalue systems numerically using Python's `numpy.linalg`.
+% ==========================================================
+% Chapter 5 Instructional Management Plan & Syllabus
+% ==========================================================
+\section*{Chapter 5 Instructional Management Plan}
+\addcontentsline{toc}{section}{Chapter 5 Instructional Management Plan}
+
+\begin{planbox}[colframe=rbruNavy, colbacktitle=rbruNavy]{1. Chapter Topics and Core Content}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Matrix Operations and Special Classes of Matrices
+    \item The Eigenvalue Problem and Diagonalization
+    \item Physical Applications: Coupled Oscillators and Normal Modes
+    \item Worked Examples and Inertia Tensor Transformations
+    \item Summary of Key Formulas and Chapter Exercises
 \end{enumerate}
-\end{chapterobjectives}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGreen, colbacktitle=rbruGreen]{2. Behavioral Learning Objectives (OBE)}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Perform matrix algebra, determinant evaluations, and matrix inversions.
+    \item Solve the secular eigenvalue equation $\det(\mathbf{A} - \lambda\mathbf{I}) = 0$ for eigenvalues and eigenvectors.
+    \item Diagonalize symmetric and Hermitian operators via similarity transformations.
+    \item Model coupled mechanical oscillators, normal modes, and inertia tensors.
+\end{enumerate}
+\end{planbox}
+
+\newpage
+
+\begin{planbox}[colframe=rbruNavy!85!black, colbacktitle=rbruNavy!85!black]{3. Teaching Methods and Instructional Activities}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Lecture on linear vector spaces, matrix operators, and spectral decomposition.
+    \item Workshop deriving normal mode frequencies and eigenvectors for multi-mass systems.
+    \item Computational lab using Python `numpy.linalg` for large-scale matrix diagonalization.
+    \item Case study on principal axes of inertia in rigid body rotational dynamics.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruGold!90!black, colbacktitle=rbruGold!90!black]{4. Instructional Media and Educational Technology}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item Course textbook: Chapter 5 Linear Algebra \& Matrix Mechanics.
+    \item Lecture slides illustrating 2D/3D geometric transformations and eigenvector shears.
+    \item Python scripts for matrix operations and coupled oscillator animations.
+    \item Digital problem sets and matrix mechanics worksheets.
+\end{enumerate}
+\end{planbox}
+
+\begin{planbox}[colframe=rbruSlate, colbacktitle=rbruSlate]{5. Measurement and Learning Assessment}
+\begin{enumerate}[topsep=2pt, itemsep=1pt, partopsep=0pt, parsep=0pt, leftmargin=1.5em]
+    \item In-class engagement and formative assessment of matrix transformation proofs.
+    \item Evaluation of homework problem sets on eigenvalues and coupled oscillators.
+    \item Chapter 5 diagnostic examination on matrix diagonalization and normal modes.
+\end{enumerate}
+\end{planbox}
+\clearpage
 
 \section{Matrix Operations and Special Classes of Matrices}
 Linear relationships permeate theoretical physics. Systems of linear equations, spatial rotations, coordinate transformations, and quantum state evolutions are formulated through matrices.
