@@ -272,7 +272,7 @@
     interior style={left color=rbruNavy!98!black, right color=rbruNavy!85!rbruSlate},
     colback=rbruNavy,
     borderline east={4pt}{0pt}{rbruGold},
-    top=16pt, bottom=16pt, left=16pt, right=20pt,
+    top=12pt, bottom=12pt, left=16pt, right=20pt,
     drop shadow=black!10,
     underlay={
         \begin{tcbclipinterior}
@@ -315,7 +315,7 @@
   {\rbruunnumberedchapterbanner}
   [\global\setlength{\parindent}{1.25cm}]
 
-\titlespacing*{\chapter}{0pt}{0pt}{22pt}
+\titlespacing*{\chapter}{0pt}{0pt}{12pt}
 
 \titleformat{\section}
   {\normalfont\fontsize{16}{20}\bfseries\color{rbruNavy}}
@@ -364,16 +364,39 @@
 
 % 6. Academic Boxes (tcolorbox)
 
-% กล่องแผนบริหารการสอนประจำบทตามระเบียบ มรภ.รำไพพรรณี
+% กล่องแผนบริหารการสอนประจำบทตามระเบียบ มรภ.รำไพพรรณี (รองรับ breakable)
 \newtcolorbox{lessonplanbox}{
     enhanced,
+    breakable,
     colback=white,
     colframe=rbruNavy,
     arc=2mm,
     boxrule=0.8pt,
     leftrule=3.5mm,
-    top=10pt, bottom=10pt, left=12pt, right=12pt,
-    drop shadow=black!8
+    top=8pt, bottom=8pt, left=10pt, right=10pt,
+    drop shadow=black!6
+}
+
+% กล่องแยกหัวข้อย่อยสำหรับแผนบริหารการสอนประจำบท (Modular Lesson Plan Boxes)
+\newtcolorbox{planbox}[2][]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=rbruNavy,
+    fonttitle=\bfseries\fontsize{11}{14}\selectfont\color{white},
+    coltitle=white,
+    colbacktitle=rbruNavy,
+    title={#2},
+    arc=1.5mm,
+    boxrule=0.8pt,
+    leftrule=3.5mm,
+    top=3pt, bottom=3pt, left=8pt, right=8pt,
+    titlerule=0pt,
+    toptitle=2.5pt, bottomtitle=2.5pt,
+    drop shadow=black!5,
+    before skip=3.5pt,
+    after skip=3.5pt,
+    #1
 }
 
 % กล่องวัตถุประสงค์เชิงพฤติกรรมประจำบท (OBE Learning Outcomes)
