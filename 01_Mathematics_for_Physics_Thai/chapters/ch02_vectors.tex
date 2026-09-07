@@ -74,7 +74,7 @@
 ปริมาณทางฟิสิกส์ส่วนใหญ่จัดเป็นปริมาณเวกเตอร์ เช่น การกระจัด ความเร็ว ความเร่ง แรง โมเมนตัม สนามไฟฟ้า และสนามแม่เหล็ก การเข้าใจการดำเนินการคูณเวกเตอร์หลายชั้นจึงเป็นหัวใจสำคัญของการศึกษากลศาสตร์และแม่เหล็กไฟฟ้า
 
 \subsection{ผลคูณจุดและผลคูณไขว้}
-กำหนดเวกเตอร์ $\vec{A} = A_x\hat{i} + A_y\hat{j} + A_z\hat{k}$ และ $\vec{B} = B_x\hat{i} + B_y\hat{j} + B_z\hat{k}$:
+กำหนดเวกเตอร์ $\vec{A} = A_x\hat{i} + A_y\hat{j} + A_z\hat{k}$ และ $\vec{B} = B_x\hat{i} + B_y\hat{j} + B_z\hat{k}$
 \begin{align}
 \vec{A} \cdot \vec{B} &= |\vec{A}||\vec{B}|\cos\theta = A_x B_x + A_y B_y + A_z B_z \\
 \vec{A} \times \vec{B} &= |\vec{A}||\vec{B}|\sin\theta \,\hat{n} = \begin{vmatrix}
@@ -84,8 +84,8 @@ B_x & B_y & B_z
 \end{vmatrix}
 \end{align}
 
-\subsection{ผลคูณเชิงสเกลาร์สามชั้น (Scalar Triple Product)}
-ผลคูณ $\vec{A} \cdot (\vec{B} \times \vec{C})$ มีความหมายทางเรขาคณิตคือ \textbf{ปริมาตรของรูปทรงสี่เหลี่ยมด้านขนาน (Parallelepiped)} ที่มีด้านทั้งสามสร้างขึ้นโดยเวกเตอร์ $\vec{A}, \vec{B}, \vec{C}$:
+\subsection{ผลคูณเชิงสเกลาร์สามชั้น}
+ผลคูณ $\vec{A} \cdot (\vec{B} \times \vec{C})$ มีความหมายทางเรขาคณิตคือ \textbf{ปริมาตรของรูปทรงสี่เหลี่ยมด้านขนาน (Parallelepiped)} ที่มีด้านทั้งสามสร้างขึ้นโดยเวกเตอร์ $\vec{A}, \vec{B}, \vec{C}$
 \begin{equation}
 \vec{A} \cdot (\vec{B} \times \vec{C}) = \begin{vmatrix}
 A_x & A_y & A_z \\
@@ -93,13 +93,13 @@ B_x & B_y & B_z \\
 C_x & C_y & C_z
 \end{vmatrix}
 \end{equation}
-สมบัติการสลับหมุนเวียน (Cyclic Permutation):
+สมบัติการสลับหมุนเวียน (Cyclic Permutation)
 \begin{equation}
 \vec{A} \cdot (\vec{B} \times \vec{C}) = \vec{B} \cdot (\vec{C} \times \vec{A}) = \vec{C} \cdot (\vec{A} \times \vec{B})
 \end{equation}
 
 \subsection{ผลคูณเชิงเวกเตอร์สามชั้นและกฎ BAC-CAB}
-ผลคูณ $\vec{A} \times (\vec{B} \times \vec{C})$ ให้ผลลัพธ์เป็นเวกเตอร์ที่อยู่ในระนาบของ $\vec{B}$ และ $\vec{C}$ เสมอ สอดคล้องกับเอกลักษณ์:
+ผลคูณ $\vec{A} \times (\vec{B} \times \vec{C})$ ให้ผลลัพธ์เป็นเวกเตอร์ที่อยู่ในระนาบของ $\vec{B}$ และ $\vec{C}$ เสมอ สอดคล้องกับเอกลักษณ์
 \begin{equation}
 \vec{A} \times (\vec{B} \times \vec{C}) = \vec{B}(\vec{A} \cdot \vec{C}) - \vec{C}(\vec{A} \cdot \vec{B})
 \end{equation}
@@ -144,32 +144,32 @@ C_x & C_y & C_z
 \end{figure}
 
 \section{ตัวดำเนินการเชิงอนุพันธ์เวกเตอร์}
-ตัวดำเนินการแนบลา $\nabla$ (Del Operator) เป็นตัวดำเนินการอนุพันธ์เวกเตอร์เชิงเส้น ในพิกัดคาร์ทีเซียน:
+ตัวดำเนินการแนบลา $\nabla$ (Del Operator) เป็นตัวดำเนินการอนุพันธ์เวกเตอร์เชิงเส้น ในพิกัดคาร์ทีเซียน
 \begin{equation}
 \nabla \equiv \hat{i}\frac{\partial}{\partial x} + \hat{j}\frac{\partial}{\partial y} + \hat{k}\frac{\partial}{\partial z}
 \end{equation}
 
-\subsection{เกรเดียนต์ (Gradient)}
-เมื่อ $\nabla$ กระทำกับสนามสเกลาร์ $\psi(x,y,z)$ จะได้สนามเวกเตอร์:
+\subsection{เกรเดียนต์}
+เมื่อ $\nabla$ กระทำกับสนามสเกลาร์ $\psi(x,y,z)$ จะได้สนามเวกเตอร์
 \begin{equation}
 \nabla \psi = \frac{\partial \psi}{\partial x}\hat{i} + \frac{\partial \psi}{\partial y}\hat{j} + \frac{\partial \psi}{\partial z}\hat{k}
 \end{equation}
-\textbf{ความหมายทางกายภาพ:} เวกเตอร์เกรเดียนต์จะชี้ไปในทิศทางที่ค่าของ $\psi$ มีอัตราการเพิ่มขึ้นเร็วที่สุด และขนาดของมัน $|\nabla \psi|$ แสดงถึงอัตราการเปลี่ยนแปลงสูงสุดต่อหน่วยระยะทาง ตัวอย่างเช่น แรงในสนามอนุรักษ์ $\vec{F} = -\nabla U$ โดยที่แรงจะชี้ไปยังทิศทางที่พลังงานศักย์ลดลงเร็วที่สุด
+\textbf{ความหมายทางกายภาพ} เวกเตอร์เกรเดียนต์จะชี้ไปในทิศทางที่ค่าของ $\psi$ มีอัตราการเพิ่มขึ้นเร็วที่สุด และขนาดของมัน $|\nabla \psi|$ แสดงถึงอัตราการเปลี่ยนแปลงสูงสุดต่อหน่วยระยะทาง ตัวอย่างเช่น แรงในสนามอนุรักษ์ $\vec{F} = -\nabla U$ โดยที่แรงจะชี้ไปยังทิศทางที่พลังงานศักย์ลดลงเร็วที่สุด
 
-\subsection{ไดเวอร์เจนซ์ (Divergence)}
-เมื่อ $\nabla$ ดอทกับสนามเวกเตอร์ $\vec{A}$:
+\subsection{ไดเวอร์เจนซ์}
+เมื่อ $\nabla$ ดอทกับสนามเวกเตอร์ $\vec{A}$
 \begin{equation}
 \nabla \cdot \vec{A} = \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z}
 \end{equation}
-\textbf{ความหมายทางกายภาพ:} ไดเวอร์เจนซ์วัดอัตราการไหลออกสุทธิของสนามต่อหนึ่งหน่วยปริมาตร:
+\textbf{ความหมายทางกายภาพ} ไดเวอร์เจนซ์วัดอัตราการไหลออกสุทธิของสนามต่อหนึ่งหน่วยปริมาตร
 \begin{itemize}
-    \item $\nabla \cdot \vec{A} > 0$: จุดนั้นเป็น \textbf{แหล่งกำเนิด (Source)} เช่น ประจุบวกในสนามไฟฟ้า
-    \item $\nabla \cdot \vec{A} < 0$: จุดนั้นเป็น \textbf{หลุมดูด (Sink)} เช่น ประจุลบในสนามไฟฟ้า
-    \item $\nabla \cdot \vec{A} = 0$: สนามมีสภาพ \textbf{โซลีนอยดัล (Solenoidal)} ไม่มีการสะสม เช่น สนามแม่เหล็ก $\nabla \cdot \vec{B} = 0$ (ไม่มีขั้วแม่เหล็กเดี่ยว)
+    \item $\nabla \cdot \vec{A} > 0$ จุดนั้นเป็น \textbf{แหล่งกำเนิด (Source)} เช่น ประจุบวกในสนามไฟฟ้า
+    \item $\nabla \cdot \vec{A} < 0$ จุดนั้นเป็น \textbf{หลุมดูด (Sink)} เช่น ประจุลบในสนามไฟฟ้า
+    \item $\nabla \cdot \vec{A} = 0$ สนามมีสภาพ \textbf{โซลีนอยดัล (Solenoidal)} ไม่มีการสะสม เช่น สนามแม่เหล็ก $\nabla \cdot \vec{B} = 0$ (ไม่มีขั้วแม่เหล็กเดี่ยว)
 \end{itemize}
 
-\subsection{เคิร์ล (Curl)}
-เมื่อ $\nabla$ ครอสกับสนามเวกเตอร์ $\vec{A}$:
+\subsection{เคิร์ล}
+เมื่อ $\nabla$ ครอสกับสนามเวกเตอร์ $\vec{A}$
 \begin{equation}
 \nabla \times \vec{A} = \begin{vmatrix}
 \hat{i} & \hat{j} & \hat{k} \\
@@ -177,7 +177,7 @@ C_x & C_y & C_z
 A_x & A_y & A_z
 \end{vmatrix}
 \end{equation}
-\textbf{ความหมายทางกายภาพ:} เคิร์ลวัดแนวโน้มในการหมุนวน (Circulation / Vorticity) ของสนามรอบจุดหนึ่ง ๆ หากสนามเวกเตอร์ใดมี $\nabla \times \vec{A} = \vec{0}$ เรียกว่า \textbf{สนามไร้การหมุน (Irrotational)} หรือสนามอนุรักษ์
+\textbf{ความหมายทางกายภาพ} เคิร์ลวัดแนวโน้มในการหมุนวน (Circulation / Vorticity) ของสนามรอบจุดหนึ่ง ๆ หากสนามเวกเตอร์ใดมี $\nabla \times \vec{A} = \vec{0}$ เรียกว่า \textbf{สนามไร้การหมุน (Irrotational)} หรือสนามอนุรักษ์
 
 \begin{figure}[htbp]
     \centering
@@ -209,45 +209,45 @@ A_x & A_y & A_z
 \end{figure}
 
 \section{การประยุกต์ใช้ในวิทยาศาสตร์และชีวิตประจำวัน}
-\subsection{เซนเซอร์วัดความเร่งและเข็มทิศดิจิทัลในสมาร์ตโฟน (IMU)}
-สมาร์ตโฟนในยุคปัจจุบันบรรจุหน่วยวัดความเฉื่อย (Inertial Measurement Unit: IMU) ซึ่งประกอบด้วยเซนเซอร์ความเร่ง 3 แกน (Accelerometer) และเซนเซอร์สนามแม่เหล็ก 3 แกน (Magnetometer):
+\subsection{เซนเซอร์วัดความเร่งและเข็มทิศดิจิทัลในสมาร์ตโฟน}
+สมาร์ตโฟนในยุคปัจจุบันบรรจุหน่วยวัดความเฉื่อย (Inertial Measurement Unit หรือ IMU) ซึ่งประกอบด้วยเซนเซอร์ความเร่ง 3 แกน (Accelerometer) และเซนเซอร์สนามแม่เหล็ก 3 แกน (Magnetometer)
 \begin{equation}
 \vec{a}_{\text{measured}} = a_x \hat{i} + a_y \hat{j} + a_z \hat{k}, \quad \vec{B}_{\text{earth}} = B_x \hat{i} + B_y \hat{j} + B_z \hat{k}
 \end{equation}
 ระบบปฏิบัติการใช้ผลคูณไขว้ $\vec{a} \times \vec{B}$ เพื่อสร้างเวกเตอร์ชี้ไปทางทิศตะวันออก จากนั้นใช้ผลคูณไขว้ซ้ำอีกครั้งเพื่อสร้างเวกเตอร์ชี้ทิศเหนือทางภูมิศาสตร์ ทำให้หน้าจอสมาร์ตโฟนสามารถปรับทิศทางของแผนที่และการแสดงผลได้อย่างแม่นยำ
 
 \begin{mathexample}[การคำนวณการเคลื่อนที่ของอิเล็กตรอนในสนามแม่เหล็กสม่ำเสมอ]
-\textbf{โจทย์:} อิเล็กตรอนประจุ $q = -e$ มวล $m$ ถูกยิงด้วยความเร็ว $\vec{v} = v_0 \hat{i}$ เข้าไปในบริเวณที่มีสนามแม่เหล็กสม่ำเสมอ $\vec{B} = B_0 \hat{k}$ จงหาสมการการเคลื่อนที่ รัศมีความโค้ง และคาบการโคจร (Cyclotron Period)
+\textbf{โจทย์} อิเล็กตรอนประจุ $q = -e$ มวล $m$ ถูกยิงด้วยความเร็ว $\vec{v} = v_0 \hat{i}$ เข้าไปในบริเวณที่มีสนามแม่เหล็กสม่ำเสมอ $\vec{B} = B_0 \hat{k}$ จงหาสมการการเคลื่อนที่ รัศมีความโค้ง และคาบการโคจร (Cyclotron Period)
 
 \vspace{0.2cm}
-\textbf{PICTURE:} ความเร็วอยู่ในระนาบ $xy$ ส่วนสนามแม่เหล็กชี้ตามแกน $+z$ แรงลอเรนซ์ $\vec{F} = q(\vec{v} \times \vec{B})$ จะตั้งฉากกับความเร็วตลอดเวลา ทำให้อนุภาคเคลื่อนที่เป็นวงกลมในระนาบ $xy$
+\textbf{PICTURE} ความเร็วอยู่ในระนาบ $xy$ ส่วนสนามแม่เหล็กชี้ตามแกน $+z$ แรงลอเรนซ์ $\vec{F} = q(\vec{v} \times \vec{B})$ จะตั้งฉากกับความเร็วตลอดเวลา ทำให้อนุภาคเคลื่อนที่เป็นวงกลมในระนาบ $xy$
 
 \vspace{0.2cm}
-\textbf{SOLVE:}
-1. คำนวณแรงแม่เหล็ก:
+\textbf{SOLVE}
+1. คำนวณแรงแม่เหล็ก
 \begin{equation}
 \vec{F}_B = -e (v_x \hat{i} + v_y \hat{j}) \times (B_0 \hat{k}) = -e \left(-v_x B_0 \hat{j} + v_y B_0 \hat{i}\right) = -e B_0 v_y \hat{i} + e B_0 v_x \hat{j}
 \end{equation}
-2. ใช้กฎข้อที่สองของนิวตัน $m\frac{d\vec{v}}{dt} = \vec{F}_B$:
+2. ใช้กฎข้อที่สองของนิวตัน $m\frac{d\vec{v}}{dt} = \vec{F}_B$
 \begin{align}
 m\frac{dv_x}{dt} &= -e B_0 v_y \\
 m\frac{dv_y}{dt} &= e B_0 v_x
 \end{align}
-3. นิยามความถี่ไซโคลตรอน $\omega_c = \frac{e B_0}{m}$ จะได้สมการตัวแกว่งกวัดฮาร์มอนิก:
+3. นิยามความถี่ไซโคลตรอน $\omega_c = \frac{e B_0}{m}$ จะได้สมการตัวแกว่งกวัดฮาร์มอนิก
 \begin{equation}
 \frac{d^2 v_x}{dt^2} + \omega_c^2 v_x = 0
 \end{equation}
-4. แรงแม่เหล็กทำหน้าที่เป็นแรงสู่ศูนย์กลาง $F_c = \frac{m v^2}{R} = e v B_0$:
+4. แรงแม่เหล็กทำหน้าที่เป็นแรงสู่ศูนย์กลาง $F_c = \frac{m v^2}{R} = e v B_0$
 \begin{equation}
 R = \frac{m v}{e B_0}
 \end{equation}
-และคาบการโคจรคือ:
+และคาบการโคจรคือ
 \begin{equation}
 T = \frac{2\pi R}{v} = \frac{2\pi m}{e B_0}
 \end{equation}
 
 \vspace{0.2cm}
-\textbf{CHECK:} คาบการโคจร $T$ ไม่ขึ้นกับความเร็ว $v$ หรือรัศมี $R$ ซึ่งเป็นหลักการทำงานสำคัญของเครื่องเร่งอนุภาคไซโคลตรอน (Cyclotron Accelerator)\qedexam
+\textbf{CHECK} คาบการโคจร $T$ ไม่ขึ้นกับความเร็ว $v$ หรือรัศมี $R$ ซึ่งเป็นหลักการทำงานสำคัญของเครื่องเร่งอนุภาคไซโคลตรอน (Cyclotron Accelerator)\qedexam
 
 \begin{pythonbox}[การจำลองด้วย Python  หาผลเฉลยวิติการเคลื่อนที่ของอนุภาคประจุในสนามแม่เหล็ก]
 import numpy as np
@@ -273,26 +273,26 @@ print(f"คาบการโคจร T: {T_exact*1e9:.3f} ns | รัศมี
 \end{mathexample}
 
 \begin{mathexample}[การพิสูจน์สนามไฟฟ้าเป็นสนามอนุรักษ์]
-\textbf{โจทย์:} กำหนดสนามไฟฟ้าของจุดประจุ $Q$ ณ จุดกำเนิดคือ $\vec{E}(\vec{r}) = \frac{k Q}{r^2}\hat{r}$ จงพิสูจน์ว่า $\nabla \times \vec{E} = \vec{0}$
+\textbf{โจทย์} กำหนดสนามไฟฟ้าของจุดประจุ $Q$ ณ จุดกำเนิดคือ $\vec{E}(\vec{r}) = \frac{k Q}{r^2}\hat{r}$ จงพิสูจน์ว่า $\nabla \times \vec{E} = \vec{0}$
 
 \vspace{0.2cm}
-\textbf{SOLVE:} สังเกตว่า $\hat{r} = \vec{r}/r$ ดังนั้น $\vec{E} = \frac{kQ}{r^3}(x\hat{i} + y\hat{j} + z\hat{k})$
-หาเคิร์ลตามแนวแกน $z$:
+\textbf{SOLVE} สังเกตว่า $\hat{r} = \vec{r}/r$ ดังนั้น $\vec{E} = \frac{kQ}{r^3}(x\hat{i} + y\hat{j} + z\hat{k})$
+หาเคิร์ลตามแนวแกน $z$
 \begin{equation}
 (\nabla \times \vec{E})_z = \frac{\partial E_y}{\partial x} - \frac{\partial E_x}{\partial y} = \frac{\partial}{\partial x}\left(\frac{kQy}{r^3}\right) - \frac{\partial}{\partial y}\left(\frac{kQx}{r^3}\right)
 \end{equation}
-ใช้กฎลูกโซ่โดยที่ $\frac{\partial r}{\partial x} = \frac{x}{r}$ และ $\frac{\partial r}{\partial y} = \frac{y}{r}$:
+ใช้กฎลูกโซ่โดยที่ $\frac{\partial r}{\partial x} = \frac{x}{r}$ และ $\frac{\partial r}{\partial y} = \frac{y}{r}$
 \begin{align}
 \frac{\partial}{\partial x}\left(\frac{kQy}{r^3}\right) &= kQy\left(-\frac{3}{r^4}\frac{x}{r}\right) = -\frac{3kQxy}{r^5} \\
 \frac{\partial}{\partial y}\left(\frac{kQx}{r^3}\right) &= kQx\left(-\frac{3}{r^4}\frac{y}{r}\right) = -\frac{3kQxy}{r^5}
 \end{align}
-เมื่อนำมาลบกันจะได้ $(\nabla \times \vec{E})_z = 0$ และในทำนองเดียวกันสำหรับแกน $x$ และ $y$:
+เมื่อนำมาลบกันจะได้ $(\nabla \times \vec{E})_z = 0$ และในทำนองเดียวกันสำหรับแกน $x$ และ $y$
 \begin{equation}
 \nabla \times \vec{E} = \vec{0}
 \end{equation}
 
 \vspace{0.2cm}
-\textbf{CHECK:} เนื่องจาก $\nabla \times \vec{E} = \vec{0}$ ทุกจุด (ยกเว้นที่ $r=0$) สนามไฟฟ้าสถิตจึงเป็นสนามอนุรักษ์ และสามารถนิยามฟังก์ชันศักย์ไฟฟ้าสเกลาร์ $V = kQ/r$ ที่ทำให้ $\vec{E} = -\nabla V$ ได้เสมอ\qedexam
+\textbf{CHECK} เนื่องจาก $\nabla \times \vec{E} = \vec{0}$ ทุกจุด (ยกเว้นที่ $r=0$) สนามไฟฟ้าสถิตจึงเป็นสนามอนุรักษ์ และสามารถนิยามฟังก์ชันศักย์ไฟฟ้าสเกลาร์ $V = kQ/r$ ที่ทำให้ $\vec{E} = -\nabla V$ ได้เสมอ\qedexam
 
 \begin{pythonbox}[การจำลองด้วย Python  ตรวจสอบเคิร์ลของสนามไฟฟ้าสถิตด้วย SymPy]
 import sympy as sp
@@ -336,13 +336,13 @@ print("ยืนยันสนามไฟฟ้าสถิตเป็นส�
 \end{table}
 
 \section{แบบฝึกหัดท้ายบท}
-\subsection{คำถามเชิงแนวคิด (Conceptual Questions)}
+\subsection{คำถามเชิงแนวคิด}
 \begin{enumerate}
     \item หากสนามแม่เหล็กมีไดเวอร์เจนซ์เป็นศูนย์เสมอ ($\nabla \cdot \vec{B} = 0$) สิ่งนี้บอกอะไรเกี่ยวกับเส้นแรงแม่เหล็กและการมีอยู่ของขั้วแม่เหล็กเดี่ยว (Magnetic Monopole)
     \item ในพายุไซโคลน เหตุใดลมจึงหมุนวนทวนเข็มนาฬิกาในซีกโลกเหนือ จงอธิบายด้วยความสัมพันธ์ของแรงโคริออลิสและเคิร์ลของสนามความเร็ว
 \end{enumerate}
 
-\subsection{โจทย์การคำนวณเชิงวิเคราะห์ (Analytical Problems)}
+\subsection{โจทย์การคำนวณเชิงวิเคราะห์}
 \begin{enumerate}
     \item จงพิสูจน์เอกลักษณ์เวกเตอร์ $\nabla \cdot (\vec{A} \times \vec{B}) = \vec{B} \cdot (\nabla \times \vec{A}) - \vec{A} \cdot (\nabla \times \vec{B})$
     \item กำหนดสนามเวกเตอร์ $\vec{v} = (y^2)\hat{i} + (2xy + z^2)\hat{j} + (2yz)\hat{k}$ จงตรวจสอบว่าสนามนี้เป็นสนามอนุรักษ์หรือไม่ หากเป็น จงหาฟังก์ชันศักย์สเกลาร์ $\phi$ ที่สอดคล้องกับ $\vec{v} = \nabla \phi$

@@ -69,7 +69,7 @@
 \section{การดำเนินการของเมทริกซ์และการแปลงเชิงเส้น}
 เมทริกซ์เป็นเครื่องมือทางคณิตศาสตร์ที่มีบทบาทกว้างขวางที่สุดในฟิสิกส์ยุคใหม่ ตั้งแต่กลศาสตร์ดั้งเดิม กลศาสตร์ควอนตัม ไปจนถึงทฤษฎีสัมพัทธภาพและปัญญาประดิษฐ์
 
-เมทริกซ์ $\mathbf{A}$ ขนาด $m \times n$ คือตารางตัวเลขที่มี $m$ แถวและ $n$ หลัก:
+เมทริกซ์ $\mathbf{A}$ ขนาด $m \times n$ คือตารางตัวเลขที่มี $m$ แถวและ $n$ หลัก
 \begin{equation}
 \mathbf{A} = \begin{pmatrix}
 a_{11} & a_{12} & \cdots & a_{1n} \\
@@ -81,7 +81,7 @@ a_{m1} & a_{m2} & \cdots & a_{mn}
 
 \subsection{การแปลงเชิงเส้นและการหมุนพิกัด}
 การแปลงเชิงเส้นใน $\mathbb{R}^2$ หรือ $\mathbb{R}^3$ สามารถเขียนแทนด้วยการคูณเมทริกซ์กับเวกเตอร์บอกตำแหน่ง $\vec{r}' = \mathbf{R} \vec{r}$
-การหมุนเวกเตอร์ในระนาบ $xy$ ทวนเข็มนาฬิกาด้วยมุม $\theta$:
+การหมุนเวกเตอร์ในระนาบ $xy$ ทวนเข็มนาฬิกาด้วยมุม $\theta$
 \begin{equation}
 \mathbf{R}_z(\theta) = \begin{pmatrix}
 \cos\theta & -\sin\theta & 0 \\
@@ -92,21 +92,21 @@ a_{m1} & a_{m2} & \cdots & a_{mn}
 เมทริกซ์การหมุนมีสมบัติเป็น \textbf{เมทริกซ์เชิงตั้งฉาก (Orthogonal Matrix)} นั่นคือ $\mathbf{R}^T \mathbf{R} = \mathbf{I}$ และ $\det(\mathbf{R}) = +1$ ซึ่งมีสมบัติอนุรักษ์ความยาวของเวกเตอร์และมุมระหว่างเวกเตอร์
 
 \section{ปัญหาค่าเจาะจงและการแปลงทแยงมุม}
-สำหรับตัวดำเนินการเชิงเส้นที่แทนด้วยเมทริกซ์จัตุรัส $\mathbf{A}$ ขนาด $n \times n$ เวกเตอร์ที่ไม่ใช่เวกเตอร์ศูนย์ $\vec{v}$ ที่เมื่อถูกแปลงด้วย $\mathbf{A}$ แล้วยังคงชี้ในแนวทิศทางเดิม (เพียงแต่ขนาดถูกขยายหรือหดตัวด้วยสเกลาร์ $\lambda$) เรียกว่า \textbf{เวกเตอร์เจาะจง (Eigenvector)} และสเกลาร์ $\lambda$ เรียกว่า \textbf{ค่าเจาะจง (Eigenvalue)}:
+สำหรับตัวดำเนินการเชิงเส้นที่แทนด้วยเมทริกซ์จัตุรัส $\mathbf{A}$ ขนาด $n \times n$ เวกเตอร์ที่ไม่ใช่เวกเตอร์ศูนย์ $\vec{v}$ ที่เมื่อถูกแปลงด้วย $\mathbf{A}$ แล้วยังคงชี้ในแนวทิศทางเดิม (เพียงแต่ขนาดถูกขยายหรือหดตัวด้วยสเกลาร์ $\lambda$) เรียกว่า \textbf{เวกเตอร์เจาะจง (Eigenvector)} และสเกลาร์ $\lambda$ เรียกว่า \textbf{ค่าเจาะจง (Eigenvalue)}
 \begin{equation}
 \mathbf{A}\vec{v} = \lambda \vec{v} \iff (\mathbf{A} - \lambda \mathbf{I})\vec{v} = \vec{0}
 \end{equation}
-สมการจะมีผลเฉลยที่ไม่เป็นศูนย์ ($\vec{v} \neq \vec{0}$) ก็ต่อเมื่อดีเทอร์มิแนนต์ของเมทริกซ์สัมประสิทธิ์เป็นศูนย์ ซึ่งเรียกว่า \textbf{สมการลักษณะเฉพาะ (Characteristic Equation)}:
+สมการจะมีผลเฉลยที่ไม่เป็นศูนย์ ($\vec{v} \neq \vec{0}$) ก็ต่อเมื่อดีเทอร์มิแนนต์ของเมทริกซ์สัมประสิทธิ์เป็นศูนย์ ซึ่งเรียกว่า \textbf{สมการลักษณะเฉพาะ (Characteristic Equation)}
 \begin{equation}
 \det(\mathbf{A} - \lambda \mathbf{I}) = 0
 \end{equation}
 
 \begin{maththeorem}[ทฤษฎีบทสเปกตรัมสำหรับเมทริกซ์เฮอร์มิเชียน (Spectral Theorem)]
-ในกลศาสตร์ควอนตัม ตัวสังเกตได้ทางกายภาพ (Physical Observables) เช่น พลังงาน ($\hat{H}$) โมเมนตัม ($\hat{p}$) หรือสปิน ($\hat{S}$) จะแทนด้วยเมทริกซ์หรือตัวดำเนินการเฮอร์มิเชียน ($\mathbf{H}^\dagger = \mathbf{H}$):
+ในกลศาสตร์ควอนตัม ตัวสังเกตได้ทางกายภาพ (Physical Observables) เช่น พลังงาน ($\hat{H}$) โมเมนตัม ($\hat{p}$) หรือสปิน ($\hat{S}$) จะแทนด้วยเมทริกซ์หรือตัวดำเนินการเฮอร์มิเชียน ($\mathbf{H}^\dagger = \mathbf{H}$)
 \begin{enumerate}
     \item ค่าเจาะจงทุกค่าเป็นจำนวนจริงเสมอ ($\lambda_i \in \mathbb{R}$) ซึ่งเป็นค่าที่วัดได้จริงในห้องปฏิบัติการ
-    \item เวกเตอร์เจาะจงที่สอดคล้องกับค่าเจาะจงที่ต่างกัน จะตั้งฉากกันแบบออร์โธกอนัล: $\vec{v}_i^\dagger \vec{v}_j = 0$ เมื่อ $i \neq j$
-    \item เมทริกซ์ $\mathbf{H}$ สามารถแปลงทแยงมุมได้เสมอโดยเมทริกซ์ยูนิตารี $\mathbf{U}$: $\mathbf{U}^\dagger \mathbf{H} \mathbf{U} = \mathbf{D} = \text{diag}(\lambda_1, \lambda_2, \dots, \lambda_n)$
+    \item เวกเตอร์เจาะจงที่สอดคล้องกับค่าเจาะจงที่ต่างกัน จะตั้งฉากกันแบบออร์โธกอนัล กล่าวคือ $\vec{v}_i^\dagger \vec{v}_j = 0$ เมื่อ $i \neq j$
+    \item เมทริกซ์ $\mathbf{H}$ สามารถแปลงทแยงมุมได้เสมอโดยเมทริกซ์ยูนิตารี $\mathbf{U}$ ดังสมการ $\mathbf{U}^\dagger \mathbf{H} \mathbf{U} = \mathbf{D} = \text{diag}(\lambda_1, \lambda_2, \dots, \lambda_n)$
 \end{enumerate}
 \end{maththeorem}
 
@@ -127,7 +127,7 @@ a_{m1} & a_{m2} & \cdots & a_{mn}
 \end{table}
 
 \section{การประยุกต์ใช้ในวิทยาศาสตร์และวิศวกรรมศาสตร์}
-\subsection{โหมดการสั่นสะเทือนของอาคารต้านแผ่นดินไหว (Coupled Oscillators)}
+\subsection{โหมดการสั่นสะเทือนของอาคารต้านแผ่นดินไหว}
 ในการออกแบบโครงสร้างอาคารสูงต้านแผ่นดินไหว อาคาร 2 ชั้นสามารถจำลองเป็นมวล 2 ก้อน ($m_1, m_2$) เชื่อมต่อด้วยเสาที่มีสภาพยืดหยุ่นเสมือนสปริงค่าคงที่ ($k_1, k_2, k_3$)
 
 \begin{figure}[htbp]
@@ -162,49 +162,49 @@ a_{m1} & a_{m2} & \cdots & a_{mn}
     \label{fig:coupled_oscillator}
 \end{figure}
 
-สมการการเคลื่อนที่ตามกฎของนิวตัน:
+สมการการเคลื่อนที่ตามกฎของนิวตัน
 \begin{align}
 m \ddot{x}_1 &= -k x_1 + k(x_2 - x_1) = -2k x_1 + k x_2 \\
 m \ddot{x}_2 &= -k(x_2 - x_1) - k x_2 = k x_1 - 2k x_2
 \end{align}
-จัดในรูปสมการเมทริกซ์:
+จัดในรูปสมการเมทริกซ์
 \begin{equation}
 \begin{pmatrix} \ddot{x}_1 \\ \ddot{x}_2 \end{pmatrix} = -\frac{k}{m} \begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
 \end{equation}
-สมมติผลเฉลยในรูปฮาร์มอนิก $\vec{x}(t) = \vec{v} e^{i\omega t}$ จะได้ $\ddot{\vec{x}} = -\omega^2 \vec{x}$ นำไปสู่ปัญหาค่าเจาะจง:
+สมมติผลเฉลยในรูปฮาร์มอนิก $\vec{x}(t) = \vec{v} e^{i\omega t}$ จะได้ $\ddot{\vec{x}} = -\omega^2 \vec{x}$ นำไปสู่ปัญหาค่าเจาะจง
 \begin{equation}
 \begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix} \vec{v} = \lambda \vec{v}, \quad \lambda = \frac{m\omega^2}{k}
 \end{equation}
 
 \begin{mathexample}[การหาความถี่ธรรมชาติและโหมดปกติของระบบมวลคู่]
-\textbf{โจทย์:} จงหาความถี่ธรรมชาติ $\omega_1, \omega_2$ และเวกเตอร์โหมดปกติของระบบมวลเชื่อมคู่ที่มีเมทริกซ์ $\mathbf{K} = \begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix}$
+\textbf{โจทย์} จงหาความถี่ธรรมชาติ $\omega_1, \omega_2$ และเวกเตอร์โหมดปกติของระบบมวลเชื่อมคู่ที่มีเมทริกซ์ $\mathbf{K} = \begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix}$
 
 \vspace{0.2cm}
-\textbf{SOLVE:}
-1. ตั้งสมการลักษณะเฉพาะ:
+\textbf{SOLVE}
+1. ตั้งสมการลักษณะเฉพาะ
 \begin{equation}
 \det(\mathbf{K} - \lambda \mathbf{I}) = \begin{vmatrix} 2 - \lambda & -1 \\ -1 & 2 - \lambda \end{vmatrix} = (2 - \lambda)^2 - 1 = 0
 \end{equation}
-แก้ออกมาได้ค่าเจาะจง 2 ค่า:
+แก้ออกมาได้ค่าเจาะจง 2 ค่า
 \begin{equation}
 2 - \lambda = \pm 1 \implies \lambda_1 = 1, \quad \lambda_2 = 3
 \end{equation}
-2. หาความถี่ธรรมชาติของระบบ:
+2. หาความถี่ธรรมชาติของระบบ
 \begin{align}
 \omega_1 &= \sqrt{\frac{k}{m}\lambda_1} = \sqrt{\frac{k}{m}} \\
 \omega_2 &= \sqrt{\frac{k}{m}\lambda_2} = \sqrt{\frac{3k}{m}}
 \end{align}
-3. หาเวกเตอร์เจาะจงสำหรับแต่ละโหมด:
+3. หาเวกเตอร์เจาะจงสำหรับแต่ละโหมด
 \begin{itemize}
-    \item สำหรับ $\lambda_1 = 1$: $\begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_1 = v_2 \implies \vec{v}_1 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$
-    \item สำหรับ $\lambda_2 = 3$: $\begin{pmatrix} -1 & -1 \\ -1 & -1 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_1 = -v_2 \implies \vec{v}_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix}$
+    \item สำหรับ $\lambda_1 = 1$ จะได้ $\begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_1 = v_2 \implies \vec{v}_1 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$
+    \item สำหรับ $\lambda_2 = 3$ จะได้ $\begin{pmatrix} -1 & -1 \\ -1 & -1 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_1 = -v_2 \implies \vec{v}_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix}$
 \end{itemize}
 
 \vspace{0.2cm}
-\textbf{CHECK (การตีความทางกายภาพ):}
+\textbf{CHECK (การตีความทางกายภาพ)}
 \begin{itemize}
-    \item \textbf{โหมดที่ 1 (Symmetric Mode, $\omega_1 = \sqrt{k/m}$):} มวลทั้งสองแกว่งไปในทิศทางเดียวกันพร้อมกัน สปริงตัวกลางไม่ยืดหด
-    \item \textbf{โหมดที่ 2 (Anti-symmetric Mode, $\omega_2 = \sqrt{3k/m}$):} มวลทั้งสองแกว่งสวนทางกัน สปริงตัวกลางถูกบีบและยืดอย่างรุนแรง ทำให้ความถี่สูงกว่า\qedexam
+    \item \textbf{โหมดที่ 1 (Symmetric Mode, $\omega_1 = \sqrt{k/m}$)} มวลทั้งสองแกว่งไปในทิศทางเดียวกันพร้อมกัน สปริงตัวกลางไม่ยืดหด
+    \item \textbf{โหมดที่ 2 (Anti-symmetric Mode, $\omega_2 = \sqrt{3k/m}$)} มวลทั้งสองแกว่งสวนทางกัน สปริงตัวกลางถูกบีบและยืดอย่างรุนแรง ทำให้ความถี่สูงกว่า\qedexam
 \end{itemize}
 
 \begin{pythonbox}[การจำลองด้วย Python  การแก้ปัญหาค่าเจาะจงและเวกเตอร์เจาะจงของระบบมวลสปริงคู่]
@@ -230,28 +230,28 @@ for i, (val, vec) in enumerate(zip(eigenvals, eigenvecs.T), start=1):
 \end{mathexample}
 
 \begin{mathexample}[การคำนวณการสลับทัศนียภาพในระบบ AR/VR ด้วยเมทริกซ์ 3D]
-\textbf{โจทย์:} จุดวัตถุเสมือนในโลก 3 มิติ มีพิกัด $\vec{P} = (1, 0, 0)^T$ ผู้ใช้สวมแว่นตาเสมือนจริงหันศีรษะหมุนรอบแกน $z$ ทำมุม $90^\circ$ และก้มศีรษะหมุนรอบแกน $x$ ทำมุม $90^\circ$ จงหาพิกัดใหม่ของจุดวัตถุในมุมมองของผู้ใช้
+\textbf{โจทย์} จุดวัตถุเสมือนในโลก 3 มิติ มีพิกัด $\vec{P} = (1, 0, 0)^T$ ผู้ใช้สวมแว่นตาเสมือนจริงหันศีรษะหมุนรอบแกน $z$ ทำมุม $90^\circ$ และก้มศีรษะหมุนรอบแกน $x$ ทำมุม $90^\circ$ จงหาพิกัดใหม่ของจุดวัตถุในมุมมองของผู้ใช้
 
 \vspace{0.2cm}
-\textbf{SOLVE:} เมทริกซ์การหมุนรอบแกน $z$ ด้วยมุม $\theta_z = 90^\circ$:
+\textbf{SOLVE} เมทริกซ์การหมุนรอบแกน $z$ ด้วยมุม $\theta_z = 90^\circ$
 \begin{equation}
 \mathbf{R}_z(90^\circ) = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix}
 \end{equation}
-และเมทริกซ์การหมุนรอบแกน $x$ ด้วยมุม $\theta_x = 90^\circ$:
+และเมทริกซ์การหมุนรอบแกน $x$ ด้วยมุม $\theta_x = 90^\circ$
 \begin{equation}
 \mathbf{R}_x(90^\circ) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & -1 \\ 0 & 1 & 0 \end{pmatrix}
 \end{equation}
-การหมุนรวมแบบต่อเนื่อง (Compound Rotation):
+การหมุนรวมแบบต่อเนื่อง (Compound Rotation)
 \begin{equation}
 \mathbf{R}_{\text{total}} = \mathbf{R}_x \mathbf{R}_z = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & -1 \\ 0 & 1 & 0 \end{pmatrix} \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & -1 \\ 1 & 0 & 0 \end{pmatrix}
 \end{equation}
-พิกัดใหม่ของวัตถุ:
+พิกัดใหม่ของวัตถุ
 \begin{equation}
 \vec{P}' = \mathbf{R}_{\text{total}} \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}
 \end{equation}
 
 \vspace{0.2cm}
-\textbf{CHECK:} จุดเดิมอยู่บนแกน $+x$ เมื่อหมุนรอบแกน $z$ ไป $90^\circ$ จะย้ายไปแกน $+y$ และเมื่อหมุนรอบแกน $x$ ต่ออีก $90^\circ$ แกน $+y$ จะหมุนขึ้นไปเป็นแกน $+z$ สอดคล้องกับการคำนวณเชิงเรขาคณิตโดยตรง\qedexam
+\textbf{CHECK} จุดเดิมอยู่บนแกน $+x$ เมื่อหมุนรอบแกน $z$ ไป $90^\circ$ จะย้ายไปแกน $+y$ และเมื่อหมุนรอบแกน $x$ ต่ออีก $90^\circ$ แกน $+y$ จะหมุนขึ้นไปเป็นแกน $+z$ สอดคล้องกับการคำนวณเชิงเรขาคณิตโดยตรง\qedexam
 
 \begin{pythonbox}[การจำลองด้วย Python  การแปลงพิกัด 3 มิติและการหมุนต่อเนื่องในระบบ AR/VR]
 import numpy as np
@@ -300,13 +300,13 @@ print(f"พิกัดใหม่ในมุมมองผู้ใช้ P'
 
 \clearpage
 \section{แบบฝึกหัดท้ายบท}
-\subsection{คำถามเชิงแนวคิด (Conceptual Questions)}
+\subsection{คำถามเชิงแนวคิด}
 \begin{enumerate}
     \item เหตุใดผลคูณของการหมุนใน 3 มิติจึงไม่มีสมบัติการสลับที่ ($\mathbf{R}_1 \mathbf{R}_2 \neq \mathbf{R}_2 \mathbf{R}_1$) จงอธิบายเปรียบเทียบกับการหมุนใน 2 มิติ
     \item ในกลศาสตร์ควอนตัม หากตัวดำเนินการสองตัวไม่สลับที่กัน ($[\mathbf{A}, \mathbf{B}] \neq 0$) สิ่งนี้ส่งผลต่อความแม่นยำในการวัดค่าทางกายภาพตามหลักความไม่แน่นอนของไฮเซนเบิร์กอย่างไร
 \end{enumerate}
 
-\subsection{โจทย์การคำนวณเชิงวิเคราะห์ (Analytical Problems)}
+\subsection{โจทย์การคำนวณเชิงวิเคราะห์}
 \begin{enumerate}
     \item จงหาค่าเจาะจงและเวกเตอร์เจาะจงของเมทริกซ์ $\mathbf{A} = \begin{pmatrix} 5 & 4 \\ 1 & 2 \end{pmatrix}$ พร้อมทั้งหาเมทริกซ์ $\mathbf{P}$ ที่ทำให้ $\mathbf{P}^{-1} \mathbf{A} \mathbf{P}$ เป็นเมทริกซ์ทแยงมุม
     \item กำหนดระบบลูกตุ้มคู่ขนาดเล็ก จงตั้งสมการเมทริกซ์ของความเร่งและหาความถี่การแกว่งในโหมดปกติ
