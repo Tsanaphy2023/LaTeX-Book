@@ -1,0 +1,199 @@
+% !TEX program = xelatex
+\documentclass[11pt]{article}
+\usepackage[paperwidth=6in, paperheight=9in, margin=0mm]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc,shadows.blur,positioning}
+\usepackage[skins]{tcolorbox}
+\usepackage{enumitem}
+
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+
+\definecolor{themeCol}{HTML}{060A17}
+\definecolor{accentCol}{HTML}{00E5FF}
+\definecolor{titleColorOne}{HTML}{060A17}
+\definecolor{titleColorTwo}{HTML}{8B5CF6}
+\definecolor{headerColor}{HTML}{00E5FF}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ==============================================================================
+% 1. FRONT COVER (สถาปัตยกรรม 5 เสาหลัก: Full-bleed 2:3, Dual-Layer Micro Shadows, ไร้กล่องทึบ)
+% ==============================================================================
+\begingroup
+\setlength{\XeTeXlinebreakskip}{0pt}
+\begin{tikzpicture}[remember picture, overlay]
+    % 1. ภาพประกอบ 3D Pixar สัดส่วน 2:3 เต็มหน้ากระดาษ (Full-bleed 100%)
+    \node[inner sep=0pt, anchor=center] at (current page.center) {
+        \includegraphics[width=\paperwidth, height=\paperheight]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/06_Prototype_2x3_Images/Book13_portrait.png}
+    };
+    
+    % 2. ข้อความหัวเรื่องด้านบน (Upper Sky Region - Dual-Layer Micro Drop-Shadow)
+    % เลเยอร์เงาสีขาว (Soft White Glow Layer)
+    \node[anchor=north, align=center, text width=5.2in] at ([xshift=0.5pt, yshift=-0.384in]current page.north) {
+        {\fontsize{8.5pt}{12pt}\selectfont\bfseries\color{white} QUANTUM COMPUTING & AI PHYSICS SERIES 2026 • VOL. 13} \\[4pt]
+        {\fontsize{17.5pt}{22pt}\selectfont\bfseries\color{white} ควอนตัมฟิสิกส์เบื้องต้น} \\[4pt]
+        {\fontsize{17.5pt}{22pt}\selectfont\bfseries\color{white} และการประยุกต์ภาพเสมือนจริงสามมิติร่วมกับปัญญาประดิษฐ์} \\[5pt]
+        {\fontsize{8.5pt}{12pt}\selectfont\bfseries\color{white} INTRODUCTION TO QUANTUM PHYSICS WITH WEBAR AND AI}
+    };
+    % เลเยอร์ตัวอักษรจริง (Rich Contrast Color Layer)
+    \node[anchor=north, align=center, text width=5.2in] at ([yshift=-0.38in]current page.north) {
+        {\fontsize{8.5pt}{12pt}\selectfont\bfseries\color{headerColor} QUANTUM COMPUTING & AI PHYSICS SERIES 2026 • VOL. 13} \\[4pt]
+        {\fontsize{17.5pt}{22pt}\selectfont\bfseries\color{titleColorOne} ควอนตัมฟิสิกส์เบื้องต้น} \\[4pt]
+        {\fontsize{17.5pt}{22pt}\selectfont\bfseries\color{titleColorTwo} และการประยุกต์ภาพเสมือนจริงสามมิติร่วมกับปัญญาประดิษฐ์} \\[5pt]
+        {\fontsize{8.5pt}{12pt}\selectfont\bfseries\color{headerColor!90!black} INTRODUCTION TO QUANTUM PHYSICS WITH WEBAR AND AI}
+    };
+    
+    % 3. ข้อมูลผู้แต่งและสังกัดด้านล่าง (Bottom Soil/Ground Region - Dual-Layer Micro Drop-Shadow)
+    % เลเยอร์เงาสีดำ (Drop Shadow Layer)
+    \node[anchor=south, align=center, text width=5.2in] at ([xshift=0.35pt, yshift=0.347in]current page.south) {
+        {\fontsize{13.5pt}{18pt}\selectfont\bfseries\color{black!95} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ  ทัศนา} \\[2pt]
+        {\fontsize{8.5pt}{12pt}\selectfont\bfseries\color{black!95} สาขาวิชาดิจิทัลการเกษตรและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี} \\[2pt]
+        {\fontsize{8pt}{11pt}\selectfont\bfseries\color{black!95} โครงการพัฒนาสื่อนวัตกรรมการศึกษาดิจิทัล พ.ศ. 2569}
+    };
+    % เลเยอร์ตัวอักษรจริง (Crisp Pure White & Warm Gold)
+    \node[anchor=south, align=center, text width=5.2in] at ([yshift=0.35in]current page.south) {
+        {\fontsize{13.5pt}{18pt}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ  ทัศนา} \\[2pt]
+        {\fontsize{8.5pt}{12pt}\selectfont\bfseries\color{white!95} สาขาวิชาดิจิทัลการเกษตรและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี} \\[2pt]
+        {\fontsize{8pt}{11pt}\selectfont\bfseries\color{yellow!90!white} โครงการพัฒนาสื่อนวัตกรรมการศึกษาดิจิทัล พ.ศ. 2569}
+    };
+\end{tikzpicture}
+\endgroup
+
+\newpage
+
+% ==============================================================================
+% 2. INSIDE TITLE PAGE (หน้าปกในเวกเตอร์ Dark-Mode Vector Art ตามมาตรฐานสากล)
+% ==============================================================================
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[themeCol!95!black] (current page.south west) rectangle (current page.north east);
+    
+    % กรอบเส้นคู่สไตล์โมเดิร์น
+    \draw[line width=1.5pt, color=accentCol!80] ($(current page.north west)+(0.8cm, -0.8cm)$) rectangle ($(current page.south east)+(-0.8cm, 0.8cm)$);
+    \draw[line width=0.5pt, color=white!40] ($(current page.north west)+(0.95cm, -0.95cm)$) rectangle ($(current page.south east)+(-0.95cm, 0.95cm)$);
+\end{tikzpicture}
+
+\vspace*{1.0cm}
+\begin{center}
+    {\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} INTRODUCTION TO QUANTUM PHYSICS WITH WEBAR AND AI} \\[0.6cm]
+    
+    {\fontsize{11pt}{14pt}\selectfont\color{white!90} ตำราวิชาการ (Academic Textbook)} \\[0.4cm]
+    
+    {\fontsize{18pt}{23pt}\selectfont\bfseries\color{white} ควอนตัมฟิสิกส์เบื้องต้น} \\[4pt]
+    {\fontsize{18pt}{23pt}\selectfont\bfseries\color{accentCol} และการประยุกต์ภาพเสมือนจริงสามมิติร่วมกับปัญญาประดิษฐ์} \\[0.6cm]
+    
+    % วงกลมไอคอน 3D ตรงกลางสไตล์ Dark Mode Vector Art
+    \begin{tikzpicture}
+        \draw[accentCol, line width=2pt] (0,0) circle (1.6cm);
+        \clip (0,0) circle (1.55cm);
+        \node at (0,0) {\includegraphics[width=3.2cm, height=3.2cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_atom.png}};
+    \end{tikzpicture}
+    
+    \vspace{0.6cm}
+    
+    \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} ตำราและคู่มือวิชาการ • มาตรฐาน Outcome-Based Education (OBE)}
+    
+    \vspace{0.9cm}
+    
+    {\fontsize{13.5pt}{18pt}\selectfont\bfseries\color{white} ผู้ช่วยศาสตราจารย์ ดร.ชีวะ  ทัศนา} \\[3pt]
+    {\fontsize{9.5pt}{13pt}\selectfont\color{accentCol} Asst. Prof. Dr. Chewa Thassana} \\[3pt]
+    {\fontsize{9pt}{12pt}\selectfont\color{white!85} สาขาวิชาดิจิทัลการเกษตรและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี}
+    
+    \vfill
+    {\fontsize{9pt}{12pt}\selectfont\color{white!70} โครงการพัฒนาสื่อนวัตกรรมการศึกษาดิจิทัล พ.ศ. 2569}
+\end{center}
+
+\newpage
+
+% ==============================================================================
+% 3. BACK COVER (หน้าปกหลัง: สาระสังเขป จุดเด่น ประวัติผู้เขียนพร้อมภาพ 3D Pixar Avatar และ ISBN)
+% ==============================================================================
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[themeCol!95!black] (current page.south west) rectangle (current page.north east);
+    \fill[accentCol] ($(current page.north west)+(0, -3mm)$) rectangle ($(current page.north east)+(0, 0)$);
+    \fill[accentCol] ($(current page.south west)+(0, 0)$) rectangle ($(current page.south east)+(0, 3mm)$);
+\end{tikzpicture}
+
+\vspace*{0.35cm}
+\begin{center}
+    \begin{tcolorbox}[
+        enhanced,
+        colback=black!60,
+        colframe=accentCol,
+        boxrule=1.2pt,
+        arc=5pt,
+        width=13.6cm,
+        top=7pt, bottom=7pt, left=10pt, right=10pt
+    ]
+        \raggedright
+        {\fontsize{11.5pt}{14pt}\selectfont\bfseries\color{accentCol} \textbullet\ สาระสังเขปและจุดเด่นของตำรา} \\[4pt]
+        {\fontsize{9pt}{13.5pt}\selectfont\color{white} ตำราควอนตัมฟิสิกส์เบื้องต้นระดับอุดมศึกษา 10 บทหลัก บูรณาการการคำนวณเชิงตัวเลขด้วย Python และ Qiskit การแสดงผลสามมิติผ่าน WebAR บนเบราว์เซอร์ และการสร้างแบบจำลองสมการชเรอดิงเงอร์ด้วย Physics-Informed Neural Networks (PINNs)} \\[6pt]
+        
+        {\fontsize{9.5pt}{12.5pt}\selectfont\bfseries\color{accentCol} \textbullet\ จุดเด่นสำคัญในเล่ม (Highlights):} \\[3pt]
+        \begin{itemize}[leftmargin=0.7cm, itemsep=1.5pt]
+            \color{white!95}
+            \fontsize{8.5pt}{12pt}\selectfont
+            \item ครอบคลุมทฤษฎีควอนตัมพื้นฐาน บ่อศักย์ อะตอมไฮโดรเจน ทฤษฎีการรบกวน จนถึงสารสนเทศควอนตัม
+            \item แล็บเสมือนจริง WebAR 10 สถานี โต้ตอบสามมิติได้ทันทีผ่านสมาร์ทโฟนและเบราว์เซอร์
+            \item การสร้างแบบจำลองควอนตัมด้วย Python, NumPy, SciPy, Qiskit และ PINNs
+            \item แบบฝึกหัดทบทวนพร้อมเฉลยละเอียดและกรณีศึกษาขั้นพรมแดนวิจัยตามมาตรฐาน OBE
+        \end{itemize}
+    \end{tcolorbox}
+    
+    \vspace{0.25cm}
+    
+    % กรอบประวัติผู้เรียบเรียงพร้อมภาพถ่าย 3D Pixar Avatar ต้นแบบ
+    \begin{tcolorbox}[
+        enhanced,
+        colback=black!60,
+        colframe=accentCol!80!white,
+        boxrule=1pt,
+        arc=5pt,
+        width=13.6cm,
+        top=6pt, bottom=6pt, left=8pt, right=8pt
+    ]
+        \begin{minipage}{0.22\textwidth}
+            \centering
+            \includegraphics[width=2.5cm, height=2.5cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PROTOTYPE_ASSETS/author_chewa_circle_final.png}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.75\textwidth}
+            \raggedright
+            {\fontsize{10pt}{13pt}\selectfont\bfseries\color{accentCol} \textbullet\ เกี่ยวกับผู้เรียบเรียง} \\[2pt]
+            {\fontsize{8.5pt}{12pt}\selectfont\color{white} \textbf{ผู้ช่วยศาสตราจารย์ ดร.ชีวะ  ทัศนา} (Asst. Prof. Dr. Chewa Thassana) ดำรงตำแหน่งผู้ช่วยศาสตราจารย์ ประจำสาขาวิชาดิจิทัลการเกษตรและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี มีความเชี่ยวชาญด้านฟิสิกส์ประยุกต์ การสร้างแบบจำลองคอมพิวเตอร์ ฟิสิกส์เกษตรดิจิทัล ระบบปัญญาประดิษฐ์ฝังตัว (AIoT) และเทคโนโลยีความจริงขยาย (XR) เพื่อการศึกษา}
+        \end{minipage}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    % ISBN Barcode & Publisher Bar
+    \begin{tcolorbox}[
+        enhanced,
+        colback=white,
+        colframe=accentCol,
+        boxrule=1.2pt,
+        arc=4pt,
+        width=13.6cm,
+        top=5pt, bottom=5pt, left=8pt, right=8pt
+    ]
+        \begin{minipage}{0.60\textwidth}
+            {\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{black!90} ศูนย์นวัตกรรมและตำราวิชาการ มหาวิทยาลัยราชภัฏรำไพพรรณี} \\[1pt]
+            {\fontsize{7.5pt}{10pt}\selectfont\color{black!70} Rambhai Barni Rajabhat University Academic Press} \\[1pt]
+            {\fontsize{7pt}{9pt}\selectfont\color{black!60} สงวนลิขสิทธิ์ตามพระราชบัญญัติลิขสิทธิ์ • จัดพิมพ์ พ.ศ. ๒๕๖๙}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.36\textwidth}
+            \raggedleft
+            {\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{black!90} ISBN: 978-616-413-903-2} \\[1pt]
+            \rule{3.2cm}{1pt} \\[1pt]
+            {\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol!80!black} ราคา 390 บาท}
+        \end{minipage}
+    \end{tcolorbox}
+\end{center}
+
+\end{document}

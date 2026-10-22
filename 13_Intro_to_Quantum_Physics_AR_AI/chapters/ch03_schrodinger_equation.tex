@@ -1,0 +1,1046 @@
+\chapter{สมการชเรอดิงเงอร์และพีชคณิตเชิงเส้นควอนตัม}
+\label{chap:schrodinger_equation}
+\index{สมการชเรอดิงเงอร์ (Schrödinger Equation)}
+\index{สัญกรณ์ดิแรก (Dirac Notation)}
+\index{ปริภูมิฮิลเบิร์ต (Hilbert Space)}
+\index{ตัวดำเนินการแฮร์มิเชียน (Hermitian Operator)}
+\index{ทฤษฎีบทเอห์เรนเฟสต์ (Ehrenfest Theorem)}
+\index{กระแสความน่าจะเป็น (Probability Current)}
+\index{โครงข่ายประสาทเทียมฟิสิกส์ (PINNs)}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 3
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 3}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 3}
+
+\begin{lessonplanbox}
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item กำเนิดสมการคลื่นควอนตัมและสมการชเรอดิงเงอร์ขึ้นกับเวลา (TDSE)
+    \item การแยกตัวแปรและสมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา (TISE)
+    \item กฎอนุรักษ์ความน่าจะเป็นและกระแสความน่าจะเป็นใน 1 มิติและ 3 มิติ
+    \item โครงสร้างเชิงคณิตศาสตร์ของปริภูมิฮิลเบิร์ตและสัญกรณ์บรา-เคตของดิแรก
+    \item ตัวดำเนินการเชิงเส้น ตัวดำเนินการแฮร์มิเชียน และทฤษฎีบทสเปกตรัม
+    \item ฐานตั้งฉากปรกติ ความสัมพันธ์ความสมบูรณ์ และการแปลงปริภูมิโมเมนตัม
+    \item พีชคณิตคอมมิวเตเตอร์และทฤษฎีบทเอห์เรนเฟสต์ฉบับสมบูรณ์
+    \item พรมแดนร่วมสมัย ---- การแก้สมการชเรอดิงเงอร์ด้วยโครงข่ายประสาทเทียมฟิสิกส์ (PINNs)
+    \item ห้องปฏิบัติการเสมือนจริง WebAR การจำลองเชิงตัวเลขด้วย Python และการประยุกต์ P-S-C-T
+    \item สรุปสาระสำคัญ คำถามเชิงมโนทัศน์ และแบบฝึกหัดท้ายบทฉบับสมบูรณ์
+\end{enumerate}
+
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
+    \item อธิบายที่มาเชิงฟิสิกส์และอนุพัทธ์สมการชเรอดิงเงอร์ขึ้นกับเวลาและไม่ขึ้นกับเวลาได้อย่างถูกต้องตามหลักการ
+    \item พิสูจน์สมการความต่อเนื่องของกระแสความน่าจะเป็นใน 3 มิติ และอธิบายผลของการแปลงเกจแม่เหล็กไฟฟ้าได้
+    \item ประยุกต์ใช้สัญกรณ์บรา-เคตของดิแรกในการคำนวณผลคูณภายใน การฉายภาพ และการกระจายสถานะในปริภูมิฮิลเบิร์ตได้
+    \item พิสูจน์สมบัติความเป็นจริงของค่าเจาะจงและความตั้งฉากของสถานะเจาะจงของตัวดำเนินการแฮร์มิเชียนได้อย่างรัดกุม
+    \item อนุพัทธ์ทฤษฎีบทเอห์เรนเฟสต์ และอธิบายการเชื่อมโยงจากกลศาสตร์ควอนตัมสู่กฎการเคลื่อนที่ข้อที่สองของนิวตันได้
+    \item ออกแบบฟังก์ชันการสูญเสีย (Loss Function) ของแบบจำลอง PINNs เพื่อแก้สมการชเรอดิงเงอร์เชิงตัวเลขได้
+\end{enumerate}
+\end{lessonplanbox}
+
+% ==========================================================
+% 3.1 กำเนิดสมการคลื่นควอนตัมและสมการชเรอดิงเงอร์ขึ้นกับเวลา
+% ==========================================================
+\newpage
+\section{กำเนิดสมการคลื่นควอนตัมและสมการชเรอดิงเงอร์ขึ้นกับเวลา}
+\index{สมการชเรอดิงเงอร์ขึ้นกับเวลา (TDSE)}
+\index{หลักการซ้อนทับควอนตัม (Quantum Superposition Principle)}
+
+ในช่วงปลายคริสต์ศักราช 1925 ถึงต้นปี 1926 แอร์วิน ชเรอดิงเงอร์ (Erwin Schrödinger, 1887--1961) นักฟิสิกส์ทฤษฎีชาวออสเตรีย ได้ต่อยอดสมมติฐานคลื่นสสารของเดอ บรอยล์ โดยมีเป้าหมายเพื่อสร้าง \textbf{สมการคลื่นเชิงอนุพันธ์ (Differential Wave Equation)} ที่สามารถอธิบายพลวัตของคลื่นสสารได้อย่างแม่นยำเฉกเช่นเดียวกับที่สมการของแมกซ์เวลล์อธิบายคลื่นแม่เหล็กไฟฟ้า หรือสมการของนิวตันอธิบายกลศาสตร์ดั้งเดิม
+
+พิจารณาอนุภาคอิสระมวล $m$ เคลื่อนที่ใน 1 มิติด้วยโมเมนตัม $p$ และพลังงาน $E$ ตามแนวคิดของเดอ บรอยล์และพลังค์ อนุภาคนี้สมนัยกับคลื่นระนาบเอกรงค์ (Monochromatic Plane Wave) ซึ่งเขียนแทนด้วยฟังก์ชันเชิงซ้อนได้ดังนี้
+\begin{equation}
+\Psi(x, t) = A e^{i(kx - \omega t)} = A e^{i(px - Et)/\hbar}
+\label{eq:free_plane_wave}
+\end{equation}
+โดยที่ $k = p/\hbar$ คือเลขคลื่น และ $\omega = E/\hbar$ คือความถี่เชิงมุม
+
+เมื่อหาอนุพันธ์ย่อยเทียบกับเวลา $t$ จะได้
+\begin{equation}
+\frac{\partial \Psi}{\partial t} = -\frac{iE}{\hbar} \Psi \quad \implies \quad i\hbar \frac{\partial \Psi}{\partial t} = E\Psi
+\label{eq:energy_diff}
+\end{equation}
+และเมื่อหาอนุพันธ์ย่อยเทียบกับตำแหน่ง $x$ สองครั้ง จะได้
+\begin{equation}
+\frac{\partial \Psi}{\partial x} = \frac{ip}{\hbar} \Psi \quad \implies \quad -i\hbar \frac{\partial \Psi}{\partial x} = p\Psi
+\label{eq:momentum_diff}
+\end{equation}
+\begin{equation}
+\frac{\partial^2 \Psi}{\partial x^2} = -\frac{p^2}{\hbar^2} \Psi \quad \implies \quad -\hbar^2 \frac{\partial^2 \Psi}{\partial x^2} = p^2 \Psi
+\label{eq:momentum_diff2}
+\end{equation}
+
+จากสมการ~\eqref{eq:energy_diff} และ~\eqref{eq:momentum_diff} ชเรอดิงเงอร์ได้นิยามตัวดำเนินการเชิงอนุพันธ์ในกลศาสตร์ควอนตัม ได้แก่ \textbf{ตัวดำเนินการพลังงาน (Energy Operator)} และ \textbf{ตัวดำเนินการโมเมนตัม (Momentum Operator)} ในระบบพิกัดตำแหน่ง ดังนี้
+\begin{equation}
+\hat{E} = i\hbar \frac{\partial}{\partial t}, \qquad \hat{p}_x = -i\hbar \frac{\partial}{\partial x}
+\label{eq:quantum_operators}
+\end{equation}
+
+ในกลศาสตร์ดั้งเดิมที่ความเร็วต่ำกว่าแสง พลังงานรวม $E$ ของอนุภาคภายใต้สนามพลังงานศักย์ $V(x, t)$ มีค่าเท่ากับผลรวมของพลังงานจลน์กับพลังงานศักย์
+\begin{equation}
+E = \frac{p^2}{2m} + V(x, t)
+\label{eq:classical_hamiltonian}
+\end{equation}
+
+เมื่อแทนปริมาณฟิสิกส์ดั้งเดิมด้วยตัวดำเนินการควอนตัมจากสมการ~\eqref{eq:quantum_operators} แล้วกระทำลงบนฟังก์ชันคลื่น $\Psi(x, t)$ จะได้สมการรากฐานของกลศาสตร์ควอนตัม ซึ่งเรียกว่า \textbf{สมการชเรอดิงเงอร์ขึ้นกับเวลา (Time-Dependent Schrödinger Equation ---- TDSE)} ใน 1 มิติ ดังนี้
+\begin{equation}
+i\hbar \frac{\partial \Psi(x, t)}{\partial t} = \left[ -\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2} + V(x, t) \right] \Psi(x, t)
+\label{eq:tdse_1d}
+\end{equation}
+
+หากนิยาม \textbf{ตัวดำเนินการฮามิลโทเนียน (Hamiltonian Operator, $\hat{H}$)} ซึ่งแทนพลังงานรวมของระบบ
+\begin{equation}
+\hat{H} = -\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2} + V(x, t) = \frac{\hat{p}_x^2}{2m} + V(x, t)
+\label{eq:hamiltonian_def}
+\end{equation}
+สมการชเรอดิงเงอร์ขึ้นกับเวลาสามารถเขียนในรูปกระชับได้ดังนี้
+\begin{equation}
+i\hbar \frac{\partial \Psi}{\partial t} = \hat{H}\Psi
+\label{eq:tdse_compact}
+\end{equation}
+
+สำหรับกรณี 3 มิติ สมการ TDSE ขยายรูปโดยใช้ตัวดำเนินการลาปลาเซียน (Laplacian Operator, $\nabla^2$) ได้เป็น
+\begin{equation}
+i\hbar \frac{\partial \Psi(\mathbf{r}, t)}{\partial t} = \left[ -\frac{\hbar^2}{2m} \nabla^2 + V(\mathbf{r}, t) \right] \Psi(\mathbf{r}, t)
+\label{eq:tdse_3d}
+\end{equation}
+
+สมบัติสำคัญที่สุดประการหนึ่งของสมการ TDSE คือ \textbf{ความเป็นสมการเชิงเส้น (Linearity)} นั่นคือ หาก $\Psi_1(x, t)$ และ $\Psi_2(x, t)$ ต่างเป็นผลเฉลยของสมการชเรอดิงเงอร์ การรวมกันเชิงเส้น
+\begin{equation}
+\Psi(x, t) = c_1 \Psi_1(x, t) + c_2 \Psi_2(x, t)
+\label{eq:superposition}
+\end{equation}
+โดยที่ $c_1, c_2 \in \mathbb{C}$ จะเป็นผลเฉลยของสมการด้วยเสมอ สมบัตินี้เรียกว่า \textbf{หลักการซ้อนทับควอนตัม (Quantum Superposition Principle)} ซึ่งเป็นหัวใจของการประมวลผลข้อมูลควอนตัมและการทำงานของคิวบิต
+
+% ==========================================================
+% 3.2 การแยกตัวแปรและสมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา
+% ==========================================================
+\section{การแยกตัวแปรและสมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา}
+\index{สมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา (TISE)}
+\index{สถานะคงตัว (Stationary State)}
+
+ในระบบกายภาพจำนวนมาก พลังงานศักย์ไม่เปลี่ยนแปลงตามเวลา กล่าวคือ $V(x, t) = V(x)$ ในสภาวะดังกล่าว เราสามารถแก้สมการชเรอดิงเงอร์ขึ้นกับเวลาได้โดยใช้ \textbf{ระเบียบวิธีแยกตัวแปร (Method of Separation of Variables)} โดยสมมติให้ผลเฉลยอยู่ในรูปผลคูณของฟังก์ชันที่ขึ้นกับตำแหน่งเพียงอย่างเดียว กับฟังก์ชันที่ขึ้นกับเวลาเพียงอย่างเดียว
+\begin{equation}
+\Psi(x, t) = \psi(x) \phi(t)
+\label{eq:sep_vars}
+\end{equation}
+
+เมื่อแทนสมการ~\eqref{eq:sep_vars} ลงในสมการ TDSE~\eqref{eq:tdse_1d} จะได้
+\begin{equation}
+i\hbar \psi(x) \frac{d\phi(t)}{dt} = -\frac{\hbar^2}{2m} \phi(t) \frac{d^2\psi(x)}{dx^2} + V(x) \psi(x) \phi(t)
+\end{equation}
+
+หารตลอดด้วย $\psi(x)\phi(t)$ จะได้สมการที่ตัวแปรแยกออกจากกันอย่างสมบูรณ์
+\begin{equation}
+i\hbar \frac{1}{\phi(t)} \frac{d\phi(t)}{dt} = -\frac{\hbar^2}{2m} \frac{1}{\psi(x)} \frac{d^2\psi(x)}{dx^2} + V(x)
+\label{eq:separated_both_sides}
+\end{equation}
+
+เนื่องจากทางด้านซ้ายของสมการ~\eqref{eq:separated_both_sides} ขึ้นอยู่กับตัวแปรเวลา $t$ เพียงอย่างเดียว ส่วนทางด้านขวาขึ้นอยู่กับตำแหน่ง $x$ เพียงอย่างเดียว การที่ทั้งสองด้านจะเท่ากันได้ตลอดทุกค่าของ $x$ และ $t$ ทั้งสองด้านต้องมีค่าเท่ากับค่าคงตัวค่าเดียวกัน ซึ่งเรากำหนดให้เป็นค่าคงตัวของการแยกตัวแปร $E$ โดยมีมิติของพลังงาน
+
+\subsection{ส่วนที่ขึ้นกับเวลา}
+พิจารณาสมการส่วนเวลา
+\begin{equation}
+i\hbar \frac{1}{\phi(t)} \frac{d\phi(t)}{dt} = E \quad \implies \quad \frac{d\phi(t)}{dt} = -\frac{iE}{\hbar} \phi(t)
+\end{equation}
+การอินทิเกรตสมการเชิงอนุพันธ์อันดับหนึ่งนี้ให้ผลเฉลยทันที
+\begin{equation}
+\phi(t) = e^{-iEt/\hbar} = e^{-i\omega t}
+\label{eq:time_part_sol}
+\end{equation}
+โดยที่ $\omega = E/\hbar$ แสดงว่าวิวัฒนาการตามเวลาของสถานะที่มีพลังงานแน่นอนเป็นเพียงแฟกเตอร์เฟสเชิงซ้อนแบบฮาร์มอนิกเท่านั้น
+
+\subsection{ส่วนที่ขึ้นกับตำแหน่ง ---- สมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา (TISE)}
+พิจารณาสมการส่วนตำแหน่ง
+\begin{equation}
+-\frac{\hbar^2}{2m} \frac{d^2\psi(x)}{dx^2} + V(x)\psi(x) = E\psi(x)
+\label{eq:tise_1d}
+\end{equation}
+สมการนี้เรียกว่า \textbf{สมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา (Time-Independent Schrödinger Equation ---- TISE)} ซึ่งสามารถเขียนในรูปสมการค่าเจาะจงของตัวดำเนินการฮามิลโทเนียนได้ดังนี้
+\begin{equation}
+\hat{H}\psi(x) = E\psi(x)
+\label{eq:tise_operator}
+\end{equation}
+
+\subsection{สมบัติของสถานะคงตัว}
+ฟังก์ชันคลื่นรวมของสถานะที่มีพลังงานแน่นอน $E$ คือ
+\begin{equation}
+\Psi(x, t) = \psi(x) e^{-iEt/\hbar}
+\label{eq:stationary_full}
+\end{equation}
+สถานะนี้มีสมบัติพิเศษที่เรียกว่า \textbf{สถานะคงตัว (Stationary State)} ดังนี้
+\begin{enumerate}
+    \item \textbf{ความหนาแน่นความน่าจะเป็นไม่ขึ้นกับเวลา}
+    \begin{equation}
+    |\Psi(x, t)|^2 = \Psi^*(x, t)\Psi(x, t) = \left( \psi^*(x) e^{iEt/\hbar} \right) \left( \psi(x) e^{-iEt/\hbar} \right) = |\psi(x)|^2
+    \end{equation}
+    นั่นคือ โอกาสที่จะพบอนุภาค ณ ตำแหน่งใดๆ ไม่เปลี่ยนแปลงไปตามกาลเวลา
+    \item \textbf{ค่าคาดหวังของปริมาณทางกายภาพที่เป็นอิสระจากเวลาไม่เปลี่ยนแปลงตามเวลา}
+    \begin{equation}
+    \langle Q \rangle = \int_{-\infty}^{\infty} \Psi^*(x, t) \hat{Q} \Psi(x, t) \, dx = \int_{-\infty}^{\infty} \psi^*(x) \hat{Q} \psi(x) \, dx = \text{คงตัว}
+    \end{equation}
+    \item \textbf{พลังงานรวมมีค่าแน่นอน ปราศจากความไม่แน่นอน} ($\Delta H = 0$)
+    \begin{equation}
+    \hat{H}^2 \psi = \hat{H}(\hat{H}\psi) = \hat{H}(E\psi) = E(\hat{H}\psi) = E^2\psi \quad \implies \quad \langle H^2 \rangle = E^2, \quad \langle H \rangle = E
+    \end{equation}
+    ดังนั้น ส่วนเบี่ยงเบนมาตรฐานของพลังงาน $\sigma_E = \sqrt{\langle H^2 \rangle - \langle H \rangle^2} = 0$
+\end{enumerate}
+
+ผลเฉลยทั่วไปของสมการ TDSE คือผลรวมเชิงเส้นของสถานะคงตัวทั้งหมดที่มีพลังงาน $E_n$
+\begin{equation}
+\Psi(x, t) = \sum_{n=1}^{\infty} c_n \psi_n(x) e^{-iE_n t/\hbar}
+\label{eq:general_solution_superposition}
+\end{equation}
+โดยที่สัมประสิทธิ์ $c_n$ ถูกกำหนดจากสภาวะเริ่มต้น $\Psi(x, 0)$ และสอดคล้องกับเงื่อนไขนอร์มอลไลซ์ $\sum_n |c_n|^2 = 1$
+
+% ==========================================================
+% 3.3 การอนุรักษ์ความน่าจะเป็นและกระแสความน่าจะเป็น
+% ==========================================================
+\section{การอนุรักษ์ความน่าจะเป็นและกระแสความน่าจะเป็น}
+\index{ความหนาแน่นกระแสความน่าจะเป็น (Probability Current Density)}
+\index{สมการความต่อเนื่อง (Continuity Equation)}
+\index{การแปลงเกจ (Gauge Transformation)}
+
+การที่ผลรวมของความน่าจะเป็นทั้งหมดในการค้นพบอนุภาคทั่วทั้งเอกภพจะต้องมีค่าเท่ากับ 1 เสมอ ทุกขณะเวลา
+\begin{equation}
+\int_{-\infty}^{\infty} \rho(x, t) \, dx = \int_{-\infty}^{\infty} |\Psi(x, t)|^2 \, dx = 1
+\label{eq:total_prob_conserved}
+\end{equation}
+นำไปสู่คำถามพื้นฐานว่า กลศาสตร์ควอนตัมรับประกันการอนุรักษ์ความน่าจะเป็นนี้อย่างสอดคล้องในตัวเองหรือไม่ หากเวลาล่วงเลยไป
+
+พิจารณาอัตราการเปลี่ยนแปลงตามเวลาของความหนาแน่นความน่าจะเป็น $\rho(x, t) = \Psi^* \Psi$
+\begin{equation}
+\frac{\partial \rho}{\partial t} = \frac{\partial}{\partial t}(\Psi^* \Psi) = \frac{\partial \Psi^*}{\partial t}\Psi + \Psi^* \frac{\partial \Psi}{\partial t}
+\label{eq:drho_dt_product}
+\end{equation}
+
+จากสมการชเรอดิงเงอร์ขึ้นกับเวลา~\eqref{eq:tdse_1d}
+\begin{equation}
+\frac{\partial \Psi}{\partial t} = \frac{1}{i\hbar} \left( -\frac{\hbar^2}{2m} \frac{\partial^2 \Psi}{\partial x^2} + V \Psi \right) = \frac{i\hbar}{2m} \frac{\partial^2 \Psi}{\partial x^2} - \frac{i}{\hbar} V \Psi
+\label{eq:dpsi_dt}
+\end{equation}
+เมื่อหาสังยุคเชิงซ้อนของสมการ~\eqref{eq:dpsi_dt} (เนื่องจากศักย์ $V(x, t)$ เป็นค่าจริง) จะได้
+\begin{equation}
+\frac{\partial \Psi^*}{\partial t} = -\frac{i\hbar}{2m} \frac{\partial^2 \Psi^*}{\partial x^2} + \frac{i}{\hbar} V \Psi^*
+\label{eq:dpsistar_dt}
+\end{equation}
+
+นำสมการ~\eqref{eq:dpsi_dt} และ~\eqref{eq:dpsistar_dt} แทนกลับลงในสมการ~\eqref{eq:drho_dt_product}
+\begin{align}
+\frac{\partial \rho}{\partial t} &= \left( -\frac{i\hbar}{2m} \frac{\partial^2 \Psi^*}{\partial x^2} + \frac{i}{\hbar} V \Psi^* \right) \Psi + \Psi^* \left( \frac{i\hbar}{2m} \frac{\partial^2 \Psi}{\partial x^2} - \frac{i}{\hbar} V \Psi \right) \nonumber \\
+&= \frac{i\hbar}{2m} \left( \Psi^* \frac{\partial^2 \Psi}{\partial x^2} - \frac{\partial^2 \Psi^*}{\partial x^2} \Psi \right) \nonumber \\
+&= -\frac{\partial}{\partial x} \left[ \frac{\hbar}{2mi} \left( \Psi^* \frac{\partial \Psi}{\partial x} - \frac{\partial \Psi^*}{\partial x} \Psi \right) \right]
+\label{eq:continuity_derivation}
+\end{align}
+
+เราจึงนิยาม \textbf{ความหนาแน่นกระแสความน่าจะเป็น (Probability Current Density, $j(x, t)$)} ใน 1 มิติ ดังนี้
+\begin{equation}
+j(x, t) = \frac{\hbar}{2mi} \left( \Psi^* \frac{\partial \Psi}{\partial x} - \Psi \frac{\partial \Psi^*}{\partial x} \right) = \frac{\hbar}{m} \text{Im}\left( \Psi^* \frac{\partial \Psi}{\partial x} \right)
+\label{eq:prob_current_1d}
+\end{equation}
+
+จากสมการ~\eqref{eq:continuity_derivation} เราได้ \textbf{สมการความต่อเนื่อง (Continuity Equation)} ซึ่งมีรูปแบบทางคณิตศาสตร์เช่นเดียวกับกฎอนุรักษ์ประจุในทฤษฎีแม่เหล็กไฟฟ้าและการอนุรักษ์มวลในกลศาสตร์ของไหล
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \frac{\partial j}{\partial x} = 0
+\label{eq:continuity_equation}
+\end{equation}
+
+ใน 3 มิติ ความหนาแน่นกระแสความน่าจะเป็นเขียนในรูปเวกเตอร์ $\mathbf{j}(\mathbf{r}, t)$ ได้เป็น
+\begin{equation}
+\mathbf{j}(\mathbf{r}, t) = \frac{\hbar}{2mi} \left( \Psi^* \nabla \Psi - \Psi \nabla \Psi^* \right) = \frac{\hbar}{m} \text{Im}(\Psi^* \nabla \Psi)
+\label{eq:prob_current_3d}
+\end{equation}
+และสมการความต่อเนื่องใน 3 มิติ คือ
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{j} = 0
+\label{eq:continuity_3d}
+\end{equation}
+
+\subsection{กระแสความน่าจะเป็นในสนามแม่เหล็กไฟฟ้าและการแปลงเกจ}
+
+เมื่ออนุภาคมีประจุ $q$ เคลื่อนที่ภายใต้สนามแม่เหล็กไฟฟ้าที่มีเวกเตอร์ศักย์ $\mathbf{A}(\mathbf{r}, t)$ ตัวดำเนินการโมเมนตัมคาโนนิคัล $\hat{\mathbf{p}}$ จะถูกแทนที่ด้วยโมเมนตัมจลนศาสตร์ $\hat{\mathbf{P}} = \hat{\mathbf{p}} - q\mathbf{A}$ ตามหลักการจับคู่แบบมินิมัล (Minimal Coupling) ส่งผลให้ความหนาแน่นกระแสความน่าจะเป็นขยายรูปเป็น
+
+\begin{equation}
+\mathbf{j}(\mathbf{r}, t) = \frac{1}{m} \text{Re}\left[ \Psi^* \left( -i\hbar\nabla - q\mathbf{A} \right) \Psi \right] = \frac{\hbar}{m}\text{Im}(\Psi^*\nabla\Psi) - \frac{q}{m}\mathbf{A}|\Psi|^2
+\label{eq:prob_current_gauge}
+\end{equation}
+
+เมื่อระบบอยู่ภายใต้การแปลงเกจ (Gauge Transformation) $\mathbf{A}' = \mathbf{A} + \nabla \chi$ ฟังก์ชันคลื่นจะเปลี่ยนเฟสตามความสัมพันธ์ $\Psi' = \Psi e^{i q\chi / \hbar}$ ซึ่งทำให้กระแสความน่าจะเป็น $\mathbf{j}' = \mathbf{j}$ มีค่าคงเดิมเสมอ ปรากฏการณ์นี้เรียกว่า \textbf{ความไม่แปรเปลี่ยนตามเกจ (Gauge Invariance)} ซึ่งเป็นรากฐานของทฤษฎีเกจสมัยใหม่และปรากฏการณ์อาฮารอนอฟ-โบห์ม (Aharonov-Bohm Effect)
+
+% ==========================================================
+% 3.4 สัญกรณ์ดิแรกและโครงสร้างปริภูมิฮิลเบิร์ต
+% ==========================================================
+\section{สัญกรณ์ดิแรกและโครงสร้างปริภูมิฮิลเบิร์ต}
+\index{สัญกรณ์บรา-เคต (Bra-Ket Notation)}
+\index{ปริภูมิฮิลเบิร์ต (Hilbert Space)}
+\index{ความสมบูรณ์ของฐาน (Completeness Relation)}
+
+ในคริสต์ศักราช 1930 พอล ดิแรก (Paul Dirac, 1902--1984) นักฟิสิกส์ทฤษฎีชาวอังกฤษ ได้เสนอระบบสัญกรณ์ที่ทรงพลังและงดงามเป็นเลิศในหนังสือ \textit{The Principles of Quantum Mechanics} เรียกว่า \textbf{สัญกรณ์บรา-เคต (Bra-Ket Notation)} ซึ่งช่วยรวมฟิสิกส์กลศาสตร์คลื่นของชเรอดิงเงอร์และกลศาสตร์เมทริกซ์ของไฮเซนเบิร์กเข้าสู่โครงสร้างทางคณิตศาสตร์อันเป็นหนึ่งเดียวบน \textbf{ปริภูมิฮิลเบิร์ต (Hilbert Space, $\mathcal{H}$)}
+
+\subsection{เวกเตอร์เคตและบรา}
+ในมุมมองเชิงพีชคณิตเชิงเส้น สถานะควอนตัมของระบบถูกแทนด้วยเวกเตอร์ในปริภูมิเชิงซ้อนมิติอนันต์ เรียกว่า \textbf{เวกเตอร์เคต (Ket Vector)} เขียนแทนด้วยสัญลักษณ์ $\ket{\psi} \in \mathcal{H}$ 
+
+สำหรับทุกๆ เคต $\ket{\psi}$ จะมีเวกเตอร์คู่กันในปริภูมิดูอัล (Dual Space, $\mathcal{H}^*$) เรียกว่า \textbf{เวกเตอร์บรา (Bra Vector)} เขียนแทนด้วยสัญลักษณ์
+\begin{equation}
+\bra{\psi} = \big( \ket{\psi} \big)^\dagger \in \mathcal{H}^*
+\end{equation}
+โดยที่เครื่องหมายกริช $(\dagger)$ หมายถึงสังยุคแฮร์มิเชียน (Hermitian Adjoint หรือ Conjugate Transpose)
+
+\subsection{ผลคูณภายในและสมบัติเมทริกซ์}
+ผลคูณภายใน (Inner Product) ระหว่างบรา $\bra{\phi}$ และเคต $\ket{\psi}$ ประกบกันเป็นคำว่า Bracket เขียนแทนด้วย $\braket{\phi}{\psi} \in \mathbb{C}$ ซึ่งมีสมบัติพื้นฐานดังนี้
+\begin{enumerate}
+    \item \textbf{สมบัติสังยุคสมมาตร (Conjugate Symmetry)} ---- $\braket{\phi}{\psi} = \braket{\psi}{\phi}^*$
+    \item \textbf{ความเป็นเชิงเส้นในอาร์กิวเมนต์ที่สอง (Linearity in Ket)} ---- $\braket{\phi}{c_1 \psi_1 + c_2 \psi_2} = c_1 \braket{\phi}{\psi_1} + c_2 \braket{\phi}{\psi_2}$
+    \item \textbf{ความเป็นแอนติลีเนียร์ในอาร์กิวเมนต์แรก (Antilinearity in Bra)} ---- $\braket{c_1 \phi_1 + c_2 \phi_2}{\psi} = c_1^* \braket{\phi_1}{\psi} + c_2^* \braket{\phi_2}{\psi}$
+    \item \textbf{ภาวะบวกแน่นอน (Positive Definiteness)} ---- $\braket{\psi}{\psi} \ge 0$ โดยที่ $\braket{\psi}{\psi} = 0 \iff \ket{\psi} = 0$
+\end{enumerate}
+
+\subsection{ความสัมพันธ์ระหว่างฟังก์ชันคลื่นกับสัญกรณ์ดิแรก}
+ในปริภูมิฮิลเบิร์ตของตำแหน่ง ให้ $\{\ket{x}\}$ เป็นเซตของสถานะเจาะจงของตำแหน่ง ฟังก์ชันคลื่น $\psi(x)$ ในกลศาสตร์คลื่นแท้จริงแล้วคือสัมประสิทธิ์การฉายภาพของเคตสถานะ $\ket{\psi}$ ลงบนแกนตำแหน่ง $\ket{x}$
+\begin{equation}
+\psi(x) = \braket{x}{\psi}, \qquad \psi^*(x) = \braket{\psi}{x}
+\label{eq:wavefunc_projection}
+\end{equation}
+
+ในทำนองเดียวกัน ฟังก์ชันคลื่นในปริภูมิโมเมนตัม $\Phi(p)$ คือการฉายภาพลงบนสถานะโมเมนตัม $\ket{p}$
+\begin{equation}
+\Phi(p) = \braket{p}{\psi}
+\end{equation}
+
+ผลคูณภายในระหว่างสองสถานะ $\ket{\phi}$ และ $\ket{\psi}$ ในการแทนด้วยตำแหน่ง สอดคล้องกับการอินทิเกรตฟังก์ชันคลื่น
+\begin{equation}
+\braket{\phi}{\psi} = \int_{-\infty}^{\infty} \braket{\phi}{x}\braket{x}{\psi} \, dx = \int_{-\infty}^{\infty} \phi^*(x) \psi(x) \, dx
+\end{equation}
+
+\subsection{ความสมบูรณ์และตัวดำเนินการฉายภาพ}
+หาก $\{ \ket{u_n} \}$ เป็นเซตฐานตั้งฉากปรกติ (Orthonormal Basis) ของปริภูมิฮิลเบิร์ต ซึ่งสอดคล้องกับเงื่อนไขภาวะตั้งฉากปรกติ $\braket{u_m}{u_n} = \delta_{mn}$ แล้ว สถานะใดๆ $\ket{\psi}$ สามารถกระจายบนฐานนี้ได้เป็น
+\begin{equation}
+\ket{\psi} = \sum_n c_n \ket{u_n}, \qquad c_n = \braket{u_n}{\psi}
+\label{eq:basis_expansion}
+\end{equation}
+
+เมื่อนำ $c_n$ แทนกลับเข้าไป
+\begin{equation}
+\ket{\psi} = \sum_n \ket{u_n}\braket{u_n}{\psi} = \left( \sum_n \ket{u_n}\bra{u_n} \right) \ket{\psi}
+\end{equation}
+เนื่องจากสมการนี้เป็นจริงสำหรับทุกเคต $\ket{\psi}$ จะได้ \textbf{ความสัมพันธ์ความสมบูรณ์ (Completeness Relation หรือ Resolution of the Identity)}
+\begin{equation}
+\sum_n \ket{u_n}\bra{u_n} = \hat{I}
+\label{eq:completeness_discrete}
+\end{equation}
+โดยที่ตัวดำเนินการ $\hat{P}_n = \ket{u_n}\bra{u_n}$ คือ \textbf{ตัวดำเนินการฉายภาพ (Projection Operator)} ลงบนสถานะ $\ket{u_n}$
+
+สำหรับตัวแปรต่อเนื่อง เช่น ตำแหน่ง $x$ ความสัมพันธ์ความสมบูรณ์เขียนในรูปการอินทิเกรต
+\begin{equation}
+\int_{-\infty}^{\infty} \ket{x}\bra{x} \, dx = \hat{I}
+\label{eq:completeness_continuous}
+\end{equation}
+
+% ==========================================================
+% 3.5 ตัวดำเนินการแฮร์มิเชียน ปัญหาค่าเจาะจง และทฤษฎีบทสเปกตรัม
+% ==========================================================
+\section{ตัวดำเนินการแฮร์มิเชียน ปัญหาค่าเจาะจง และทฤษฎีบทสเปกตรัม}
+\index{ตัวดำเนินการแฮร์มิเชียน (Hermitian Operator)}
+\index{ค่าเจาะจงและสถานะเจาะจง (Eigenvalue and Eigenstate)}
+\index{ทฤษฎีบทสเปกตรัม (Spectral Theorem)}
+
+ในกลศาสตร์ควอนตัม ปริมาณที่สังเกตวัดได้จริงทางกายภาพ (Observables) ทั้งหมด เช่น ตำแหน่ง โมเมนตัม พลังงาน และโมเมนตัมเชิงมุม จะถูกแทนด้วย \textbf{ตัวดำเนินการเชิงเส้นที่เป็นแฮร์มิเชียน (Hermitian Linear Operator)}
+
+\subsection{นิยามและสมบัติของตัวดำเนินการแฮร์มิเชียน}
+ตัวดำเนินการ $\hat{A}$ จะเป็นตัวดำเนินการแฮร์มิเชียน ก็ต่อเมื่อมันเท่ากับสังยุคแฮร์มิเชียนของตัวเอง
+\begin{equation}
+\hat{A}^\dagger = \hat{A}
+\label{eq:hermitian_def}
+\end{equation}
+ในรูปของผลคูณภายใน สำหรับทุกๆ เคต $\ket{\phi}$ และ $\ket{\psi}$ ในปริภูมิฮิลเบิร์ต
+\begin{equation}
+\braket{\phi}{\hat{A}\psi} = \braket{\hat{A}\phi}{\psi}
+\label{eq:hermitian_inner_product}
+\end{equation}
+
+\subsection{ทฤษฎีบทที่ 1 ---- ค่าเจาะจงของตัวดำเนินการแฮร์มิเชียนเป็นจำนวนจริงเสมอ}
+\textbf{การพิสูจน์} \\
+ให้ $\ket{a}$ เป็นสถานะเจาะจงของตัวดำเนินการแฮร์มิเชียน $\hat{A}$ ที่มีค่าเจาะจง $a$
+\begin{equation}
+\hat{A}\ket{a} = a\ket{a}
+\label{eq:eigen_eq1}
+\end{equation}
+นำบรา $\bra{a}$ มาประกบจากทางซ้าย
+\begin{equation}
+\bra{a}\hat{A}\ket{a} = a\braket{a}{a}
+\label{eq:proof_real_1}
+\end{equation}
+หาคอนจูเกตทรานสโพสของสมการ~\eqref{eq:eigen_eq1} จะได้
+\begin{equation}
+\bra{a}\hat{A}^\dagger = a^*\bra{a} \quad \implies \quad \bra{a}\hat{A} = a^*\bra{a}
+\end{equation}
+นำเคต $\ket{a}$ มาประกบจากทางขวา
+\begin{equation}
+\bra{a}\hat{A}\ket{a} = a^*\braket{a}{a}
+\label{eq:proof_real_2}
+\end{equation}
+นำสมการ~\eqref{eq:proof_real_1} ลบด้วยสมการ~\eqref{eq:proof_real_2}
+\begin{equation}
+(a - a^*)\braket{a}{a} = 0
+\end{equation}
+เนื่องจากเคตสถานะเจาะจงไม่ใช่เวกเตอร์ศูนย์ ดังนั้น $\braket{a}{a} > 0$ จึงบังคับให้
+\begin{equation}
+a - a^* = 0 \quad \implies \quad a = a^* \in \mathbb{R}
+\end{equation}
+นั่นคือ ค่าเจาะจง $a$ ต้องเป็นจำนวนจริงอย่างแน่นอน ซึ่งสอดคล้องกับข้อเท็จจริงว่า ผลการวัดทางกายภาพในห้องปฏิบัติการต้องเป็นค่าจริงเสมอ
+
+\subsection{ทฤษฎีบทที่ 2 ---- สถานะเจาะจงที่มีค่าเจาะจงต่างกันจะตั้งฉากกันเสมอ}
+\textbf{การพิสูจน์} \\
+พิจารณาสถานะเจาะจงสองสถานะ $\ket{a_1}$ และ $\ket{a_2}$ โดยที่ $a_1 \ne a_2$
+\begin{align}
+\hat{A}\ket{a_1} &= a_1\ket{a_1} \label{eq:ortho_1} \\
+\hat{A}\ket{a_2} &= a_2\ket{a_2} \label{eq:ortho_2}
+\end{align}
+นำ $\bra{a_2}$ ประกบทางซ้ายของสมการ~\eqref{eq:ortho_1}
+\begin{equation}
+\bra{a_2}\hat{A}\ket{a_1} = a_1\braket{a_2}{a_1}
+\label{eq:ortho_lhs}
+\end{equation}
+จากสมการ~\eqref{eq:ortho_2} เมื่อหาสังยุคแฮร์มิเชียนและใช้ความเป็นจริงของ $a_2$ จะได้ $\bra{a_2}\hat{A} = a_2\bra{a_2}$ นำ $\ket{a_1}$ มาประกบจากทางขวา
+\begin{equation}
+\bra{a_2}\hat{A}\ket{a_1} = a_2\braket{a_2}{a_1}
+\label{eq:ortho_rhs}
+\end{equation}
+นำสมการ~\eqref{eq:ortho_lhs} ลบด้วยสมการ~\eqref{eq:ortho_rhs}
+\begin{equation}
+(a_1 - a_2)\braket{a_2}{a_1} = 0
+\end{equation}
+เนื่องจากโจทย์กำหนดให้ค่าเจาะจงไม่เท่ากัน ($a_1 \ne a_2$ ทำให้ $a_1 - a_2 \ne 0$) จึงสรุปได้ว่า
+\begin{equation}
+\braket{a_2}{a_1} = 0
+\end{equation}
+นั่นคือ สถานะเจาะจงทั้งสองตั้งฉากกัน (Orthogonal)
+
+\subsection{ทฤษฎีบทสเปกตรัม (Spectral Theorem)}
+จากสมบัติความสมบูรณ์และความเป็นแฮร์มิเชียน ตัวดำเนินการ $\hat{A}$ สามารถเขียนกระจายในรูปของการรวมตัวดำเนินการฉายภาพตาม \textbf{ทฤษฎีบทสเปกตรัม (Spectral Decomposition Theorem)}
+\begin{equation}
+\hat{A} = \sum_n a_n \ket{a_n}\bra{a_n} = \sum_n a_n \hat{P}_n
+\label{eq:spectral_decomposition}
+\end{equation}
+และฟังก์ชันใดๆ ของตัวดำเนินการ $f(\hat{A})$ สามารถคำนวณได้อย่างง่ายดายผ่าน
+\begin{equation}
+f(\hat{A}) = \sum_n f(a_n) \ket{a_n}\bra{a_n}
+\label{eq:operator_function}
+\end{equation}
+
+% ==========================================================
+% 3.6 พีชคณิตคอมมิวเตเตอร์และทฤษฎีบทเอห์เรนเฟสต์
+% ==========================================================
+\section{พีชคณิตคอมมิวเตเตอร์และทฤษฎีบทเอห์เรนเฟสต์}
+\index{คอมมิวเตเตอร์ (Commutator)}
+\index{ทฤษฎีบทเอห์เรนเฟสต์ (Ehrenfest Theorem)}
+\index{หลักความสอดคล้อง (Correspondence Principle)}
+
+\subsection{พีชคณิตคอมมิวเตเตอร์และเอกลักษณ์สำคัญ}
+คอมมิวเตเตอร์ระหว่างตัวดำเนินการสองตัว $\hat{A}$ และ $\hat{B}$ นิยามโดย
+\begin{equation}
+[\hat{A}, \hat{B}] = \hat{A}\hat{B} - \hat{B}\hat{A}
+\label{eq:commutator_def}
+\end{equation}
+เอกลักษณ์พื้นฐานที่สำคัญในพีชคณิตคอมมิวเตเตอร์ ได้แก่
+\begin{enumerate}
+    \item \textbf{การสลับที่แบบปฏิสมมาตร} ---- $[\hat{A}, \hat{B}] = -[\hat{B}, \hat{A}]$
+    \item \textbf{ความเป็นเชิงเส้น} ---- $[\hat{A}, \hat{B} + \hat{C}] = [\hat{A}, \hat{B}] + [\hat{A}, \hat{C}]$
+    \item \textbf{กฎอนุพันธ์ผลคูณของไลบ์นิซ}
+    \begin{align}
+    [\hat{A}\hat{B}, \hat{C}] &= \hat{A}[\hat{B}, \hat{C}] + [\hat{A}, \hat{C}]\hat{B} \\
+    [\hat{A}, \hat{B}\hat{C}] &= \hat{B}[\hat{A}, \hat{C}] + [\hat{A}, \hat{B}]\hat{C}
+    \end{align}
+    \item \textbf{เอกลักษณ์ยาโคบี (Jacobi Identity)}
+    \begin{equation}
+    [\hat{A}, [\hat{B}, \hat{C}]] + [\hat{B}, [\hat{C}, \hat{A}]] + [\hat{C}, [\hat{A}, \hat{B}]] = 0
+    \end{equation}
+\end{enumerate}
+
+คอมมิวเตเตอร์คาโนนิคัลระหว่างตำแหน่งและโมเมนตัม $[\hat{x}, \hat{p}_x] = i\hbar \hat{I}$ สามารถขยายไปสู่ฟังก์ชันใดๆ ของตำแหน่ง $f(x)$ และโมเมนตัม $g(p)$ ดังนี้
+\begin{equation}
+[f(\hat{x}), \hat{p}_x] = i\hbar \frac{\partial f}{\partial x}, \qquad [\hat{x}, g(\hat{p}_x)] = i\hbar \frac{\partial g}{\partial p_x}
+\label{eq:functional_commutator}
+\end{equation}
+
+\subsection{การอนุพัทธ์ทฤษฎีบทเอห์เรนเฟสต์ฉบับสมบูรณ์}
+ทฤษฎีบทเอห์เรนเฟสต์ (Ehrenfest Theorem) เสนอโดย พอล เอห์เรนเฟสต์ ในปี 1927 เป็นสะพานเชื่อมที่งดงามที่สุดระหว่างกลศาสตร์ควอนตัมและกลศาสตร์ดั้งเดิม
+
+พิจารณาอัตราการเปลี่ยนแปลงตามเวลาของค่าคาดหวังของตัวดำเนินการ $\hat{A}$
+\begin{equation}
+\frac{d}{dt}\langle A \rangle = \frac{d}{dt}\braket{\Psi(t)}{\hat{A}\Psi(t)} = \left(\frac{\partial}{\partial t}\bra{\Psi}\right) \hat{A} \ket{\Psi} + \bra{\Psi} \frac{\partial \hat{A}}{\partial t} \ket{\Psi} + \bra{\Psi} \hat{A} \left(\frac{\partial}{\partial t}\ket{\Psi}\right)
+\end{equation}
+
+จากสมการชเรอดิงเงอร์ $i\hbar \frac{\partial}{\partial t}\ket{\Psi} = \hat{H}\ket{\Psi} \implies \frac{\partial}{\partial t}\ket{\Psi} = \frac{1}{i\hbar}\hat{H}\ket{\Psi}$ และสังยุคแฮร์มิเชียน $\frac{\partial}{\partial t}\bra{\Psi} = -\frac{1}{i\hbar}\bra{\Psi}\hat{H}$ แทนค่าลงไป
+\begin{align}
+\frac{d}{dt}\langle A \rangle &= -\frac{1}{i\hbar}\bra{\Psi}\hat{H}\hat{A}\ket{\Psi} + \left\langle \frac{\partial \hat{A}}{\partial t} \right\rangle + \frac{1}{i\hbar}\bra{\Psi}\hat{A}\hat{H}\ket{\Psi} \nonumber \\
+&= \frac{1}{i\hbar}\bra{\Psi} (\hat{A}\hat{H} - \hat{H}\hat{A}) \ket{\Psi} + \left\langle \frac{\partial \hat{A}}{\partial t} \right\rangle
+\end{align}
+
+เราจึงได้ \textbf{สมการเอห์เรนเฟสต์ (Ehrenfest Equation)}
+\begin{equation}
+\frac{d}{dt}\langle A \rangle = \frac{1}{i\hbar} \langle [\hat{A}, \hat{H}] \rangle + \left\langle \frac{\partial \hat{A}}{\partial t} \right\rangle
+\label{eq:ehrenfest_master}
+\end{equation}
+
+\subsection{การเกิดใหม่ของกฎการเคลื่อนที่ของนิวตัน}
+เมื่อประยุกต์สมการเอห์เรนเฟสต์เข้ากับตัวดำเนินการตำแหน่ง $\hat{x}$ ภายใต้ฮามิลโทเนียน $\hat{H} = \frac{\hat{p}^2}{2m} + V(x)$
+\begin{equation}
+[\hat{x}, \hat{H}] = \left[ \hat{x}, \frac{\hat{p}^2}{2m} \right] = \frac{1}{2m} (\hat{p}[\hat{x}, \hat{p}] + [\hat{x}, \hat{p}]\hat{p}) = \frac{1}{2m} (\hat{p}(i\hbar) + (i\hbar)\hat{p}) = \frac{i\hbar}{m}\hat{p}
+\end{equation}
+\begin{equation}
+\frac{d}{dt}\langle x \rangle = \frac{1}{i\hbar} \left\langle \frac{i\hbar}{m}\hat{p} \right\rangle = \frac{\langle p \rangle}{m}
+\label{eq:ehrenfest_x}
+\end{equation}
+
+เมื่อประยุกต์เข้ากับตัวดำเนินการโมเมนตัม $\hat{p}$
+\begin{equation}
+[\hat{p}, \hat{H}] = [\hat{p}, V(x)] = -i\hbar \frac{\partial V}{\partial x}
+\end{equation}
+\begin{equation}
+\frac{d}{dt}\langle p \rangle = \frac{1}{i\hbar} \left\langle -i\hbar \frac{\partial V}{\partial x} \right\rangle = -\left\langle \frac{\partial V}{\partial x} \right\rangle = \langle F(x) \rangle
+\label{eq:ehrenfest_p}
+\end{equation}
+
+เมื่อรวมสมการ~\eqref{eq:ehrenfest_x} และ~\eqref{eq:ehrenfest_p}
+\begin{equation}
+m \frac{d^2}{dt^2}\langle x \rangle = \langle F(x) \rangle
+\label{eq:quantum_newton}
+\end{equation}
+
+หากกระจายแรง $F(x) = -\frac{\partial V}{\partial x}$ ด้วยอนุกรมเทย์เลอร์รอบค่าคาดหวังตำแหน่ง $\langle x \rangle$
+\begin{equation}
+F(x) = F(\langle x \rangle) + F'(\langle x \rangle)(x - \langle x \rangle) + \frac{1}{2}F''(\langle x \rangle)(x - \langle x \rangle)^2 + \dots
+\end{equation}
+เมื่อหาค่าคาดหวัง พจน์ที่สองจะกลายเป็นศูนย์ และพจน์ที่สามขึ้นกับความแปรปรวน $\sigma_x^2$
+\begin{equation}
+\langle F(x) \rangle = F(\langle x \rangle) + \frac{1}{2} F''(\langle x \rangle) \sigma_x^2 + \dots
+\end{equation}
+ในกรณีที่กลุ่มคลื่นมีความกว้างแคบมาก ($\sigma_x \to 0$) หรือสนามศักย์เปลี่ยนแปลงช้ามากในระดับขนาดของกลุ่มคลื่น ($F'' \approx 0$) จะได้ $\langle F(x) \rangle \approx F(\langle x \rangle)$ ส่งผลให้สมการ~\eqref{eq:quantum_newton} ลดรูปกลับไปเป็น \textbf{กฎการเคลื่อนที่ข้อที่สองของนิวตัน} $m \frac{d^2 \langle x \rangle}{dt^2} = F(\langle x \rangle)$ อย่างแม่นยำ นี่คือการแสดงออกอย่างเป็นรูปธรรมของ \textbf{หลักความสอดคล้อง (Correspondence Principle)}
+
+% ==========================================================
+% 3.7 พรมแดนร่วมสมัย โครงข่ายประสาทเทียมฟิสิกส์ (PINNs)
+% ==========================================================
+\section{พรมแดนร่วมสมัย ---- การแก้สมการชเรอดิงเงอร์ด้วยโครงข่ายประสาทเทียมฟิสิกส์ (PINNs)}
+\index{โครงข่ายประสาทเทียมฟิสิกส์ (Physics-Informed Neural Networks)}
+\index{การหาอนุพันธ์อัตโนมัติ (Automatic Differentiation)}
+\index{การเรียนรู้เชิงลึกทางควอนตัม (Quantum Deep Learning)}
+
+\subsection{แนวคิดของ Physics-Informed Neural Networks (PINNs)}
+ในการคำนวณทางฟิสิกส์ควอนตัมสมัยใหม่ ระเบียบวิธีดั้งเดิม เช่น วิธีผลต่างสืบเนื่อง (Finite Difference) หรือวิธีไฟไนต์เอลิเมนต์ (Finite Element) ประสบปัญหาการระเบิดเชิงมิติ (Curse of Dimensionality) เมื่อขยายไปสู่ระบบหลายอนุภาค 
+
+ในคริสต์ศักราช 2019 มาซิอาร์ ไรส์ซี (Maziar Raissi) ปาริส เพอร์ดิคาริส (Paris Perdikaris) และ จอร์จ คาร์เนียดาคิส (George Em Karniadakis) ได้เสนอสถาปัตยกรรม \textbf{โครงข่ายประสาทเทียมฟิสิกส์ (Physics-Informed Neural Networks --- PINNs)} ซึ่งฝังกฎฟิสิกส์เชิงอนุพันธ์ย่อย (PDE) เข้าไปในฟังก์ชันการสูญเสียของโครงข่ายประสาทเทียมโดยตรงผ่านการหาอนุพันธ์อัตโนมัติ (Automatic Differentiation / Autograd)
+
+\subsection{สถาปัตยกรรมและฟังก์ชันการสูญเสียสำหรับสมการชเรอดิงเงอร์}
+ให้โครงข่ายประสาทเทียม $NN(x, t; \boldsymbol{\theta})$ ที่มีพารามิเตอร์เวตและไบอัส $\boldsymbol{\theta}$ ทำนายค่าฟังก์ชันคลื่นส่วนจริง $u(x, t)$ และส่วนจินตภาพ $v(x, t)$ โดยที่ $\Psi(x, t) = u(x, t) + i v(x, t)$
+
+แยกสมการชเรอดิงเงอร์ขึ้นกับเวลา $i\hbar \frac{\partial \Psi}{\partial t} = -\frac{\hbar^2}{2m}\frac{\partial^2 \Psi}{\partial x^2} + V(x)\Psi$ ออกเป็นส่วนจริงและส่วนจินตภาพ
+\begin{align}
+f_u &= -\hbar \frac{\partial v}{\partial t} + \frac{\hbar^2}{2m}\frac{\partial^2 u}{\partial x^2} - V(x)u = 0 \\
+f_v &= \hbar \frac{\partial u}{\partial t} + \frac{\hbar^2}{2m}\frac{\partial^2 v}{\partial x^2} - V(x)v = 0
+\end{align}
+
+ฟังก์ชันการสูญเสียรวม (Total Loss Function, $\mathcal{L}_{\text{total}}$) ประกอบด้วย 3 ส่วน
+\begin{equation}
+\mathcal{L}_{\text{total}}(\boldsymbol{\theta}) = w_{\text{pde}}\mathcal{L}_{\text{PDE}} + w_{\text{ic}}\mathcal{L}_{\text{IC}} + w_{\text{bc}}\mathcal{L}_{\text{BC}}
+\label{eq:pinn_loss}
+\end{equation}
+
+โดยที่
+\begin{enumerate}
+    \item \textbf{การสูญเสียตามสมการฟิสิกส์ (PDE Residual Loss)} ---- บังคับให้โครงข่ายสอดคล้องกับสมการชเรอดิงเงอร์ ณ จุดจัดวางสุ่ม (Collocation Points, $N_f$)
+    \begin{equation}
+    \mathcal{L}_{\text{PDE}} = \frac{1}{N_f} \sum_{i=1}^{N_f} \left( |f_u(x_i, t_i)|^2 + |f_v(x_i, t_i)|^2 \right)
+    \end{equation}
+    \item \textbf{การสูญเสียเงื่อนไขเริ่มต้น (Initial Condition Loss)} ---- สอดคล้องกับสถานะเริ่มต้น $\Psi(x, 0) = \Psi_0(x)$ ณ จุดข้อมูล $N_0$ จุด
+    \begin{equation}
+    \mathcal{L}_{\text{IC}} = \frac{1}{N_0} \sum_{j=1}^{N_0} \left( |u(x_j, 0) - u_0(x_j)|^2 + |v(x_j, 0) - v_0(x_j)|^2 \right)
+    \end{equation}
+    \item \textbf{การสูญเสียเงื่อนไขขอบเขต (Boundary Condition Loss)} ---- บังคับเงื่อนไขขอบเขต เช่น $\Psi(\pm L, t) = 0$
+    \begin{equation}
+    \mathcal{L}_{\text{BC}} = \frac{1}{N_b} \sum_{k=1}^{N_b} \left( |\Psi(x_k^b, t_k)|^2 \right)
+    \end{equation}
+\end{enumerate}
+
+การอัปเดตพารามิเตอร์ $\boldsymbol{\theta}$ ด้วยขั้นตอนวิธี Adam Optimizer ร่วมกับ L-BFGS ช่วยให้โครงข่ายประสาทเทียมสามารถเรียนรู้และค้นพบฟังก์ชันคลื่นควอนตัมได้โดยไม่ต้องสร้างกริดแบบดั้งเดิม (Mesh-free Solver) ซึ่งกำลังเป็นเครื่องมือแนวหน้าในการจำลองสสารควอนตัมหลายตัว (Many-Body Quantum Systems) และควอนตัมเคมีในปัจจุบัน
+
+% ==========================================================
+% กล่องปฏิบัติการ WebAR
+% ==========================================================
+\begin{qrcodelabbox}{การทดลองเสมือนจริง วิวัฒนาการเวลาของฟังก์ชันคลื่นควอนตัม WebAR}{https://tsanaphysics.github.io/ar-Quantum/lab03_schrodinger_wavepacket.html}
+\begin{minipage}[c]{0.70\textwidth}
+\textbf{คำแนะนำการทดลองเสมือนจริงสามมิติ (Interactive WebAR Simulation)}
+\begin{enumerate}
+    \item สแกน QR Code ด้วยอุปกรณ์สมาร์ทโฟนหรือแท็บเล็ตเพื่อเปิดแบบจำลอง WebAR
+    \item สังเกตการแกว่งกวัดของฟังก์ชันคลื่นส่วนจริง ($u$), ส่วนจินตภาพ ($v$) และความหนาแน่นความน่าจะเป็น ($|\Psi|^2$) ใน 3 มิติ
+    \item ทดลองปรับเปลี่ยนศักย์ขวางกั้น $V(x)$ เพื่อสังเกตการสะท้อนและการทะลุผ่านของกลุ่มคลื่น
+    \item ตรวจสอบเวกเตอร์กระแสความน่าจะเป็น $\mathbf{j}(x, t)$ ที่เคลื่อนที่สอดคล้องกับสมการความต่อเนื่อง
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.25\textwidth}
+\centering
+\qrcode[height=2.8cm]{https://tsanaphysics.github.io/ar-Quantum/lab03_schrodinger_wavepacket.html}
+\end{minipage}
+\end{qrcodelabbox}
+
+% ==========================================================
+% ตัวอย่างโจทย์ P-S-C-T 7 ข้อเข้มข้น
+% ==========================================================
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+
+\begin{psctbox}{การวิเคราะห์สถานะซ้อนทับและคาบการแกว่งกวัดของความน่าจะเป็น}
+\textbf{Problem (โจทย์ปัญหา)}
+
+อนุภาคในบ่อศักย์ลึกอนันต์ 1 มิติกว้าง $L$ ($0 \le x \le L$) มีฟังก์ชันคลื่นเริ่มต้น ณ เวลา $t = 0$ อยู่ในสถานะซ้อนทับเชิงเส้นระหว่างสถานะพื้น ($n = 1$) และสถานะกระตุ้นแรก ($n = 2$) ดังนี้
+\begin{equation*}
+\Psi(x, 0) = \frac{1}{\sqrt{2}}\psi_1(x) + \frac{1}{\sqrt{2}}\psi_2(x)
+\end{equation*}
+โดยที่ $\psi_n(x) = \sqrt{\frac{2}{L}}\sin\left( \frac{n\pi x}{L} \right)$ และ $E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}$
+\begin{enumerate}
+    \item จงหาฟังก์ชันคลื่น $\Psi(x, t)$ ณ เวลา $t > 0$
+    \item จงคำนวณความหนาแน่นความน่าจะเป็น $|\Psi(x, t)|^2$ และแสดงว่ามีการแกว่งกวัดตามเวลา
+    \item จงหาคาบเวลาการแกว่งกวัด ($T_{\text{osc}}$) และความถี่เชิงมุม ($\omega_{\text{osc}}$)
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} ใส่แฟกเตอร์วิวัฒนาการเวลา $e^{-iE_n t/\hbar}$ ให้แก่แต่ละสถานะ
+\begin{equation*}
+\Psi(x, t) = \frac{1}{\sqrt{2}}\psi_1(x) e^{-iE_1 t/\hbar} + \frac{1}{\sqrt{2}}\psi_2(x) e^{-iE_2 t/\hbar}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณความหนาแน่นความน่าจะเป็น $|\Psi(x, t)|^2 = \Psi^* \Psi$
+\begin{align*}
+|\Psi(x, t)|^2 &= \left( \frac{1}{\sqrt{2}}\psi_1 e^{iE_1 t/\hbar} + \frac{1}{\sqrt{2}}\psi_2 e^{iE_2 t/\hbar} \right) \left( \frac{1}{\sqrt{2}}\psi_1 e^{-iE_1 t/\hbar} + \frac{1}{\sqrt{2}}\psi_2 e^{-iE_2 t/\hbar} \right) \\
+&= \frac{1}{2}\psi_1^2(x) + \frac{1}{2}\psi_2^2(x) + \frac{1}{2}\psi_1(x)\psi_2(x)\left( e^{i(E_2 - E_1)t/\hbar} + e^{-i(E_2 - E_1)t/\hbar} \right) \\
+&= \frac{1}{2}\psi_1^2(x) + \frac{1}{2}\psi_2^2(x) + \psi_1(x)\psi_2(x)\cos\left( \frac{E_2 - E_1}{\hbar} t \right)
+\end{align*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณความถี่และคาบของการแกว่งกวัด
+ความถี่เชิงมุมของการแกว่งกวัดคือ
+\begin{equation*}
+\omega_{\text{osc}} = \frac{E_2 - E_1}{\hbar} = \frac{4E_1 - E_1}{\hbar} = \frac{3E_1}{\hbar} = \frac{3\pi^2 \hbar}{2mL^2}
+\end{equation*}
+คาบของการแกว่งกวัดคือ
+\begin{equation*}
+T_{\text{osc}} = \frac{2\pi}{\omega_{\text{osc}}} = \frac{2\pi \hbar}{3E_1} = \frac{4mL^2}{3\pi \hbar}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- เมื่อ $t = 0$ พจน์ $\cos(0) = 1$ ทำให้ $|\Psi|^2 = \frac{1}{2}(\psi_1 + \psi_2)^2$ สอดคล้องกับสภาวะเริ่มต้น และความน่าจะเป็นรวม $\int_0^L |\Psi(x, t)|^2 dx = \frac{1}{2}(1) + \frac{1}{2}(1) + 0 = 1$ คงที่ตลอดเวลาเนื่องจาก $\psi_1$ และ $\psi_2$ ตั้งฉากกัน
+
+\textbf{Think (คิดต่อ)} ---- ในสถานะคงตัวเดี่ยว ความหนาแน่นความน่าจะเป็นจะอยู่นิ่งไม่เปลี่ยนตามเวลา แต่เมื่อใดก็ตามที่มีการซ้อนทับของสถานะที่มีพลังงานต่างกัน ความน่าจะเป็นจะแกว่งกวัดไปมาระหว่างสองฟากของบ่อศักย์ด้วยความถี่บีต $\Delta E/\hbar$ ซึ่งเป็นกลไกพื้นฐานของการเกิดการแผ่รังสีแม่เหล็กไฟฟ้าจากการเปลี่ยนระดับพลังงานในอะตอม
+\end{psctbox}
+
+\begin{psctbox}{การคำนวณกระแสความน่าจะเป็นของคลื่นทรงกลมแผ่ออก}
+\textbf{Problem (โจทย์ปัญหา)}
+
+ในปรากฏการณ์การกระเจิงควอนตัม 3 มิติ ลำอนุภาคที่กระเจิงออกจากจุดศูนย์กลางสามารถแทนด้วยฟังก์ชันคลื่นทรงกลมแผ่ออก (Outgoing Spherical Wave)
+\begin{equation*}
+\Psi(r, t) = \frac{A}{r} e^{i(kr - \omega t)}
+\end{equation*}
+โดยที่ $A$ คือค่าคงตัวแอมพลิจูด และ $k = p/\hbar$ จงคำนวณ
+\begin{enumerate}
+    \item ความหนาแน่นกระแสความน่าจะเป็นในแนวรัศมี ($j_r$)
+    \item ฟลักซ์ความน่าจะเป็นรวมทั้งหมดที่ไหลผ่านผิวทรงกลมรัศมี $R$ ปิดล้อมจุดกำเนิด
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} ตัวดำเนินการเกรเดียนต์ในพิกัดทรงกลมสำหรับฟังก์ชันที่ขึ้นกับรัศมี $r$ เท่านั้นคือ $\nabla = \hat{r}\frac{\partial}{\partial r}$
+หาอนุพันธ์ของฟังก์ชันคลื่น
+\begin{equation*}
+\frac{\partial \Psi}{\partial r} = \frac{\partial}{\partial r}\left( \frac{A}{r} e^{i(kr - \omega t)} \right) = \left( -\frac{A}{r^2} + \frac{ikA}{r} \right) e^{i(kr - \omega t)} = \left( ik - \frac{1}{r} \right)\Psi
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณความหนาแน่นกระแสความน่าจะเป็นจากสมการ~\eqref{eq:prob_current_3d}
+\begin{align*}
+\mathbf{j}(r) &= \frac{\hbar}{m}\text{Im}\left( \Psi^* \frac{\partial \Psi}{\partial r}\hat{r} \right) = \frac{\hbar}{m}\text{Im}\left[ \Psi^* \left( ik - \frac{1}{r} \right)\Psi \hat{r} \right] \\
+&= \frac{\hbar}{m}\text{Im}\left[ |\Psi|^2 \left( ik - \frac{1}{r} \right) \right] \hat{r} = \frac{\hbar}{m} |\Psi|^2 k \, \hat{r}
+\end{align*}
+เนื่องจาก $|\Psi|^2 = \frac{|A|^2}{r^2}$ จะได้
+\begin{equation*}
+\mathbf{j}(r) = \frac{\hbar k}{m} \frac{|A|^2}{r^2} \hat{r} = v \frac{|A|^2}{r^2} \hat{r}
+\end{equation*}
+โดยที่ $v = \hbar k/m$ คือความเร็วของอนุภาค
+
+\textbf{ขั้นตอนที่ 3} คำนวณฟลักซ์รวมผ่านผิวทรงกลมรัศมี $R$
+\begin{equation*}
+\Phi_{\text{prob}} = \oint_{S} \mathbf{j}\cdot d\mathbf{a} = \int_{0}^{2\pi}\int_{0}^{\pi} \left( v \frac{|A|^2}{R^2} \right) R^2 \sin\theta \, d\theta \, d\phi = 4\pi v |A|^2
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ฟลักซ์รวม $\Phi_{\text{prob}} = 4\pi v |A|^2$ เป็นค่าคงที่ที่ไม่ขึ้นกับรัศมี $R$ เลย สอดคล้องกับกฎอนุรักษ์ความน่าจะเป็นอย่างสมบูรณ์ เพราะไม่มีความน่าจะเป็นสะสมหรือสูญหายในอวกาศระหว่างทาง
+
+\textbf{Think (คิดต่อ)} ---- พจน์ $1/r^2$ ในกระแสความน่าจะเป็นสะท้อนกฎกำลังสองผกผันเชิงเรขาคณิต (Inverse-Square Law) ของความเข้มรังสี ซึ่งเป็นผลลัพธ์โดยตรงจากการอนุรักษ์ความน่าจะเป็นใน 3 มิติ
+\end{psctbox}
+
+\begin{psctbox}{พีชคณิตเมทริกซ์ในปริภูมิฮิลเบิร์ต 2 มิติ}
+\textbf{Problem (โจทย์ปัญหา)}
+
+ในปริภูมิฮิลเบิร์ต 2 มิติ กำหนดฐานตั้งฉากปรกติ $\{\ket{1}, \ket{2}\}$ ตัวดำเนินการ $\hat{\Omega}$ มีการแทนด้วยเมทริกซ์ดังนี้
+\begin{equation*}
+\boldsymbol{\Omega} = \begin{pmatrix} 2 & i \\ -i & 2 \end{pmatrix}
+\end{equation*}
+\begin{enumerate}
+    \item จงแสดงว่า $\hat{\Omega}$ เป็นตัวดำเนินการแฮร์มิเชียน
+    \item จงหาค่าเจาะจงทั้งหมด และเวกเตอร์สถานะเจาะจงที่ได้รับการนอร์มอลไลซ์
+    \item จงตรวจสอบว่าสถานะเจาะจงทั้งสองตั้งฉากกันและสอดคล้องกับความสมบูรณ์ของฐาน
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} ตรวจสอบความเป็นแฮร์มิเชียน $\boldsymbol{\Omega}^\dagger = (\boldsymbol{\Omega}^*)^T$
+\begin{equation*}
+\boldsymbol{\Omega}^* = \begin{pmatrix} 2 & -i \\ i & 2 \end{pmatrix} \implies (\boldsymbol{\Omega}^*)^T = \begin{pmatrix} 2 & i \\ -i & 2 \end{pmatrix} = \boldsymbol{\Omega}
+\end{equation*}
+ดังนั้น $\hat{\Omega}$ เป็นแฮร์มิเชียน
+
+\textbf{ขั้นตอนที่ 2} หาค่าเจาะจงจากสมการลักษณะเฉพาะ $\det(\boldsymbol{\Omega} - \lambda \mathbf{I}) = 0$
+\begin{equation*}
+\begin{vmatrix} 2-\lambda & i \\ -i & 2-\lambda \end{vmatrix} = (2-\lambda)^2 - (i)(-i) = (2-\lambda)^2 - 1 = 0
+\end{equation*}
+\begin{equation*}
+(2-\lambda)^2 = 1 \implies 2-\lambda = \pm 1 \implies \lambda_1 = 3, \quad \lambda_2 = 1
+\end{equation*}
+ค่าเจาะจงทั้งสองเป็นจำนวนจริง สอดคล้องกับทฤษฎีบทของแฮร์มิเชียน
+
+\textbf{ขั้นตอนที่ 3} หาเวกเตอร์เจาะจงสำหรับ $\lambda_1 = 3$
+\begin{equation*}
+\begin{pmatrix} 2-3 & i \\ -i & 2-3 \end{pmatrix} \begin{pmatrix} u_1 \\ u_2 \end{pmatrix} = \begin{pmatrix} -1 & i \\ -i & -1 \end{pmatrix} \begin{pmatrix} u_1 \\ u_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies -u_1 + i u_2 = 0 \implies u_1 = i u_2
+\end{equation*}
+นอร์มอลไลซ์ $|u_1|^2 + |u_2|^2 = |i u_2|^2 + |u_2|^2 = 2|u_2|^2 = 1 \implies u_2 = \frac{1}{\sqrt{2}}$
+\begin{equation*}
+\ket{\lambda_1} = \frac{1}{\sqrt{2}}\begin{pmatrix} i \\ 1 \end{pmatrix}
+\end{equation*}
+
+หาเวกเตอร์เจาะจงสำหรับ $\lambda_2 = 1$
+\begin{equation*}
+\begin{pmatrix} 2-1 & i \\ -i & 2-1 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 1 & i \\ -i & 1 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_1 + i v_2 = 0 \implies v_1 = -i v_2
+\end{equation*}
+\begin{equation*}
+\ket{\lambda_2} = \frac{1}{\sqrt{2}}\begin{pmatrix} -i \\ 1 \end{pmatrix}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 4} ตรวจสอบความตั้งฉากและความสมบูรณ์
+\begin{equation*}
+\braket{\lambda_1}{\lambda_2} = \frac{1}{\sqrt{2}}\begin{pmatrix} -i & 1 \end{pmatrix} \frac{1}{\sqrt{2}}\begin{pmatrix} -i \\ 1 \end{pmatrix} = \frac{1}{2}\big( (-i)(-i) + (1)(1) \big) = \frac{1}{2}(-1 + 1) = 0
+\end{equation*}
+และตัวดำเนินการฉายภาพรวม
+\begin{align*}
+\ket{\lambda_1}\bra{\lambda_1} + \ket{\lambda_2}\bra{\lambda_2} &= \frac{1}{2}\begin{pmatrix} i \\ 1 \end{pmatrix}\begin{pmatrix} -i & 1 \end{pmatrix} + \frac{1}{2}\begin{pmatrix} -i \\ 1 \end{pmatrix}\begin{pmatrix} i & 1 \end{pmatrix} \\
+&= \frac{1}{2}\begin{pmatrix} 1 & i \\ -i & 1 \end{pmatrix} + \frac{1}{2}\begin{pmatrix} 1 & -i \\ i & 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \mathbf{I}
+\end{align*}
+
+\textbf{Check (ตรวจสอบ)} ---- ค่าเจาะจงเป็นจริง เวกเตอร์เจาะจงตั้งฉากกัน และผลบวกของโปรเจกเตอร์เท่ากับเมทริกซ์เอกลักษณ์อย่างแม่นยำ
+
+\textbf{Think (คิดต่อ)} ---- เมทริกซ์ลักษณะนี้คือรูปแบบทั่วไปของการแทนคิวบิตในคอมพิวเตอร์ควอนตัม ซึ่งสามารถแยกออกเป็นส่วนผสมของเมทริกซ์พอลิ (Pauli Matrices) $\boldsymbol{\Omega} = 2\mathbf{I} - \sigma_y$
+\end{psctbox}
+
+\begin{psctbox}{การประยุกต์ทฤษฎีบทเอห์เรนเฟสต์กับฮาร์มอนิกออสซิลเลเตอร์}
+\textbf{Problem (โจทย์ปัญหา)}
+
+สำหรับตัวแกว่งกวัดฮาร์มอนิก 1 มิติ ฮามิลโทเนียนกำหนดโดย $\hat{H} = \frac{\hat{p}^2}{2m} + \frac{1}{2}m\omega^2 \hat{x}^2$
+\begin{enumerate}
+    \item จงใช้ทฤษฎีบทเอห์เรนเฟสต์เพื่อสร้างสมการเชิงอนุพันธ์ของ $\frac{d}{dt}\langle x \rangle$ และ $\frac{d}{dt}\langle p \rangle$
+    \item จงหาผลเฉลยของ $\langle x(t) \rangle$ สำหรับสภาวะเริ่มต้นใดๆ ที่มี $\langle x(0) \rangle = x_0$ และ $\langle p(0) \rangle = p_0$
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} คำนวณคอมมิวเตเตอร์
+จากสมการ~\eqref{eq:ehrenfest_x} ทราบว่า $\frac{d}{dt}\langle x \rangle = \frac{\langle p \rangle}{m}$
+สำหรับโมเมนตัม คำนวณคอมมิวเตเตอร์กับพลังงานศักย์ $V(x) = \frac{1}{2}m\omega^2 x^2$
+\begin{equation*}
+[\hat{p}, \hat{H}] = \left[ \hat{p}, \frac{1}{2}m\omega^2 \hat{x}^2 \right] = \frac{1}{2}m\omega^2 [\hat{p}, \hat{x}^2] = \frac{1}{2}m\omega^2 (-2i\hbar \hat{x}) = -i\hbar m\omega^2 \hat{x}
+\end{equation*}
+ใช้สมการเอห์เรนเฟสต์
+\begin{equation*}
+\frac{d}{dt}\langle p \rangle = \frac{1}{i\hbar}\langle [\hat{p}, \hat{H}] \rangle = -m\omega^2 \langle x \rangle
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} แก้ระบบสมการอนุพันธ์ควบคู่
+หาอนุพันธ์เทียบกับเวลาอีกหนึ่งครั้งของสมการแรก
+\begin{equation*}
+\frac{d^2}{dt^2}\langle x \rangle = \frac{1}{m}\frac{d}{dt}\langle p \rangle = \frac{1}{m}(-m\omega^2 \langle x \rangle) = -\omega^2 \langle x \rangle
+\end{equation*}
+นี่คือสมการการแกว่งกวัดฮาร์มอนิกอย่างง่าย ผลเฉลยทั่วไปคือ
+\begin{equation*}
+\langle x(t) \rangle = A \cos(\omega t) + B \sin(\omega t)
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} กำหนดค่าคงตัวจากเงื่อนไขเริ่มต้น
+ที่ $t = 0$ จะได้ $\langle x(0) \rangle = A = x_0$
+หาอนุพันธ์เพื่อเชื่อมโยงกับโมเมนตัม
+\begin{equation*}
+\frac{d}{dt}\langle x(0) \rangle = \omega B = \frac{\langle p(0) \rangle}{m} = \frac{p_0}{m} \implies B = \frac{p_0}{m\omega}
+\end{equation*}
+ดังนั้น ผลเฉลยสมบูรณ์คือ
+\begin{equation*}
+\langle x(t) \rangle = x_0 \cos(\omega t) + \frac{p_0}{m\omega}\sin(\omega t)
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ผลเฉลยของค่าคาดหวังตำแหน่ง $\langle x(t) \rangle$ มีรูปแบบเหมือนกับสมการการเคลื่อนที่ของมวลติดสปริงในกลศาสตร์คลาสสิกทุกประการ
+
+\textbf{Think (คิดต่อ)} ---- ในกรณีของศักย์ฮาร์มอนิก อนุพันธ์อันดับสองของแรง $F''(x) = -\frac{d^3 V}{dx^3} = 0$ ทำให้พจน์ความคลาดเคลื่อนทางควอนตัมเป็นศูนย์อย่างแท้จริง ค่าคาดหวังของฮาร์มอนิกออสซิลเลเตอร์จึงเคลื่อนที่ตามวิถีคลาสสิกได้อย่างสมบูรณ์แบบไม่ว่ากลุ่มคลื่นจะกว้างเพียงใด
+\end{psctbox}
+
+\begin{psctbox}{การแปลงฟูเรียร์สู่ปริภูมิโมเมนตัมของอนุภาคในกล่อง}
+\textbf{Problem (โจทย์ปัญหา)}
+
+อนุภาคในกล่อง 1 มิติที่สถานะพื้น ($n = 1$) มีฟังก์ชันคลื่นในปริภูมิตำแหน่งคือ
+\begin{equation*}
+\psi(x) = \begin{cases} \sqrt{\frac{2}{L}}\sin\left( \frac{\pi x}{L} \right) & \text{เมื่อ } 0 \le x \le L \\ 0 & \text{กรณีอื่น} \end{cases}
+\end{equation*}
+จงหาฟังก์ชันคลื่นในปริภูมิโมเมนตัม $\Phi(p)$ และคำนวณการกระจายความน่าจะเป็นที่จะวัดได้โมเมนตัม $p$
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} ฟังก์ชันคลื่นในปริภูมิโมเมนตัมหาได้จากการฉายภาพ $\Phi(p) = \braket{p}{\psi}$
+\begin{equation*}
+\Phi(p) = \frac{1}{\sqrt{2\pi\hbar}} \int_{-\infty}^{\infty} \psi(x) e^{-ipx/\hbar} \, dx = \frac{1}{\sqrt{2\pi\hbar}} \sqrt{\frac{2}{L}} \int_{0}^{L} \sin\left( \frac{\pi x}{L} \right) e^{-ipx/\hbar} \, dx
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} ใช้เอกลักษณ์ออยเลอร์ $\sin(\theta) = \frac{e^{i\theta} - e^{-i\theta}}{2i}$
+\begin{equation*}
+\Phi(p) = \frac{1}{\sqrt{\pi\hbar L}}\frac{1}{2i} \int_{0}^{L} \left( e^{i(\pi/L - p/\hbar)x} - e^{-i(\pi/L + p/\hbar)x} \right) dx
+\end{equation*}
+อินทิเกรตแต่ละพจน์และแทนขอบเขตจาก $0$ ถึง $L$ หลังจัดรูปพีชคณิต
+\begin{equation*}
+\Phi(p) = \sqrt{\frac{\pi L}{\hbar}} \left( \frac{1 + e^{-ipL/\hbar}}{\pi^2 - (pL/\hbar)^2} \right)
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} หาความหนาแน่นความน่าจะเป็นในปริภูมิโมเมนตัม $P(p) = |\Phi(p)|^2$
+\begin{equation*}
+|1 + e^{-ipL/\hbar}|^2 = (1 + \cos(pL/\hbar))^2 + \sin^2(pL/\hbar) = 2 + 2\cos(pL/\hbar) = 4\cos^2\left( \frac{pL}{2\hbar} \right)
+\end{equation*}
+ดังนั้น
+\begin{equation*}
+P(p) = \frac{4\pi L}{\hbar} \frac{\cos^2(pL / 2\hbar)}{\left[ \pi^2 - (pL/\hbar)^2 \right]^2}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- เมื่อ $p \to \pm \frac{\pi\hbar}{L}$ (โมเมนตัมตามแบบจำลองโบร์) ใช้กฎโลปิตาลจะได้ค่าความน่าจะเป็นมีจุดยอดสูงสุด และเมื่ออินทิเกรตตลอดทุกค่าของโมเมนตัม $\int_{-\infty}^\infty P(p) dp = 1$ สอดคล้องกับทฤษฎีบทพาร์เซวาล (Parseval's Theorem)
+
+\textbf{Think (คิดต่อ)} ---- แม้ในกลศาสตร์คลาสสิกอนุภาคที่สะท้อนไปมาจะมีโมเมนตัมเพียงสองค่าคือ $+p$ และ $-p$ แต่ในกลศาสตร์ควอนตัม เนื่องจากการกักขังอนุภาคในบริเวณจำกัด $L$ ทำให้เกิดการเลี้ยวเบนของคลื่น ส่งผลให้การกระจายโมเมนตัมทอดยาวออกไปทุกช่วงค่าตามหลักความไม่แน่นอนของไฮเซนเบิร์ก
+\end{psctbox}
+
+\begin{psctbox}{กระบวนการสร้างฐานตั้งฉากปรกติแบบแกรม-ชมิดต์สำหรับสถานะลดหลั่น}
+\textbf{Problem (โจทย์ปัญหา)}
+
+ในระบบควอนตัม 3 มิติ ฮามิลโทเนียนมีระดับพลังงานหนึ่งที่มีความลดหลั่น (Degeneracy) 2 เท่า โดยมีสถานะเจาะจงที่ไม่อิสระเชิงเส้นต่อกันสองสถานะ ได้แก่ $\ket{\phi_1}$ และ $\ket{\phi_2}$ ซึ่งได้รับการนอร์มอลไลซ์แล้ว ($\braket{\phi_1}{\phi_1} = \braket{\phi_2}{\phi_2} = 1$) แต่ไม่ได้ตั้งฉากกัน โดยมีผลคูณภายใน $\braket{\phi_1}{\phi_2} = \gamma = \frac{1}{2}$
+จงใช้กระบวนการแกรม-ชมิดต์ (Gram-Schmidt Orthogonalization) เพื่อสร้างเซตฐานตั้งฉากปรกติ $\{\ket{\psi_1}, \ket{\psi_2}\}$
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} กำหนดให้สถานะแรกเป็นสถานะฐานตัวแรก
+\begin{equation*}
+\ket{\psi_1} = \ket{\phi_1}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} สร้างสถานะที่สองโดยการลบส่วนที่ฉายลงบน $\ket{\psi_1}$ ออกจาก $\ket{\phi_2}$
+\begin{equation*}
+\ket{\psi_2'} = \ket{\phi_2} - \braket{\psi_1}{\phi_2}\ket{\psi_1} = \ket{\phi_2} - \gamma \ket{\phi_1} = \ket{\phi_2} - \frac{1}{2}\ket{\phi_1}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} ตรวจสอบความตั้งฉากระหว่าง $\ket{\psi_1}$ และ $\ket{\psi_2'}$
+\begin{equation*}
+\braket{\psi_1}{\psi_2'} = \braket{\phi_1}{\phi_2 - \frac{1}{2}\phi_1} = \braket{\phi_1}{\phi_2} - \frac{1}{2}\braket{\phi_1}{\phi_1} = \frac{1}{2} - \frac{1}{2}(1) = 0
+\end{equation*}
+ตั้งฉากกันเรียบร้อยแล้ว
+
+\textbf{ขั้นตอนที่ 4} นอร์มอลไลซ์ $\ket{\psi_2'}$ เพื่อหา $\ket{\psi_2}$
+\begin{align*}
+\braket{\psi_2'}{\psi_2'} &= \left( \bra{\phi_2} - \frac{1}{2}\bra{\phi_1} \right) \left( \ket{\phi_2} - \frac{1}{2}\ket{\phi_1} \right) \\
+&= \braket{\phi_2}{\phi_2} - \frac{1}{2}\braket{\phi_2}{\phi_1} - \frac{1}{2}\braket{\phi_1}{\phi_2} + \frac{1}{4}\braket{\phi_1}{\phi_1} \\
+&= 1 - \frac{1}{2}\left(\frac{1}{2}\right) - \frac{1}{2}\left(\frac{1}{2}\right) + \frac{1}{4}(1) = 1 - \frac{1}{4} - \frac{1}{4} + \frac{1}{4} = \frac{3}{4}
+\end{align*}
+ดังนั้น ตัวประกอบการนอร์มอลไลซ์คือ $\frac{1}{\sqrt{3/4}} = \frac{2}{\sqrt{3}}$
+\begin{equation*}
+\ket{\psi_2} = \frac{\ket{\psi_2'}}{\sqrt{\braket{\psi_2'}{\psi_2'}}} = \frac{2}{\sqrt{3}}\left( \ket{\phi_2} - \frac{1}{2}\ket{\phi_1} \right) = \frac{2}{\sqrt{3}}\ket{\phi_2} - \frac{1}{\sqrt{3}}\ket{\phi_1}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- คำนวณนอร์ม $\braket{\psi_2}{\psi_2} = \frac{4}{3}(1) + \frac{1}{3}(1) - \frac{4}{3}(\frac{1}{2}) = \frac{5}{3} - \frac{2}{3} = 1$ และ $\braket{\psi_1}{\psi_2} = \frac{2}{\sqrt{3}}(\frac{1}{2}) - \frac{1}{\sqrt{3}}(1) = 0$ สมบูรณ์
+
+\textbf{Think (คิดต่อ)} ---- ในทฤษฎีการรบกวนสำหรับสถานะลดหลั่น (Degenerate Perturbation Theory) การเลือกฐานตั้งฉากปรกติที่ถูกต้องที่ทำให้ตัวดำเนินการรบกวนอยู่ในรูปเมทริกซ์ทแยงมุมมีความสำคัญอย่างยิ่งยวดต่อการหาการแยกของระดับพลังงาน
+\end{psctbox}
+
+\begin{psctbox}{การคำนวณฟังก์ชันการสูญเสียของ PINNs สำหรับสมการชเรอดิงเงอร์}
+\textbf{Problem (โจทย์ปัญหา)}
+
+ในการฝึกโครงข่ายประสาทเทียมฟิสิกส์ (PINNs) เพื่อแก้สมการชเรอดิงเงอร์ของอนุภาคอิสระหนึ่งมิติ ($m = 1, \hbar = 1, V = 0$) สมมติว่าโครงข่ายประสาทเทียมทำนายค่าฟังก์ชันคลื่นทดสอบ ณ จุดจัดวางหนึ่ง $x = 1.0, t = 0.5$ ได้ค่าอนุพันธ์ย่อยจากการหาอนุพันธ์อัตโนมัติ (Autograd) ดังนี้
+\begin{equation*}
+\frac{\partial u}{\partial t} = 0.40, \quad \frac{\partial v}{\partial t} = -0.60, \quad \frac{\partial^2 u}{\partial x^2} = -1.20, \quad \frac{\partial^2 v}{\partial x^2} = 0.80
+\end{equation*}
+\begin{enumerate}
+    \item จงคำนวณเศษตกค้างของสมการฟิสิกส์ $f_u$ และ $f_v$ ณ จุดนี้
+    \item จงคำนวณค่าการสูญเสียฟิสิกส์เฉพาะจุด $\mathcal{L}_{\text{PDE}}(x, t) = |f_u|^2 + |f_v|^2$
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} จากสมการเศษตกค้างของ TDSE สำหรับอนุภาคอิสระ ($m = 1, \hbar = 1, V = 0$)
+\begin{align*}
+f_u &= -\frac{\partial v}{\partial t} + \frac{1}{2}\frac{\partial^2 u}{\partial x^2} \\
+f_v &= \frac{\partial u}{\partial t} + \frac{1}{2}\frac{\partial^2 v}{\partial x^2}
+\end{align*}
+
+\textbf{ขั้นตอนที่ 2} แทนค่าตัวเลขของอนุพันธ์ย่อย
+\begin{equation*}
+f_u = -(-0.60) + \frac{1}{2}(-1.20) = 0.60 - 0.60 = 0.00
+\end{equation*}
+\begin{equation*}
+f_v = 0.40 + \frac{1}{2}(0.80) = 0.40 + 0.40 = 0.80
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณค่าความสูญเสียเฉพาะจุด
+\begin{equation*}
+\mathcal{L}_{\text{PDE}}(1.0, 0.5) = |f_u|^2 + |f_v|^2 = (0.00)^2 + (0.80)^2 = 0.64
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ค่า $f_u = 0$ แสดงว่าส่วนจริงของสมการชเรอดิงเงอร์สอดคล้องกับฟิสิกส์พอดี แต่ $f_v = 0.80$ แสดงว่าส่วนจินตภาพยังมีค่าคลาดเคลื่อน จึงทำให้เกิดค่าความสูญเสีย $0.64$ ส่งสัญญาณให้เกิดการแพร่ย้อนกลับ (Backpropagation)
+
+\textbf{Think (คิดต่อ)} ---- ในกระบวนการเรียนรู้จริง โครงข่ายจะสุ่มตัวอย่างจุด Collocation นับหมื่นจุด และใช้วิธีเกรเดียนต์เพื่อปรับค่าน้ำหนักจนกระทั่งค่าเฉลี่ยของ $\mathcal{L}_{\text{PDE}} < 10^{-5}$ ซึ่งจะทำให้ฟังก์ชันคลื่นที่โครงข่ายทำนายมีความถูกต้องแม่นยำเทียบเท่ากับผลเฉลยเชิงวิเคราะห์
+\end{psctbox}
+
+% ==========================================================
+% 3.9 สรุปสาระสำคัญประจำบท
+% ==========================================================
+\section{สรุปสาระสำคัญประจำบทที่ 3}
+
+\begin{enumerate}
+    \item \textbf{สมการชเรอดิงเงอร์ขึ้นกับเวลา (TDSE)} ---- $i\hbar \frac{\partial \Psi}{\partial t} = \hat{H}\Psi$ เป็นสมการคลื่นเชิงเส้นที่ควบคุมพลวัตของสถานะควอนตัมทั้งหมด ความเป็นเชิงเส้นของสมการนำไปสู่หลักการซ้อนทับควอนตัม
+    \item \textbf{สมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา (TISE)} ---- การแยกตัวแปรสำหรับศักย์คงตัว $\Psi(x, t) = \psi(x)e^{-iEt/\hbar}$ นำไปสู่สมการค่าเจาะจง $\hat{H}\psi = E\psi$ ผลเฉลยคือสถานะคงตัวซึ่งมีความหนาแน่นความน่าจะเป็นคงที่ในเวลา
+    \item \textbf{กฎอนุรักษ์ความน่าจะเป็น} ---- ความหนาแน่นความน่าจะเป็น $\rho = |\Psi|^2$ และกระแสความน่าจะเป็น $\mathbf{j} = \frac{\hbar}{m}\text{Im}(\Psi^*\nabla\Psi)$ สอดคล้องกับสมการความต่อเนื่อง $\frac{\partial\rho}{\partial t} + \nabla\cdot\mathbf{j} = 0$ ซึ่งรับประกันว่าผลรวมความน่าจะเป็นทั่วเอกภพเท่ากับ 1 เสมอตลอดกาล
+    \item \textbf{สัญกรณ์ดิแรกและปริภูมิฮิลเบิร์ต} ---- เวกเตอร์สถานะแทนด้วยเคต $\ket{\psi}$ และดูอัลเวกเตอร์คือบรา $\bra{\psi}$ ผลคูณภายใน $\braket{\phi}{\psi}$ นิยามเรขาคณิตของปริภูมิ และฟังก์ชันคลื่นคือการฉายภาพ $\psi(x) = \braket{x}{\psi}$
+    \item \textbf{ตัวดำเนินการแฮร์มิเชียน} ---- ปริมาณที่สังเกตวัดได้ทางกายภาพทั้งหมดแทนด้วยตัวดำเนินการแฮร์มิเชียน $\hat{A} = \hat{A}^\dagger$ ซึ่งให้ค่าเจาะจงเป็นจำนวนจริงเสมอ และสถานะเจาะจงที่ค่าเจาะจงต่างกันจะตั้งฉากกันอย่างสมบูรณ์
+    \item \textbf{ทฤษฎีบทเอห์เรนเฟสต์} ---- อัตราการเปลี่ยนแปลงตามเวลาของค่าคาดหวังเป็นไปตาม $\frac{d}{dt}\langle A \rangle = \frac{1}{i\hbar}\langle [\hat{A}, \hat{H}] \rangle + \langle \frac{\partial \hat{A}}{\partial t} \rangle$ แสดงให้เห็นว่าค่าเฉลี่ยของตัวแปรควอนตัมเคลื่อนที่สอดคล้องกับกฎของนิวตัน
+    \item \textbf{โครงข่ายประสาทเทียมฟิสิกส์ (PINNs)} ---- การปฏิวัติการแก้สมการชเรอดิงเงอร์เชิงตัวเลขด้วยการเรียนรู้เชิงลึก โดยการฝังสมการ PDE และเงื่อนไขขอบเขตลงในฟังก์ชันการสูญเสียของโครงข่ายประสาทเทียม
+\end{enumerate}
+
+% ==========================================================
+% คำถามเชิงมโนทัศน์ 20 ข้อ
+% ==========================================================
+\section{คำถามเชิงมโนทัศน์ประจำบทที่ 3}
+
+\begin{enumerate}
+    \item เหตุใดสมการชเรอดิงเงอร์จึงต้องมีจำนวนจินตภาพ $i$ ปรากฏอยู่ในสมการ และจะเกิดผลอย่างไรต่อฟิสิกส์หากตัด $i$ ออกไป
+    \item จงอธิบายความแตกต่างระหว่างสถานะคงตัว (Stationary State) และสถานะที่ไม่คงตัว ในแง่ของความหนาแน่นความน่าจะเป็นและค่าคาดหวัง
+    \item เหตุใดฟังก์ชันคลื่น $\Psi(x, t)$ จึงไม่สามารถวัดได้โดยตรงในห้องปฏิบัติการ แต่ปริมาณ $|\Psi|^2$ จึงสามารถวัดได้
+    \item ในสมการความต่อเนื่องของกระแสความน่าจะเป็น ความหมายทางกายภาพของพจน์ $\nabla\cdot\mathbf{j}$ คืออะไร
+    \item หากเพิ่มค่าคงที่ $V_0$ เข้าไปในพลังงานศักย์ทั่วทั้งระบบ ($V'(x) = V(x) + V_0$) ฟังก์ชันคลื่นและค่าพลังงานจะเปลี่ยนแปลงไปอย่างไร
+    \item จงอธิบายว่าเหตุใดตัวดำเนินการที่แทนปริมาณวัดได้ทางฟิสิกส์จึงต้องเป็นตัวดำเนินการแฮร์มิเชียนเท่านั้น
+    \item ในสัญกรณ์ดิแรก ผลคูณภายใน $\braket{\phi}{\psi}$ และผลคูณภายนอก $\ket{\psi}\bra{\phi}$ มีความหมายทางเรขาคณิตและพีชคณิตแตกต่างกันอย่างไร
+    \item ความสัมพันธ์ความสมบูรณ์ $\sum_n \ket{n}\bra{n} = \hat{I}$ มีประโยชน์อย่างไรในการเปลี่ยนฐานและการคำนวณในปริภูมิฮิลเบิร์ต
+    \item จงอธิบายความหมายทางฟิสิกส์ของค่าคอมมิวเตเตอร์ $[\hat{A}, \hat{B}] = 0$ เทียบกับ $[\hat{A}, \hat{B}] \ne 0$ ในแง่ของการวัดพร้อมกัน
+    \item ทฤษฎีบทเอห์เรนเฟสต์ยืนยันว่ากฎของนิวตันเป็นจริงเสมอในระดับควอนตัมหรือไม่ มีเงื่อนไขหรือข้อยกเว้นอย่างไร
+    \item สำหรับอนุภาคอิสระ เหตุใดคลื่นระนาบ $e^{i(kx-\omega t)}$ จึงไม่สามารถนอร์มอลไลซ์ได้ในปริภูมิฮิลเบิร์ตแบบปกติ และนักฟิสิกส์แก้ปัญหานี้อย่างไร
+    \item ในการแปลงเกจของสนามแม่เหล็กไฟฟ้า เหตุใดฟังก์ชันคลื่นจึงต้องเปลี่ยนเฟสเพื่อรักษากฎฟิสิกส์ให้คงเดิม
+    \item หากสถานะควอนตัมอยู่ในสถานะเจาะจงของพลังงาน การวัดพลังงานซ้ำหลายๆ ครั้งจะได้ผลลัพธ์เป็นอย่างไร
+    \item จงอธิบายบทบาทของตัวดำเนินการฉายภาพ $\hat{P} = \ket{\psi}\bra{\psi}$ ในกระบวนการวัดควอนตัมตามการแปลความหมายแบบโคเปนเฮเกน
+    \item เหตุใดความหนาแน่นกระแสความน่าจะเป็นของคลื่นนิ่งจึงมีค่าเป็นศูนย์ตลอดเวลา แม้ว่าฟังก์ชันคลื่นจะมีการสั่นตามเวลาก็ตาม
+    \item จงอธิบายความแตกต่างระหว่างสเปกตรัมแบบไม่ต่อเนื่อง (Discrete Spectrum) และสเปกตรัมแบบต่อเนื่อง (Continuous Spectrum) ของตัวดำเนินการ
+    \item โครงข่ายประสาทเทียมฟิสิกส์ (PINNs) แตกต่างจากการเรียนรู้ของเครื่องแบบดั้งเดิมที่ใช้ข้อมูลฝึกสอน (Data-driven ML) อย่างไร
+    \item การหาอนุพันธ์อัตโนมัติ (Autograd) ใน PINNs มีข้อได้เปรียบกว่าการหาอนุพันธ์แบบผลต่างสืบเนื่อง (Finite Difference) อย่างไร
+    \item เหตุใดการฝึก PINNs สำหรับสมการชเรอดิงเงอร์จึงต้องแยกฟังก์ชันคลื่นออกเป็นส่วนจริงและส่วนจินตภาพ
+    \item ในระบบหลายมิติ เหตุใด PINNs จึงสามารถก้าวข้ามข้อจำกัดการระเบิดเชิงมิติ (Curse of Dimensionality) ได้ดีกว่าวิธีเชิงตัวเลขแบบกริด
+\end{enumerate}
+
+% ==========================================================
+% แบบฝึกหัดคำนวณและพิสูจน์เชิงวิเคราะห์ 20 ข้อ
+% ==========================================================
+\section{แบบฝึกหัดคำนวณและพิสูจน์เชิงวิเคราะห์ประจำบทที่ 3}
+
+\begin{enumerate}
+    \item อนุภาคตัวหนึ่งมีฟังก์ชันคลื่น $\psi(x) = A e^{-\lambda |x|}$ โดยที่ $A$ และ $\lambda$ เป็นค่าคงที่จริงบวก จงหาค่า $A$ ที่ทำให้นอร์มอลไลซ์ และคำนวณความน่าจะเป็นที่จะพบอนุภาคในช่วง $-\frac{1}{\lambda} \le x \le \frac{1}{\lambda}$
+    \item จงคำนวณหาความหนาแน่นกระแสความน่าจะเป็น $j(x)$ ของฟังก์ชันคลื่น $\psi(x) = A e^{i k x} + B e^{-i k x}$ เมื่อ $A$ และ $B$ เป็นจำนวนเชิงซ้อน
+    \item จงพิสูจน์ว่าตัวดำเนินการโมเมนตัม $\hat{p}_x = -i\hbar\frac{\partial}{\partial x}$ เป็นตัวดำเนินการแฮร์มิเชียนในปริภูมิของฟังก์ชันคลื่นที่ลู่เข้าสู่ศูนย์ที่ระยะอนันต์
+    \item จงคำนวณคอมมิวเตเตอร์ $[\hat{x}^3, \hat{p}_x]$ และ $[\hat{x}, \hat{p}_x^2]$ โดยใช้เอกลักษณ์พีชคณิตคอมมิวเตเตอร์
+    \item อนุภาคมีฟังก์ชันคลื่น $\Psi(x, t) = \sqrt{\frac{a}{\pi}} \frac{e^{-iEt/\hbar}}{x^2 + a^2}$ จงคำนวณหาค่าคาดหวัง $\langle x \rangle$ และ $\langle x^2 \rangle$
+    \item จงแสดงว่า หาก $\hat{A}$ เป็นตัวดำเนินการแฮร์มิเชียน แล้ว ตัวดำเนินการ $\hat{U} = e^{i\hat{A}}$ จะเป็นตัวดำเนินการยูนิแทรี ($\hat{U}^\dagger \hat{U} = \hat{I}$)
+    \item กำหนดเมทริกซ์ฮามิลโทเนียน $\mathbf{H} = \begin{pmatrix} E_0 & V \\ V & E_0 \end{pmatrix}$ จงหาค่าเจาะจงพลังงานและสถานะเจาะจงที่ได้รับการนอร์มอลไลซ์
+    \item ในระบบ 2 มิติ สถานะเริ่มต้นคือ $\ket{\Psi(0)} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ ภายใต้ฮามิลโทเนียนในข้อ 7 จงหาเคตสถานะ $\ket{\Psi(t)}$ ณ เวลา $t > 0$
+    \item จงพิสูจน์เอกลักษณ์แฮดามาร์ด (Hadamard Lemma) $e^{\hat{A}}\hat{B}e^{-\hat{A}} = \hat{B} + [\hat{A}, \hat{B}] + \frac{1}{2!}[\hat{A}, [\hat{A}, \hat{B}]] + \dots$
+    \item จงคำนวณกระแสความน่าจะเป็นสำหรับฟังก์ชันคลื่นเกาส์เซียน $\psi(x) = \left(\frac{1}{2\pi\sigma^2}\right)^{1/4} e^{-x^2/(4\sigma^2)} e^{ik_0 x}$
+    \item อนุภาคอยู่ภายใต้ศักย์สนามโน้มถ่วงสม่ำเสมอ $V(x) = mgx$ จงใช้ทฤษฎีบทเอห์เรนเฟสต์พิสูจน์ว่า $\frac{d^2}{dt^2}\langle x \rangle = -g$
+    \item จงพิสูจน์ว่าค่าคาดหวังของตัวดำเนินการแฮร์มิเชียนใดๆ จะต้องเป็นจำนวนจริงเสมอ ($\langle A \rangle \in \mathbb{R}$)
+    \item กำหนดฟังก์ชันคลื่น $\psi(x) = C x e^{-\alpha x}$ สำหรับ $x \ge 0$ และเป็นศูนย์สำหรับ $x < 0$ จงหาค่า $C$ และคำนวณ $\langle x \rangle, \langle p_x \rangle$
+    \item จงแสดงว่าตัวดำเนินการพาริตี $\hat{\Pi}$ ซึ่งนิยามโดย $\hat{\Pi}\psi(x) = \psi(-x)$ เป็นตัวดำเนินการแฮร์มิเชียนและยูนิแทรี พร้อมหาค่าเจาะจงที่เป็นไปได้
+    \item จงพิสูจน์ว่าหาก $[\hat{H}, \hat{A}] = 0$ และ $\hat{A}$ ไม่ขึ้นกับเวลาอย่างชัดแจ้ง ค่าคาดหวัง $\langle A \rangle$ จะเป็นค่าคงที่ของการเคลื่อนที่ (Constant of Motion)
+    \item ในกล่อง 1 มิติกว้าง $L$ จงคำนวณองค์ประกอบเมทริกซ์ของตำแหน่ง $x_{mn} = \braket{m}{\hat{x}}{n} = \int_0^L \psi_m^*(x) x \psi_n(x) dx$
+    \item จงคำนวณหาการกระจายฟลักซ์ความน่าจะเป็นของคลื่นระนาบที่ตกกระทบขอบเขตศักย์ขั้นบันได
+    \item จงแสดงว่าผลรวมของตัวดำเนินการฉายภาพ $\hat{P}_1 + \hat{P}_2$ จะเป็นตัวดำเนินการฉายภาพ ก็ต่อเมื่อ $\hat{P}_1 \hat{P}_2 = 0$
+    \item จงเขียนสมการเศษตกค้างของ PINNs สำหรับสมการชเรอดิงเงอร์ที่มีสนามศักย์แบบฮาร์มอนิก $V(x) = \frac{1}{2}x^2$
+    \item จงพิสูจน์ทฤษฎีบทไวรัล (Virial Theorem) $\langle T \rangle = \frac{1}{2}\langle x \frac{dV}{dx} \rangle$ โดยการพิจารณาอัตราการเปลี่ยนแปลงตามเวลาของตัวดำเนินการ $\hat{x}\hat{p}$
+\end{enumerate}
+
+% ==========================================================
+% โครงงานจำลองเชิงคำนวณด้วย Python
+% ==========================================================
+\section{โครงงานจำลองเชิงคำนวณด้วยภาษา Python}
+
+โปรแกรมภาษา Python ต่อไปนี้สาธิตการแก้สมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา (TISE) ใน 1 มิติ โดยใช้ระเบียบวิธีผลต่างสืบเนื่องในการสร้างเมทริกซ์ฮามิลโทเนียนและหาค่าเจาะจง (Finite Difference Matrix Diagonalization)
+
+\begin{lstlisting}[language=Python, caption={โปรแกรม Python หาค่าเจาะจงพลังงานและฟังก์ชันคลื่นด้วยระเบียบวิธีเมทริกซ์ผลต่างสืบเนื่อง}]
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.linalg import eigh
+
+# กำหนดพารามิเตอร์ทางฟิสิกส์ (Atomic units: hbar = 1, m = 1)
+hbar = 1.0
+m = 1.0
+
+# กำหนดกริดเชิงพื้นที่
+N = 1000               # จำนวนจุดกริด
+L = 10.0               # ความกว้างของอาณาเขต [-L/2, L/2]
+x = np.linspace(-L/2, L/2, N)
+dx = x[1] - x[0]
+
+# กำหนดสนามพลังงานศักย์ (ตัวอย่าง: ศักย์ฮาร์มอนิก V(x) = 0.5 * k * x^2)
+k_spring = 2.0
+V = 0.5 * k_spring * x**2
+
+# สร้างเมทริกซ์อนุพันธ์อันดับสอง (Kinetic Energy Matrix) ด้วย Finite Difference 3 จุด
+# d^2 psi / dx^2 approx (psi_{i+1} - 2*psi_i + psi_{i-1}) / dx^2
+main_diag = (hbar**2 / (m * dx**2)) + V
+off_diag = (-hbar**2 / (2.0 * m * dx**2)) * np.ones(N - 1)
+
+# ประกอบเมทริกซ์ฮามิลโทเนียนสมมาตร (Tridiagonal Hamiltonian)
+H = np.diag(main_diag) + np.diag(off_diag, -1) + np.diag(off_diag, 1)
+
+# คำนวณค่าเจาะจงพลังงาน (Eigenvalues) และสถานะเจาะจง (Eigenvectors)
+eigenvalues, eigenvectors = eigh(H)
+
+# พล็อตระดับพลังงานและฟังก์ชันคลื่น 4 สถานะแรก
+plt.figure(figsize=(10, 7))
+plt.plot(x, V, 'k--', label='Potential $V(x)$', lw=1.5)
+
+colors = ['#00F0FF', '#7B2CBF', '#FF007F', '#00FF66']
+num_states = 4
+
+for n in range(num_states):
+    E_n = eigenvalues[n]
+    psi_n = eigenvectors[:, n]
+    
+    # นอร์มอลไลซ์ฟังก์ชันคลื่น integral |psi|^2 dx = 1
+    norm = np.sqrt(np.sum(psi_n**2) * dx)
+    psi_n = psi_n / norm
+    
+    # วาดฟังก์ชันคลื่นโดยเลื่อนระดับขึ้นไปตามค่าพลังงาน E_n
+    scale = 1.5
+    plt.plot(x, E_n + scale * psi_n, color=colors[n], lw=2, 
+             label=f'n={n}: $E_{n}={E_n:.3f}$')
+    plt.axhline(E_n, color=colors[n], linestyle=':', alpha=0.5)
+
+plt.xlim(-4.0, 4.0)
+plt.ylim(0, eigenvalues[num_states-1] + 2.0)
+plt.title('Quantum Harmonic Oscillator: Eigenenergies and Wavefunctions (Finite Difference)', 
+          fontsize=13, fontweight='bold')
+plt.xlabel('Position $x$', fontsize=12)
+plt.ylabel('Energy / Shifted Wavefunction', fontsize=12)
+plt.grid(True, linestyle=':', alpha=0.6)
+plt.legend(loc='upper right', fontsize=10)
+plt.tight_layout()
+plt.savefig('schrodinger_finite_difference.png', dpi=300)
+plt.show()
+\end{lstlisting}

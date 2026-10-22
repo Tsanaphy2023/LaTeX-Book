@@ -1,0 +1,1069 @@
+\chapter{สารสนเทศควอนตัม คิวบิต และทรงกลมบล็อค}
+\label{chap:quantum_information_qubits}
+\index{สารสนเทศควอนตัม (Quantum Information)}
+\index{คิวบิต (Qubit)}
+\index{ทรงกลมบล็อค (Bloch Sphere)}
+\index{เกตควอนตัม (Quantum Gates)}
+\index{เมทริกซ์ความหนาแน่น (Density Matrix)}
+\index{การสูญเสียความพร้อมเพรียง (Decoherence)}
+\index{คอมพิวเตอร์ควอนตัม (Quantum Computer)}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 8
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 8}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 8}
+
+\begin{lessonplanbox}
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item จากบิตคลาสสิกสู่คิวบิตในระบบสองระดับและหลักการซ้อนทับ
+    \item การแทนสถานะเชิงเรขาคณิตสามมิติบนทรงกลมบล็อคและเวกเตอร์บล็อค
+    \item สถานะบริสุทธิ์ สถานะผสม และรูปแบบเมทริกซ์ความหนาแน่น
+    \item ทฤษฎีตัวดำเนินการเอกภาพและเกตควอนตัม 1 คิวบิต (เพาลี ฮาดามาร์ด และเกตเปลี่ยนเฟส)
+    \item การแยกตัวประกอบออยเลอร์ $Z-Y$ และเซตเกตสากลโซโลเวย์-คิเทียฟ
+    \item ทฤษฎีการวัดควอนตัม สัจพจน์การฉายภาพ และการวัดแบบ POVM
+    \item ปรากฏการณ์ซีโนควอนตัมและการยับยั้งการเปลี่ยนสถานะ
+    \item ระบบหลายคิวบิต ปริภูมิผลคูณเทนเซอร์ และเกตสองคิวบิต (CNOT, CZ, SWAP)
+    \item การสูญเสียความพร้อมเพรียงเชิงควอนตัมและช่องสัญญาณสัญญาณรบกวนควอนตัม ($T_1, T_2$)
+    \item แพลตฟอร์มฮาร์ดแวร์ควอนตัมคอมพิวติงยุคใหม่ (Transmon, Trapped-Ion, Neutral Atom)
+    \item ห้องปฏิบัติการเสมือนจริง 3 มิติ WebAR ทรงกลมบล็อคปฏิสัมพันธ์ไร้สัมผัส
+    \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
+    \item สคริปต์การจำลองวงจรควอนตัมด้วยภาษา Python และ Qiskit
+    \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
+\end{enumerate}
+
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
+    \item อธิบายความแตกต่างพื้นฐานระหว่างบิตดั้งเดิมและคิวบิตตามหลักการซ้อนทับเชิงเส้นได้อย่างลึกซึ้ง
+    \item แปลงสถานะควอนตัมสองระดับให้อยู่ในรูปพิกัดเชิงมุม $(\theta, \phi)$ และคำนวณเวกเตอร์บล็อค $\mathbf{r}$ ได้อย่างแม่นยำ
+    \item จำแนกความแตกต่างระหว่างสถานะบริสุทธิ์และสถานะผสมผ่านเมทริกซ์ความหนาแน่น $\rho$ และเอนโทรปีฟอนนอยมันน์ได้
+    \item คำนวณผลการแปลงสถานะด้วยเกตเอกภาพเพาลี เกตฮาดามาร์ด และตัวดำเนินการหมุน $R_{\hat{\mathbf{n}}}(\theta)$ ได้
+    \item ประยุกต์ใช้สัจพจน์การวัดในการคำนวณความน่าจะเป็นของผลลัพธ์และสถานะหลังการวัดได้
+    \item อธิบายกลไกทางฟิสิกส์ของปรากฏการณ์ซีโนควอนตัมและการประยุกต์ใช้ในการควบคุมสถานะได้
+    \item สร้างสถานะพัวพันเบลล์ในระบบสองคิวบิตด้วยการดำเนินการของเกตฮาดามาร์ดและ CNOT ได้
+    \item วิเคราะห์ผลกระทบของการสูญเสียความพร้อมเพรียงผ่านเวลาผ่อนคลาย $T_1$ และ $T_2$ ในสถาปัตยกรรมคิวบิตตัวนำยิ่งยวดได้
+    \item พัฒนาโปรแกรมภาษา Python ด้วยไลบรารี Qiskit ในการจำลองวงจรควอนตัมและแสดงผลบนทรงกลมบล็อคได้อย่างถูกต้อง
+\end{enumerate}
+\end{lessonplanbox}
+
+% ==========================================================
+% 8.1 จากบิตคลาสสิกสู่คิวบิตในระบบสองระดับ
+% ==========================================================
+\newpage
+\section{จากบิตคลาสสิกสู่คิวบิตในระบบสองระดับ}
+\index{ทฤษฎีสารสนเทศ (Information Theory)}
+\index{บิตคลาสสิก (Classical Bit)}
+\index{คิวบิต (Qubit)}
+\index{สถานะซ้อนทับ (Superposition)}
+
+ในทฤษฎีสารสนเทศดั้งเดิมของ คลอด แชนนอน (Claude Shannon, 1916--2001) หน่วยย่อยที่สุดของสารสนเทศคือ \textbf{บิต (Binary Digit หรือ Bit)} ซึ่งสามารถมีสถานะที่แน่นอนเด็ดขาดเพียงสองค่าที่เป็นไปได้คือ $0$ หรือ $1$ ทางกายภาพ บิตถูกจำลองขึ้นจากระบบมหภาคแบบคลาสสิก เช่น การมีหรือไม่มีประจุไฟฟ้าในตัวเก็บประจุของหน่วยความจำ DRAM หรือระดับศักย์ไฟฟ้าแรงดันต่ำ ($0\text{ V}$) และแรงดันสูง ($5\text{ V}$) ในทรานซิสเตอร์ตรรกะแบบ CMOS
+
+ทว่าเมื่อเราก้าวเข้าสู่ขอบเขตของโลกควอนตัม หน่วยย่อยที่สุดของสารสนเทศเชิงควอนตัมถูกเรียกว่า \textbf{คิวบิต (Quantum Bit หรือ Qubit)} ซึ่งมีรากฐานมาจากระบบกายภาพที่มีสองระดับสถานะพลังงาน (Two-level Quantum System) บนปริภูมิฮิลเบิร์ตสองมิติ $\mathcal{H}_2 \cong \mathbb{C}^2$ ระบบกายภาพจริงที่ใช้สร้างคิวบิตมีหลากหลายรูปแบบในธรรมชาติ เช่น
+\begin{itemize}
+    \item \textbf{สปินของอิเล็กตรอนเดี่ยว} ---- สถานะสปินชี้ขึ้นตามแกน $z$ ($\ket{\uparrow} \equiv \ket{0}$) และสปินชี้ลง ($\ket{\downarrow} \equiv \ket{1}$)
+    \item \textbf{โพลาไรเซชันของโฟตอนเดี่ยว} ---- โพลาไรเซชันแนวนอน ($\ket{H} \equiv \ket{0}$) และโพลาไรเซชันแนวตั้ง ($\ket{V} \equiv \ket{1}$)
+    \item \textbf{ระดับพลังงานของไอออนในกับดักแม่เหล็ก} ---- สถานะพื้นไฮเปอร์ไฟน์ ($\ket{g} \equiv \ket{0}$) และสถานะกระตุ้นที่มีอายุยืนยาว ($\ket{e} \equiv \ket{1}$)
+    \item \textbf{วงจรตัวนำยิ่งยวดทรานสมอน (Superconducting Transmon)} ---- สถานะไม่มีคูเปอร์แพร์กระตุ้นในบ่อศักย์โจเซฟสัน ($\ket{0}$) และสถานะมีหนึ่งโฟตอนกระตุ้น ($\ket{1}$)
+\end{itemize}
+
+\subsection{หลักการซ้อนทับเชิงเส้นและเงื่อนไขการนอร์มอลไลซ์}
+ความแตกต่างพื้นฐานที่สุดระหว่างบิตคลาสสิกและคิวบิตคือ คิวบิตไม่จำเป็นต้องมีสถานะเป็น $\ket{0}$ หรือ $\ket{1}$ เพียงอย่างใดอย่างหนึ่ง แต่สามารถดำรงอยู่ใน \textbf{การซ้อนทับเชิงเส้น (Linear Superposition)} ของสถานะฐานทั้งสองได้พร้อมกัน
+\begin{equation}
+\ket{\psi} = \alpha \ket{0} + \beta \ket{1}
+\label{eq:qubit_superposition}
+\end{equation}
+โดยที่ $\ket{0} \equiv \begin{pmatrix} 1 \\ 0 \end{pmatrix}$ และ $\ket{1} \equiv \begin{pmatrix} 0 \\ 1 \end{pmatrix}$ เรียกว่า \textbf{สถานะฐานเชิงคำนวณ (Computational Basis States)}
+
+สัมประสิทธิ์ $\alpha$ และ $\beta$ คือ \textbf{แอมพลิจูดความน่าจะเป็น (Probability Amplitudes)} ซึ่งโดยทั่วไปเป็นจำนวนเชิงซ้อน ($\alpha, \beta \in \mathbb{C}$) ตามกฎของบอร์น (Born's Rule) ความน่าจะเป็นในการวัดคิวบิตแล้วพบว่าระบบยุบตัวลงสู่สถานะ $\ket{0}$ คือ $|\alpha|^2$ และความน่าจะเป็นที่จะพบสถานะ $\ket{1}$ คือ $|\beta|^2$ เนื่องจากผลลัพธ์ของการวัดต้องเป็นสถานะใดสถานะหนึ่งอย่างแน่นอน สัมประสิทธิ์ทั้งสองจึงต้องสอดคล้องกับ \textbf{เงื่อนไขการนอร์มอลไลซ์ (Normalization Condition)}
+\begin{equation}
+|\alpha|^2 + |\beta|^2 = 1
+\label{eq:qubit_normalization}
+\end{equation}
+
+\subsection{เฟสรวมสากลและเฟสสัมพัทธ์}
+เนื่องจากจำนวนเชิงซ้อนสองจำนวน $\alpha$ และ $\beta$ มีส่วนจริงและส่วนจินตภาพรวม 4 องค์ประกอบอิสระ การบังคับเงื่อนไขนอร์มอลไลซ์~\eqref{eq:qubit_normalization} จะลดจำนวนองศาความอิสระลงเหลือ 3 องศา เราสามารถเขียน $\alpha$ และ $\beta$ ในรูปเชิงขั้ว
+\begin{equation}
+\alpha = r_0 e^{i\phi_0}, \qquad \beta = r_1 e^{i\phi_1}
+\end{equation}
+โดยที่ $r_0^2 + r_1^2 = 1$ เราสามารถดึงตัวประกอบเฟสของ $\alpha$ ออกมาเป็นตัวคูณร่วมด้านหน้า
+\begin{equation}
+\ket{\psi} = e^{i\phi_0} \Big( r_0 \ket{0} + r_1 e^{i(\phi_1 - \phi_0)} \ket{1} \Big)
+\end{equation}
+
+เทอม $e^{i\phi_0}$ ด้านหน้าเรียกว่า \textbf{เฟสรวมสากล (Global Phase)} ซึ่งไม่มีผลกระทบต่อผลการทดลองทางกายภาพใดๆ เลย เพราะสำหรับตัวสังเกตได้ (Observable) แฮร์มิเชียน $\hat{A}$ ใดๆ ค่าคาดหวังของสถานะที่มีเฟสสากลต่างกันจะมีค่าเท่ากันอย่างสิ้นเชิง
+\begin{equation}
+\langle \hat{A} \rangle_{\psi e^{i\gamma}} = \bra{\psi e^{i\gamma}} \hat{A} \ket{\psi e^{i\gamma}} = e^{-i\gamma} e^{i\gamma} \bra{\psi}\hat{A}\ket{\psi} = \bra{\psi}\hat{A}\ket{\psi} = \langle \hat{A} \rangle_\psi
+\end{equation}
+และความน่าจะเป็นของการเปลี่ยนสถานะไปสู่สถานะ $\ket{\phi}$ ใดๆ ย่อมเท่ากัน
+\begin{equation}
+|\braket{\phi}{\psi e^{i\gamma}}|^2 = |e^{i\gamma} \braket{\phi}{\psi}|^2 = |e^{i\gamma}|^2 |\braket{\phi}{\psi}|^2 = |\braket{\phi}{\psi}|^2
+\end{equation}
+
+ดังนั้น ในทางกายภาพของคิวบิตเดี่ยว เราสามารถละทิ้งเฟสสากลได้โดยไม่สูญเสียสาระสำคัญ ทว่าผลต่างของเฟส $\phi \equiv \phi_1 - \phi_0$ เรียกว่า \textbf{เฟสสัมพัทธ์ (Relative Phase)} ซึ่งมีความสำคัญสูงสุดในการแทรกสอดเชิงควอนตัม (Quantum Interference) และส่งผลต่อความน่าจะเป็นในการวัดบนฐานอื่นๆ นอกเหนือจากฐานเชิงคำนวณ
+
+% ==========================================================
+% 8.2 การแทนสถานะเชิงเรขาคณิตสามมิติบนทรงกลมบล็อค
+% ==========================================================
+\section{การแทนสถานะเชิงเรขาคณิตสามมิติบนทรงกลมบล็อค}
+\index{ทรงกลมบล็อค (Bloch Sphere)}
+\index{เวกเตอร์บล็อค (Bloch Vector)}
+\index{พิกัดเชิงมุมบล็อค (Bloch Angles)}
+
+จากการที่ $r_0^2 + r_1^2 = 1$ เราสามารถจับคู่ความสัมพันธ์นี้กับเอกลักษณ์ตรีโกณมิติ $\cos^2(\theta/2) + \sin^2(\theta/2) = 1$ โดยการเลือกมุม $\theta \in [0, \pi]$ และให้เฟสสัมพัทธ์เป็นมุม $\phi \in [0, 2\pi)$ ทำให้เราสามารถเขียนสถานะทั่วไปของ 1 คิวบิตบริสุทธิ์ในรูปแบบสากล
+\begin{equation}
+\ket{\psi} = \cos\left(\frac{\theta}{2}\right) \ket{0} + e^{i\phi} \sin\left(\frac{\theta}{2}\right) \ket{1}
+\label{eq:bloch_state_parameterization}
+\end{equation}
+
+สมการ~\eqref{eq:bloch_state_parameterization} สร้างการจับคู่แบบหนึ่งต่อหนึ่งระหว่างสถานะควอนตัมบริสุทธิ์ของ 1 คิวบิต กับจุดบนพื้นผิวของทรงกลมหนึ่งหน่วยในปริภูมิยุคลิดสามมิติ ($\mathbb{R}^3$) ทรงกลมนี้ได้รับการตั้งชื่อเพื่อเป็นเกียรติแก่ เฟลิกซ์ บล็อค (Felix Bloch, 1905--1983) นักฟิสิกส์รางวัลโนเบลชาวสวิส-อเมริกัน เรียกว่า \textbf{ทรงกลมบล็อค (Bloch Sphere)}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.2, >=Stealth]
+    % Sphere Outline
+    \draw[darkNavy, line width=1.3pt] (0, 0) circle (2.6cm);
+    \draw[dashed, slateGrey!80, line width=0.8pt] (0, 0) ellipse (2.6cm and 0.85cm);
+    
+    % Coordinate Axes
+    \draw[->, darkNavy, line width=1.2pt] (0, -3.2) -- (0, 3.5) node[above, font=\bfseries\color{darkNavy}] {$z \ (\ket{0})$};
+    \draw[->, darkNavy, line width=1.2pt] (-3.2, 0) -- (3.5, 0) node[right, font=\bfseries\color{darkNavy}] {$y \ (\ket{+y})$};
+    \draw[->, darkNavy, line width=1.2pt] (0, 0) -- (-1.8, -1.8) node[below left, font=\bfseries\color{darkNavy}] {$x \ (\ket{+})$};
+    
+    % State Vector |psi>
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (1.5, 2.0);
+    \coordinate (Pproj) at (1.5, -0.35);
+    
+    \draw[quantumGold, line width=2.2pt, ->] (O) -- (P) node[above right, font=\large\bfseries\color{quantumGold}] {$\ket{\psi}$};
+    \draw[dashed, cyberBlue, line width=1.0pt] (P) -- (Pproj);
+    \draw[dashed, cyberBlue, line width=1.0pt] (O) -- (Pproj);
+    
+    % Angles
+    % Polar angle theta
+    \draw[entanglePink, line width=1.2pt, ->] (0, 1.2) arc (90:53:1.2cm);
+    \node at (0.4, 1.45) [font=\small\bfseries\color{entanglePink}] {$\theta$};
+    
+    % Azimuthal angle phi
+    \draw[quantumGold, line width=1.2pt, ->] (-0.6, -0.6) arc (225:340:0.8cm and 0.45cm);
+    \node at (0.25, -0.8) [font=\small\bfseries\color{quantumGold}] {$\phi$};
+    
+    % Special State Points
+    \fill[cyberBlue] (0, 2.6) circle (3pt) node[above right, font=\small\bfseries\color{cyberBlue}] {$\ket{0}$ (ขั้วเหนือ)};
+    \fill[cyberBlue] (0, -2.6) circle (3pt) node[below right, font=\small\bfseries\color{cyberBlue}] {$\ket{1}$ (ขั้วใต้)};
+    \fill[entanglePink] (-1.84, -1.84) circle (2.5pt) node[above left, font=\footnotesize\bfseries\color{entanglePink}] {$\ket{+}$};
+    \fill[entanglePink] (1.84, 1.84) circle (2.5pt) node[below right, font=\footnotesize\bfseries\color{entanglePink}] {$\ket{-}$};
+    \fill[rubyRed] (2.6, 0) circle (2.5pt) node[above right, font=\footnotesize\bfseries\color{rubyRed}] {$\ket{+y}$};
+    \fill[rubyRed] (-2.6, 0) circle (2.5pt) node[above left, font=\footnotesize\bfseries\color{rubyRed}] {$\ket{-y}$};
+\end{tikzpicture}
+\caption{การแทนสถานะคิวบิตเชิงเรขาคณิตสามมิติบนทรงกลมบล็อค แสดงมุมขั้ว $\theta$ และมุมทิศ $\phi$}
+\label{fig:bloch_sphere_full_diagram}
+\end{figure}
+
+\subsection{เวกเตอร์บล็อคและพิกัดคาร์ทีเซียน}
+เวกเตอร์หนึ่งหน่วยที่ชี้จากจุดกำเนิดไปยังพื้นผิวทรงกลมบล็อค เรียกว่า \textbf{เวกเตอร์บล็อค (Bloch Vector, $\mathbf{r}$)} ซึ่งมีองค์ประกอบตามแนวแกนคาร์ทีเซียนสามมิติสัมพันธ์กับมุม $(\theta, \phi)$ ดังนี้
+\begin{align}
+r_x &= \sin\theta \cos\phi \label{eq:bloch_rx} \\
+r_y &= \sin\theta \sin\phi \label{eq:bloch_ry} \\
+r_z &= \cos\theta \label{eq:bloch_rz}
+\end{align}
+
+ความเชื่อมโยงที่ลึกซึ้งยิ่งกับตัวดำเนินการควอนตัมคือ องค์ประกอบของเวกเตอร์บล็อคแท้จริงแล้วคือ \textbf{ค่าคาดหวังของตัวดำเนินการเมทริกซ์เพาลี} ในสถานะ $\ket{\psi}$
+\begin{equation}
+r_x = \bra{\psi} \sigma_x \ket{\psi}, \qquad r_y = \bra{\psi} \sigma_y \ket{\psi}, \qquad r_z = \bra{\psi} \sigma_z \ket{\psi}
+\label{eq:bloch_vector_pauli_exp}
+\end{equation}
+เวกเตอร์บล็อคจึงสามารถเขียนสรุปได้ในรูปเวกเตอร์ค่าคาดหวัง
+\begin{equation}
+\mathbf{r} = \langle \boldsymbol{\sigma} \rangle = (\langle\sigma_x\rangle, \langle\sigma_y\rangle, \langle\sigma_z\rangle)
+\end{equation}
+
+\subsection{จุดตรงข้ามบนทรงกลมบล็อคและสถานะตั้งฉาก}
+ในเรขาคณิตของทรงกลมบล็อค จุดสองจุดที่อยู่ \textbf{ตรงข้ามกันในแนวเส้นผ่านศูนย์กลาง (Antipodal Points)} สมนัยกับสถานะควอนตัมที่ \textbf{ตั้งฉากซึ่งกันและกัน (Orthogonal States, $\braket{\psi_1}{\psi_2} = 0$)}
+\begin{itemize}
+    \item \textbf{แกน $z$ (ขั้วเหนือและขั้วใต้)}
+    \begin{equation}
+    \ket{0} = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \ (\theta=0), \qquad \ket{1} = \begin{pmatrix} 0 \\ 1 \end{pmatrix} \ (\theta=\pi) \quad \implies \quad \braket{0}{1} = 0
+    \end{equation}
+    \item \textbf{แกน $x$ (จุดตัดระนาบเส้นศูนย์สูตร)}
+    \begin{align}
+    \ket{+} &= \frac{\ket{0}+\ket{1}}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix} \quad (\theta=\pi/2, \phi=0) \\
+    \ket{-} &= \frac{\ket{0}-\ket{1}}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix} \quad (\theta=\pi/2, \phi=\pi) \quad \implies \quad \braket{+}{-} = 0
+    \end{align}
+    \item \textbf{แกน $y$ (จุดตัดระนาบเส้นศูนย์สูตร)}
+    \begin{align}
+    \ket{+y} &= \frac{\ket{0}+i\ket{1}}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ i \end{pmatrix} \quad (\theta=\pi/2, \phi=\pi/2) \\
+    \ket{-y} &= \frac{\ket{0}-i\ket{1}}{\sqrt{2}} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -i \end{pmatrix} \quad (\theta=\pi/2, \phi=3\pi/2) \quad \implies \quad \braket{+y}{-y} = 0
+    \end{align}
+\end{itemize}
+
+สังเกตว่าในปริภูมิฮิลเบิร์ต สถานะ $\ket{0}$ และ $\ket{1}$ ทำมุมตั้งฉากกัน $90^\circ$ แต่เมื่อถูกฉายภาพลงบนทรงกลมบล็อค ทั้งสองสถานะจะทำมุมต่อกัน $180^\circ$ (ขั้วเหนือและขั้วใต้) ความสัมพันธ์ทางมุมระหว่างสองสถานะใดๆ คือ $\cos(\Theta_{\text{Bloch}}/2) = |\braket{\psi_1}{\psi_2}|$
+
+% ==========================================================
+% 8.3 สถานะบริสุทธิ์ สถานะผสม และเมทริกซ์ความหนาแน่น
+% ==========================================================
+\section{สถานะบริสุทธิ์ สถานะผสม และเมทริกซ์ความหนาแน่น}
+\index{สถานะบริสุทธิ์ (Pure State)}
+\index{สถานะผสม (Mixed State)}
+\index{เมทริกซ์ความหนาแน่น (Density Matrix)}
+\index{เอนโทรปีฟอนนอยมันน์ (von Neumann Entropy)}
+
+จนถึงจุดนี้ เราได้พิจารณาเฉพาะระบบควอนตัมในอุดมคติที่สถานะของระบบเป็นที่ทราบอย่างสมบูรณ์ ซึ่งเรียกว่า \textbf{สถานะบริสุทธิ์ (Pure State)} ทว่าในการทดลองจริงหรือในสภาวะที่มีสัญญาณรบกวนจากสิ่งแวดล้อม เรามักจะมีความรู้เกี่ยวกับสถานะของระบบเพียงในเชิงสถิติ (Statistical Ensemble) เช่น มีโอกาส $p_1$ ที่ระบบจะอยู่ในสถานะ $\ket{\psi_1}$ และมีโอกาส $p_2$ ที่จะอยู่ในสถานะ $\ket{\psi_2}$ สถานะลักษณะนี้เรียกว่า \textbf{สถานะผสม (Mixed State)}
+
+\subsection{ตัวดำเนินการความหนาแน่นและคุณสมบัติพื้นฐาน}
+สถานะควอนตัมทั่วไปสามารถเขียนได้อย่างรัดกุมผ่าน \textbf{ตัวดำเนินการความหนาแน่น (Density Operator หรือ Density Matrix, $\rho$)} ซึ่งเสนอโดย จอห์น ฟอน นอยมันน์ (John von Neumann, 1903--1957)
+\begin{equation}
+\rho \equiv \sum_i p_i \ket{\psi_i}\bra{\psi_i}
+\label{eq:density_matrix_def}
+\end{equation}
+โดยที่ $p_i \ge 0$ คือความน่าจะเป็นคลาสสิกที่ระบบจะอยู่ในสถานะ $\ket{\psi_i}$ ภายใต้เงื่อนไข $\sum_i p_i = 1$
+
+เมทริกซ์ความหนาแน่นมีคุณสมบัติมูลฐานสี่ประการ
+\begin{enumerate}
+    \item \textbf{ความเป็นแฮร์มิเชียน} ---- $\rho^\dagger = \rho$
+    \item \textbf{การมีผลรวมเทรซเป็นหนึ่ง} ---- $\text{Tr}(\rho) = \sum_i p_i \text{Tr}(\ket{\psi_i}\bra{\psi_i}) = \sum_i p_i = 1$
+    \item \textbf{ความเป็นบวกกึ่งแน่นอน (Positive Semi-definite)} ---- สำหรับทุกสถานะเวกเตอร์ $\ket{\phi}$ จะได้ $\bra{\phi}\rho\ket{\phi} \ge 0$ (ค่าเจาะจงของ $\rho$ มีค่าเป็นจำนวนจริงที่ไม่เป็นลบ)
+    \item \textbf{เกณฑ์การจำแนกสถานะบริสุทธิ์และสถานะผสม}
+    \begin{align}
+    \text{Tr}(\rho^2) &= 1 \iff \rho \text{ เป็นสถานะบริสุทธิ์} \\
+    \text{Tr}(\rho^2) &< 1 \iff \rho \text{ เป็นสถานะผสม}
+    \end{align}
+\end{enumerate}
+
+\subsection{การแทนเมทริกซ์ความหนาแน่นของ 1 คิวบิตบนทรงกลมบล็อค}
+สำหรับระบบ 1 คิวบิตใดๆ เมทริกซ์ความหนาแน่นขนาด $2 \times 2$ สามารถกระจายบนเซตฐานของเมทริกซ์เอกลักษณ์ $I$ และเมทริกซ์เพาลีทั้งสามตัวได้อย่างสมบูรณ์
+\begin{equation}
+\rho = \frac{1}{2} (I + \mathbf{r}\cdot\boldsymbol{\sigma}) = \frac{1}{2} \begin{pmatrix} 1 + r_z & r_x - i r_y \\ r_x + i r_y & 1 - r_z \end{pmatrix}
+\label{eq:density_matrix_bloch}
+\end{equation}
+เมื่อคำนวณเทรซของ $\rho^2$
+\begin{equation}
+\rho^2 = \frac{1}{4}(I + \mathbf{r}\cdot\boldsymbol{\sigma})^2 = \frac{1}{4}\big( (1 + |\mathbf{r}|^2)I + 2\mathbf{r}\cdot\boldsymbol{\sigma} \big)
+\end{equation}
+เนื่องจาก $\text{Tr}(I) = 2$ และ $\text{Tr}(\boldsymbol{\sigma}) = 0$
+\begin{equation}
+\text{Tr}(\rho^2) = \frac{1}{2}(1 + |\mathbf{r}|^2)
+\end{equation}
+
+ความสัมพันธ์นี้นำไปสู่ข้อสรุปทางเรขาคณิตที่งดงามยิ่ง
+\begin{itemize}
+    \item \textbf{สถานะบริสุทธิ์} ---- $\text{Tr}(\rho^2) = 1 \iff |\mathbf{r}| = 1$ สถานะอยู่ที่ \textbf{พื้นผิวภายนอกของทรงกลมบล็อค}
+    \item \textbf{สถานะผสม} ---- $\text{Tr}(\rho^2) < 1 \iff |\mathbf{r}| < 1$ สถานะอยู่ที่ \textbf{เนื้อในภายในทรงกลมบล็อค}
+    \item \textbf{สถานะผสมสมบูรณ์แบบ (Maximally Mixed State)} ---- $|\mathbf{r}| = 0$ สถานะอยู่ที่ \textbf{จุดศูนย์กลางของทรงกลม} ($x=0, y=0, z=0$)
+    \begin{equation}
+    \rho_{\text{mix}} = \frac{1}{2} I = \begin{pmatrix} 1/2 & 0 \\ 0 & 1/2 \end{pmatrix} = \frac{1}{2}\ket{0}\bra{0} + \frac{1}{2}\ket{1}\bra{1}
+    \end{equation}
+    ซึ่งเป็นสภาวะที่มีความไม่แน่นอนทางสารสนเทศสูงสุด ไม่มีความพร้อมเพรียงเชิงควอนตัมหลงเหลืออยู่เลย
+\end{itemize}
+
+ระดับความไร้ระเบียบของสถานะควอนตัมวัดด้วย \textbf{เอนโทรปีฟอนนอยมันน์ (von Neumann Entropy)}
+\begin{equation}
+S(\rho) \equiv -\text{Tr}(\rho \log_2 \rho) = -\sum_i \lambda_i \log_2 \lambda_i
+\label{eq:von_neumann_entropy}
+\end{equation}
+โดยที่ $\lambda_i$ คือค่าเจาะจงของเมทริกซ์ความหนาแน่น สำหรับสถานะบริสุทธิ์ $S(\rho) = 0$ (ไม่มีความไม่แน่นอน) และสำหรับสถานะผสมสมบูรณ์แบบของ 1 คิวบิต $S(\rho) = -\big( \frac{1}{2}\log_2\frac{1}{2} + \frac{1}{2}\log_2\frac{1}{2} \big) = 1\text{ bit}$
+
+% ==========================================================
+% 8.4 ทฤษฎีตัวดำเนินการเอกภาพและเกตควอนตัม 1 คิวบิต
+% ==========================================================
+\section{ทฤษฎีตัวดำเนินการเอกภาพและเกตควอนตัม 1 คิวบิต}
+\index{เกตควอนตัม 1 คิวบิต (Single-Qubit Gates)}
+\index{ตัวดำเนินการเอกภาพ (Unitary Operator)}
+\index{เกตฮาดามาร์ด (Hadamard Gate)}
+\index{การแยกตัวประกอบออยเลอร์ (Euler Decomposition)}
+
+การประมวลผลสารสนเทศในคอมพิวเตอร์ควอนตัมดำเนินไปผ่านการควบคุมวิวัฒนาการของระบบปิด ซึ่งตามสมการชเรอดิงเงอร์ วิวัฒนาการตามเวลาของสถานะควอนตัมจะต้องเป็นการแปลงสภาพเชิงเส้นที่ \textbf{รักษาบรรทัดฐานความน่าจะเป็น (Norm-Preserving)} การแปลงสภาพลักษณะนี้เรียกว่า \textbf{ตัวดำเนินการเอกภาพ (Unitary Operator, $U$)}
+\begin{equation}
+U^\dagger U = U U^\dagger = I
+\end{equation}
+
+บนทรงกลมบล็อค การกระทำของตัวดำเนินการเอกภาพ $U \in SU(2)$ กับคิวบิต $\ket{\psi} \to U\ket{\psi}$ สมนัยโดยตรงกับ \textbf{การหมุนแบบแข็ง (Rigid Rotation) ของเวกเตอร์บล็อครอบจุดศูนย์กลาง}
+
+\subsection{ตัวดำเนินการหมุนสากลรอบแกนใดๆ}
+ตัวดำเนินการหมุนเวกเตอร์บล็อครอบแกนหมุนหนึ่งหน่วย $\hat{\mathbf{n}} = (n_x, n_y, n_z)$ ด้วยมุม $\theta$ เรเดียน กำหนดโดยเอกซ์โพเนนเชียลของตัวดำเนินการสปิน
+\begin{equation}
+R_{\hat{\mathbf{n}}}(\theta) \equiv \exp\left( -i\frac{\theta}{2} \hat{\mathbf{n}}\cdot\boldsymbol{\sigma} \right) = \cos\left(\frac{\theta}{2}\right) I - i\sin\left(\frac{\theta}{2}\right) (n_x \sigma_x + n_y \sigma_y + n_z \sigma_z)
+\label{eq:arbitrary_rotation_gate}
+\end{equation}
+
+ตัวดำเนินการหมุนรอบแกนหลักทั้งสามแกนมีรูปเฉพาะดังนี้
+\begin{align}
+R_x(\theta) &= \exp\left( -i\frac{\theta}{2}\sigma_x \right) = \begin{pmatrix} \cos(\theta/2) & -i\sin(\theta/2) \\ -i\sin(\theta/2) & \cos(\theta/2) \end{pmatrix} \label{eq:rx_gate} \\
+R_y(\theta) &= \exp\left( -i\frac{\theta}{2}\sigma_y \right) = \begin{pmatrix} \cos(\theta/2) & -\sin(\theta/2) \\ \sin(\theta/2) & \cos(\theta/2) \end{pmatrix} \label{eq:ry_gate} \\
+R_z(\theta) &= \exp\left( -i\frac{\theta}{2}\sigma_z \right) = \begin{pmatrix} e^{-i\theta/2} & 0 \\ 0 & e^{i\theta/2} \end{pmatrix} \label{eq:rz_gate}
+\end{align}
+
+\subsection{เกตควอนตัมมูลฐาน 1 คิวบิต}
+ในวงจรควอนตัมเชิงคำนวณ เกตที่นิยมใช้เป็นองค์ประกอบพื้นฐานประกอบด้วย
+\begin{enumerate}
+    \item \textbf{เกตเพาลี-เอ็กซ์ (Pauli-X Gate หรือ Bit-Flip):} หมุนเวกเตอร์รอบแกน $x$ ด้วยมุม $\pi$ ทำหน้าที่สลับสถานะฐาน $\ket{0} \leftrightarrow \ket{1}$ เทียบเท่ากับเกต NOT คลาสสิก
+    \begin{equation}
+    X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \qquad X\ket{0} = \ket{1}, \quad X\ket{1} = \ket{0}
+    \end{equation}
+    \item \textbf{เกตเพาลี-วาย (Pauli-Y Gate):} หมุนเวกเตอร์รอบแกน $y$ ด้วยมุม $\pi$
+    \begin{equation}
+    Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \qquad Y\ket{0} = i\ket{1}, \quad Y\ket{1} = -i\ket{0}
+    \end{equation}
+    \item \textbf{เกตเพาลี-ซี (Pauli-Z Gate หรือ Phase-Flip):} หมุนเวกเตอร์รอบแกน $z$ ด้วยมุม $\pi$ ทำหน้าที่พลิกเฟสสัมพัทธ์ของสถานะ $\ket{1}$
+    \begin{equation}
+    Z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \qquad Z\ket{0} = \ket{0}, \quad Z\ket{1} = -\ket{1}
+    \end{equation}
+    \item \textbf{เกตฮาดามาร์ด (Hadamard Gate, $H$):} เกตสร้างการซ้อนทับเชิงเส้นที่มีความสำคัญที่สุด ทำหน้าที่แปลงสถานะฐานเชิงคำนวณเป็นสถานะฐานของแกน $x$
+    \begin{equation}
+    H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}, \qquad H\ket{0} = \ket{+} = \frac{\ket{0}+\ket{1}}{\sqrt{2}}, \quad H\ket{1} = \ket{-} = \frac{\ket{0}-\ket{1}}{\sqrt{2}}
+    \end{equation}
+    ในเชิงเรขาคณิต เกต $H$ เทียบเท่ากับการหมุนรอบแกนผสม $(\hat{\mathbf{x}} + \hat{\mathbf{z}})/\sqrt{2}$ ด้วยมุม $\pi$
+    \item \textbf{เกตเปลี่ยนเฟสเอส (Phase Gate หรือ $S$ Gate):} การหมุนรอบแกน $z$ ด้วยมุม $\pi/2$ หรือเทียบเท่ากับรากที่สองของเกต $Z$ ($S^2 = Z$)
+    \begin{equation}
+    S = \begin{pmatrix} 1 & 0 \\ 0 & i \end{pmatrix}, \qquad S\ket{0} = \ket{0}, \quad S\ket{1} = i\ket{1}
+    \end{equation}
+    \item \textbf{เกตที (T Gate หรือ $\pi/8$ Gate):} การหมุนรอบแกน $z$ ด้วยมุม $\pi/4$ หรือเทียบเท่ากับรากที่สี่ของเกต $Z$ ($T^4 = Z$)
+    \begin{equation}
+    T = \begin{pmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{pmatrix}, \qquad T\ket{0} = \ket{0}, \quad T\ket{1} = e^{i\pi/4}\ket{1}
+    \end{equation}
+\end{enumerate}
+
+\subsection{การแยกตัวประกอบออยเลอร์และการประมาณค่าเกตสากล}
+เกตเอกภาพขนาด $2 \times 2$ ทั่วไปใดๆ $U$ สามารถแยกตัวประกอบได้ตาม \textbf{ทฤษฎีบทการแยกตัวประกอบออยเลอร์ (Euler Angle Decomposition)}
+\begin{equation}
+U = e^{i\alpha} R_z(\beta) R_y(\gamma) R_z(\delta)
+\label{eq:euler_decomposition}
+\end{equation}
+โดยที่ $\alpha, \beta, \gamma, \delta$ เป็นจำนวนจริง ความสัมพันธ์นี้พิสูจน์ว่า เราสามารถสร้างการหมุนใดๆ ในสามมิติได้จากการผสมผสานการหมุนรอบแกน $z$ และแกน $y$ เพียงสองแกนเท่านั้น
+
+ยิ่งไปกว่านั้น ตาม \textbf{ทฤษฎีบทโซโลเวย์-คิเทียฟ (Solovay-Kitaev Theorem)} การเลือกเซตจำกัดของเกตที่ประกอบด้วยเกตคลิฟฟอร์ดและเกต $T$ (Clifford+T Set ---- $\{H, S, T, CNOT\}$) สามารถประมาณการแปลงเอกภาพตามอำเภอใจใดๆ ได้ด้วยความแม่นยำ $\epsilon$ โดยใช้จำนวนเกตที่เพิ่มขึ้นเพียง $O(\log^c(1/\epsilon))$ ซึ่งเป็นรากฐานของการประมวลผลควอนตัมที่ทนทานต่อความผิดพร่อง (Fault-Tolerant Quantum Computing)
+
+% ==========================================================
+% 8.5 ทฤษฎีการวัดควอนตัม สัจพจน์ และปรากฏการณ์ซีโน
+% ==========================================================
+\section{ทฤษฎีการวัดควอนตัม สัจพจน์ และปรากฏการณ์ซีโน}
+\index{ทฤษฎีการวัดควอนตัม (Quantum Measurement Theory)}
+\index{สัจพจน์การฉายภาพ (Projection Postulate)}
+\index{การวัดแบบ POVM (POVM Measurement)}
+\index{ปรากฏการณ์ซีโนควอนตัม (Quantum Zeno Effect)}
+
+การวัดในกลศาสตร์ควอนตัมไม่ได้เป็นเพียงการสังเกตคุณสมบัติที่มีอยู่เดิม แต่เป็นกระบวนการทางกายภาพที่มีอันตรกิริยากับระบบและบังคับให้ระบบเปลี่ยนแปลงสถานะอย่างไม่สามารถย้อนกลับได้
+
+\subsection{การวัดแบบฉายภาพของฟอนนอยมันน์ (Projective Measurements)}
+ตัวสังเกตได้แบบแฮร์มิเชียน $\hat{M}$ มีการกระจายสเปกตรัมในรูป
+\begin{equation}
+\hat{M} = \sum_m m \hat{P}_m
+\end{equation}
+โดยที่ $m$ คือผลการวัดที่เป็นไปได้ (ค่าเจาะจง) และ $\hat{P}_m$ คือตัวดำเนินการฉายภาพ (Projection Operator) ประจำค่าเจาะจงนั้น ซึ่งมีสมบัติ $\hat{P}_m^\dagger = \hat{P}_m$, $\hat{P}_m \hat{P}_{m'} = \delta_{mm'} \hat{P}_m$ และผลรวมของทุกโปรเจกเตอร์คือตัวดำเนินการเอกลักษณ์ $\sum_m \hat{P}_m = I$
+
+\textbf{สัจพจน์การวัด (Measurement Postulates)} ระบุว่า
+\begin{enumerate}
+    \item \textbf{ความน่าจะเป็นของผลการวัด} ---- เมื่อวัดระบบที่อยู่ในสถานะ $\ket{\psi}$ โอกาสที่จะได้ผลการวัด $m$ กำหนดโดยกฎของบอร์น
+    \begin{equation}
+    p(m) = \bra{\psi} \hat{P}_m \ket{\psi} = \text{Tr}(\hat{P}_m \rho)
+    \end{equation}
+    \item \textbf{การยุบตัวของสถานะ (State Reduction)} ---- ทันทีหลังจากการวัดเสร็จสิ้นและได้ผลลัพธ์ $m$ สถานะควอนตัมของระบบจะยุบตัวลงสู่สถานะใหม่
+    \begin{equation}
+    \ket{\psi'} = \frac{\hat{P}_m \ket{\psi}}{\sqrt{p(m)}} \qquad \text{หรือ} \qquad \rho' = \frac{\hat{P}_m \rho \hat{P}_m}{\text{Tr}(\hat{P}_m \rho)}
+    \label{eq:state_collapse}
+    \end{equation}
+\end{enumerate}
+
+\subsection{การวัดแบบวางนัยทั่วไป (POVM)}
+ในสถานการณ์ที่ต้องการข้อมูลที่กว้างกว่าการวัดแบบฉายภาพ เช่น การแยกแยะสถานะควอนตัมที่ไม่ตั้งฉากกันอย่างไม่มีความคลุมเครือ (Unambiguous State Discrimination) เราใช้ \textbf{การวัดแบบตัวดำเนินการเชิงบวก (Positive Operator-Valued Measure, POVM)}
+เซตของตัวดำเนินการ $\{ \hat{E}_m \}$ สอดคล้องกับ
+\begin{equation}
+\hat{E}_m \ge 0, \qquad \sum_m \hat{E}_m = I
+\end{equation}
+โดยความน่าจะเป็นในการได้ผลลัพธ์ $m$ คือ $p(m) = \text{Tr}(\hat{E}_m \rho)$ สมาชิกในเซต POVM ไม่จำเป็นต้องตั้งฉากกันและจำนวนสมาชิกอาจมากกว่ามิติของปริภูมิฮิลเบิร์ตได้
+
+\subsection{ปรากฏการณ์ซีโนควอนตัม (The Quantum Zeno Effect)}
+ปรากฏการณ์ซีโนควอนตัม ซึ่งนำเสนอโดย อลัน ซูดาร์ชาน (E. C. George Sudarshan) และไบเดียนัต มิสรา (Baidyanath Misra) ในปี ค.ศ. 1977 ระบุว่า \textbf{การวัดสถานะควอนตัมซ้ำๆ ด้วยความถี่สูงมาก จะสามารถแช่แข็งวิวัฒนาการตามเวลาของระบบให้หยุดนิ่งอยู่กับที่ได้}
+
+พิจารณาระบบสองระดับที่มีสถานะเริ่มต้นเป็น $\ket{0}$ ภายใต้ฮามิลโทเนียนการหมุนเรโซแนนซ์แบบราบี $\hat{H} = \frac{\hbar\Omega}{2}\sigma_x$ ในช่วงเวลาสั้นๆ $\Delta t$ วิวัฒนาการตามเวลาคือ
+\begin{equation}
+\ket{\psi(\Delta t)} = \exp\left( -i\frac{\Omega \Delta t}{2}\sigma_x \right)\ket{0} = \cos\left(\frac{\Omega \Delta t}{2}\right)\ket{0} - i\sin\left(\frac{\Omega \Delta t}{2}\right)\ket{1}
+\end{equation}
+หากเราทำการวัดโปรเจกชัน $\hat{P}_0 = \ket{0}\bra{0}$ ความน่าจะเป็นที่ระบบจะยังคงอยู่ในสถานะ $\ket{0}$ คือ
+\begin{equation}
+P_{\text{stay}}(\Delta t) = \cos^2\left(\frac{\Omega \Delta t}{2}\right) \approx 1 - \frac{\Omega^2 (\Delta t)^2}{4}
+\end{equation}
+
+หากเราแบ่งช่วงเวลาทั้งหมด $T$ ออกเป็น $N$ ช่วงย่อยที่เท่ากัน ($\Delta t = T/N$) และทำการวัดซ้ำทุกๆ ช่วงเวลา $\Delta t$ ความน่าจะเป็นรวมที่ระบบจะรอดพ้นจากการเปลี่ยนสถานะและยังคงอยู่ที่ $\ket{0}$ เมื่อสิ้นสุดเวลา $T$ คือ
+\begin{equation}
+P_{\text{survive}}(T) = \left[ P_{\text{stay}}\left(\frac{T}{N}\right) \right]^N \approx \left[ 1 - \frac{\Omega^2 T^2}{4 N^2} \right]^N \approx 1 - \frac{\Omega^2 T^2}{4 N}
+\end{equation}
+
+เมื่อจำนวนครั้งของการวัดเข้าสู่อนันต์ ($N \to \infty$ หรือ $\Delta t \to 0$)
+\begin{equation}
+\lim_{N \to \infty} P_{\text{survive}}(T) = \lim_{N \to \infty} \left( 1 - \frac{\Omega^2 T^2}{4 N} \right) = 1
+\label{eq:zeno_limit}
+\end{equation}
+นั่นคือ \textbf{ระบบจะถูกกักขังอยู่ในสถานะ $\ket{0}$ ตลอดกาลโดยไม่มีการเปลี่ยนสถานะเกิดขึ้นเลย!} ปรากฏการณ์นี้สอดคล้องกับสุภาษิตโบราณของกรีก ``หม้อที่ถูกจ้องมองไม่มีวันเดือด'' (A watched pot never boils) และได้รับการพิสูจน์ยืนยันความจริงในการทดลองกับไอออนที่ถูกกักขังจริงโดยกลุ่มของเดวิด ไวน์แลนด์ (David Wineland) ในปี ค.ศ. 1990
+
+% ==========================================================
+% 8.6 ระบบหลายคิวบิตและผลคูณเทนเซอร์
+% ==========================================================
+\section{ระบบหลายคิวบิตและผลคูณเทนเซอร์}
+\index{ระบบหลายคิวบิต (Multi-Qubit Systems)}
+\index{ผลคูณเทนเซอร์ (Tensor Product)}
+\index{เกตซีก็อต (CNOT Gate)}
+\index{เกตสวอป (SWAP Gate)}
+
+เพื่อที่จะสร้างคอมพิวเตอร์ควอนตัมที่ทรงพลัง เราจำเป็นต้องขยายระบบจาก 1 คิวบิตไปสู่ระบบหลายคิวบิต ปริภูมิฮิลเบิร์ตรวมของระบบผสม $n$ คิวบิตสร้างขึ้นจาก \textbf{ผลคูณเทนเซอร์ (Tensor Product, $\otimes$)} ของปริภูมิย่อย
+\begin{equation}
+\mathcal{H}_{n} = \mathcal{H}_2 \otimes \mathcal{H}_2 \otimes \dots \otimes \mathcal{H}_2 = (\mathbb{C}^2)^{\otimes n}
+\end{equation}
+มิติของปริภูมิฮิลเบิร์ตจะเพิ่มขึ้นแบบเอกซ์โพเนนเชียลเท่ากับ $2^n$ มิติ เช่น ระบบ 50 คิวบิตจะมีมิติเท่ากับ $2^{50} \approx 1.125 \times 10^{15}$ ซึ่งเกินขีดความสามารถของซูเปอร์คอมพิวเตอร์คลาสสิกที่ใหญ่ที่สุดในโลกที่จะจำลองสถานะควอนตัมได้อย่างสมบูรณ์
+
+\subsection{สถานะฐานและการดำเนินการเทนเซอร์}
+สำหรับระบบ 2 คิวบิต ฐานเชิงคำนวณประกอบด้วย 4 สถานะตั้งฉาก
+\begin{equation}
+\ket{00} = \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}, \quad \ket{01} = \begin{pmatrix} 0 \\ 1 \\ 0 \\ 0 \end{pmatrix}, \quad \ket{10} = \begin{pmatrix} 0 \\ 0 \\ 1 \\ 0 \end{pmatrix}, \quad \ket{11} = \begin{pmatrix} 0 \\ 0 \\ 0 \\ 1 \end{pmatrix}
+\end{equation}
+สถานะทั่วไปคือการรวมเชิงเส้น $\ket{\Psi} = c_{00}\ket{00} + c_{01}\ket{01} + c_{10}\ket{10} + c_{11}\ket{11}$ ภายใต้เงื่อนไข $\sum |c_{ij}|^2 = 1$
+
+\subsection{เกตสองคิวบิตมูลฐาน}
+เกตสองคิวบิตทำหน้าที่สร้างปฏิสัมพันธ์ระหว่างคิวบิต ซึ่งจำเป็นอย่างยิ่งในการสร้างสถานะพัวพัน (Entanglement)
+\begin{enumerate}
+    \item \textbf{เกตควบคุมการกลับค่า (Controlled-NOT หรือ CNOT):} มีคิวบิตควบคุม (Control Qubit) และคิวบิตเป้าหมาย (Target Qubit) หากคิวบิตควบคุมมีสถานะเป็น $\ket{1}$ คิวบิตเป้าหมายจะถูกกลับค่าด้วยเกต $X$ หากเป็น $\ket{0}$ จะไม่มีการเปลี่ยนแปลง
+    \begin{equation}
+    CNOT = \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+    \end{pmatrix}, \qquad \ket{c, t} \xrightarrow{CNOT} \ket{c, c \oplus t}
+    \label{eq:cnot_matrix}
+    \end{equation}
+    โดยที่ $\oplus$ คือการบวกแบบโมดูโลสอง (Modulo-2 Addition หรือ XOR)
+    \item \textbf{เกตควบคุมเฟส (Controlled-Z หรือ CZ):} พลิกเฟสเฉพาะสถานะ $\ket{11}$ เท่านั้น
+    \begin{equation}
+    CZ = \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & -1
+    \end{pmatrix}, \qquad CZ = (I \otimes H) CNOT (I \otimes H)
+    \end{equation}
+    \item \textbf{เกตสลับสถานะ (SWAP Gate):} สลับข้อมูลระหว่างสองคิวบิต $\ket{a, b} \to \ket{b, a}$
+    \begin{equation}
+    SWAP = \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1
+    \end{pmatrix}
+    \end{equation}
+    เกต SWAP สามารถสร้างขึ้นจากเกต CNOT สามตัวเรียงสลับทิศทางกันได้อย่างแม่นตรง
+    \begin{equation}
+    SWAP = CNOT_{12} \cdot CNOT_{21} \cdot CNOT_{12}
+    \label{eq:swap_from_cnots}
+    \end{equation}
+\end{enumerate}
+
+ตามทฤษฎีบทของบาเรนโกและคณะ (Barenco et al., 1995) \textbf{เกต CNOT ร่วมกับเกตหนึ่งคิวบิตตามอำเภอใจ ก่อรูปเป็นเซตเกตสากล (Universal Gate Set) สำหรับการคำนวณควอนตัมทุกชนิด}
+
+% ==========================================================
+% 8.7 การสูญเสียความพร้อมเพรียงเชิงควอนตัมและช่องสัญญาณสัญญาณรบกวน
+% ==========================================================
+\section{การสูญเสียความพร้อมเพรียงเชิงควอนตัมและช่องสัญญาณสัญญาณรบกวน}
+\index{การสูญเสียความพร้อมเพรียง (Decoherence)}
+\index{เวลาผ่อนคลาย T1 (T1 Relaxation)}
+\index{เวลาสูญเสียเฟส T2 (T2 Dephasing)}
+\index{ตัวดำเนินการคราอุส (Kraus Operators)}
+
+ในการทำงานจริง คิวบิตไม่สามารถแยกตัวอยู่อย่างโดดเดี่ยวจากสิ่งแวดล้อมได้อย่างสมบูรณ์ อันตรกิริยาระหว่างคิวบิตและสิ่งแวดล้อมนำไปสู่การรั่วไหลของข้อมูลควอนตัมและทำลายเฟสสัมพันธ์ ปรากฏการณ์นี้เรียกว่า \textbf{การสูญเสียความพร้อมเพรียงเชิงควอนตัม (Quantum Decoherence)}
+
+\subsection{ตัวดำเนินการคราอุสและการแปลงสภาพระบบเปิด}
+วิวัฒนาการของระบบควอนตัมเปิด (Open Quantum System) ภายใต้สัญญาณรบกวนสามารถอธิบายได้ด้วยทฤษฎีบทการแทนค่าของคราอุส (Kraus Representation Theorem)
+\begin{equation}
+\rho' = \mathcal{E}(\rho) = \sum_k E_k \rho E_k^\dagger
+\label{eq:kraus_representation}
+\end{equation}
+โดยที่ $\{ E_k \}$ คือ \textbf{ตัวดำเนินการคราอุส (Kraus Operators)} ซึ่งสอดคล้องกับเงื่อนไขการรักษาความน่าจะเป็น $\sum_k E_k^\dagger E_k = I$
+
+ช่องสัญญาณสัญญาณรบกวนควอนตัมมูลฐานประกอบด้วย
+\begin{enumerate}
+    \item \textbf{ช่องสัญญาณลดทอนแอมพลิจูด (Amplitude Damping Channel):} จำลองการสูญเสียพลังงานจากการคายพลังงานสู่สิ่งแวดล้อม (Spontaneous Emission)
+    \begin{equation}
+    E_0 = \begin{pmatrix} 1 & 0 \\ 0 & \sqrt{1 - \gamma} \end{pmatrix}, \qquad E_1 = \begin{pmatrix} 0 & \sqrt{\gamma} \\ 0 & 0 \end{pmatrix}
+    \end{equation}
+    โดยที่ $\gamma = 1 - e^{-t/T_1}$ คือความน่าจะเป็นในการสูญเสียพลังงาน
+    \item \textbf{ช่องสัญญาณลดทอนเฟส (Phase Damping Channel):} จำลองการสูญเสียเฟสสัมพัทธ์โดยไม่มีการแลกเปลี่ยนพลังงาน (Pure Dephasing)
+    \begin{equation}
+    E_0 = \sqrt{1 - \lambda} I, \qquad E_1 = \sqrt{\lambda} \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, \qquad E_2 = \sqrt{\lambda} \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}
+    \end{equation}
+    ส่งผลให้สมาชิกนอกแนวทแยงมุมของเมทริกซ์ความหนาแน่นสลายตัวแบบเอกซ์โพเนนเชียล $\rho_{01}(t) = \rho_{01}(0) e^{-t/T_2}$
+\end{enumerate}
+
+\subsection{เวลาผ่อนคลาย $T_1$ และ $T_2$}
+ในฮาร์ดแวร์ควอนตัม คุณภาพของคิวบิตถูกกำหนดโดยพารามิเตอร์เวลาสองตัว
+\begin{itemize}
+    \item \textbf{เวลาผ่อนคลายตามยาว (Longitudinal Relaxation Time, $T_1$):} เวลาเฉลี่ยที่คิวบิตในสถานะกระตุ้น $\ket{1}$ สลายตัวกลับสู่สถานะพื้น $\ket{0}$
+    \item \textbf{เวลาสูญเสียความพร้อมเพรียงตามขวาง (Transverse Coherence Time, $T_2$):} เวลาเฉลี่ยที่สถานะซ้อนทับสูญเสียความสัมพันธ์เชิงเฟส
+\end{itemize}
+เวลาทั้งสองมีความสัมพันธ์กันผ่านเวลาดีเฟสซิงแท้จริง ($T_\phi$) ตามสมการ
+\begin{equation}
+\frac{1}{T_2} = \frac{1}{2 T_1} + \frac{1}{T_\phi} \quad \implies \quad T_2 \le 2 T_1
+\label{eq:t1_t2_relation}
+\end{equation}
+
+ในฮาร์ดแวร์ยุคปัจจุบัน (2020--2026) คิวบิตตัวนำยิ่งยวดทรานสมอนสามารถทำค่า $T_1, T_2$ ได้ในระดับ $100--300~\mu\text{s}$ ในขณะที่คิวบิตไอออนในกับดักแม่เหล็กสามารถทำค่า $T_2$ ได้ยาวนานถึงระดับหลายวินาทีถึงหลายนาที
+
+% ==========================================================
+% 8.8 ฮาร์ดแวร์ควอนตัมคอมพิวติงยุคใหม่
+% ==========================================================
+\section{ฮาร์ดแวร์ควอนตัมคอมพิวติงยุคใหม่}
+\index{ทรานสมอน (Transmon Qubit)}
+\index{ไอออนดักจับ (Trapped Ions)}
+\index{อะตอมเป็นกลาง (Neutral Atoms)}
+
+การสร้างคอมพิวเตอร์ควอนตัมจริงในปัจจุบันอาศัยเทคโนโลยีฟิสิกส์เชิงทดลองสามตระกูลหลัก
+\begin{enumerate}
+    \item \textbf{วงจรตัวนำยิ่งยวดทรานสมอน (Superconducting Transmon Qubits)} ---- นำโดย IBM (โปรเซสเซอร์ Eagle, Heron), Google Quantum AI (Willow, Sycamore) อาศัยรอยต่อโจเซฟสันที่ไม่เป็นเชิงเส้นคั่นระหว่างตัวเก็บประจุ ทำงานในตู้หล่อเย็นเจือจาง (Dilution Refrigerator) ที่อุณหภูมิต่ำกว่า $15~\text{mK}$ ข้อดีคือทำงานได้เร็วระดับนาโนวินาทีและผลิตด้วยกระบวนการโฟโตลิโทกราฟีของไมโครชิป
+    \item \textbf{ไอออนในกับดักแม่เหล็กไฟฟ้า (Trapped Ions)} ---- นำโดย Quantinuum, IonQ ใช้ไอออนของ $^{171}\text{Yb}^+$ หรือ $^{40}\text{Ca}^+$ ถูกกักขังในสุญญากาศด้วยสนามไฟฟ้ากระแสสลับของกับดักพอล (Paul Trap) และควบคุมด้วยลำแสงเลเซอร์ มีข้อดีคือความแม่นยำของเกตสูงที่สุด ($> 99.9\%$) และคิวบิตทุกตัวเหมือนกันตามธรรมชาติอย่างแท้จริง
+    \item \textbf{อะตอมเป็นกลางในคีมจับแสง (Neutral Atoms in Optical Tweezers)} ---- นำโดย QuEra, Harvard ใช้ลำแสงเลเซอร์โฟกัสเป็นตารางดักจับอะตอมรูบิเดียมหรือซีเซียมเดี่ยวหลายพันอะตอม และกระตุ้นสู่อันตรกิริยาริดเบิร์ก (Rydberg Blockade) เพื่อสร้างเกตพัวพัน มีข้อได้เปรียบด้านความสามารถในการปรับขยายขนาด (Scalability) สู่หลายพันคิวบิต
+\end{enumerate}
+
+% ==========================================================
+% ห้องปฏิบัติการเสมือนจริง 3 มิติ WebAR
+% ==========================================================
+\section{ห้องปฏิบัติการเสมือนจริง 3 มิติ WebAR ทรงกลมบล็อคปฏิสัมพันธ์ไร้สัมผัส}
+\index{ห้องปฏิบัติการเสมือนจริง (WebAR Lab)}
+
+\begin{qrcodelabbox}{การทดลองทรงกลมบล็อคสามมิติ WebAR ปฏิสัมพันธ์ไร้สัมผัส}{https://tsanaphysics.github.io/ar-Quantum/lab08_bloch_sphere.html}
+\begin{minipage}[c]{0.70\textwidth}
+\textbf{ขั้นตอนการทดลองและกิจกรรมการเรียนรู้}
+\begin{enumerate}
+    \item สแกน QR Code ด้วยสมาร์ทโฟนหรือแท็บเล็ตเพื่อเปิดห้องปฏิบัติการเสมือนจริง 3 มิติบนเว็บเบราว์เซอร์
+    \item ส่องกล้องเข้าหา \textbf{ภาพที่ \ref{fig:bloch_sphere_full_diagram}} ในหน้าหนังสือนี้ ระบบจะตรวจจับภาพเป้าหมาย (Image Tracking) และเรนเดอร์ทรงกลมบล็อคสามมิติลอยตัวขึ้นมาเหนือหน้ากระดาษ
+    \item ทดลองกดปุ่มเกตเพาลี $X, Y, Z$ เกตฮาดามาร์ด $H$ และเกตเปลี่ยนเฟส $S, T$ เพื่อสังเกตทิศทางการหมุนของเวกเตอร์บล็อคแบบเรียลไทม์ 60 FPS
+    \item เปิดโหมดควบคุมด้วยการตรวจจับมือเปล่า (MediaPipe Hands) เพื่อทดลองใช้การเคลื่อนไหวของนิ้วมือในการหมุนปรับมุม $\theta$ และ $\phi$ บนทรงกลม
+    \item กดปุ่ม ``Measure'' เพื่อสังเกตการยุบตัวของฟังก์ชันคลื่นควอนตัมสุ่มลงสู่ขั้วเหนือ $\ket{0}$ หรือขั้วใต้ $\ket{1}$ ตามค่าน้ำหนักความน่าจะเป็น
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.25\textwidth}
+\centering
+\qrcode[height=2.8cm]{https://tsanaphysics.github.io/ar-Quantum/lab08_bloch_sphere.html}
+\end{minipage}
+\end{qrcodelabbox}
+
+% ==========================================================
+% ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
+% ==========================================================
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+\index{ระเบียบวิธี P-S-C-T (P-S-C-T Method)}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 8.1
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 8.1 ---- การแปลงสถานะคิวบิตเป็นพิกัดมุมและเวกเตอร์บนทรงกลมบล็อค}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+คิวบิตตัวหนึ่งอยู่ในสถานะควอนตัม
+\begin{equation*}
+\ket{\psi} = \frac{\sqrt{3}}{2} \ket{0} + \frac{1 - i}{2\sqrt{2}} \ket{1}
+\end{equation*}
+\begin{enumerate}
+    \item จงตรวจสอบว่าสถานะนี้สอดคล้องกับเงื่อนไขการนอร์มอลไลซ์หรือไม่
+    \item จงหามุมเชิงขั้ว $\theta$ มุมแอซิมัท $\phi$ และพิกัดเวกเตอร์บล็อค $\mathbf{r} = (r_x, r_y, r_z)$
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} ตรวจสอบเงื่อนไขการนอร์มอลไลซ์
+กำหนดให้ $\alpha = \frac{\sqrt{3}}{2}$ และ $\beta = \frac{1 - i}{2\sqrt{2}}$
+\begin{equation*}
+|\alpha|^2 = \left( \frac{\sqrt{3}}{2} \right)^2 = \frac{3}{4}
+\end{equation*}
+\begin{equation*}
+|\beta|^2 = \left| \frac{1 - i}{2\sqrt{2}} \right|^2 = \frac{1^2 + (-1)^2}{(2\sqrt{2})^2} = \frac{2}{8} = \frac{1}{4}
+\end{equation*}
+ผลรวมคือ $|\alpha|^2 + |\beta|^2 = \frac{3}{4} + \frac{1}{4} = 1$ สถานะนี้นอร์มอลไลซ์แล้วอย่างสมบูรณ์
+
+\textbf{ขั้นตอนที่ 2} หามุมเชิงขั้ว $\theta$
+จากรูปแบบมาตรฐาน $\alpha = \cos(\theta/2)$ เนื่องจาก $\alpha$ เป็นจำนวนจริงบวก
+\begin{equation*}
+\cos\left(\frac{\theta}{2}\right) = \frac{\sqrt{3}}{2} \quad \implies \quad \frac{\theta}{2} = \frac{\pi}{6} \quad \implies \quad \theta = \frac{\pi}{3} = 60^\circ
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} หามุมแอซิมัท $\phi$
+จาก $\beta = e^{i\phi} \sin(\theta/2)$ โดยที่ $\sin(\theta/2) = \sin(\pi/6) = \frac{1}{2}$
+\begin{equation*}
+e^{i\phi} \left(\frac{1}{2}\right) = \frac{1 - i}{2\sqrt{2}} \quad \implies \quad e^{i\phi} = \frac{1 - i}{\sqrt{2}} = \frac{1}{\sqrt{2}} - i\frac{1}{\sqrt{2}}
+\end{equation*}
+เขียนในรูปเอกซ์โพเนนเชียลเชิงซ้อน
+\begin{equation*}
+e^{i\phi} = e^{-i\pi/4} = e^{i 7\pi/4} \quad \implies \quad \phi = \frac{7\pi}{4} = 315^\circ \quad (\text{หรือ } -45^\circ)
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 4} คำนวณเวกเตอร์บล็อค $\mathbf{r}$
+จากสูตรพิกัดคาร์ทีเซียน สมการ~\eqref{eq:bloch_rx}--\eqref{eq:bloch_rz}
+\begin{align*}
+r_x &= \sin\theta \cos\phi = \sin(60^\circ) \cos(315^\circ) = \left(\frac{\sqrt{3}}{2}\right)\left(\frac{1}{\sqrt{2}}\right) = \frac{\sqrt{6}}{4} \approx 0.6124 \\
+r_y &= \sin\theta \sin\phi = \sin(60^\circ) \sin(315^\circ) = \left(\frac{\sqrt{3}}{2}\right)\left(-\frac{1}{\sqrt{2}}\right) = -\frac{\sqrt{6}}{4} \approx -0.6124 \\
+r_z &= \cos\theta = \cos(60^\circ) = \frac{1}{2} = 0.5000
+\end{align*}
+เวกเตอร์บล็อคคือ $\mathbf{r} = \left( \frac{\sqrt{6}}{4}, -\frac{\sqrt{6}}{4}, \frac{1}{2} \right)$
+
+\textbf{Check (ตรวจสอบ)} ---- คำนวณขนาดกำลังสองของเวกเตอร์บล็อค
+\begin{equation*}
+|\mathbf{r}|^2 = r_x^2 + r_y^2 + r_z^2 = \frac{6}{16} + \frac{6}{16} + \frac{1}{4} = \frac{12}{16} + \frac{4}{16} = 1
+\end{equation*}
+ขนาดเท่ากับ 1 สอดคล้องกับคุณสมบัติของสถานะบริสุทธิ์บนพื้นผิวทรงกลมบล็อค
+
+\textbf{Think (คิดต่อ)} ---- พิกัด $r_z = 0.5$ สอดคล้องกับค่าคาดหวัง $\langle \sigma_z \rangle = |\alpha|^2 - |\beta|^2 = 0.75 - 0.25 = 0.5$ ส่วนพิกัดในแนวระนาบ $xy$ มีเครื่องหมาย $r_x > 0, r_y < 0$ สะท้อนว่าเวกเตอร์ชี้อยู่ในจตุภาคที่ 4 ของระนาบเส้นศูนย์สูตร ซึ่งเชื่อมโยงข้อมูลเชิงตัวเลขกับภาพเรขาคณิตสามมิติได้อย่างชัดเจน
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 8.2
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 8.2 ---- การแปลงสถานะผ่านลำดับเกต $H \to S \to X$ และการคำนวณการวัด}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+คิวบิตเริ่มต้นอยู่ในสถานะ $\ket{\psi_0} = \ket{0}$ ถูกนำไปผ่านวงจรควอนตัมที่ประกอบด้วยลำดับของเกตดังนี้
+\begin{enumerate}
+    \item เกตฮาดามาร์ด $H$
+    \item เกตเปลี่ยนเฟส $S$
+    \item เกตเพาลี $X$
+\end{enumerate}
+จงหาเวกเตอร์สถานะสุดท้าย $\ket{\psi_f}$ พิกัดบนทรงกลมบล็อค และความน่าจะเป็นที่จะวัดได้ผลลัพธ์เป็น $\ket{0}$ และ $\ket{1}$
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} การกระทำของเกต $H$
+\begin{equation*}
+\ket{\psi_1} = H \ket{0} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} 1 \\ 0 \end{pmatrix} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \ket{+}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} การกระทำของเกต $S$
+\begin{equation*}
+\ket{\psi_2} = S \ket{\psi_1} = \begin{pmatrix} 1 & 0 \\ 0 & i \end{pmatrix} \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ i \end{pmatrix} = \ket{+y}
+\end{equation*}
+เวกเตอร์บล็อคหมุนรอบแกน $z$ ไป $90^\circ$ จากแกน $+x$ สู่แกน $+y$
+
+\textbf{ขั้นตอนที่ 3} การกระทำของเกต $X$
+\begin{equation*}
+\ket{\psi_f} = X \ket{\psi_2} = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ i \end{pmatrix} = \frac{1}{\sqrt{2}}\begin{pmatrix} i \\ 1 \end{pmatrix}
+\end{equation*}
+ดึงเฟสสากล $i = e^{i\pi/2}$ ออกมา
+\begin{equation*}
+\ket{\psi_f} = \frac{i}{\sqrt{2}}\begin{pmatrix} 1 \\ -i \end{pmatrix} \sim \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -i \end{pmatrix} = \ket{-y}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 4} คำนวณความน่าจะเป็นของการวัด
+\begin{equation*}
+P(0) = |\braket{0}{\psi_f}|^2 = \left| \frac{i}{\sqrt{2}} \right|^2 = \frac{1}{2} = 50\%
+\end{equation*}
+\begin{equation*}
+P(1) = |\braket{1}{\psi_f}|^2 = \left| \frac{1}{\sqrt{2}} \right|^2 = \frac{1}{2} = 50\%
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ผลรวมความน่าจะเป็น $P(0) + P(1) = 50\% + 50\% = 100\%$ พิกัดเวกเตอร์บล็อคของสถานะ $\ket{-y}$ คือ $\mathbf{r} = (0, -1, 0)$ มี $r_z = 0$ ซึ่งตรงกับ $P(0) - P(1) = 0$
+
+\textbf{Think (คิดต่อ)} ---- แม้ว่าการวัดบนฐาน $\ket{0}, \ket{1}$ จะให้ความน่าจะเป็น $50/50$ เท่ากันกับสถานะ $\ket{+}$ และ $\ket{-}$ แต่สถานะ $\ket{-y}$ นี้ชี้ไปตามแกน $-y$ หากเราเปลี่ยนฐานการวัดไปเป็นฐานของตัวดำเนินการ $\sigma_y$ จะวัดได้ผลลัพธ์ $-1$ ด้วยความน่าจะเป็น $100\%$ เต็มโดยไม่มีความสุ่มเลย
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 8.3
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 8.3 ---- การพิสูจน์เอกลักษณ์เกต SWAP จากลำดับเกต CNOT สามตัว}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+จงพิสูจน์โดยใช้พีชคณิตเมทริกซ์ว่า เกตสองคิวบิต SWAP สามารถสร้างขึ้นจากการต่ออนุกรมของเกต CNOT สามตัวที่สลับทิศทางกัน กล่าวคือ
+\begin{equation*}
+SWAP = CNOT_{12} \cdot CNOT_{21} \cdot CNOT_{12}
+\end{equation*}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} พิจารณาผลการกระทำต่อสถานะฐานเชิงคำนวณ $\ket{a, b}$ โดยที่ $a, b \in \{0, 1\}$
+จากนิยามของ CNOT เกต $CNOT_{12}$ มีคิวบิต 1 เป็นตัวควบคุมและคิวบิต 2 เป็นเป้าหมาย
+\begin{equation*}
+\ket{a, b} \xrightarrow{CNOT_{12}} \ket{a, a \oplus b}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} กระทำด้วย $CNOT_{21}$ (คิวบิต 2 เป็นตัวควบคุม คิวบิต 1 เป็นเป้าหมาย)
+\begin{equation*}
+\ket{a, a \oplus b} \xrightarrow{CNOT_{21}} \ket{a \oplus (a \oplus b), a \oplus b}
+\end{equation*}
+เนื่องจากการบวกมอดุโลสองมีสมบัติการเปลี่ยนกลุ่มและการสลับที่ $a \oplus a = 0$
+\begin{equation*}
+a \oplus (a \oplus b) = (a \oplus a) \oplus b = 0 \oplus b = b
+\end{equation*}
+สถานะกลายเป็น $\ket{b, a \oplus b}$
+
+\textbf{ขั้นตอนที่ 3} กระทำด้วย $CNOT_{12}$ ครั้งสุดท้าย
+\begin{equation*}
+\ket{b, a \oplus b} \xrightarrow{CNOT_{12}} \ket{b, (a \oplus b) \oplus b} = \ket{b, a \oplus (b \oplus b)} = \ket{b, a \oplus 0} = \ket{b, a}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- สถานะเริ่มต้นคือ $\ket{a, b}$ และสถานะสุดท้ายคือ $\ket{b, a}$ ข้อมูลระหว่างสองคิวบิตถูกสลับกันโดยสมบูรณ์สำหรับทุกค่า $a, b \in \{0, 1\}$
+
+\textbf{Think (คิดต่อ)} ---- ในทางฮาร์ดแวร์จริง เช่น ชิปควอนตัมของ IBM หรือ Google คิวบิตแต่ละตัวอาจไม่ได้เชื่อมต่อถึงกันหมดทุกคู่ (Limited Connectivity) หากเราต้องการทำเกตสองคิวบิตระหว่างคิวบิตที่อยู่ห่างกัน วิศวกรควอนตัมจะแทรกเกต SWAP เข้าไปเพื่อย้ายข้อมูลของคิวบิตให้ขยับเข้ามาอยู่ติดกันก่อนดำเนินการ
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 8.4
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 8.4 ---- การวิเคราะห์สถานะผสม เวกเตอร์บล็อค และเอนโทรปีฟอนนอยมันน์}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+แหล่งกำเนิดควอนตัมแห่งหนึ่งปล่อยคิวบิตออกมาในรูปสถานะผสมทางสถิติ โดยมีโอกาส $75\%$ ที่คิวบิตจะอยู่ในสถานะ $\ket{0}$ และมีโอกาส $25\%$ ที่จะอยู่ในสถานะ $\ket{1}$
+\begin{enumerate}
+    \item จงเขียนเมทริกซ์ความหนาแน่น $\rho$
+    \item จงหาความยาวของเวกเตอร์บล็อค $|\mathbf{r}|$ และตรวจสอบความบริสุทธิ์ $\text{Tr}(\rho^2)$
+    \item จงคำนวณเอนโทรปีฟอนนอยมันน์ $S(\rho)$
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} เขียนเมทริกซ์ความหนาแน่น $\rho$
+จากสมการ~\eqref{eq:density_matrix_def} โดย $p_0 = 0.75 = 3/4$ และ $p_1 = 0.25 = 1/4$
+\begin{equation*}
+\rho = \frac{3}{4}\ket{0}\bra{0} + \frac{1}{4}\ket{1}\bra{1} = \frac{3}{4}\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} + \frac{1}{4}\begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 3/4 & 0 \\ 0 & 1/4 \end{pmatrix}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณเวกเตอร์บล็อค $\mathbf{r}$
+เปรียบเทียบกับรูปแบบมาตรฐานในสมการ~\eqref{eq:density_matrix_bloch}
+\begin{equation*}
+\frac{1 + r_z}{2} = \frac{3}{4} \quad \implies \quad r_z = \frac{1}{2} = 0.5
+\end{equation*}
+และสมาชิกนอกแนวทแยงมุมเป็นศูนย์ $r_x = r_y = 0$ ดังนั้น
+\begin{equation*}
+\mathbf{r} = (0, 0, 0.5) \quad \implies \quad |\mathbf{r}| = 0.5
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณความบริสุทธิ์ $\text{Tr}(\rho^2)$
+\begin{equation*}
+\rho^2 = \begin{pmatrix} (3/4)^2 & 0 \\ 0 & (1/4)^2 \end{pmatrix} = \begin{pmatrix} 9/16 & 0 \\ 0 & 1/16 \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+\text{Tr}(\rho^2) = \frac{9}{16} + \frac{1}{16} = \frac{10}{16} = \frac{5}{8} = 0.625 < 1
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 4} คำนวณเอนโทรปีฟอนนอยมันน์ $S(\rho)$
+ค่าเจาะจงของ $\rho$ คือ $\lambda_1 = 3/4$ และ $\lambda_2 = 1/4$
+\begin{align*}
+S(\rho) &= -\lambda_1 \log_2 \lambda_1 - \lambda_2 \log_2 \lambda_2 \\
+&= -\frac{3}{4}\log_2(3/4) - \frac{1}{4}\log_2(1/4) \\
+&= -\frac{3}{4}(\log_2 3 - 2) - \frac{1}{4}(-2) \\
+&= -\frac{3}{4}(1.585 - 2) + \frac{1}{2} = -\frac{3}{4}(-0.415) + 0.5 = 0.311 + 0.5 \approx 0.811~\text{bits}
+\end{align*}
+
+\textbf{Check (ตรวจสอบ)} ---- ความยาวเวกเตอร์บล็อค $|\mathbf{r}| = 0.5 < 1$ และ $\text{Tr}(\rho^2) = 0.625 < 1$ ยืนยันว่าระบบอยู่ในสถานะผสม และค่าเอนโทรปี $0.811\text{ bits}$ อยู่ระหว่าง 0 (สถานะบริสุทธิ์) และ 1 (สถานะผสมสมบูรณ์)
+
+\textbf{Think (คิดต่อ)} ---- ในทางเรขาคณิต เวกเตอร์บล็อคชี้อยู่บนแกน $z$ ภายในเนื้อทรงกลมบล็อคที่ระยะครึ่งหนึ่งจากจุดศูนย์กลางไปยังขั้วเหนือ การหดสั้นลงของเวกเตอร์บล็อคจากผิวทรงกลมเข้าสู่จุดกึ่งกลางคือภาพจำลองโดยตรงของการสูญเสียสารสนเทศเชิงควอนตัมจากการเชื่อมต่อกับสิ่งแวดล้อม
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 8.5
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 8.5 ---- การคำนวณการเปลี่ยนแปลงสถานะในช่องสัญญาณลดทอนแอมพลิจูด}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+คิวบิตตัวนำยิ่งยวดเริ่มต้นอยู่ในสถานะกระตุ้น $\ket{\psi_0} = \ket{1}$ ถูกทิ้งไว้ให้ทำอันตรกิริยากับสิ่งแวดล้อมความร้อนต่ำผ่านช่องสัญญาณลดทอนแอมพลิจูด (Amplitude Damping Channel) โดยมีเวลาผ่อนคลาย $T_1 = 60~\mu\text{s}$
+\begin{enumerate}
+    \item จงหาเมทริกซ์ความหนาแน่น $\rho(t)$ ที่เวลา $t$ ใดๆ
+    \item จงคำนวณความน่าจะเป็นที่จะพบว่าคิวบิตยังคงอยู่ในสถานะ $\ket{1}$ ที่เวลา $t = 60~\mu\text{s}$ และ $t = 120~\mu\text{s}$
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} เขียนตัวดำเนินการคราอุสของช่องสัญญาณ
+\begin{equation*}
+E_0 = \begin{pmatrix} 1 & 0 \\ 0 & \sqrt{1 - \gamma} \end{pmatrix}, \qquad E_1 = \begin{pmatrix} 0 & \sqrt{\gamma} \\ 0 & 0 \end{pmatrix}
+\end{equation*}
+โดยที่ $\gamma(t) = 1 - e^{-t/T_1}$
+
+\textbf{ขั้นตอนที่ 2} คำนวณ $\rho(t) = E_0 \rho(0) E_0^\dagger + E_1 \rho(0) E_1^\dagger$
+สถานะเริ่มต้นคือ $\rho(0) = \ket{1}\bra{1} = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}$
+\begin{equation*}
+E_0 \rho(0) E_0^\dagger = \begin{pmatrix} 1 & 0 \\ 0 & \sqrt{1 - \gamma} \end{pmatrix} \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & \sqrt{1 - \gamma} \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 1 - \gamma \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+E_1 \rho(0) E_1^\dagger = \begin{pmatrix} 0 & \sqrt{\gamma} \\ 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 \\ \sqrt{\gamma} & 0 \end{pmatrix} = \begin{pmatrix} \gamma & 0 \\ 0 & 0 \end{pmatrix}
+\end{equation*}
+รวมทั้งสองเทอม
+\begin{equation*}
+\rho(t) = \begin{pmatrix} \gamma(t) & 0 \\ 0 & 1 - \gamma(t) \end{pmatrix} = \begin{pmatrix} 1 - e^{-t/T_1} & 0 \\ 0 & e^{-t/T_1} \end{pmatrix}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณความน่าจะเป็น $P_1(t)$
+\begin{equation*}
+P_1(t) = \bra{1}\rho(t)\ket{1} = e^{-t/T_1}
+\end{equation*}
+\begin{itemize}
+    \item ที่ $t = 60~\mu\text{s} = T_1$
+    \begin{equation*}
+    P_1(T_1) = e^{-1} \approx 0.3679 = 36.79\%
+    \end{equation*}
+    \item ที่ $t = 120~\mu\text{s} = 2T_1$
+    \begin{equation*}
+    P_1(2T_1) = e^{-2} \approx 0.1353 = 13.53\%
+    \end{equation*}
+\end{itemize}
+
+\textbf{Check (ตรวจสอบ)} ---- ที่ $t = 0$ จะได้ $P_1(0) = e^0 = 1$ และเมื่อ $t \to \infty$ จะได้ $P_1 \to 0$ และ $P_0 \to 1$ คิวบิตสลายตัวกลับสู่สถานะพื้น $\ket{0}$ อย่างสมบูรณ์
+
+\textbf{Think (คิดต่อ)} ---- ในการรันอัลกอริทึมควอนตัมจริง หากเวลาในการทำงานของวงจรควอนตัม (Gate Depth $\times$ Gate Time) ยาวนานเข้าใกล้ค่า $T_1$ ผลลัพธ์ของการคำนวณจะถูกทำลายด้วยความร้อนและสัญญาณรบกวน นี่คือเหตุผลที่วิศวกรควอนตัมต้องออกแบบเกตที่มีความเร็วสูงระดับนาโนวินาทีเพื่อให้อัลกอริทึมเสร็จสิ้นก่อนที่การสลายตัวของ $T_1$ จะเกิดขึ้น
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 8.6
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 8.6 ---- การจำลองปรากฏการณ์ซีโนควอนตัมเชิงปริมาณ}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+คิวบิตตัวหนึ่งเริ่มต้นอยู่ในสถานะ $\ket{0}$ ถูกขับเคลื่อนด้วยฮามิลโทเนียนการหมุน $\hat{H} = \frac{\hbar\Omega}{2}\sigma_x$ โดยมีความถี่ราบี $\Omega = 1.0 \times 10^6~\text{rad/s}$ ในช่วงเวลา $T = \frac{\pi}{\Omega} = \pi~\mu\text{s}$ (ซึ่งหากปล่อยให้วิวัฒนาการตามธรรมชาติจะพลิกสถานะไปเป็น $\ket{1}$ อย่างสมบูรณ์)
+\begin{enumerate}
+    \item หากไม่มีการวัดระหว่างทาง จงหาความน่าจะเป็นที่จะพบสถานะ $\ket{0}$ ที่เวลา $T$
+    \item หากทำการวัดโปรเจกชัน $\hat{P}_0 = \ket{0}\bra{0}$ จำนวน $N = 100$ ครั้งอย่างสม่ำเสมอตลอดช่วงเวลา $T$ จงคำนวณความน่าจะเป็นสุทธิที่คิวบิตจะยังคงถูกแช่แข็งอยู่ในสถานะ $\ket{0}$
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} กรณีไม่มีการวัดระหว่างทาง
+ฟังก์ชันคลื่นที่เวลา $T = \pi/\Omega$
+\begin{equation*}
+\ket{\psi(T)} = \cos\left(\frac{\Omega T}{2}\right)\ket{0} - i\sin\left(\frac{\Omega T}{2}\right)\ket{1} = \cos(\pi/2)\ket{0} - i\sin(\pi/2)\ket{1} = -i\ket{1}
+\end{equation*}
+ความน่าจะเป็นที่จะพบสถานะ $\ket{0}$ คือ
+\begin{equation*}
+P_0(T) = |\braket{0}{\psi(T)}|^2 = 0\%
+\end{equation*}
+สถานะพลิกตัวเป็น $\ket{1}$ อย่างสมบูรณ์แบบ
+
+\textbf{ขั้นตอนที่ 2} กรณีมีการวัด $N = 100$ ครั้ง
+ช่วงเวลาระหว่างการวัดแต่ละครั้งคือ $\Delta t = T/N = \frac{\pi}{100 \Omega}$
+มุมการหมุนในแต่ละช่วงย่อยคือ $\theta_1 = \Omega \Delta t = \frac{\pi}{100}$ เรเดียน
+ความน่าจะเป็นที่ระบบจะผ่านการวัดครั้งแรกและยังคงอยู่ที่ $\ket{0}$ คือ
+\begin{equation*}
+P_1 = \cos^2\left(\frac{\theta_1}{2}\right) = \cos^2\left(\frac{\pi}{200}\right) \approx \cos^2(0.015708~\text{rad})
+\end{equation*}
+ใช้การประมาณอนุกรมเทย์เลอร์ $\cos x \approx 1 - x^2/2 \implies \cos^2 x \approx 1 - x^2$
+\begin{equation*}
+P_1 \approx 1 - \left(\frac{\pi}{200}\right)^2 = 1 - \frac{\pi^2}{40,000} \approx 1 - 0.0002467 = 0.9997533
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณความน่าจะเป็นรอดชีวิตหลังการวัด 100 ครั้ง
+\begin{equation*}
+P_{\text{survive}} = (P_1)^{100} \approx \left( 1 - \frac{\pi^2}{400 N} \right)^N \approx \exp\left( -\frac{\pi^2}{400} \right)
+\end{equation*}
+แทนค่า $\pi^2 \approx 9.8696$
+\begin{equation*}
+P_{\text{survive}} \approx \exp\left( -\frac{9.8696}{400} \right) = \exp(-0.02467) \approx 0.9756 = 97.56\%
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- จากเดิมที่โอกาสรอดเป็น $0\%$ เมื่อไม่มีการวัด การวัดเพียง 100 ครั้งสามารถเพิ่มโอกาสรอดชีวิตให้อยู่ในสถานะเดิมสูงถึง $97.56\%$
+
+\textbf{Think (คิดต่อ)} ---- หากเพิ่มจำนวนครั้งของการวัดเป็น $N = 10,000$ ครั้ง โอกาสรอดชีวิตจะเพิ่มสูงขึ้นเป็น $99.97\%$ นี่คือข้อพิสูจน์เชิงประจักษ์ว่า การวัดแบบฉายภาพซ้ำๆ สามารถระงับการเปลี่ยนแปลงพลวัตทางควอนตัมได้อย่างทรงประสิทธิภาพ ซึ่งถูกนำไปประยุกต์ใช้ในการตรวจจับและแก้ไขข้อผิดพลาดควอนตัม (Quantum Error Suppression)
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 8.7
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 8.7 ---- การสร้างสถานะพัวพันเบลล์ $\ket{\Phi^+}$ จากเกต $H$ และ $CNOT$}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+พิจารณาวงจรควอนตัมสองคิวบิตที่เริ่มต้นจากสถานะฐาน $\ket{\psi_0} = \ket{00}$ นำคิวบิตที่ 1 ผ่านเกตฮาดามาร์ด $H$ จากนั้นนำทั้งสองคิวบิตผ่านเกต $CNOT_{12}$
+\begin{enumerate}
+    \item จงแสดงขั้นตอนการคำนวณเวกเตอร์สถานะในแต่ละขั้นตอน
+    \item จงแสดงว่าสถานะสุดท้ายไม่สามารถเขียนแยกตัวประกอบเป็นผลคูณเทนเซอร์ของสองคิวบิตเดี่ยวได้ (พิสูจน์ความเป็นสถานะพัวพัน)
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} การกระทำของเกต $H \otimes I$ กับสถานะ $\ket{00}$
+เกตฮาดามาร์ดกระทำเฉพาะคิวบิตที่หนึ่ง
+\begin{equation*}
+\ket{\psi_1} = (H \otimes I) \ket{00} = (H\ket{0}) \otimes (I\ket{0}) = \left(\frac{\ket{0}+\ket{1}}{\sqrt{2}}\right) \otimes \ket{0} = \frac{\ket{00} + \ket{10}}{\sqrt{2}}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} การกระทำของเกต $CNOT_{12}$
+เกต CNOT มีคิวบิต 1 เป็นตัวควบคุมและคิวบิต 2 เป็นเป้าหมาย
+\begin{align*}
+\ket{\psi_f} &= CNOT_{12} \left( \frac{\ket{00} + \ket{10}}{\sqrt{2}} \right) = \frac{1}{\sqrt{2}} \Big( CNOT\ket{00} + CNOT\ket{10} \Big) \\
+&= \frac{\ket{00} + \ket{11}}{\sqrt{2}} \equiv \ket{\Phi^+}
+\end{align*}
+สถานะที่ได้คือสถานะเบลล์สถานะแรก ($\ket{\Phi^+}$)
+
+\textbf{ขั้นตอนที่ 3} พิสูจน์ว่าสถานะนี้เป็นสถานะพัวพัน (Entangled State)
+สมมติว่าสถานะ $\ket{\Phi^+}$ สามารถแยกตัวประกอบได้เป็นสถานะผลคูณ (Product State)
+\begin{equation*}
+\ket{\Phi^+} = (a\ket{0} + b\ket{1}) \otimes (c\ket{0} + d\ket{1}) = ac\ket{00} + ad\ket{01} + bc\ket{10} + bd\ket{11}
+\end{equation*}
+เทียบสัมประสิทธิ์กับ $\frac{1}{\sqrt{2}}\ket{00} + \frac{1}{\sqrt{2}}\ket{11}$
+\begin{align*}
+ac &= \frac{1}{\sqrt{2}} \tag{1} \\
+ad &= 0 \tag{2} \\
+bc &= 0 \tag{3} \\
+bd &= \frac{1}{\sqrt{2}} \tag{4}
+\end{align*}
+จากสมการ $ad = 0$ จะได้ว่า $a = 0$ หรือ $d = 0$
+\begin{itemize}
+    \item หาก $a = 0$ จะได้ $ac = 0$ ซึ่งขัดแย้งกับ $ac = 1/\sqrt{2}$
+    \item หาก $d = 0$ จะได้ $bd = 0$ ซึ่งขัดแย้งกับ $bd = 1/\sqrt{2}$
+\end{itemize}
+เกิดข้อขัดแย้งทุกกรณี ดังนั้น สถานะ $\ket{\Phi^+}$ จึงไม่สามารถแยกตัวประกอบเป็นผลคูณของสองสถานะเดี่ยวได้ $\blacksquare$
+
+\textbf{Check (ตรวจสอบ)} ---- เมื่อทำการวัดคิวบิตที่หนึ่ง หากได้ผลลัพธ์ $\ket{0}$ คิวบิตที่สองจะยุบตัวลงสู่ $\ket{0}$ ทันที $100\%$ และหากได้ $\ket{1}$ คิวบิตที่สองจะกลายเป็น $\ket{1}$ ทันที $100\%$ ทั้งสองคิวบิตมีความสัมพันธ์เกี่ยวเนื่องกันอย่างสมบูรณ์แบบ
+
+\textbf{Think (คิดต่อ)} ---- การสร้างสถานะพัวพันนี้อาศัยเกตง่ายๆ เพียงสองเกต คือเกตฮาดามาร์ดสร้างการซ้อนทับ และเกต CNOT ผูกมัดความสัมพันธ์ นี่คือวงจรตั้งต้นสำหรับการสื่อสารควอนตัมทางไกล (Quantum Teleportation) และการเข้ารหัสลับควอนตัมที่จะศึกษาอย่างละเอียดในบทถัดไป
+\end{psctbox}
+
+% ==========================================================
+% สคริปต์การจำลองวงจรควอนตัมด้วยภาษา Python และ Qiskit
+% ==========================================================
+\section{สคริปต์การจำลองวงจรควอนตัมด้วยภาษา Python และ Qiskit}
+\index{การคำนวณเชิงตัวเลขด้วยไพทอน (Python Computation)}
+\index{คิสกิต (Qiskit)}
+
+สคริปต์ภาษา Python ด้านล่างนี้ใช้ไลบรารีมาตรฐานสากล `qiskit` ในการสร้างวงจรควอนตัม 1 คิวบิต ดำเนินการเกตหมุน คำนวณเวกเตอร์สถานะ และแปลงผลลัพธ์เป็นพิกัดมุม $(\theta, \phi)$ บนทรงกลมบล็อค
+
+\begin{tcolorbox}[colback=slateGrey!5, colframe=darkNavy, title={\textbf{Python 3 Script ---- Qiskit Qubit Statevector \& Bloch Sphere Coordinates}}]
+\begin{lstlisting}[language=Python]
+import numpy as np
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import Statevector
+
+# ==========================================================
+# 1. สร้างวงจรควอนตัม 1 คิวบิต
+# ==========================================================
+qc = QuantumCircuit(1)
+print("1. สถานะเริ่มต้น |0>:")
+psi_0 = Statevector.from_instruction(qc)
+print(psi_0)
+
+# ==========================================================
+# 2. ป้อนเกตฮาดามาร์ด H และเกตหมุนเฟส S
+# ==========================================================
+qc.h(0)       # สร้างสถานะ |+> บนแกน x
+qc.s(0)       # หมุนรอบแกน z ไป pi/2 สู่สถานะ |+y> บนแกน y
+qc.t(0)       # หมุนรอบแกน z ไปอีก pi/4
+
+psi_final = Statevector.from_instruction(qc)
+print("\n2. สถานะหลังผ่านเกต H -> S -> T:")
+print(psi_final)
+
+# ==========================================================
+# 3. คำนวณความน่าจะเป็นของการวัดค่าฐาน |0> และ |1>
+# ==========================================================
+probs = psi_final.probabilities_dict()
+print("\n3. ความน่าจะเป็นในการวัดค่า ----")
+print(f"P(|0>) = {probs.get('0', 0):.4f}")
+print(f"P(|1>) = {probs.get('1', 0):.4f}")
+
+# ==========================================================
+# 4. แปลงแอมพลิจูดเป็นพิกัดมุมและเวกเตอร์บล็อค
+# ==========================================================
+alpha = psi_final.data[0]
+beta = psi_final.data[1]
+
+# คำนวณมุมเชิงขั้ว theta (0 ถึง pi)
+theta = 2.0 * np.arccos(np.clip(np.abs(alpha), 0.0, 1.0))
+
+# คำนวณมุมแอซิมัท phi (0 ถึง 2pi)
+phi = np.angle(beta) - np.angle(alpha)
+if phi < 0:
+    phi += 2.0 * np.pi
+
+# คำนวณพิกัดเวกเตอร์บล็อค (rx, ry, rz)
+rx = np.sin(theta) * np.cos(phi)
+ry = np.sin(theta) * np.sin(phi)
+rz = np.cos(theta)
+
+print("\n4. พิกัดเรขาคณิตบนทรงกลมบล็อค ----")
+print(f"Theta = {np.degrees(theta):.2f} องศา ({theta:.4f} rad)")
+print(f"Phi   = {np.degrees(phi):.2f} องศา ({phi:.4f} rad)")
+print(f"เวกเตอร์บล็อค r = ({rx:.4f}, {ry:.4f}, {rz:.4f})")
+print(f"ขนาดเวกเตอร์ |r| = {np.sqrt(rx**2 + ry**2 + rz**2):.4f}")
+\end{lstlisting}
+\end{tcolorbox}
+
+% ==========================================================
+% สรุปสาระสำคัญประจำบทที่ 8
+% ==========================================================
+\section{สรุปสาระสำคัญประจำบทที่ 8}
+
+\begin{itemize}
+    \item \textbf{คิวบิตและหลักการซ้อนทับ} ---- คิวบิตคือหน่วยสารสนเทศควอนตัมในระบบสองระดับที่สามารถดำรงอยู่ในสภาวะซ้อนทับเชิงเส้น $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ โดยมีเงื่อนไขการนอร์มอลไลซ์ $|\alpha|^2 + |\beta|^2 = 1$
+    \item \textbf{ทรงกลมบล็อค} ---- ให้ภาพแทนเชิงเรขาคณิตสามมิติของ 1 คิวบิตบริสุทธิ์ $\ket{\psi} = \cos(\theta/2)\ket{0} + e^{i\phi}\sin(\theta/2)\ket{1}$ โดยขั้วเหนือคือ $\ket{0}$ ขั้วใต้คือ $\ket{1}$ และระนาบเส้นศูนย์สูตรคือสถานะซ้อนทับที่มีขนาดแอมพลิจูดเท่ากัน
+    \item \textbf{สถานะผสมและเมทริกซ์ความหนาแน่น} ---- สถานะควอนตัมทั่วไปแทนด้วยเมทริกซ์ความหนาแน่น $\rho = \frac{1}{2}(I + \mathbf{r}\cdot\boldsymbol{\sigma})$ โดยสถานะบริสุทธิ์อยู่บนพื้นผิวทรงกลม ($|\mathbf{r}| = 1$) และสถานะผสมอยู่ภายในเนื้อทรงกลม ($|\mathbf{r}| < 1$)
+    \item \textbf{เกตควอนตัมเอกภาพ} ---- การประมวลผลควอนตัมปิดแทนด้วยตัวดำเนินการเอกภาพ $U^\dagger U = I$ ซึ่งสมนัยกับการหมุนแบบแข็งรอบแกนต่างๆ บนทรงกลมบล็อค เกตสำคัญได้แก่ เกตเพาลี $X, Y, Z$ เกตฮาดามาร์ด $H$ และเกตเปลี่ยนเฟส $S, T$
+    \item \textbf{การวัดควอนตัมและการยุบตัว} ---- การวัดแบบฉายภาพบังคับให้ฟังก์ชันคลื่นยุบตัวสู่สถานะเจาะจงของตัวสังเกตได้ และการวัดซ้ำๆ ด้วยความถี่สูงสามารถหยุดยั้งวิวัฒนาการตามธรรมชาติของระบบได้ตามปรากฏการณ์ซีโนควอนตัม
+    \item \textbf{ระบบหลายคิวบิตและเกต CNOT} ---- ปริภูมิฮิลเบิร์ตของระบบ $n$ คิวบิตมีขนาด $2^n$ มิติ เกตสองคิวบิต CNOT ทำหน้าที่ควบคุมการกลับค่าและสร้างสถานะพัวพันเชิงควอนตัม เช่น สถานะเบลล์
+    \item \textbf{การสูญเสียความพร้อมเพรียง} ---- อันตรกิริยากับสิ่งแวดล้อมจำลองผ่านช่องสัญญาณสัญญาณรบกวนของคราอุส โดยมีเวลาผ่อนคลายพลังงาน $T_1$ และเวลาสูญเสียเฟส $T_2$ เป็นตัวกำหนดขีดจำกัดความเร็วและความแม่นยำของคอมพิวเตอร์ควอนตัม
+    \item \textbf{ฮาร์ดแวร์ยุคใหม่} ---- เทคโนโลยีคิวบิตตัวนำยิ่งยวดทรานสมอน ไอออนในกับดักแม่เหล็ก และอะตอมเป็นกลางในคีมจับแสงเลเซอร์ เป็นแพลตฟอร์มหลักที่กำลังขับเคลื่อนการประมวลผลควอนตัมในปัจจุบัน
+\end{itemize}
+
+% ==========================================================
+% แบบฝึกหัดท้ายบทที่ 8
+% ==========================================================
+\section*{แบบฝึกหัดท้ายบทที่ 8}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 8}
+
+\subsection*{คำถามเชิงแนวคิด (Conceptual Questions)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item จงอธิบายความแตกต่างพื้นฐานระหว่างบิตคลาสสิกและคิวบิต เหตุใดการมีอยู่ของหลักการซ้อนทับจึงทำให้คอมพิวเตอร์ควอนตัมมีพลังในการประมวลผลสูงกว่าคอมพิวเตอร์คลาสสิก
+    \item อธิบายความแตกต่างระหว่างเฟสรวมสากล (Global Phase) และเฟสสัมพัทธ์ (Relative Phase) เหตุใดเฟสสากลจึงไม่มีผลต่อการวัดทางกายภาพในขณะที่เฟสสัมพัทธ์มีผลอย่างมีนัยสำคัญ
+    \item เหตุใดสถานะควอนตัมที่ตั้งฉากกันในปริภูมิฮิลเบิร์ต ($\braket{\psi_1}{\psi_2} = 0$) จึงชี้ไปในทิศทางตรงกันข้ามกัน ($180^\circ$) บนทรงกลมบล็อค
+    \item อธิบายความแตกต่างระหว่างสถานะบริสุทธิ์ (Pure State) และสถานะผสม (Mixed State) ในแง่ของเวกเตอร์บล็อคและเมทริกซ์ความหนาแน่น
+    \item จงอธิบายความหมายทางกายภาพของจุดศูนย์กลางของทรงกลมบล็อค ($|\mathbf{r}| = 0$) สภาวะนี้มีสารสนเทศควอนตัมหลงเหลืออยู่หรือไม่
+    \item เหตุใดการดำเนินการกับคิวบิตในระบบปิดจึงต้องเป็นตัวดำเนินการเอกภาพ (Unitary Operator) เสมอ และมีความเชื่อมโยงกับการอนุรักษ์ความน่าจะเป็นอย่างไร
+    \item อธิบายบทบาทเชิงเรขาคณิตของเกตฮาดามาร์ด $H$ บนทรงกลมบล็อค และเหตุใดเกตนี้จึงเป็นจุดเริ่มต้นของอัลกอริทึมควอนตัมเกือบทุกชนิด
+    \item ทฤษฎีบทโซโลเวย์-คิเทียฟ มีความสำคัญอย่างไรต่อการสร้างคอมพิวเตอร์ควอนตัมที่ทนทานต่อความผิดพร่องในโลกความเป็นจริง
+    \item อธิบายกลไกทางกายภาพของปรากฏการณ์ซีโนควอนตัม (Quantum Zeno Effect) เหตุใดการวัดบ่อยครั้งจึงสามารถแช่แข็งสถานะควอนตัมได้
+    \item การวัดแบบวางนัยทั่วไป (POVM) มีข้อได้เปรียบเหนือการวัดแบบฉายภาพของฟอนนอยมันน์อย่างไรในการแยกแยะสถานะควอนตัมที่ไม่ตั้งฉากกัน
+    \item ทำไมมิติของปริภูมิฮิลเบิร์ตในระบบหลายคิวบิตจึงเพิ่มขึ้นแบบทวีคูณ $2^n$ และสิ่งนี้สร้างความได้เปรียบเชิงควอนตัม (Quantum Advantage) อย่างไร
+    \item อธิบายหลักการทำงานของเกต CNOT และชี้ให้เห็นว่าเกตนี้เปลี่ยนสถานะผลคูณธรรมดาให้กลายเป็นสถานะพัวพันได้อย่างไร
+    \item ความแตกต่างระหว่างเวลาผ่อนคลาย $T_1$ และเวลาสูญเสียเฟส $T_2$ คืออะไร และเหตุใด $T_2$ จึงไม่มีทางยาวนานเกินกว่า $2T_1$
+    \item อธิบายความหมายของช่องสัญญาณลดทอนแอมพลิจูด (Amplitude Damping Channel) ในทางฟิสิกส์ว่าสมนัยกับปรากฏการณ์ใดในอะตอม
+    \item เปรียบเทียบข้อดีและข้อจำกัดของแพลตฟอร์มคิวบิตตัวนำยิ่งยวด (Transmon) และไอออนในกับดักแม่เหล็ก (Trapped Ions)
+    \item ทำไมตู้หล่อเย็นเจือจาง (Dilution Refrigerator) จึงจำเป็นต้องลดอุณหภูมิลงสู่ระดับมิลลิเคลวินในการทำงานของคิวบิตตัวนำยิ่งยวด
+    \item ในระบบสองคิวบิต เกต SWAP มีความจำเป็นอย่างไรในสถาปัตยกรรมชิปควอนตัมที่มีการเชื่อมต่อแบบจำกัด (Nearest-Neighbor Coupling)
+    \item อธิบายความหมายของเอนโทรพีฟอนนอยมันน์ $S(\rho)$ และการประยุกต์ใช้ในการวัดระดับความพัวพันเชิงควอนตัม
+    \item เพราะเหตุใดการวัดคิวบิตตัวหนึ่งในสถานะพัวพันเบลล์ จึงส่งผลต่อผลการวัดของอีกคิวบิตหนึ่งในทันที แม้ว่าทั้งสองจะอยู่ห่างกัน
+    \item เทคโนโลยีอะตอมเป็นกลางในคีมจับแสง (Neutral Atoms in Optical Tweezers) ใช้กลไกใดในการสร้างเกตสองคิวบิตระหว่างอะตอม
+\end{enumerate}
+
+\subsection*{โจทย์ปัญหาเชิงวิเคราะห์และคำนวณ (Analytical Problems)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item คิวบิตอยู่ในสถานะ $\ket{\psi} = \frac{1}{2}\ket{0} + \frac{\sqrt{3}i}{2}\ket{1}$ จงหามุม $\theta, \phi$ บนทรงกลมบล็อค และคำนวณเวกเตอร์บล็อค $\mathbf{r} = (r_x, r_y, r_z)$
+    \item กำหนดเวกเตอร์บล็อค $\mathbf{r} = (0, 1, 0)$ จงเขียนเวกเตอร์สถานะ $\ket{\psi}$ ในฐานเชิงคำนวณ และแสดงว่าเป็นสถานะเจาะจงของตัวดำเนินการเพาลี $\sigma_y$
+    \item จงพิสูจน์เอกลักษณ์เกตควอนตัมต่อไปนี้โดยใช้การคูณเมทริกซ์
+    \begin{enumerate}
+        \item $H X H = Z$
+        \item $H Z H = X$
+        \item $H Y H = -Y$
+        \item $S^2 = Z$ และ $T^2 = S$
+    \end{enumerate}
+    \item จงเขียนเมทริกซ์ตัวดำเนินการหมุนรอบแกน $x$ ด้วยมุม $\theta = \pi/2$ เรเดียน ($R_x(\pi/2)$) และคำนวณผลการกระทำของเกตนี้กับสถานะ $\ket{0}$
+    \item คิวบิตอยู่ในสถานะ $\ket{+} = \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$ หากทำการวัดค่าตัวสังเกตได้ $\sigma_z$ จงหาความน่าจะเป็นของผลลัพธ์ที่เป็นไปได้แต่ละค่า และระบุสถานะหลังการวัด
+    \item หากนำคิวบิตในสถานะ $\ket{0}$ ไปผ่านเกต $R_y(\pi/3)$ จากนั้นทำการวัดบนฐานเชิงคำนวณ จงคำนวณความน่าจะเป็นที่จะได้ผลลัพธ์เป็น $\ket{0}$ และ $\ket{1}$
+    \item จงหาการแยกตัวประกอบออยเลอร์ $Z-Y-Z$ ของเกตฮาดามาร์ด $H$ ในรูป $H = e^{i\alpha} R_z(\beta) R_y(\gamma) R_z(\delta)$
+    \item กำหนดเมทริกซ์ความหนาแน่น $\rho = \begin{pmatrix} 0.8 & 0.2i \\ -0.2i & 0.2 \end{pmatrix}$
+    \begin{enumerate}
+        \item จงตรวจสอบว่า $\rho$ เป็นเมทริกซ์ความหนาแน่นที่ถูกต้องหรือไม่
+        \item จงคำนวณความบริสุทธิ์ $\text{Tr}(\rho^2)$ และระบุว่าเป็นสถานะบริสุทธิ์หรือสถานะผสม
+        \item จงหาเวกเตอร์บล็อค $\mathbf{r}$
+    \end{enumerate}
+    \item ระบบสองคิวบิตอยู่ในสถานะ $\ket{\Psi} = \frac{1}{2}\ket{00} + \frac{1}{2}\ket{01} + \frac{1}{\sqrt{2}}\ket{11}$ จงคำนวณความน่าจะเป็นที่จะวัดได้ผลลัพธ์เป็น $\ket{0}$ เมื่อทำการวัดเฉพาะคิวบิตแรก
+    \item สำหรับสถานะในข้อ 9 จงหาเมทริกซ์ความหนาแน่นลดทอน (Reduced Density Matrix) ของคิวบิตแรก $\rho_A = \text{Tr}_B(\ket{\Psi}\bra{\Psi})$ และคำนวณความบริสุทธิ์ $\text{Tr}(\rho_A^2)$
+    \item จงแสดงว่าตัวดำเนินการ $CZ$ สามารถเขียนในรูปของโปรเจกเตอร์ได้เป็น $CZ = I \otimes \ket{0}\bra{0} + Z \otimes \ket{1}\bra{1}$
+    \item คิวบิตตัวหนึ่งผ่านช่องสัญญาณดีเฟสซิง (Phase Damping) ที่มีค่าความน่าจะเป็นเกิดความผิดพลาด $\lambda = 0.2$ หากสถานะเริ่มต้นคือ $\ket{+}$ จงหาเมทริกซ์ความหนาแน่นสุดท้าย $\rho'$ และคำนวณการหดตัวของเวกเตอร์บล็อค
+    \item ในการทดลองปรากฏการณ์ซีโนควอนตัม หากความถี่ราบีคือ $\Omega = 2.0 \times 10^5~\text{rad/s}$ และต้องการคงสถานะ $\ket{0}$ ไว้เป็นเวลา $T = 10~\mu\text{s}$ โดยให้มีความน่าจะเป็นรอดชีวิตไม่น้อยกว่า $99\%$ จงคำนวณจำนวนครั้งของการวัดขั้นต่ำ $N_{\text{min}}$ ที่ต้องกระทำ
+    \item จงคำนวณเอนโทรปีฟอนนอยมันน์ $S(\rho)$ ของสถานะผสม $\rho = \frac{1}{3}\ket{0}\bra{0} + \frac{2}{3}\ket{+}\bra{+}$
+    \item กำหนดให้เกต $U = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & -i \\ -i & 1 \end{pmatrix}$ จงหาแกนหมุนหนึ่งหน่วย $\hat{\mathbf{n}}$ และมุมการหมุน $\theta$ บนทรงกลมบล็อคที่สมนัยกับเกตนี้
+    \item คิวบิตตัวนำยิ่งยวดมีเวลา $T_1 = 80~\mu\text{s}$ และ $T_\phi = 120~\mu\text{s}$ จงคำนวณเวลาสูญเสียความพร้อมเพรียง $T_2$
+    \item จงหาผลการกระทำของวงจรควอนตัม $CNOT_{12} (H \otimes H) CNOT_{12}$ ต่อสถานะฐาน $\ket{00}$
+    \item สำหรับสถานะเบลล์ $\ket{\Psi^-} = \frac{\ket{01}-\ket{10}}{\sqrt{2}}$ จงแสดงว่าสถานะนี้ไม่เปลี่ยนแปลงภายใต้การแปลงเอกภาพแบบเดียวกันในทั้งสองคิวบิต $(U \otimes U)\ket{\Psi^-} = \det(U)\ket{\Psi^-}$ (สถานะเอกเทศเชิงสปิน)
+    \item คิวบิตอยู่ในสถานะ $\ket{\psi} = \cos(\theta/2)\ket{0} + e^{i\phi}\sin(\theta/2)\ket{1}$ จงคำนวณความแปรปรวนของการวัดตัวดำเนินการเพาลี $(\Delta \sigma_x)^2$ และ $(\Delta \sigma_z)^2$
+    \item \textbf{โจทย์ประยุกต์การคำนวณเชิงตัวเลขด้วย Qiskit (Computational Task)} ---- จงเขียนโค้ดภาษา Python โดยใช้ไลบรารี Qiskit เพื่อสร้างวงจรควอนตัมที่ทำการแปลงสถานะ $\ket{0}$ ให้กลายเป็นสถานะที่สอดคล้องกับเวกเตอร์บล็อค $\mathbf{r} = (1/\sqrt{3}, 1/\sqrt{3}, 1/\sqrt{3})$ โดยใช้ลำดับเกต $R_y$ และ $R_z$ จากนั้นคำนวณ Statevector และตรวจสอบว่าค่าคาดหวังของตัวดำเนินการ $\sigma_x, \sigma_y, \sigma_z$ ตรงกับองค์ประกอบของเวกเตอร์บล็อคดังกล่าวอย่างถูกต้อง
+\end{enumerate}

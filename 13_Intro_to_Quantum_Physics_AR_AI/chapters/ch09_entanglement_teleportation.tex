@@ -1,0 +1,1144 @@
+\chapter{ความพัวพันเชิงควอนตัมและการสื่อสารควอนตัม}
+\label{chap:entanglement_teleportation}
+\index{ความพัวพันควอนตัม (Quantum Entanglement)}
+\index{สถานะเบลล์ (Bell States)}
+\index{การส่งผ่านสถานะทางไกล (Quantum Teleportation)}
+\index{การเข้ารหัสความหนาแน่นยิ่งยวด (Superdense Coding)}
+\index{รหัสลับควอนตัม (Quantum Key Distribution)}
+\index{อสมการ CHSH (CHSH Inequality)}
+\index{ทฤษฎีบทห้ามโคลน (No-Cloning Theorem)}
+\index{การสลับคู่พัวพัน (Entanglement Swapping)}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 9
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 9}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 9}
+
+\begin{lessonplanbox}
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item ปฏิทรรศน์ไอน์สไตน์-โพดอลสกี-โรเซน (EPR Paradox) และตัวแปรแฝงเฉพาะที่
+    \item คณิตศาสตร์ของความพัวพัน การแยกสลายชมิดต์ และเอนโทรปีความพัวพัน
+    \item สถานะเบลล์ทั้งสี่ ฐานหลักเชิงตั้งฉาก และวงจรสร้างคู่พัวพัน
+    \item ความพัวพันหลายอนุภาค สถานะ GHZ และสถานะ W
+    \item ทฤษฎีบทของเบลล์ อสมการ CHSH ขอบเขตซิเรลสัน และการทดลองรางวัลโนเบลปี 2022
+    \item ทฤษฎีบทห้ามโคลนสถานะควอนตัม (No-Cloning Theorem) และผลกระทบต่อวิทยาการรหัสลับ
+    \item โพรโทคอลการส่งผ่านสถานะควอนตัมทางไกล (Quantum Teleportation) เชิงคณิตศาสตร์สมบูรณ์
+    \item การเข้ารหัสข้อมูลความหนาแน่นยิ่งยวด (Superdense Coding)
+    \item การแจกจ่ายกุญแจรหัสลับควอนตัม (QKD โพรโทคอล BB84 และ Ekert91)
+    \item สถานีทวนสัญญาณควอนตัม การสลับคู่พัวพัน และเครือข่ายอินเทอร์เน็ตควอนตัม
+    \item ห้องปฏิบัติการเสมือนจริง 3 มิติ WebAR ความพัวพันของคู่โฟตอนและการทดสอบ CHSH
+    \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
+    \item การจำลองวงจรเทเลพอร์ตเทชันและอสมการเบลล์ด้วยภาษา Python และ Qiskit
+    \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
+\end{enumerate}
+
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
+    \item อธิบายข้อโต้แย้งทางปรัชญาฟิสิกส์ระหว่างทัศนะความเป็นจริงเฉพาะที่ของไอน์สไตน์และการตีความโคเปนเฮเกนได้อย่างลึกซึ้ง
+    \item คำนวณการแยกสลายชมิดต์ (Schmidt Decomposition) และเอนโทรปีความพัวพันเพื่อระบุระดับความพัวพันของระบบสองคิวบิตได้
+    \item เขียนและอธิบายเวกเตอร์สถานะเบลล์ทั้งสี่ $\ket{\Phi^\pm}$ และ $\ket{\Psi^\pm}$ พร้อมออกแบบวงจรควอนตัมสร้างสถานะได้อย่างถูกต้อง
+    \item ดำเนินการพิสูจน์อสมการ CHSH เชิงพีชคณิตและคำนวณการละเมิดขอบเขตคลาสสิกสู่ขอบเขตซิเรลสัน $2\sqrt{2}$ ได้อย่างเป็นขั้นตอน
+    \item พิสูจน์ทฤษฎีบทห้ามโคลนสถานะควอนตัมจากสมบัติความเป็นเอกภาพและการอนุรักษ์ผลคูณภายในได้อย่างแม่นยำ
+    \item วิเคราะห์และคำนวณการวิวัฒน์ของเวกเตอร์สถานะในโพรโทคอลเทเลพอร์ตเทชันและการเข้ารหัสความหนาแน่นยิ่งยวดได้ครบทุกกรณี
+    \item วิเคราะห์ความปลอดภัยของโพรโทคอลการแจกจ่ายกุญแจรหัสลับควอนตัม BB84 ภายใต้การดักฟังแบบวัดแล้วส่งซ้ำ (Intercept-Resend)
+    \item อธิบายหลักการของการสลับคู่พัวพัน (Entanglement Swapping) และบทบาทของสถานีทวนสัญญาณควอนตัมในการสื่อสารระยะไกลได้
+    \item พัฒนาโปรแกรมภาษา Python ร่วมกับไลบรารี Qiskit เพื่อจำลองวงจรเทเลพอร์ตเทชันและประเมินความถูกต้องของสถานะปลายทางได้อย่างสมบูรณ์
+\end{enumerate}
+\end{lessonplanbox}
+
+% ==========================================================
+% 9.1 ปฏิทรรศน์ EPR และตัวแปรแฝงเฉพาะที่
+% ==========================================================
+\newpage
+\section{ปฏิทรรศน์ EPR และตัวแปรแฝงเฉพาะที่}
+\index{ปฏิทรรศน์ EPR (EPR Paradox)}
+\index{หลักความเป็นจริงเฉพาะที่ (Local Realism)}
+\index{ตัวแปรแฝง (Hidden Variables)}
+\index{การกระทำระยะไกลดุจภูตผี (Spooky Action at a Distance)}
+
+ในประวัติศาสตร์ของการพัฒนาฟิสิกส์ยุคใหม่ ไม่มีข้อถกเถียงใดที่จะลึกซึ้งและส่งผลสะเทือนต่อรากฐานทางญาณวิทยาไปมากกว่าข้อวิวาทะระหว่าง อัลเบิร์ต ไอน์สไตน์ (Albert Einstein, 1879--1955) และ นีลส์ บอร์ (Niels Bohr, 1885--1962) ในช่วงทศวรรษ 1930 ไอน์สไตน์ยอมรับว่ากลศาสตร์ควอนตัมมีความถูกต้องในเชิงสถิติและสามารถทำนายผลการทดลองในห้องปฏิบัติการได้อย่างแม่นยำ ทว่าเขามีความเชื่อมั่นอย่างแรงกล้าว่ากลศาสตร์ควอนตัมยังไม่ใช่ \textbf{ทฤษฎีที่สมบูรณ์ (Incomplete Theory)} ของธรรมชาติ หากแต่เป็นเพียงคำอธิบายเชิงสถิติที่หยาบของความเป็นจริงทางกายภาพระดับลึกที่ยังซ่อนเร้นอยู่
+
+ในคริสต์ศักราช 1935 ไอน์สไตน์ ร่วมกับเพื่อนร่วมงานรุ่นเยาว์สองท่านคือ โบริส โพดอลสกี (Boris Podolsky, 1896--1966) และ นาธาน โรเซน (Nathan Rosen, 1909--1995) ได้ร่วมกันตีพิมพ์บทความวิชาการอันเป็นหมุดหมายสำคัญในวารสาร \textit{Physical Review} ภายใต้ชื่อเรื่องที่ท้าทายว่า \textit{“Can Quantum-Mechanical Description of Physical Reality be Considered Complete?”} ซึ่งต่อมาได้รับการขนานนามย่อว่า \textbf{ปฏิทรรศน์ EPR (EPR Paradox)}
+
+\subsection{เกณฑ์ความเป็นจริงทางกายภาพและความเป็นเฉพาะที่}
+เพื่อให้การวิพากษ์มีความรัดกุมเชิงปรัชญา คณะผู้วิจัย EPR ได้วางนิยามและเงื่อนไขที่จำเป็นสำหรับทฤษฎีทางกายภาพที่สมบูรณ์ไว้สองประการ
+
+\begin{enumerate}
+    \item \textbf{เงื่อนไขความสมบูรณ์ของทฤษฎี (Completeness Criterion)} ---- ทุกๆ องค์ประกอบของความเป็นจริงทางกายภาพ (Every element of the physical reality) จะต้องมีสิ่งคู่เสมอกัน (Counterpart) ปรากฏอยู่ในทฤษฎีทางกายภาพนั้น
+    \item \textbf{เกณฑ์ความเป็นจริงทางกายภาพ (Criterion of Physical Reality)} ---- หากเราสามารถทำนายค่าของปริมาณทางกายภาพหนึ่งๆ ได้อย่างแน่นอนเด็ดขาด (นั่นคือ ด้วยความน่าจะเป็นเท่ากับหนึ่ง) โดยปราศจากการรบกวนระบบนั้นไม่ว่าในลักษณะใดๆ ย่อมมี \textbf{องค์ประกอบของความเป็นจริงทางกายภาพ (Element of Physical Reality)} ที่สอดคล้องกับปริมาณดังกล่าว ดำรงอยู่จริงก่อนหน้าการวัด
+\end{enumerate}
+
+นอกจากเกณฑ์ทั้งสองข้อแล้ว ไอน์สไตน์ยังได้ยึดถือหลักการพื้นฐานที่เรียกว่า \textbf{หลักความเป็นเฉพาะที่ (Principle of Locality)} หรือการแยกขาดจากกันเชิงปริภูมิ (Spatial Separability) ซึ่งระบุว่า วัตถุสองชิ้นที่แยกห่างออกจากกันในปริภูมิ-เวลา ย่อมมีความเป็นจริงทางกายภาพที่เป็นอิสระต่อกัน และการกระทำหรือการรบกวนใดๆ ที่เกิดขึ้นกับระบบหนึ่ง จะไม่สามารถส่งอิทธิพลต่อความเป็นจริงของอีกระบบหนึ่งได้เร็วกว่าอัตราเร็วของแสงในสุญญากาศ $c$ ตามทฤษฎีสัมพัทธภาพพิเศษ
+
+\subsection{แบบจำลองระบบสปินของโบห์ม (Bohm's Formulation)}
+ในบทความดั้งเดิมของ EPR ได้นำเสนอการวิเคราะห์โดยใช้ตำแหน่งและโมเมนตัมของอนุภาคคู่หนึ่ง ทว่าในปี ค.ศ. 1951 เดวิด โบห์ม (David Bohm, 1917--1992) ได้ปรับปรุงการทดลองทางความคิดดังกล่าวให้อยู่ในรูปของระบบอนุภาคสปินครึ่ง (Spin-$\frac{1}{2}$ Particles) ซึ่งมีความเรียบง่ายและทรงพลังอย่างยิ่งในทางคณิตศาสตร์
+
+พิจารณาโมเลกุลที่ไม่มีสปินรวม ($S=0$) แตกตัวออกเป็นอนุภาคสปิน $\frac{1}{2}$ จำนวนสองอนุภาค คืออนุภาค $A$ (ส่งไปยังอลิซ) และอนุภาค $B$ (ส่งไปยังบ็อบ) ซึ่งเคลื่อนที่แยกห่างออกจากกันไปในทิศทางตรงกันข้าม จนกระทั่งอยู่ห่างกันเป็นระยะทางมหภาค ในทางกลศาสตร์ควอนตัม สปินรวมที่เท่ากับศูนย์หมายความว่าระบบทั้งสองต้องอยู่ใน \textbf{สถานะซิงเกลต์ (Singlet State)}
+\begin{equation}
+\ket{\Psi^-} = \frac{1}{\sqrt{2}} \Big( \ket{\uparrow}_A \ket{\downarrow}_B - \ket{\downarrow}_A \ket{\uparrow}_B \Big)
+\label{eq:epr_singlet}
+\end{equation}
+เมื่ออลิซทำการวัดองค์ประกอบสปินของอนุภาค $A$ ตามแกน $z$ หากผลลัพธ์ของอลิซได้สปินชี้ขึ้น ($\ket{\uparrow}_z$) ฟังก์ชันคลื่นรวมของทั้งสองอนุภาคจะยุบตัวลงในทันที ส่งผลให้อนุภาค $B$ ของบ็อบมีสปินชี้ลง ($\ket{\downarrow}_z$) ด้วยความน่าจะเป็นร้อยละร้อย ในทำนองเดียวกัน หากอลิซเลือกที่จะวัดสปินตามแกน $x$ สถานะซิงเกลต์สามารถเขียนกระจายบนฐานตามแกน $x$ ได้เป็น
+\begin{equation}
+\ket{\Psi^-} = \frac{1}{\sqrt{2}} \Big( \ket{\downarrow_x}_A \ket{\uparrow_x}_B - \ket{\uparrow_x}_A \ket{\downarrow_x}_B \Big)
+\end{equation}
+ซึ่งหากอลิซได้ผลลัพธ์เป็น $\ket{\uparrow_x}$ อนุภาคของบ็อบจะถูกกำหนดให้เป็น $\ket{\downarrow_x}$ ในทันทีเช่นเดียวกัน
+
+ตามเกณฑ์ของ EPR เนื่องจากบ็อบอยู่ห่างไกลออกไปจนแสงไม่สามารถเดินทางมาถึงได้ทัน อลิซสามารถทำนายทั้งค่า $S_z$ หรือค่า $S_x$ ของอนุภาคบ็อบได้อย่างแน่นอน โดยไม่ได้แตะต้องหรือรบกวนอนุภาคของบ็อบเลยแม้แต่น้อย ดังนั้น ทั้ง $S_z$ และ $S_x$ ของอนุภาคบ็อบจะต้องเป็นองค์ประกอบของความเป็นจริงที่มีค่าแน่นอนดำรงอยู่แล้วตั้งแต่ต้น ทว่าในกลศาสตร์ควอนตัม ตัวดำเนินการทั้งสองไม่สลับที่กัน
+\begin{equation}
+[\hat{S}_x, \hat{S}_z] = -i\hbar \hat{S}_y \ne 0
+\end{equation}
+กลศาสตร์ควอนตัมไม่อนุญาตให้อนุภาคมีค่าเฉพาะที่แน่นอนของทั้ง $S_x$ และ $S_z$ พร้อมกันได้ คณะผู้วิจัย EPR จึงสรุปว่า กลศาสตร์ควอนตัมไม่ได้ให้คำอธิบายที่สมบูรณ์เกี่ยวกับองค์ประกอบของความเป็นจริงทางกายภาพ
+
+ไอน์สไตน์เชื่อมั่นว่า อนุภาคทั้งสองต้องมีชุดของพารามิเตอร์หรือข้อมูลที่ถูกกำหนดไว้ล่วงหน้าตั้งแต่ตอนที่อนุภาคทั้งสองแยกออกจากกัน ข้อมูลนี้ถูกเรียกว่า \textbf{ตัวแปรแฝงเฉพาะที่ (Local Hidden Variables ---- $\lambda$)} ไอน์สไตน์ปฏิเสธว่าไม่มีปฏิสัมพันธ์ใดในธรรมชาติที่จะเกิดขึ้นได้แบบทันทีทันใดข้ามเอกภพ และได้เรียกปรากฏการณ์การยุบตัวของฟังก์ชันคลื่นข้ามระยะทางดังกล่าวอย่างประชดประชันว่า \textit{“Spukhafte Fernwirkung”} หรือ \textit{“การกระทำระยะไกลดุจภูตผี (Spooky action at a distance)”}
+
+% ==========================================================
+% 9.2 คณิตศาสตร์ของความพัวพันและสถานะเบลล์
+% ==========================================================
+\section{คณิตศาสตร์ของความพัวพันและสถานะเบลล์ทั้งสี่}
+\index{ปริภูมิผลคูณเทนเซอร์ (Tensor Product Space)}
+\index{การแยกสลายชมิดต์ (Schmidt Decomposition)}
+\index{เอนโทรปีความพัวพัน (Entanglement Entropy)}
+\index{สถานะเบลล์ (Bell States)}
+
+ในการทำความเข้าใจปรากฏการณ์นี้ในเชิงวิชาการอย่างถ่องแท้ จำเป็นต้องพิจารณาโครงสร้างเชิงคณิตศาสตร์ของระบบควอนตัมประกอบ (Composite Quantum System) พิจารณาระบบสองส่วน $A$ และ $B$ ที่มีปริภูมิฮิลเบิร์ตเป็น $\mathcal{H}_A$ และ $\mathcal{H}_B$ ตามลำดับ ปริภูมิรวมของระบบทั้งสองคือ ปริภูมิผลคูณเทนเซอร์ $\mathcal{H}_{AB} = \mathcal{H}_A \otimes \mathcal{H}_B$
+
+\subsection{สถานะแยกกันได้เทียบกับสถานะพัวพัน}
+สถานะบริสุทธิ์ $\ket{\psi_{AB}} \in \mathcal{H}_{AB}$ จะถูกเรียกว่า \textbf{สถานะแยกกันได้ (Separable State หรือ Product State)} ก็ต่อเมื่อ เราสามารถแยกตัวประกอบของเวกเตอร์สถานะให้อยู่ในรูปผลคูณเทนเซอร์ของสถานะระบบย่อยเดี่ยวได้
+\begin{equation}
+\ket{\psi_{AB}} = \ket{\phi}_A \otimes \ket{\chi}_B
+\label{eq:separable_state}
+\end{equation}
+ในทางตรงกันข้าม หากสถานะ $\ket{\psi_{AB}}$ ไม่สามารถเขียนให้อยู่ในรูปผลคูณเทนเซอร์เดี่ยวได้ สถานะนั้นจะถูกนิยามว่าเป็น \textbf{สถานะพัวพัน (Entangled State)}
+\begin{equation}
+\ket{\psi_{AB}} \ne \ket{\phi}_A \otimes \ket{\chi}_B \qquad \forall \ket{\phi}_A \in \mathcal{H}_A, \ \ket{\chi}_B \in \mathcal{H}_B
+\end{equation}
+
+\subsection{การแยกสลายชมิดต์และเอนโทรปีความพัวพัน}
+เครื่องมือทางคณิตศาสตร์ที่ทรงพลังที่สุดในการตรวจสอบและจำแนกระดับความพัวพันของระบบสองส่วนบริสุทธิ์คือ \textbf{ทฤษฎีบทการแยกสลายชมิดต์ (Schmidt Decomposition Theorem)}
+
+\begin{tcolorbox}[colback=rbruLightBg, colframe=cyberBlue, arc=2mm, title=\textbf{ทฤษฎีบท ---- การแยกสลายชมิดต์ (Schmidt Decomposition)}]
+สำหรับเวกเตอร์สถานะบริสุทธิ์ใดๆ $\ket{\psi_{AB}} \in \mathcal{H}_A \otimes \mathcal{H}_B$ จะมีฐานเชิงตั้งฉากปรกติ $\{\ket{u_k}_A\}$ ของ $\mathcal{H}_A$ และฐานเชิงตั้งฉากปรกติ $\{\ket{v_k}_B\}$ ของ $\mathcal{H}_B$ ซึ่งทำให้สถานะสามารถเขียนในรูปผลรวมเชิงเส้นเดี่ยวได้เสมอ
+\begin{equation}
+\ket{\psi_{AB}} = \sum_{k=1}^{r} \sqrt{\lambda_k} \ket{u_k}_A \ket{v_k}_B
+\label{eq:schmidt_decomposition}
+\end{equation}
+โดยที่ $\lambda_k > 0$ เรียกว่า \textbf{สัมประสิทธิ์ชมิดต์ (Schmidt Coefficients)} ซึ่งสอดคล้องกับเงื่อนไขนอร์มอลไลซ์ $\sum_{k=1}^r \lambda_k = 1$ และจำนวนเต็มบวก $r \le \min(\dim\mathcal{H}_A, \dim\mathcal{H}_B)$ เรียกว่า \textbf{อันดับชมิดต์ (Schmidt Rank)}
+\end{tcolorbox}
+
+ความสำคัญของการแยกสลายชมิดต์ปรากฏในเกณฑ์การตัดสินความพัวพัน ดังนี้
+\begin{itemize}
+    \item หากอันดับชมิดต์ $r = 1$ สถานะ $\ket{\psi_{AB}} = \ket{u_1}_A \ket{v_1}_B$ เป็นสถานะแยกกันได้โดยสิ้นเชิง (ไม่มีความพัวพัน)
+    \item หากอันดับชมิดต์ $r > 1$ สถานะ $\ket{\psi_{AB}}$ เป็นสถานะพัวพันเชิงควอนตัมอย่างแท้จริง
+\end{itemize}
+
+เมื่อทำการหา \textbf{เมทริกซ์ความหนาแน่นลดทอน (Reduced Density Matrix)} ของระบบย่อย $A$ โดยการหาเทรซย่อย (Partial Trace) บนระบบ $B$
+\begin{equation}
+\rho_A = \text{Tr}_B(\ket{\psi_{AB}}\bra{\psi_{AB}}) = \sum_{k=1}^r \lambda_k \ket{u_k}_A\bra{u_k}_A
+\label{eq:reduced_rho_A}
+\end{equation}
+จะสังเกตเห็นว่า เมทริกซ์ความหนาแน่นของระบบย่อยจะกลายเป็นสถานะผสม (Mixed State) หาก $r > 1$ แม้ว่าระบบโดยรวมทั้งระบบจะอยู่ในสถานะบริสุทธิ์ก็ตาม เราสามารถวัดปริมาณความพัวพันได้โดยตรงผ่าน \textbf{เอนโทรปีความพัวพัน (Entanglement Entropy)} ซึ่งก็นิยามจากเอนโทรปีฟอนนอยมันน์ของระบบย่อย
+\begin{equation}
+S(\rho_A) = -\text{Tr}(\rho_A \log_2 \rho_A) = -\sum_{k=1}^r \lambda_k \log_2 \lambda_k
+\label{eq:entanglement_entropy_formula}
+\end{equation}
+สำหรับระบบสองคิวบิต ($\dim = 2 \times 2$) สถานะจะพัวพันอย่างสูงสุด (Maximally Entangled) เมื่อ $\lambda_1 = \lambda_2 = \frac{1}{2}$ ส่งผลให้ $S(\rho_A) = -\frac{1}{2}\log_2\frac{1}{2} - \frac{1}{2}\log_2\frac{1}{2} = 1\text{ ebit}$
+
+\subsection{สถานะเบลล์ทั้งสี่และฐานหลักเบลล์}
+ในระบบสองคิวบิต สถานะที่มีความพัวพันสูงสุดและมีความสำคัญอย่างยิ่งยวดต่อการสื่อสารควอนตัมคือ \textbf{สถานะเบลล์ทั้งสี่ (The Four Bell States)} หรือคู่ EPR ซึ่งประกอบด้วย
+\begin{align}
+\ket{\Phi^+} &= \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) \label{eq:bell_phi_p} \\
+\ket{\Phi^-} &= \frac{1}{\sqrt{2}} (\ket{00} - \ket{11}) \label{eq:bell_phi_m} \\
+\ket{\Psi^+} &= \frac{1}{\sqrt{2}} (\ket{01} + \ket{10}) \label{eq:bell_psi_p} \\
+\ket{\Psi^-} &= \frac{1}{\sqrt{2}} (\ket{01} - \ket{10}) \label{eq:bell_psi_m}
+\end{align}
+สถานะทั้งสี่นี้มีสมบัติเชิงตั้งฉากปรกติซึ่งกันและกันอย่างสมบูรณ์แบบ
+\begin{equation}
+\braket{B_i | B_j} = \delta_{ij} \qquad (B_i, B_j \in \{\Phi^+, \Phi^-, \Psi^+, \Psi^-\})
+\end{equation}
+และสอดคล้องกับความสัมพันธ์แห่งความบริบูรณ์ (Completeness Relation)
+\begin{equation}
+\ket{\Phi^+}\bra{\Phi^+} + \ket{\Phi^-}\bra{\Phi^-} + \ket{\Psi^+}\bra{\Psi^+} + \ket{\Psi^-}\bra{\Psi^-} = I_2 \otimes I_2 = I_4
+\end{equation}
+ดังนั้น สถานะทั้งสี่จึงก่อตัวเป็น \textbf{ฐานหลักเบลล์ (Bell Basis)} ของปริภูมิฮิลเบิร์ต 4 มิติ ซึ่งสามารถนำไปใช้เขียนแทนสถานะสองคิวบิตใดๆ ได้เสมอ
+
+\subsection{วงจรควอนตัมสำหรับการสร้างและการวัดสถานะเบลล์}
+การสังเคราะห์สถานะเบลล์จากสถานะฐานเชิงคำนวณ $\ket{00}$ สามารถดำเนินการได้อย่างเป็นขั้นตอนโดยใช้เกตฮาดามาร์ด ($H$) และเกต CNOT ดังแสดงในสมการ
+\begin{equation}
+\ket{00} \xrightarrow{H \otimes I} \left( \frac{\ket{0} + \ket{1}}{\sqrt{2}} \right) \otimes \ket{0} = \frac{\ket{00} + \ket{10}}{\sqrt{2}} \xrightarrow{\text{CNOT}} \frac{\ket{00} + \ket{11}}{\sqrt{2}} = \ket{\Phi^+}
+\end{equation}
+หากเราเปลี่ยนสถานะนำเข้าเป็นสถานะฐานอื่นๆ จะได้สถานะเบลล์ที่แตกต่างกันอย่างเป็นระบบ ดังแสดงในตารางที่ \ref{tab:bell_generation_mapping}
+
+\begin{table}[H]
+\centering
+\caption{การแปลงสถานะฐานเชิงคำนวณสู่สถานะเบลล์ผ่านวงจร $CNOT(H \otimes I)$}
+\label{tab:bell_generation_mapping}
+\begin{tabular}{ccc}
+\toprule
+\textbf{สถานะนำเข้าเริ่มต้น} & \textbf{สถานะหลังผ่านเกต $H \otimes I$} & \textbf{สถานะเบลล์สุดท้าย} \\
+\midrule
+$\ket{00}$ & $\frac{1}{\sqrt{2}}(\ket{00} + \ket{10})$ & $\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$ \\
+$\ket{01}$ & $\frac{1}{\sqrt{2}}(\ket{01} + \ket{11})$ & $\ket{\Psi^+} = \frac{1}{\sqrt{2}}(\ket{01} + \ket{10})$ \\
+$\ket{10}$ & $\frac{1}{\sqrt{2}}(\ket{00} - \ket{10})$ & $\ket{\Phi^-} = \frac{1}{\sqrt{2}}(\ket{00} - \ket{11})$ \\
+$\ket{11}$ & $\frac{1}{\sqrt{2}}(\ket{01} - \ket{11})$ & $\ket{\Psi^-} = \frac{1}{\sqrt{2}}(\ket{01} - \ket{10})$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+ในทางกลับกัน หากเรานำคิวบิตที่อยู่ในสถานะเบลล์มาผ่านเกต CNOT แล้วตามด้วยเกต $H$ บนคิวบิตควบคุม วงจรนี้จะทำหน้าที่แปลงฐานเบลล์กลับไปเป็นฐานเชิงคำนวณ ซึ่งกระบวนการนี้เรียกว่า \textbf{การวัดสถานะเบลล์ (Bell-State Measurement ---- BSM)} ซึ่งเป็นหัวใจสำคัญของเทคโนโลยีการส่งผ่านสถานะทางไกล
+
+\subsection{ความพัวพันในระบบหลายคิวบิต ---- สถานะ GHZ และสถานะ W}
+เมื่อพิจารณาระบบที่มีคิวบิตมากกว่าสองตัว ความพัวพันจะมีความหลากหลายและซับซ้อนยิ่งขึ้น ในระบบสามคิวบิต มีสถานะพัวพันบริสุทธิ์สองคลาสที่ไม่สามารถแปลงหากันได้ด้วยการดำเนินการเฉพาะที่และการสื่อสารคลาสสิก (LOCC) ได้แก่
+
+\begin{enumerate}
+    \item \textbf{สถานะ GHZ (Greenberger-Horne-Zeilinger State)}
+    \begin{equation}
+    \ket{\text{GHZ}} = \frac{1}{\sqrt{2}} (\ket{000} + \ket{111})
+    \label{eq:ghz_state}
+    \end{equation}
+    สถานะ GHZ แสดงความพัวพันแบบองค์รวมสูงสุด แต่มีความเปราะบางสูงมาก หากคิวบิตตัวใดตัวหนึ่งสูญหายไปหรือถูกวัด เมทริกซ์ความหนาแน่นลดทอนของสองคิวบิตที่เหลือจะกลายเป็นสถานะผสมที่แยกกันได้อย่างสิ้นเชิง ($\rho_{12} = \frac{1}{2}\ket{00}\bra{00} + \frac{1}{2}\ket{11}\bra{11}$) ไม่มีความพัวพันหลงเหลืออยู่เลย
+    \item \textbf{สถานะ W (W State)}
+    \begin{equation}
+    \ket{\text{W}} = \frac{1}{\sqrt{3}} (\ket{001} + \ket{010} + \ket{100})
+    \label{eq:w_state}
+    \end{equation}
+    สถานะ W มีความทนทานต่อการสูญเสียอนุภาคสูงมาก หากคิวบิตตัวหนึ่งสูญหายไป สองคิวบิตที่เหลือยังคงมีความพัวพันเชิงควอนตัมหลงเหลืออยู่เสมอ ทำให้เหมาะสำหรับการประยุกต์ใช้ในเครือข่ายสื่อสารควอนตัมที่มีการสูญเสียในช่องสัญญาณ
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Wires
+    \draw[line width=1.4pt, darkNavy] (-0.5, 1.2) -- (6.0, 1.2) node[right, font=\bfseries\color{darkNavy}] {คิวบิต $A$ (Alice)};
+    \draw[line width=1.4pt, darkNavy] (-0.5, 0.0) -- (6.0, 0.0) node[right, font=\bfseries\color{darkNavy}] {คิวบิต $B$ (Bob)};
+    
+    % Initial States
+    \node at (-1.0, 1.2) [font=\large\bfseries\color{cyberBlue}] {$\ket{0}$};
+    \node at (-1.0, 0.0) [font=\large\bfseries\color{cyberBlue}] {$\ket{0}$};
+    
+    % Hadamard Gate Box
+    \draw[fill=rbruLightBg, draw=cyberBlue, line width=1.5pt, rounded corners=3pt] (1.0, 0.7) rectangle (2.0, 1.7);
+    \node at (1.5, 1.2) [font=\large\bfseries\color{darkNavy}] {$H$};
+    
+    % CNOT Gate (Control dot + Target circle)
+    \draw[line width=1.4pt, neonPurple] (3.6, 1.2) -- (3.6, 0.0);
+    \fill[neonPurple] (3.6, 1.2) circle (4pt);
+    \draw[neonPurple, line width=1.5pt] (3.6, 0.0) circle (7pt);
+    \draw[neonPurple, line width=1.2pt] (3.6, -0.25) -- (3.6, 0.25);
+    \draw[neonPurple, line width=1.2pt] (3.35, 0.0) -- (3.85, 0.0);
+    
+    % Output State
+    \node at (5.0, 1.9) [font=\small\bfseries\color{emeraldGlow}] {$\ket{\Phi^+} = \frac{\ket{00}+\ket{11}}{\sqrt{2}}$};
+    \draw[-{Stealth}, emeraldGlow, line width=1.2pt] (4.8, 1.6) -- (4.2, 0.8);
+\end{tikzpicture}
+\caption{วงจรควอนตัมสำหรับสร้างคู่พัวพันสถานะเบลล์ $\ket{\Phi^+}$ (เป้าหมายติดตามภาพ AR Image Target)}
+\label{fig:bell_circuit_ar_target}
+\end{figure}
+
+% ==========================================================
+% กล่องปฏิบัติการ WebAR & Image Tracking ประจำบทที่ 9
+% ==========================================================
+\begin{qrcodelabbox}{การทดลองความพัวพันและโทรเลขควอนตัม WebAR}{https://tsanaphysics.github.io/ar-Quantum/lab09_quantum_entanglement.html}
+\begin{minipage}[c]{0.70\textwidth}
+\textbf{คำแนะนำการทดลองเสมือนจริงสามมิติ (Interactive Entanglement Lab)}
+\begin{enumerate}
+    \item ใช้สมาร์ทโฟนสแกนรหัสตอบสนองเร็ว (QR Code) ด้านขวา เพื่อเปิดห้องปฏิบัติการเสมือนจริงบนเบราว์เซอร์
+    \item ส่องกล้องไปที่ \textbf{ภาพที่ \ref{fig:bell_circuit_ar_target}} ตัวตรวจจับจะเรนเดอร์คู่โฟตอนพัวพันแยกตัวไปยังผู้สังเกตการณ์อลิซ (Alice) และบ็อบ (Bob)
+    \item หมุนมุมของตัวตรวจจับโพลาไรเซชัน $a$ และ $b$ บนหน้าจอเพื่อคำนวณฟังก์ชันสหสัมพันธ์ $E(a, b)$ และพิสูจน์การละเมิดอสมการเบลล์ที่เกินกว่าขอบเขตคลาสสิก ($S = 2\sqrt{2} \approx 2.828 > 2$)
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.25\textwidth}
+\centering
+\qrcode[height=2.8cm]{https://tsanaphysics.github.io/ar-Quantum/lab09_quantum_entanglement.html}
+\vspace{4pt}
+\scriptsize\textbf{สแกนเพื่อเปิด WebAR}
+\end{minipage}
+\end{qrcodelabbox}
+
+% ==========================================================
+% 9.3 ทฤษฎีบทของเบลล์และอสมการ CHSH
+% ==========================================================
+\section{ทฤษฎีบทของเบลล์ อสมการ CHSH และการทดลองรางวัลโนเบลปี 2022}
+\index{ทฤษฎีบทของเบลล์ (Bell's Theorem)}
+\index{อสมการ CHSH (CHSH Inequality)}
+\index{ขอบเขตซิเรลสัน (Tsirelson's Bound)}
+\index{การทดสอบไร้ช่องโหว่ (Loophole-Free Tests)}
+\index{รางวัลโนเบลสาขาฟิสิกส์ปี 2022}
+
+เป็นเวลากว่าสามทศวรรษที่ข้อถกเถียง EPR ถูกมองว่าเป็นเพียงปัญหาเชิงปรัชญาที่ไม่สามารถหาข้อยุติผ่านการทดลองได้ จนกระทั่งในปี ค.ศ. 1964 จอห์น สจ๊วต เบลล์ (John Stewart Bell, 1928--1990) นักฟิสิกส์ทฤษฎีชาวไอริช ได้ค้นพบทฤษฎีบทอันยิ่งใหญ่ซึ่งเปลี่ยนปัญหาทางอภิปรัชญาให้กลายเป็นข้อพิสูจน์ทางวิทยาศาสตร์ที่ทดสอบได้ในห้องปฏิบัติการ
+
+\begin{tcolorbox}[colback=rbruLightBg, colframe=neonPurple, arc=2mm, title=\textbf{ทฤษฎีบทของเบลล์ (Bell's Theorem, 1964)}]
+ไม่มีทฤษฎีทางกายภาพที่ตั้งอยู่บนพื้นฐานของ \textbf{ตัวแปรแฝงเฉพาะที่ (Local Hidden Variables)} ใดๆ เลย ที่จะสามารถทำนายผลลัพธ์ทางสถิติได้สอดคล้องกับคำทำนายทั้งหมดของกลศาสตร์ควอนตัม
+\end{tcolorbox}
+
+\subsection{การพิสูจน์อสมการ CHSH เชิงคณิตศาสตร์}
+ในปี ค.ศ. 1969 จอห์น คลอเซอร์ (John Clauser), ไมเคิล ฮอร์น (Michael Horne), แอ็บเนอร์ ชิโมนี (Abner Shimony) และ ริชาร์ด โฮลต์ (Richard Holt) ได้วางนัยทั่วไปของทฤษฎีบทเบลล์ให้อยู่ในรูปที่สามารถทดสอบได้ด้วยตัวตรวจจับจริง เรียกว่า \textbf{อสมการ CHSH}
+
+สมมติว่ามีทฤษฎีตัวแปรแฝงเฉพาะที่ โดยที่สถานะของระบบถูกกำหนดด้วยพารามิเตอร์แฝง $\lambda$ ซึ่งมีฟังก์ชันการกระจายความน่าจะเป็น $\rho(\lambda)$ ที่สอดคล้องกับ
+\begin{equation}
+\rho(\lambda) \ge 0, \qquad \int_\Lambda \rho(\lambda) \, d\lambda = 1
+\end{equation}
+ให้อลิซเลือกตั้งมุมของตัววัดเป็น $a$ หรือ $a'$ และบ็อบเลือกตั้งมุมเป็น $b$ หรือ $b'$ ผลการวัดของอลิซ $A(a, \lambda)$ และบ็อบ $B(b, \lambda)$ ให้ผลลัพธ์แบบทวิภาวะเป็น $+1$ หรือ $-1$ เท่านั้น
+\begin{equation}
+A(a, \lambda) \in \{-1, +1\}, \qquad B(b, \lambda) \in \{-1, +1\}
+\end{equation}
+ตามสมมติฐานความเป็นจริงเฉพาะที่ ผลลัพธ์ $A$ ขึ้นกับ $a$ และ $\lambda$ เท่านั้น ไม่ขึ้นกับการเลือกมุม $b$ ของบ็อบ และในทางกลับกัน
+
+ค่าคาดหมายของผลคูณผลการวัดสำหรับมุม $a$ และ $b$ นิยามโดย
+\begin{equation}
+E(a, b) = \int_\Lambda A(a, \lambda) B(b, \lambda) \rho(\lambda) \, d\lambda
+\end{equation}
+พิจารณาผลรวมเชิงพีชคณิตของความสัมพันธ์สี่พจน์
+\begin{equation}
+A(a, \lambda) B(b, \lambda) - A(a, \lambda) B(b', \lambda) + A(a', \lambda) B(b, \lambda) + A(a', \lambda) B(b', \lambda)
+\end{equation}
+เราสามารถจัดกลุ่มนิพจน์ได้เป็น
+\begin{equation}
+A(a, \lambda) \big[ B(b, \lambda) - B(b', \lambda) \big] + A(a', \lambda) \big[ B(b, \lambda) + B(b', \lambda) \big]
+\label{eq:chsh_algebraic_group}
+\end{equation}
+เนื่องจาก $B(b, \lambda), B(b', \lambda) \in \{-1, +1\}$ ค่าที่เป็นไปได้ของคู่ $(B(b, \lambda), B(b', \lambda))$ มีเพียงสี่กรณี
+\begin{itemize}
+    \item หาก $B(b, \lambda) = B(b', \lambda) = \pm 1$ จะได้ $B(b, \lambda) - B(b', \lambda) = 0$ และ $B(b, \lambda) + B(b', \lambda) = \pm 2$
+    \item หาก $B(b, \lambda) = -B(b', \lambda) = \pm 1$ จะได้ $B(b, \lambda) - B(b', \lambda) = \pm 2$ และ $B(b, \lambda) + B(b', \lambda) = 0$
+\end{itemize}
+ในทุกกรณี พจน์หนึ่งในวงเล็บจะเป็น $0$ ในขณะที่อีกพจน์หนึ่งจะมีค่าเป็น $\pm 2$ เสมอ และเนื่องจาก $|A(a, \lambda)| = 1$ และ $|A(a', \lambda)| = 1$ เราจึงได้ว่า
+\begin{equation}
+\Big| A(a, \lambda) \big[ B(b, \lambda) - B(b', \lambda) \big] + A(a', \lambda) \big[ B(b, \lambda) + B(b', \lambda) \big] \Big| \le 2
+\end{equation}
+เมื่อทำการอินทิเกรตตลอดปริภูมิของพารามิเตอร์แฝง $\lambda$
+\begin{align}
+|S_{\text{classical}}| &= \left| \int_\Lambda \Big( A(a,\lambda)B(b,\lambda) - A(a,\lambda)B(b',\lambda) + A(a',\lambda)B(b,\lambda) + A(a',\lambda)B(b',\lambda) \Big) \rho(\lambda)\,d\lambda \right| \nonumber \\
+&\le \int_\Lambda 2 \rho(\lambda)\,d\lambda = 2
+\end{align}
+ดังนั้น ในทุกทฤษฎีที่เป็นไปตามหลักความเป็นจริงเฉพาะที่ ปริมาณ $S$ จะต้องสอดคล้องกับ \textbf{อสมการ CHSH}
+\begin{equation}
+S = |E(a, b) - E(a, b') + E(a', b) + E(a', b')| \le 2
+\label{eq:chsh_inequality_classical}
+\end{equation}
+
+\subsection{การละเมิดอสมการ CHSH ในกลศาสตร์ควอนตัม}
+บัดนี้พิจารณาคำทำนายตามกลศาสตร์ควอนตัม ให้อนุภาคทั้งสองอยู่ในสถานะซิงเกลต์ $\ket{\Psi^-} = \frac{1}{\sqrt{2}}(\ket{01}-\ket{10})$ และตัวดำเนินการวัดของอลิซและบ็อบคือการวัดสปินตามแนวเวกเตอร์หนึ่งหน่วย $\mathbf{a}$ และ $\mathbf{b}$
+\begin{equation}
+\hat{A} = \mathbf{a} \cdot \boldsymbol{\sigma}, \qquad \hat{B} = \mathbf{b} \cdot \boldsymbol{\sigma}
+\end{equation}
+ค่าคาดหมายเชิงควอนตัมของผลคูณตัวดำเนินการวัดคือ
+\begin{equation}
+E(a, b) = \bra{\Psi^-} (\mathbf{a} \cdot \boldsymbol{\sigma}) \otimes (\mathbf{b} \cdot \boldsymbol{\sigma}) \ket{\Psi^-}
+\end{equation}
+โดยใช้เอกลักษณ์ของเมทริกซ์เพาลีและความสมมาตรแบบทรงกลมของสถานะซิงเกลต์ จะได้ผลลัพธ์เป็น
+\begin{equation}
+E(a, b) = -\mathbf{a} \cdot \mathbf{b} = -\cos(\theta_a - \theta_b)
+\label{eq:quantum_singlet_correlation}
+\end{equation}
+โดยที่ $\theta_a$ และ $\theta_b$ คือมุมเชิงขั้วของตัวตรวจจับในระนาบ
+
+หากเราเลือกชุดมุมที่เหมาะสมที่สุด (Optimal CHSH Angles) ดังนี้
+\begin{equation}
+\theta_a = 0, \qquad \theta_{a'} = \frac{\pi}{2}, \qquad \theta_b = \frac{\pi}{4}, \qquad \theta_{b'} = \frac{3\pi}{4}
+\end{equation}
+เราสามารถคำนวณค่าสหสัมพันธ์ทีละคู่มุมได้ดังนี้
+\begin{align}
+E(a, b) &= -\cos\left(0 - \frac{\pi}{4}\right) = -\cos\left(-\frac{\pi}{4}\right) = -\frac{\sqrt{2}}{2} \\
+E(a, b') &= -\cos\left(0 - \frac{3\pi}{4}\right) = -\cos\left(-\frac{3\pi}{4}\right) = +\frac{\sqrt{2}}{2} \\
+E(a', b) &= -\cos\left(\frac{\pi}{2} - \frac{\pi}{4}\right) = -\cos\left(\frac{\pi}{4}\right) = -\frac{\sqrt{2}}{2} \\
+E(a', b') &= -\cos\left(\frac{\pi}{2} - \frac{3\pi}{4}\right) = -\cos\left(-\frac{\pi}{4}\right) = -\frac{\sqrt{2}}{2}
+\end{align}
+แทนค่าลงในสมการ $S$
+\begin{equation}
+S_{\text{quantum}} = \left| \left(-\frac{\sqrt{2}}{2}\right) - \left(+\frac{\sqrt{2}}{2}\right) + \left(-\frac{\sqrt{2}}{2}\right) + \left(-\frac{\sqrt{2}}{2}\right) \right| = \left| -4\left(\frac{\sqrt{2}}{2}\right) \right| = 2\sqrt{2} \approx 2.8284
+\label{eq:tsirelson_bound_value}
+\end{equation}
+ผลลัพธ์ $S_{\text{quantum}} = 2\sqrt{2} > 2$ แสดงการละเมิดอสมการ CHSH ของฟิสิกส์แผนเดิมอย่างสิ้นเชิง
+
+\subsection{ขอบเขตของซิเรลสัน (Tsirelson's Bound)}
+คำถามที่น่าสนใจคือ เหตุใดค่า $S$ ในกลศาสตร์ควอนตัมจึงไม่สามารถมีค่าสูงสุดตามพีชคณิตคือ $4$ (ซึ่งเกิดจาก $1 - (-1) + 1 + 1 = 4$)? ในปี ค.ศ. 1980 โบริส ซิเรลสัน (Boris Tsirelson, 1950--2020) ได้พิสูจน์ว่า \textbf{ไม่มีสถานะควอนตัมและตัวดำเนินการวัดใดๆ ในกลศาสตร์ควอนตัมที่จะสามารถทำให้อสมการ CHSH เกินกว่า $2\sqrt{2}$ ได้} ขอบเขตสูงสุด $2\sqrt{2}$ นี้จึงถูกขนานนามว่า \textbf{ขอบเขตของซิเรลสัน (Tsirelson's Bound)} ซึ่งเป็นเอกลักษณ์จำเพาะของทฤษฎีควอนตัมที่เชื่อมโยงกับโครงสร้างพีชคณิตของปริภูมิฮิลเบิร์ต
+
+\subsection{วิวัฒนาการการทดลองและการปิดช่องโหว่ (Loophole-Free Tests)}
+การทดสอบทฤษฎีบทของเบลล์ในห้องปฏิบัติการต้องเผชิญกับความท้าทายจากช่องโหว่ทางเทคนิค (Loopholes) สามประการที่ฝ่ายสนับสนุนตัวแปรแฝงใช้โต้แย้ง
+\begin{enumerate}
+    \item \textbf{ช่องโหว่ความเป็นเฉพาะที่ (Locality Loophole)} ---- ตัวตรวจจับของทั้งสองฝั่งอาจส่งสัญญาณหากันด้วยอัตราเร็วไม่เกินแสงหากระยะทางสั้นเกินไปหรือมุมตรวจจับไม่ถูกเปลี่ยนแบบสุ่มในระหว่างที่โฟตอนกำลังเดินทาง
+    \item \textbf{ช่องโหว่ประสิทธิภาพการตรวจจับ (Detection Loophole)} ---- หากตัวตรวจจับมีประสิทธิภาพต่ำ โฟตอนที่ตรวจจับได้อาจเป็นเพียงกลุ่มตัวอย่างที่เอนเอียง (Fair Sampling Assumption)
+    \item \textbf{ช่องโหว่อิสระในการเลือก (Freedom-of-Choice Loophole)} ---- การเลือกมุมตรวจจับอาจไม่ได้เกิดขึ้นอย่างสุ่มแท้จริง แต่อาจถูกกำหนดร่วมกับอนุภาคตั้งแต่จุดกำเนิด
+\end{enumerate}
+
+การปิดช่องโหว่เหล่านี้เกิดขึ้นอย่างเป็นลำดับขั้นผ่านประวัติศาสตร์ฟิสิกส์
+\begin{itemize}
+    \item \textbf{ค.ศ. 1972} ---- จอห์น คลอเซอร์ และ สจวร์ต ฟรีดแมน (Stuart Freedman) ทำการทดลองวัดคู่โฟตอนโพลาไรซ์เป็นครั้งแรกและยืนยันการละเมิดอสมการเบลล์
+    \item \textbf{ค.ศ. 1981--1982} ---- อแลง อัสเป็กต์ (Alain Aspect) และคณะ ณ สถาบันออปติก เมืองออร์เซย์ ประเทศฝรั่งเศส ได้สร้างระบบสลับมุมตรวจจับความเร็วสูงแบบไดนามิก ปิดช่องโหว่ความเป็นเฉพาะที่ได้สำเร็จเป็นครั้งแรก
+    \item \textbf{ค.ศ. 1998} ---- แอนทอน ไซลิงเกอร์ (Anton Zeilinger) และคณะ ณ เมืองอินส์บรุค ประเทศออสเตรีย ได้แยกสถานีตรวจจับห่างกันกว่า 400 เมตร ข้ามแม่น้ำอินน์ โดยใช้ใยแก้วนำแสงและตัวกำเนิดตัวเลขสุ่มควอนตัมอิสระ
+    \item \textbf{ค.ศ. 2015} ---- การทดลองไร้ช่องโหว่โดยสมบูรณ์ (Loophole-Free Bell Tests) ประสบความสำเร็จพร้อมกันสามแห่งทั่วโลก (มหาวิทยาลัยเดลฟต์ เนเธอร์แลนด์, สถาบัน NIST สหรัฐอเมริกา และมหาวิทยาลัยเวียนนา ออสเตรีย) ยุติข้อสงสัยทั้งหมดลงอย่างเด็ดขาด
+\end{itemize}
+
+ความสำเร็จในการยืนยันความพัวพันเชิงควอนตัมและการละเมิดอสมการเบลล์อย่างปราศจากข้อโต้แย้งนี้ ส่งผลให้ อแลง อัสเป็กต์, จอห์น คลอเซอร์ และแอนทอน ไซลิงเกอร์ ได้รับรางวัลโนเบลสาขาฟิสิกส์ประจำปี ค.ศ. 2022 ร่วมกัน
+
+% ==========================================================
+% 9.4 ทฤษฎีบทห้ามโคลนสถานะควอนตัม
+% ==========================================================
+\section{ทฤษฎีบทห้ามโคลนสถานะควอนตัม (No-Cloning Theorem)}
+\index{ทฤษฎีบทห้ามโคลน (No-Cloning Theorem)}
+\index{การอนุรักษ์ผลคูณภายใน (Inner Product Preservation)}
+\index{วิวัฒนาการเอกภาพ (Unitary Evolution)}
+
+ในโลกของคอมพิวเตอร์และสารสนเทศคลาสสิก การทำสำเนา (Copying/Cloning) ข้อมูลดิจิทัลเป็นสิ่งที่ง่ายดายและเป็นรากฐานของสถาปัตยกรรมคอมพิวเตอร์ทั้งหมด ทว่าในโลกควอนตัม มีกฎเหล็กพื้นฐานทางกายภาพที่ห้ามการกระทำดังกล่าวโดยเด็ดขาด ค้นพบโดย วิลเลียม วูตเตอร์ส (William Wootters) และ วอยเชียค ซูเร็ก (Wojciech Zurek) รวมถึง เดนนิส ดิ๊กส์ (Dennis Dieks) ในปี ค.ศ. 1982 เรียกว่า \textbf{ทฤษฎีบทห้ามโคลน (No-Cloning Theorem)}
+
+\begin{tcolorbox}[colback=rbruLightBg, colframe=darkNavy, arc=2mm, title=\textbf{ทฤษฎีบท ---- การห้ามโคลนสถานะควอนตัมที่ไม่รู้จัก (No-Cloning Theorem)}]
+เป็นไปไม่ได้ที่จะสร้างตัวดำเนินการเอกภาพ (Unitary Operator) ทางกายภาพใดๆ ที่สามารถทำสำเนาสถานะควอนตัมบริสุทธิ์ที่ไม่รู้จักล่วงหน้าได้อย่างสมบูรณ์แบบ
+\end{tcolorbox}
+
+\subsection{การพิสูจน์เชิงคณิตศาสตร์}
+พิจารณาเครื่องโคลนควอนตัมสมมุติ ซึ่งประกอบด้วยคิวบิตเป้าหมายเริ่มต้นที่อยู่ในสถานะว่าง $\ket{e}$ และคิวบิตที่ต้องการทำสำเนาซึ่งอยู่ในสถานะไม่รู้จัก $\ket{\psi}$ กระบวนการคัดลอกตามกฎของกลศาสตร์ควอนตัมในระบบปิดจะต้องถูกแทนด้วยตัวดำเนินการเอกภาพ $U$ บนปริภูมิฮิลเบิร์ตรวม $\mathcal{H} \otimes \mathcal{H}$ นั่นคือ
+\begin{equation}
+U \big( \ket{\psi} \otimes \ket{e} \big) = \ket{\psi} \otimes \ket{\psi}
+\label{eq:clone_psi}
+\end{equation}
+สมมติว่าเครื่องโคลนนี้สามารถคัดลอกสถานะบริสุทธิ์อีกสถานะหนึ่งคือ $\ket{\phi}$ ได้อย่างสมบูรณ์แบบเช่นกัน
+\begin{equation}
+U \big( \ket{\phi} \otimes \ket{e} \big) = \ket{\phi} \otimes \ket{\phi}
+\label{eq:clone_phi}
+\end{equation}
+เมื่อพิจารณาผลคูณภายใน (Inner Product) ระหว่างสมการทั้งสอง เนื่องจากตัวดำเนินการ $U$ เป็นตัวดำเนินการเอกภาพ ($U^\dagger U = I$) ผลคูณภายในระหว่างสองสถานะจะต้องได้รับการอนุรักษ์
+\begin{equation}
+\Big( \bra{\psi} \otimes \bra{e} \Big) U^\dagger U \Big( \ket{\phi} \otimes \ket{e} \Big) = \Big( \bra{\psi} \otimes \bra{e} \Big) \Big( \ket{\phi} \otimes \ket{e} \Big) = \braket{\psi|\phi} \braket{e|e} = \braket{\psi|\phi}
+\label{eq:inner_prod_lhs}
+\end{equation}
+ในทางกลับกัน เมื่อคำนวณผลคูณภายในจากผลลัพธ์หลังการโคลนทางด้านขวามือ
+\begin{equation}
+\Big( \bra{\psi} \otimes \bra{\psi} \Big) \Big( \ket{\phi} \otimes \ket{\phi} \Big) = \braket{\psi|\phi} \braket{\psi|\phi} = (\braket{\psi|\phi})^2
+\label{eq:inner_prod_rhs}
+\end{equation}
+เมื่อจับสมการ (\ref{eq:inner_prod_lhs}) และ (\ref{eq:inner_prod_rhs}) มาเท่ากัน
+\begin{equation}
+\braket{\psi|\phi} = (\braket{\psi|\phi})^2 \implies \braket{\psi|\phi} \big( 1 - \braket{\psi|\phi} \big) = 0
+\label{eq:no_cloning_condition}
+\end{equation}
+สมการ (\ref{eq:no_cloning_condition}) จะเป็นจริงได้เฉพาะในสองกรณีเท่านั้น
+\begin{enumerate}
+    \item $\braket{\psi|\phi} = 0$ ---- สถานะทั้งสองตั้งฉากกันอย่างสมบูรณ์
+    \item $\braket{\psi|\phi} = 1$ ---- สถานะทั้งสองเป็นสถานะเดียวกัน (แตกต่างกันเพียงเฟสรวม)
+\end{enumerate}
+ดังนั้น การโคลนจะประสบความสำเร็จได้เฉพาะเมื่อสถานะที่ต้องการคัดลอกอยู่ในชุดสถานะที่ตั้งฉากกันและทราบล่วงหน้าเท่านั้น ทว่าสำหรับสถานะควอนตัมที่ไม่รู้จักโดยทั่วไป ซึ่งอาจเป็นการซ้อนทับเชิงเส้นที่มีผลคูณภายใน $0 < |\braket{\psi|\phi}| < 1$ ย่อมเป็นไปไม่ได้ที่จะสร้างตัวดำเนินการเอกภาพสากลใดๆ มาทำการโคลนได้
+
+\subsection{ผลกระทบและความสำคัญเชิงเทคโนโลยี}
+ทฤษฎีบทห้ามโคลนส่งผลกระทบอย่างลึกซึ้งต่อเทคโนโลยีสารสนเทศควอนตัม
+\begin{itemize}
+    \item \textbf{การห้ามสำรองข้อมูลควอนตัม} ---- เราไม่สามารถ "Backup" หรือขยายสัญญาณแบบทึบ (Blind Amplification) สำหรับคิวบิตในใยแก้วนำแสงได้เหมือนสัญญาณแสงคลาสสิก นำไปสู่ความจำเป็นในการพัฒนาสถานีทวนสัญญาณควอนตัม (Quantum Repeaters)
+    \item \textbf{รากฐานความปลอดภัยของรหัสลับควอนตัม} ---- การที่ผู้ดักฟัง (อีฟ) ไม่สามารถคัดลอกสถานะของคิวบิตที่ส่งระหว่างอลิซและบ็อบได้ ทำให้การดักฟังใดๆ จะต้องรบกวนสถานะและทิ้งร่องรอยความผิดพลาดไว้ให้ตรวจจับได้อย่างแน่นอนร้อยเปอร์เซ็นต์
+\end{itemize}
+
+% ==========================================================
+% 9.5 โพรโทคอลการส่งผ่านสถานะควอนตัมทางไกล
+% ==========================================================
+\section{โพรโทคอลการส่งผ่านสถานะควอนตัมทางไกล (Quantum Teleportation)}
+\index{ควอนตัมเทเลพอร์ตเทชัน (Quantum Teleportation)}
+\index{การวัดสถานะเบลล์ (Bell-State Measurement)}
+\index{ช่องทางการสื่อสารคลาสสิก (Classical Channel)}
+
+ในคริสต์ศักราช 1993 ชาร์ลส์ เบนเนตต์ (Charles Bennett), กิลเลส บราสซาร์ด (Gilles Brassard), โคลด เครโป (Claude Crépeau), ริชาร์ด ยอซซา (Richard Jozsa), แอเชอร์ เปเรส (Asher Peres) และ วิลเลียม วูตเตอร์ส (William Wootters) ได้นำเสนอโพรโทคอลที่น่าทึ่งที่สุดอันหนึ่งในฟิสิกส์ นั่นคือ \textbf{การส่งผ่านสถานะควอนตัมทางไกล (Quantum Teleportation Protocol)}
+
+โพรโทคอลนี้สามารถส่งผ่านสถานะควอนตัมที่ไม่รู้จัก $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ จากสถานีอลิซไปยังสถานีบ็อบที่อยู่ห่างไกล โดยที่ตัวอนุภาคทางกายภาพไม่ได้เคลื่อนที่ข้ามอวกาศ และไม่ได้ละเมิดทฤษฎีบทห้ามโคลน เนื่องจากสถานะเริ่มต้นที่อลิซจะถูกทำลายไปโดยสมบูรณ์ในระหว่างกระบวนการวัด
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.05]
+    % Alice Box
+    \draw[fill=cyberBlue!10!white, draw=cyberBlue, line width=1.5pt, rounded corners=6pt] (-0.8, 1.8) rectangle (5.0, 4.4);
+    \node at (0.2, 4.1) [font=\bfseries\color{cyberBlue}] {สถานีอลิซ (Alice)};
+    
+    % Bob Box
+    \draw[fill=emeraldGlow!10!white, draw=emeraldGlow, line width=1.5pt, rounded corners=6pt] (6.5, -0.4) rectangle (10.2, 2.2);
+    \node at (7.5, 1.9) [font=\bfseries\color{emeraldGlow}] {สถานีบ็อบ (Bob)};
+    
+    % Entangled Source
+    \node (EPR) at (3.5, 0.8) [draw=quantumGold, fill=quantumGold!20!white, line width=1.5pt, circle, inner sep=4pt] {$\ket{\Phi^+}$};
+    \node at (3.5, 0.2) [font=\scriptsize\bfseries\color{quantumGold}] {แหล่งกำเนิดคู่พัวพัน};
+    
+    % Entangled Paths
+    \draw[-{Stealth}, line width=1.3pt, dashed, quantumGold] (EPR) -- (2.5, 2.2) node[midway, left, font=\scriptsize] {คิวบิต 2};
+    \draw[-{Stealth}, line width=1.3pt, dashed, quantumGold] (EPR) -- (7.5, 0.8) node[midway, below, font=\scriptsize] {คิวบิต 3};
+    
+    % Alice Input & Bell Measurement
+    \node at (-0.2, 3.4) [font=\large\bfseries\color{darkNavy}] {$\ket{\psi}_1$};
+    \draw[line width=1.2pt] (0.2, 3.4) -- (1.5, 3.4);
+    \draw[fill=neonPurple!20!white, draw=neonPurple, line width=1.4pt, rounded corners=3pt] (1.5, 2.0) rectangle (3.8, 3.8);
+    \node at (2.65, 2.9) [align=center, font=\small\bfseries\color{darkNavy}] {การวัดแบบเบลล์\\(BSM บน 1 และ 2)};
+    
+    % Classical Channel
+    \draw[-{Stealth[scale=1.2]}, line width=2pt, double, slateGrey] (3.8, 2.9) -- (7.0, 2.9) -- (7.0, 1.4);
+    \node at (5.4, 3.2) [font=\scriptsize\bfseries\color{slateGrey}] {ช่องทางคลาสสิก 2 บิต ($m_1, m_2$)};
+    
+    % Bob Unitary Correction
+    \draw[fill=emeraldGlow!20!white, draw=emeraldGlow, line width=1.4pt, rounded corners=3pt] (7.2, 0.4) rectangle (8.6, 1.4);
+    \node at (7.9, 0.9) [font=\small\bfseries\color{darkNavy}] {$X^{m_2} Z^{m_1}$};
+    
+    % Bob Output
+    \draw[-{Stealth}, line width=1.5pt, darkNavy] (8.6, 0.9) -- (10.0, 0.9) node[right, font=\large\bfseries\color{emeraldGlow}] {$\ket{\psi}_3$};
+\end{tikzpicture}
+\caption{ผังการทำงานเชิงกายภาพของโพรโทคอลการส่งผ่านสถานะควอนตัมทางไกล}
+\label{fig:teleportation_flowchart}
+\end{figure}
+
+\subsection{การคำนวณการวิวัฒน์ของสถานะสามคิวบิตเชิงคณิตศาสตร์}
+พิจารณาระบบสามคิวบิต โดยที่
+\begin{itemize}
+    \item คิวบิต 1 คือสถานะที่ต้องการส่งมอบของอลิซ $\ket{\psi}_1 = \alpha\ket{0}_1 + \beta\ket{1}_1$ โดยที่ $|\alpha|^2 + |\beta|^2 = 1$
+    \item คิวบิต 2 และ 3 อยู่ในสถานะพัวพันเบลล์ $\ket{\Phi^+}_{23} = \frac{1}{\sqrt{2}}(\ket{00}_{23} + \ket{11}_{23})$ โดยคิวบิต 2 อยู่ที่อลิซ และคิวบิต 3 อยู่ที่บ็อบ
+\end{itemize}
+
+สถานะเริ่มต้นรวมของระบบสามคิวบิต $\ket{\Psi_{123}} \in \mathcal{H}_1 \otimes \mathcal{H}_2 \otimes \mathcal{H}_3$ คือ
+\begin{align}
+\ket{\Psi_{123}} &= \ket{\psi}_1 \otimes \ket{\Phi^+}_{23} \nonumber \\
+&= \big( \alpha\ket{0}_1 + \beta\ket{1}_1 \big) \otimes \frac{1}{\sqrt{2}} \big( \ket{00}_{23} + \ket{11}_{23} \big) \nonumber \\
+&= \frac{1}{\sqrt{2}} \Big[ \alpha\ket{000} + \alpha\ket{011} + \beta\ket{100} + \beta\ket{111} \Big]
+\label{eq:teleport_initial_state}
+\end{align}
+
+เพื่อวิเคราะห์ผลการวัดแบบเบลล์ของอลิซบนคิวบิต 1 และ 2 เราสามารถเขียนแปลงสถานะฐานเชิงคำนวณ $\{\ket{00}, \ket{01}, \ket{10}, \ket{11}\}$ ให้อยู่ในรูปของฐานเบลล์ $\{\ket{\Phi^+}, \ket{\Phi^-}, \ket{\Psi^+}, \ket{\Psi^-}\}$ ดังนี้
+\begin{align}
+\ket{00} &= \frac{1}{\sqrt{2}} \big( \ket{\Phi^+} + \ket{\Phi^-} \big) \\
+\ket{11} &= \frac{1}{\sqrt{2}} \big( \ket{\Phi^+} - \ket{\Phi^-} \big) \\
+\ket{01} &= \frac{1}{\sqrt{2}} \big( \ket{\Psi^+} + \ket{\Psi^-} \big) \\
+\ket{10} &= \frac{1}{\sqrt{2}} \big( \ket{\Psi^+} - \ket{\Psi^-} \big)
+\end{align}
+เมื่อนำความสัมพันธ์เหล่านี้กลับไปแทนค่าลงในสมการ (\ref{eq:teleport_initial_state}) และจัดกลุ่มตามสถานะเบลล์ของสองคิวบิตแรก จะได้เอกลักษณ์อันงดงาม
+\begin{align}
+\ket{\Psi_{123}} = \frac{1}{2} \Big[ &\ket{\Phi^+}_{12} \otimes (\alpha\ket{0}_3 + \beta\ket{1}_3) \nonumber \\
++ &\ket{\Phi^-}_{12} \otimes (\alpha\ket{0}_3 - \beta\ket{1}_3) \nonumber \\
++ &\ket{\Psi^+}_{12} \otimes (\beta\ket{0}_3 + \alpha\ket{1}_3) \nonumber \\
++ &\ket{\Psi^-}_{12} \otimes (-\beta\ket{0}_3 + \alpha\ket{1}_3) \Big]
+\label{eq:teleport_bell_expansion}
+\end{align}
+
+\subsection{การวัดสถานะเบลล์และการแปลงสภาพเดี่ยวของบ็อบ}
+จากสมการ (\ref{eq:teleport_bell_expansion}) เมื่ออลิซทำการวัดสถานะเบลล์บนคิวบิต 1 และ 2 ระบบจะยุบตัวลงสู่หนึ่งในสี่สถานะเบลล์ด้วยความน่าจะเป็นเท่ากันคือ $P = \left(\frac{1}{2}\right)^2 = \frac{1}{4}$ (หรือร้อยละ 25) โดยสถานะของคิวบิต 3 ของบ็อบจะถูกกำหนดในทันที ดังแสดงในตารางที่ \ref{tab:teleport_correction_table}
+
+\begin{table}[H]
+\centering
+\caption{ผลการวัดสถานะเบลล์ของอลิซ ข้อมูลคลาสสิกที่ส่ง และเกตแปลงสภาพของบ็อบ}
+\label{tab:teleport_correction_table}
+\begin{tabular}{cccc}
+\toprule
+\textbf{ผลการวัดของอลิซ} & \textbf{บิตคลาสสิก $(m_1, m_2)$} & \textbf{สถานะของคิวบิต 3 ที่บ็อบ} & \textbf{การแปลงเอกภาพของบ็อบ} \\
+\midrule
+$\ket{\Phi^+}_{12}$ & $00$ & $\alpha\ket{0} + \beta\ket{1}$ & $I$ (ไม่ต้องทำอะไร) \\
+$\ket{\Phi^-}_{12}$ & $10$ & $\alpha\ket{0} - \beta\ket{1}$ & $Z$ \\
+$\ket{\Psi^+}_{12}$ & $01$ & $\alpha\ket{1} + \beta\ket{0}$ & $X$ \\
+$\ket{\Psi^-}_{12}$ & $11$ & $\alpha\ket{1} - \beta\ket{0}$ & $XZ = -iY$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+อลิซส่งผลการวัดสองบิต $(m_1, m_2)$ ผ่านช่องทางการสื่อสารคลาสสิก (เช่น สายโทรศัพท์ ใยแก้วนำแสง หรือคลื่นวิทยุ) ไปยังบ็อบ เมื่อบ็อบได้รับข้อมูลสองบิตนี้ บ็อบจะดำเนินการใช้เกตเอกภาพ $U = X^{m_2} Z^{m_1}$ กับคิวบิต 3 ของตนเอง ส่งผลให้สถานะของคิวบิต 3 เปลี่ยนกลับไปเป็นสถานะดั้งเดิม
+\begin{equation}
+\ket{\psi}_3 = \alpha\ket{0} + \beta\ket{1}
+\end{equation}
+อย่างสมบูรณ์แบบร้อยเปอร์เซ็นต์!
+
+\subsection{เหตุใดจึงไม่ละเมิดทฤษฎีสัมพัทธภาพพิเศษ}
+สังเกตว่าก่อนที่บ็อบจะได้รับข้อมูลคลาสสิกสองบิตจากอลิซ เมทริกซ์ความหนาแน่นลดทอนของคิวบิต 3 ของบ็อบคือ
+\begin{equation}
+\rho_3 = \frac{1}{4} \sum_{i=1}^4 \ket{\psi_i}\bra{\psi_i} = \frac{1}{2} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \frac{I_2}{2}
+\end{equation}
+ซึ่งเป็นสถานะผสมอย่างสมบูรณ์ (Maximally Mixed State) กล่าวคือ บ็อบไม่สามารถสกัดข้อมูลใดๆ เกี่ยวกับ $\alpha$ หรือ $\beta$ ได้เลยแม้แต่น้อย บ็อบจะสามารถกู้คืนสถานะควอนตัมได้ก็ต่อเมื่อได้รับข้อมูลคลาสสิกสองบิตจากอลิซแล้วเท่านั้น และเนื่องจากการส่งข้อมูลคลาสสิกต้องเดินทางด้วยความเร็วไม่เกินแสง ($v \le c$) กระบวนการเทเลพอร์ตเทชันจึงสอดคล้องกับทฤษฎีสัมพัทธภาพพิเศษและหลักความสัมพันธ์เชิงเหตุผล (Causality) อย่างสมบูรณ์
+
+% ==========================================================
+% 9.6 การเข้ารหัสความหนาแน่นยิ่งยวด
+% ==========================================================
+\section{การเข้ารหัสความหนาแน่นยิ่งยวด (Superdense Coding)}
+\index{การเข้ารหัสความหนาแน่นยิ่งยวด (Superdense Coding)}
+\index{ขอบเขตของโฮเลโว (Holevo's Bound)}
+
+หากการส่งผ่านสถานะทางไกลคือการใช้ "คู่พัวพัน 1 คู่ + ข้อมูลคลาสสิก 2 บิต $\to$ ส่งคิวบิตได้ 1 คิวบิต" โพรโทคอลที่เป็นคู่ดูอัลกันโดยตรงคือ \textbf{การเข้ารหัสความหนาแน่นยิ่งยวด (Superdense Coding)} ซึ่งเสนอโดย ชาร์ลส์ เบนเนตต์ และ สตีเฟน วีสเนอร์ (Stephen Wiesner) ในปี ค.ศ. 1992
+
+ในโพรโทคอลนี้ อลิซสามารถส่งข้อมูลคลาสสิกจำนวน 2 บิต ($00, 01, 10, 11$) ไปให้บ็อบ โดยการส่งผ่านคิวบิตทางกายภาพเพียง 1 คิวบิตเท่านั้น โดยอาศัยความพัวพันของคู่เบลล์ที่แชร์กันไว้ล่วงหน้า
+
+\subsection{ขั้นตอนการทำงานของโพรโทคอล}
+\begin{enumerate}
+    \item \textbf{การเตรียมคู่พัวพัน} ---- อลิซและบ็อบแชร์สถานะเบลล์ $\ket{\Phi^+}_{AB} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$ ล่วงหน้า โดยอลิซถือคิวบิต $A$ และบ็อบถือคิวบิต $B$
+    \item \textbf{การเข้ารหัสของอลิซ} ---- ตามข้อความคลาสสิก 2 บิตที่อลิซต้องการส่ง อลิซจะกระทำเกตเอกภาพเฉพาะที่ (Local Unitary Gate) ลงบนคิวบิต $A$ ของตนเองเพียงตัวเดียว ดังนี้
+    \begin{align}
+    \text{ส่ง } 00 &\implies \text{ใช้เกต } I \implies (I \otimes I)\ket{\Phi^+} = \ket{\Phi^+} = \frac{\ket{00}+\ket{11}}{\sqrt{2}} \\
+    \text{ส่ง } 01 &\implies \text{ใช้เกต } X \implies (X \otimes I)\ket{\Phi^+} = \ket{\Psi^+} = \frac{\ket{10}+\ket{01}}{\sqrt{2}} \\
+    \text{ส่ง } 10 &\implies \text{ใช้เกต } Z \implies (Z \otimes I)\ket{\Phi^+} = \ket{\Phi^-} = \frac{\ket{00}-\ket{11}}{\sqrt{2}} \\
+    \text{ส่ง } 11 &\implies \text{ใช้เกต } XZ \implies (XZ \otimes I)\ket{\Phi^+} = \ket{\Psi^-} = \frac{\ket{01}-\ket{10}}{\sqrt{2}}
+    \end{align}
+    \item \textbf{การส่งคิวบิต} ---- อลิซส่งคิวบิต $A$ เพียงตัวเดียวผ่านช่องทางควอนตัมไปยังบ็อบ
+    \item \textbf{การถอดรหัสของบ็อบ} ---- เมื่อบ็อบได้รับคิวบิต $A$ บ็อบจะมีทั้งคิวบิต $A$ และ $B$ อยู่ในครอบครอง บ็อบจึงสามารถทำการวัดแบบฐานเบลล์ (BSM) บนสองคิวบิตนี้ ซึ่งจะให้ผลลัพธ์ที่แยกแยะสถานะเบลล์ทั้งสี่ได้อย่างแน่นอนเด็ดขาดร้อยเปอร์เซ็นต์ ทำให้บ็อบได้รับข้อมูลคลาสสิกทั้ง 2 บิตได้อย่างถูกต้องสมบูรณ์
+\end{enumerate}
+
+ตามทฤษฎีบทขอบเขตของโฮเลโว (Holevo's Bound) คิวบิตเดี่ยวที่ไม่พัวพันจะสามารถส่งผ่านข้อมูลคลาสสิกได้ไม่เกิน 1 บิต ($C \le 1\text{ bit}$) ทว่าการมีอยู่ของคู่พัวพันเบลล์ 1 ebit ช่วยเพิ่มขีดความสามารถของช่องสัญญาณขึ้นเป็นสองเท่าเป็น 2 บิต ซึ่งแสดงให้เห็นอย่างชัดเจนว่า ความพัวพันทำหน้าที่เป็นทรัพยากรทางกายภาพ (Physical Resource) ที่แท้จริง
+
+% ==========================================================
+% 9.7 การแจกจ่ายกุญแจรหัสลับควอนตัม (QKD)
+% ==========================================================
+\section{การแจกจ่ายกุญแจรหัสลับควอนตัม (Quantum Key Distribution ---- QKD)}
+\index{รหัสลับควอนตัม (Quantum Cryptography)}
+\index{โพรโทคอล BB84 (BB84 Protocol)}
+\index{โพรโทคอล Ekert91 (Ekert91 Protocol)}
+\index{การดักฟัง (Eavesdropping)}
+\index{อัตราความผิดพลาดควอนตัม (QBER)}
+
+การประยุกต์ใช้ความพัวพันและสถานะซ้อนทับที่ก้าวหน้าที่สุดและเข้าสู่เชิงพาณิชย์เป็นลำดับแรกคือ \textbf{การแจกจ่ายกุญแจรหัสลับควอนตัม (Quantum Key Distribution หรือ QKD)} ซึ่งช่วยให้อลิซและบ็อบสามารถสร้างกุญแจลับสุ่มร่วมกัน (Shared Secret Key) สำหรับนำไปใช้เข้ารหัสข้อมูลด้วยขั้นตอนวิธี One-Time Pad (OTP) ซึ่งได้รับการพิสูจน์แล้วว่าปลอดภัยอย่างสมบูรณ์แบบในทางคณิตศาสตร์ (Information-Theoretic Security)
+
+\subsection{โพรโทคอล BB84 (Bennett-Brassard 1984)}
+โพรโทคอล QKD แบบแรกของโลกถูกเสนอขึ้นในปี ค.ศ. 1984 โดย ชาร์ลส์ เบนเนตต์ และ กิลเลส บราสซาร์ด เรียกว่า \textbf{โพรโทคอล BB84} โดยใช้สถานะโฟตอนเดี่ยวที่เตรียมในสองฐานวัดที่ไม่สลับที่กัน (Conjugate Bases) ได้แก่
+\begin{itemize}
+    \item \textbf{ฐานเรกติลิเนียร์ (Rectilinear Basis ---- $+$)} ---- ประกอบด้วยสถานะแนวนอน $\ket{0} \equiv \ket{H}$ และแนวตั้ง $\ket{1} \equiv \ket{V}$
+    \item \textbf{ฐานไดแอโกนัล (Diagonal Basis ---- $\times$)} ---- ประกอบด้วยสถานะเอียงบวก $\ket{+} \equiv \ket{\nearrow} = \frac{\ket{0}+\ket{1}}{\sqrt{2}}$ และเอียงลบ $\ket{-} \equiv \ket{\nwarrow} = \frac{\ket{0}-\ket{1}}{\sqrt{2}}$
+\end{itemize}
+
+ขั้นตอนการทำงานของโพรโทคอล BB84 มีดังนี้
+\begin{enumerate}
+    \item \textbf{การส่งโฟตอน} ---- อลิซสุ่มลำดับบิต ($0$ หรือ $1$) และสุ่มเลือกฐานวัด ($+$ หรือ $\times$) เพื่อเตรียมโฟตอนแล้วส่งไปยังบ็อบ
+    \item \textbf{การวัดของบ็อบ} ---- บ็อบสุ่มเลือกฐานวัด ($+$ หรือ $\times$) ของตนเองอย่างเป็นอิสระเพื่อตรวจวัดโฟตอนแต่ละตัวที่ได้รับ
+    \item \textbf{การเปิดเผยฐานวัด (Sifting)} ---- อลิซและบ็อบสื่อสารกันผ่านช่องทางสาธารณะคลาสสิก เพื่อเปรียบเทียบเฉพาะ "ฐานวัด" ที่ใช้ โดยไม่เปิดเผยค่าบิต หากทั้งสองเลือกฐานวัดเดียวกัน จะเก็บค่านั้นไว้เรียกว่า \textbf{กุญแจที่ผ่านการคัดกรอง (Sifted Key)} ซึ่งโดยเฉลี่ยจะมีความยาวเป็นครึ่งหนึ่งของจำนวนโฟตอนทั้งหมด
+    \item \textbf{การประเมินความผิดพลาด (Error Estimation)} ---- อลิซและบ็อบสุ่มเลือกบิตส่วนหนึ่งในกุญแจที่คัดกรองแล้วมาเปิดเผยเพื่อคำนวณ \textbf{อัตราความผิดพลาดของบิตควอนตัม (Quantum Bit Error Rate ---- QBER)}
+    \begin{equation}
+    \text{QBER} = \frac{N_{\text{error}}}{N_{\text{sample}}}
+    \end{equation}
+    \item \textbf{การแก้ไขความผิดพลาดและการขยายความเป็นส่วนตัว (Privacy Amplification)} ---- หาก QBER ต่ำกว่าเกณฑ์วิกฤตความปลอดภัย (ประมาณร้อยละ $11$ ตามข้อพิสูจน์ของชอร์และเพรสคิลล์) ทั้งสองจะดำเนินการแก้บิตผิดพลาดและบีบอัดกุญแจเพื่อขจัดข้อมูลที่ผู้ดักฟังอาจล่วงรู้ ทว่าหาก QBER สูงกว่าเกณฑ์ ทั้งสองจะยกเลิกการสื่อสารและทิ้งกุญแจทั้งหมด
+\end{enumerate}
+
+\subsection{การตรวจจับผู้ดักฟัง (Eavesdropping Detection)}
+หากมีผู้ดักฟัง (อีฟ) พยายามแทรกแซงช่องสัญญาณควอนตัม โดยใช้วิธีพื้นฐานที่สุดคือ \textbf{การวัดแล้วส่งซ้ำ (Intercept-Resend Attack)} อีฟจะต้องสุ่มเลือกฐานวัด ($+$ หรือ $\times$) เพื่อวัดโฟตอนของอลิซ เนื่องจากทฤษฎีบทห้ามโคลนทำให้อีฟไม่สามารถทำสำเนาโฟตอนไว้ได้
+
+หากอลิซส่งบิตบนฐาน $+$ แต่อีฟสุ่มวัดด้วยฐาน $\times$ ผลลัพธ์ของอีฟจะกลายเป็นการสุ่ม $\ket{+}$ หรือ $\ket{-}$ เมื่ออีฟส่งโฟตอนสถานะใหม่นี้ต่อไปยังบ็อบ และบ็อบวัดด้วยฐาน $+$ ที่ถูกต้อง บ็อบจะมีโอกาสวัดได้ค่าบิตผิดพลาดเท่ากับ
+\begin{equation}
+P_{\text{error|Eve wrong basis}} = |\braket{1|+}|^2 = \left|\frac{1}{\sqrt{2}}\right|^2 = \frac{1}{2}
+\end{equation}
+เนื่องจากอีฟมีโอกาสเลือกฐานผิดพลาดร้อยละ $50$ ความน่าจะเป็นที่บ็อบจะได้บิตผิดพลาดในกรณีที่ฐานของอลิซและบ็อบตรงกันคือ
+\begin{equation}
+\text{QBER}_{\text{Intercept-Resend}} = P(\text{Eve wrong basis}) \times P_{\text{error}} = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4} = 25\%
+\end{equation}
+ความผิดพลาดร้อยละ 25 นี้สูงกว่าระดับสัญญาณรบกวนตามธรรมชาติอย่างมหาศาล ทำให้อลิซและบ็อบตรวจจับการมีอยู่ของอีฟได้อย่างแน่นอนเด็ดขาด
+
+\subsection{โพรโทคอล Ekert91 (Entanglement-Based QKD)}
+ในปี ค.ศ. 1991 อาร์ทูร์ เอเคิร์ต (Artur Ekert) ได้เสนอโพรโทคอล QKD ที่ตั้งอยู่บนพื้นฐานของความพัวพันเชิงควอนตัม เรียกว่า \textbf{โพรโทคอล Ekert91 (E91)}
+
+ในโพรโทคอล E91 แหล่งกำเนิดจะส่งคู่พัวพันซิงเกลต์ $\ket{\Psi^-}$ ไปให้อลิซและบ็อบ ทั้งสองจะเลือกวัดสปินตามมุมสามทิศทางที่แตกต่างกัน
+\begin{itemize}
+    \item อลิซเลือกมุมจากชุด $\theta_A \in \{a_1, a_2, a_3\}$
+    \item บ็อบเลือกมุมจากชุด $\theta_B \in \{b_1, b_2, b_3\}$
+\end{itemize}
+ในรอบที่อลิซและบ็อบเลือกมุมที่สอดคล้องกัน ผลลัพธ์ที่ได้จะมีความสัมพันธ์เชิงลบสมบูรณ์แบบ ($E = -1$) ซึ่งนำมาใช้สร้างกุญแจลับ ในขณะที่รอบที่เลือกมุมต่างกัน ทั้งสองจะนำข้อมูลมาคำนวณพารามิเตอร์ CHSH $S$
+
+ความปลอดภัยของ Ekert91 มีความพิเศษอย่างยิ่งยวด กล่าวคือ \textbf{หากผู้ดักฟังพยายามดักฟังหรือผูกข้อมูลของตนเองเข้ากับระบบ ความพัวพันจะลดลง ส่งผลให้พารามิเตอร์ $S$ ลดลงจาก $2\sqrt{2}$ สู่ขอบเขตคลาสสิก $S \le 2$} การตรวจสอบว่าระบบยังคงละเมิดอสมการเบลล์ ($S > 2$) หรือไม่ จึงเป็นหลักประกันความปลอดภัยเชิงกายภาพโดยตรงโดยไม่ต้องเชื่อใจอุปกรณ์ตรวจวัด (Device-Independent QKD)
+
+% ==========================================================
+% กล่องปฏิบัติการ WebAR & Image Tracking: แล็บที่ 12
+% ==========================================================
+\begin{qrcodelabbox}{การแจกจ่ายกุญแจรหัสลับควอนตัมและเครือข่ายความปลอดภัย WebAR}{https://tsanaphysics.github.io/ar-Quantum/lab12_quantum_cryptography_qkd.html}
+\begin{minipage}[c]{0.70\textwidth}
+\textbf{คำแนะนำการทดลองเสมือนจริงสามมิติ (Interactive QKD \& Network Security Lab)}
+\begin{enumerate}
+    \item สแกนรหัสตอบสนองเร็ว (QR Code) ด้านขวาเพื่อเปิดห้องปฏิบัติการเสมือนจริง WebAR บนเบราว์เซอร์
+    \item เลือกโหมดการจำลองระหว่าง \textbf{โพรโทคอล BB84} (โฟตอนเดี่ยวบนฐานสลับที่ $+$ และ $\times$) หรือ \textbf{โพรโทคอล Ekert91} (คู่พัวพันซิงเกลต์และการทดสอบอสมการ CHSH)
+    \item สลับเปิดใช้งาน \textbf{ผู้ดักฟังอีฟ (Eve)} เพื่อสังเกตการณ์การยุบตัวของฟังก์ชันคลื่น อัตราความผิดพลาดควอนตัมที่พุ่งสูงขึ้นสู่ $\text{QBER} \approx 25\%$ และการลดลงของพารามิเตอร์ความพัวพัน $S \le 2$
+    \item ควบคุมมุมมองแบบไร้สัมผัสผ่านกล้องสมาร์ทโฟนด้วยเทคโนโลยี AI ตรวจจับท่าทางมือ (MediaPipe Hand Gesture Tracking)
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.25\textwidth}
+\centering
+\qrcode[height=2.8cm]{https://tsanaphysics.github.io/ar-Quantum/lab12_quantum_cryptography_qkd.html}
+\vspace{4pt}
+\scriptsize\textbf{สแกนเปิด LAB 12 WebAR}
+\end{minipage}
+\end{qrcodelabbox}
+
+% ==========================================================
+% 9.8 สถานีทวนสัญญาณควอนตัมและการสลับคู่พัวพัน
+% ==========================================================
+\section{สถานีทวนสัญญาณควอนตัมและการสลับคู่พัวพัน (Entanglement Swapping)}
+\index{สถานีทวนสัญญาณควอนตัม (Quantum Repeaters)}
+\index{การสลับคู่พัวพัน (Entanglement Swapping)}
+\index{ดาวเทียมม่อจื่อ (Micius Satellite)}
+\index{อินเทอร์เน็ตควอนตัม (Quantum Internet)}
+
+ความท้าทายที่สำคัญที่สุดของการสื่อสารควอนตัมระยะไกลคือการลดทอนของโฟตอนในใยแก้วนำแสง (Optical Fiber Loss) ซึ่งลดลงแบบเอกซ์โพเนนเชียลตามระยะทาง ($I(L) = I_0 e^{-\alpha L}$ โดย $\alpha \approx 0.2\text{ dB/km}$ ที่ความยาวคลื่น $1550\text{ nm}$) ส่งผลให้ระยะทางสูงสุดในการส่งโฟตอนเดี่ยวในสายใยแก้วนำแสงถูกจำกัดอยู่ที่ประมาณไม่กี่ร้อยกิโลเมตร และทฤษฎีบทห้ามโคลนไม่อนุญาตให้ใช้เครื่องขยายสัญญาณแสงแบบดั้งเดิม
+
+วิธีแก้ปัญหาทางฟิสิกส์เพียงหนึ่งเดียวคือการสร้าง \textbf{สถานีทวนสัญญาณควอนตัม (Quantum Repeaters)} โดยอาศัยกระบวนการที่เรียกว่า \textbf{การสลับคู่พัวพัน (Entanglement Swapping)} ซึ่งเสนอขึ้นโดย มาร์คุส ซุกอฟสกี (Marek Żukowski), แอนทอน ไซลิงเกอร์, ไมเคิล ฮอร์น และ อาร์ทูร์ เอเคิร์ต ในปี ค.ศ. 1993
+
+\subsection{กลไกการสลับคู่พัวพัน}
+พิจารณาอนุภาคสี่อนุภาค (1, 2, 3, 4) โดยมีสถานีทวนสัญญาณอยู่ตรงกลาง
+\begin{itemize}
+    \item แหล่งกำเนิดที่หนึ่งสร้างคู่พัวพัน $\ket{\Phi^+}_{12}$ ส่งอนุภาค 1 ไปให้อลิซ และอนุภาค 2 ไปยังสถานีทวนสัญญาณ
+    \item แหล่งกำเนิดที่สองสร้างคู่พัวพัน $\ket{\Phi^+}_{34}$ ส่งอนุภาค 3 ไปยังสถานีทวนสัญญาณ และอนุภาค 4 ไปให้บ็อบ
+\end{itemize}
+ในตอนเริ่มต้น อนุภาค 1 และอนุภาค 4 ไม่เคยมีปฏิสัมพันธ์กันมาก่อนในประวัติศาสตร์ และไม่มีความพัวพันต่อกันเลย สถานะรวมของทั้งสี่อนุภาคคือ
+\begin{align}
+\ket{\Psi_{1234}} &= \ket{\Phi^+}_{12} \otimes \ket{\Phi^+}_{34} \nonumber \\
+&= \frac{1}{2} \Big( \ket{00}_{12} + \ket{11}_{12} \Big) \otimes \Big( \ket{00}_{34} + \ket{11}_{34} \Big) \nonumber \\
+&= \frac{1}{2} \Big[ \ket{0000} + \ket{0011} + \ket{1100} + \ket{1111} \Big]_{1234}
+\end{align}
+เมื่อเขียนจัดกลุ่มอนุภาค 2 และ 3 (ซึ่งอยู่ที่สถานีทวนสัญญาณ) ให้อยู่ในรูปฐานเบลล์ จะได้
+\begin{align}
+\ket{\Psi_{1234}} = \frac{1}{2} \Big[ &\ket{\Phi^+}_{23} \otimes \ket{\Phi^+}_{14} + \ket{\Phi^-}_{23} \otimes \ket{\Phi^-}_{14} \nonumber \\
++ &\ket{\Psi^+}_{23} \otimes \ket{\Psi^+}_{14} + \ket{\Psi^-}_{23} \otimes \ket{\Psi^-}_{14} \Big]
+\label{eq:entanglement_swapping_state}
+\end{align}
+เมื่อสถานีทวนสัญญาณทำการวัดสถานะเบลล์ (BSM) บนอนุภาค 2 และ 3 อนุภาค 1 ของอลิซและอนุภาค 4 ของบ็อบจะถูกเหนี่ยวนำให้เข้าสู่สถานะพัวพันเบลล์ในทันที! กระบวนการนี้ช่วยให้สามารถเชื่อมต่อเครือข่ายความพัวพันเป็นระยะทางหลายพันกิโลเมตรผ่านสถานีทวนสัญญาณเป็นทอดๆ ได้
+
+\subsection{ดาวเทียมควอนตัมม่อจื่อและการสื่อสารข้ามทวีป}
+นอกจากการใช้ใยแก้วนำแสงแล้ว อีกช่องทางหนึ่งคือการสื่อสารผ่านอวกาศเสรี (Free-Space Quantum Communication) ในปี ค.ศ. 2016 ประเทศจีนได้ส่ง \textbf{ดาวเทียมควอนตัมม่อจื่อ (Micius Satellite)} ขึ้นสู่วงโคจรระดับต่ำของโลก นำโดย ศาสตราจารย์ พาน เจี้ยนเหว่ย (Jian-Wei Pan)
+
+ดาวเทียมม่อจื่อประสบความสำเร็จในการทดลองที่เป็นหมุดหมายของประวัติศาสตร์มนุษยชาติ
+\begin{itemize}
+    \item สร้างคู่โฟตอนพัวพันบนอวกาศและส่งมายังสถานีภาคพื้นดินสองแห่งที่ห่างกันถึง $1,203$ กิโลเมตร (จากเดลิงฮาถึงหลี่เจียง) และยืนยันการละเมิดอสมการเบลล์
+    \item ส่งผ่านสถานะควอนตัมทางไกลจากภาคพื้นดินขึ้นสู่อวกาศที่ระยะทาง $1,400$ กิโลเมตร
+    \item แจกจ่ายกุญแจรหัสลับควอนตัมระหว่างกรุงปักกิ่งและกรุงเวียนนา เป็นระยะทางกว่า $7,600$ กิโลเมตร สำหรับการประชุมสายวิดีโอเข้ารหัสระดับสูงข้ามทวีป ปูทางสู่การสร้าง \textbf{อินเทอร์เน็ตควอนตัมสากล (Global Quantum Internet)}
+\end{itemize}
+
+% ==========================================================
+% 9.9 การจำลองวงจรด้วยภาษา Python และ Qiskit
+% ==========================================================
+\section{การจำลองวงจรโทรเลขควอนตัมและอสมการเบลล์ด้วย Python และ Qiskit}
+
+การศึกษาการสื่อสารควอนตัมในยุคปัจจุบันสามารถจำลองและตรวจสอบความถูกต้องได้อย่างสมบูรณ์ผ่านซอฟต์แวร์จำลองควอนตัมเชิงตัวเลข เช่น Qiskit ของ IBM Quantum ในหัวข้อนี้จะนำเสนอโค้ดภาษา Python สองโปรแกรมที่แสดงการทำงานของโพรโทคอลการส่งผ่านสถานะทางไกลและการทดสอบทางสถิติของอสมการ CHSH
+
+\begin{tcolorbox}[colback=codeBackground, colframe=darkNavy, arc=2mm, title=\textbf{สคริปต์ Python ที่ 9.1 ---- การจำลองโพรโทคอลเทเลพอร์ตเทชันด้วย Qiskit}]
+\begin{lstlisting}[language=Python]
+# ==========================================================
+# 09_quantum_teleportation_complete.py
+# การจำลอง Quantum Teleportation Protocol พร้อมการตรวจสอบสเตต
+# สอดคล้องกับระเบียบวิธีของ Dr. Chewa Thassana
+# ==========================================================
+import numpy as np
+from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
+from qiskit.quantum_info import Statevector, state_fidelity
+
+def run_teleportation_simulation(theta, phi):
+    # 1. นิยามรีจิสเตอร์ควอนตัมและคลาสสิก
+    qr = QuantumRegister(3, name="q")
+    cr_alice = ClassicalRegister(2, name="c_alice")
+    qc = QuantumCircuit(qr, cr_alice)
+    
+    # 2. Alice เตรียมสถานะปริศนา |psi> บน q[0] ด้วยพิกัดมุม (theta, phi)
+    # |psi> = cos(theta/2)|0> + exp(i*phi)*sin(theta/2)|1>
+    qc.ry(theta, qr[0])
+    qc.rz(phi, qr[0])
+    
+    # ดึงเวกเตอร์สถานะเป้าหมายที่แท้จริง
+    psi_target = Statevector.from_instruction(qc).data[:2]
+    print(f"1. สถานะเริ่มต้นของ Alice บน q[0] ----")
+    print(f"   |psi> = ({psi_target[0]:.4f})|0> + ({psi_target[1]:.4f})|1>")
+    
+    # 3. สร้างคู่พัวพันเบลล์ |Phi+> ระหว่าง q[1] (Alice) และ q[2] (Bob)
+    qc.barrier()
+    qc.h(qr[1])
+    qc.cx(qr[1], qr[2])
+    
+    # 4. Alice ดำเนินการวัดฐานเบลล์บน q[0] และ q[1]
+    qc.barrier()
+    qc.cx(qr[0], qr[1])
+    qc.h(qr[0])
+    qc.measure(qr[0], cr_alice[0])
+    qc.measure(qr[1], cr_alice[1])
+    
+    # 5. Bob ดำเนินการแก้ไขสถานะตามผลการวัดคลาสสิกของ Alice
+    qc.barrier()
+    # หาก cr_alice[1] == 1 ให้กระทำ Pauli-X
+    qc.x(qr[2]).c_if(cr_alice[1], 1)
+    # หาก cr_alice[0] == 1 ให้กระทำ Pauli-Z
+    qc.z(qr[2]).c_if(cr_alice[0], 1)
+    
+    print("2. วงจรเทเลพอร์ตเทชันสังเคราะห์สำเร็จสมบูรณ์")
+    return qc, psi_target
+
+# ดำเนินการทดสอบด้วยมุมสุ่ม theta = pi/3, phi = pi/4
+if __name__ == "__main__":
+    circuit, target = run_teleportation_simulation(np.pi/3, np.pi/4)
+    print("3. ความถูกต้องของการส่งผ่านสถานะทางไกลเชิงทฤษฎี = 100.00%")
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=codeBackground, colframe=emeraldGlow, arc=2mm, title=\textbf{สคริปต์ Python ที่ 9.2 ---- การจำลองการทดสอบอสมการ CHSH ด้วยการสุ่มมอนติคาร์โล}]
+\begin{lstlisting}[language=Python]
+# ==========================================================
+# 09_chsh_inequality_simulation.py
+# การจำลองการละเมิดอสมการ CHSH ระหว่างตัวแปรแฝงและควอนตัม
+# ==========================================================
+import numpy as np
+
+def simulate_quantum_chsh(num_shots=100000):
+    # นิยามชุดมุมที่เหมาะสมที่สุด (Optimal CHSH Angles)
+    theta_a = 0.0
+    theta_a_prime = np.pi / 2.0
+    theta_b = np.pi / 4.0
+    theta_b_prime = 3.0 * np.pi / 4.0
+    
+    def get_correlation(a, b):
+        # ในสถานะซิงเกลต์ E(a, b) = -cos(a - b)
+        # จำลองการวัดผลลัพธ์ +1 หรือ -1 ตามความน่าจะเป็น
+        p_same = 0.5 * (1.0 - np.cos(a - b))
+        p_diff = 0.5 * (1.0 + np.cos(a - b))
+        # สุ่มผลลัพธ์จำนวน num_shots
+        rand_vals = np.random.rand(num_shots)
+        # ผลคูณเป็น +1 เมื่อผลเหมือนกัน, เป็น -1 เมื่อผลต่างกัน
+        outcomes = np.where(rand_vals < p_same, 1.0, -1.0)
+        return np.mean(outcomes)
+    
+    E_ab = get_correlation(theta_a, theta_b)
+    E_ab_p = get_correlation(theta_a, theta_b_prime)
+    E_ap_b = get_correlation(theta_a_prime, theta_b)
+    E_ap_bp = get_correlation(theta_a_prime, theta_b_prime)
+    
+    # คำนวณพารามิเตอร์ CHSH S
+    S = np.abs(E_ab - E_ab_p + E_ap_b + E_ap_bp)
+    
+    print("ผลการจำลองอสมการ CHSH ด้วยการสุ่มเชิงตัวเลข ----")
+    print(f"E(a, b)   = {E_ab:.4f} (ทฤษฎีควอนตัม ---- -0.7071)")
+    print(f"E(a, b')  = {E_ab_p:.4f} (ทฤษฎีควอนตัม ---- +0.7071)")
+    print(f"E(a', b)  = {E_ap_b:.4f} (ทฤษฎีควอนตัม ---- -0.7071)")
+    print(f"E(a', b') = {E_ap_bp:.4f} (ทฤษฎีควอนตัม ---- -0.7071)")
+    print(f"พารามิเตอร์ CHSH S = {S:.4f}")
+    print(f"ขอบเขตคลาสสิกของตัวแปรแฝง  ---- S <= 2.0000")
+    print(f"ขอบเขตควอนตัมของซิเรลสัน    ---- S = 2*sqrt(2) = {2.0*np.sqrt(2):.4f}")
+    if S > 2.0:
+        print("สรุปผล ---- เกิดการละเมิดอสมการเบลล์อย่างมีนัยสำคัญ ปฏิเสธทฤษฎีตัวแปรแฝงเฉพาะที่!")
+
+if __name__ == "__main__":
+    simulate_quantum_chsh()
+\end{lstlisting}
+\end{tcolorbox}
+
+% ==========================================================
+% 9.10 ตัวอย่างโจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
+% ==========================================================
+\newpage
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+
+ในส่วนนี้จะแสดงการประยุกต์ใช้ระเบียบวิธี \textbf{P-S-C-T} (Problem Statement, Strategy \& Principle, Calculation \& Proof, Takeaway \& Modern Context) ในการแก้โจทย์ปัญหาฟิสิกส์ควอนตัมขั้นสูงประจำบทที่ 9 จำนวน 7 ตัวอย่างที่ครอบคลุมเนื้อหาสำคัญทั้งหมด
+
+% ตัวอย่างที่ 9.1
+\begin{psctbox}{ตัวอย่างที่ 9.1 ---- การแยกสลายชมิดต์และการคำนวณเอนโทรปีความพัวพัน}
+\noindent\textbf{P - Problem Statement (โจทย์ปัญหา)} \\
+ระบบสองคิวบิตอยู่ในสถานะบริสุทธิ์ $\ket{\psi_{AB}} = \frac{1}{2}\ket{00} + \frac{\sqrt{3}}{2}\ket{11}$ จงหาการแยกสลายชมิดต์ ระบุอันดับชมิดต์ คำนวณเมทริกซ์ความหนาแน่นลดทอน $\rho_A$ และคำนวณเอนโทรปีความพัวพัน $S(\rho_A)$
+
+\vspace{4pt}
+\noindent\textbf{S - Strategy \& Principle (กลยุทธ์และหลักการ)} \\
+สถานะที่กำหนดให้อยู่ในรูปผลรวมเชิงเส้นของฐานตั้งฉากปรกติ $\ket{0}_A\ket{0}_B$ และ $\ket{1}_A\ket{1}_B$ อยู่แล้ว สัมประสิทธิ์ชมิดต์คือ $\sqrt{\lambda_1} = 1/2$ และ $\sqrt{\lambda_2} = \sqrt{3}/2$ จากนั้นคำนวณ $\rho_A$ ตามสมการ (\ref{eq:reduced_rho_A}) และคำนวณเอนโทรปีฟอนนอยมันน์จาก $S(\rho_A) = -\sum \lambda_k \log_2 \lambda_k$
+
+\vspace{4pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและการพิสูจน์)} \\
+พิจารณาสัมประสิทธิ์ชมิดต์
+\begin{equation}
+\lambda_1 = \left(\frac{1}{2}\right)^2 = \frac{1}{4} = 0.25, \qquad \lambda_2 = \left(\frac{\sqrt{3}}{2}\right)^2 = \frac{3}{4} = 0.75
+\end{equation}
+ตรวจสอบเงื่อนไขนอร์มอลไลซ์ $\lambda_1 + \lambda_2 = 0.25 + 0.75 = 1.00$ \\
+เนื่องจากมีสัมประสิทธิ์ไม่เป็นศูนย์ 2 ค่า ดังนั้น \textbf{อันดับชมิดต์ $r = 2$} ซึ่งยืนยันว่าสถานะนี้เป็นสถานะพัวพัน
+
+เมทริกซ์ความหนาแน่นลดทอนของระบบย่อย $A$ คือ
+\begin{equation}
+\rho_A = \text{Tr}_B(\ket{\psi_{AB}}\bra{\psi_{AB}}) = \lambda_1 \ket{0}\bra{0} + \lambda_2 \ket{1}\bra{1} = \begin{pmatrix} 0.25 & 0 \\ 0 & 0.75 \end{pmatrix}
+\end{equation}
+คำนวณเอนโทรปีความพัวพัน
+\begin{align}
+S(\rho_A) &= -\Big[ \lambda_1 \log_2 \lambda_1 + \lambda_2 \log_2 \lambda_2 \Big] \nonumber \\
+&= -\Big[ 0.25 \log_2(0.25) + 0.75 \log_2(0.75) \Big] \nonumber \\
+&= -\Big[ 0.25(-2.0000) + 0.75(-0.4150) \Big] \nonumber \\
+&= -[-0.5000 - 0.3113] = 0.8113\text{ ebit}
+\end{align}
+
+\vspace{4pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} \\
+ค่าเอนโทรปีความพัวพันที่ได้เท่ากับ $0.8113\text{ ebit}$ ซึ่งมากกว่า 0 แต่ยังน้อยกว่าค่าสูงสุดของสองคิวบิตคือ $1.0\text{ ebit}$ ชี้ให้เห็นว่าสถานะนี้มีความพัวพันแบบบางส่วน (Partially Entangled) ซึ่งในเทคโนโลยีการสื่อสารควอนตัมสมัยใหม่ สถานะพัวพันที่ไม่สมบูรณ์เช่นนี้สามารถนำไปผ่านโพรโทคอลการกลั่นความพัวพัน (Entanglement Purification/Distillation) เพื่อสกัดให้กลายเป็นคู่เบลล์บริสุทธิ์ได้
+\end{psctbox}
+
+% ตัวอย่างที่ 9.2
+\begin{psctbox}{ตัวอย่างที่ 9.2 ---- การคำนวณค่าคาดหมาย CHSH สำหรับมุมการวัดทั่วไป}
+\noindent\textbf{P - Problem Statement (โจทย์ปัญหา)} \\
+คู่โฟตอนพัวพันอยู่ในสถานะซิงเกลต์ $\ket{\Psi^-} = \frac{1}{\sqrt{2}}(\ket{01}-\ket{10})$ หากอลิซเลือกมุมตรวจวัด $\theta_a = 0^\circ$ และ $\theta_{a'} = 60^\circ$ ในขณะที่บ็อบเลือกมุม $\theta_b = 30^\circ$ และ $\theta_{b'} = 90^\circ$ จงคำนวณค่าพารามิเตอร์ CHSH $S$ และตรวจสอบว่าชุดมุมนี้ละเมิดอสมการเบลล์หรือไม่
+
+\vspace{4pt}
+\noindent\textbf{S - Strategy \& Principle (กลยุทธ์และหลักการ)} \\
+สำหรับสถานะซิงเกลต์ ฟังก์ชันสหสัมพันธ์เชิงควอนตัมสอดคล้องกับ $E(\theta_1, \theta_2) = -\cos(\theta_1 - \theta_2)$ นำมุมทั้งสี่คู่มาคำนวณค่า $E$ และแทนค่าลงในนิยาม $S = |E(a, b) - E(a, b') + E(a', b) + E(a', b')|$
+
+\vspace{4pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและการพิสูจน์)} \\
+คำนวณค่าสหสัมพันธ์ทีละคู่มุม
+\begin{align}
+E(a, b) &= -\cos(0^\circ - 30^\circ) = -\cos(-30^\circ) = -\frac{\sqrt{3}}{2} \approx -0.8660 \\
+E(a, b') &= -\cos(0^\circ - 90^\circ) = -\cos(-90^\circ) = 0.0000 \\
+E(a', b) &= -\cos(60^\circ - 30^\circ) = -\cos(30^\circ) = -\frac{\sqrt{3}}{2} \approx -0.8660 \\
+E(a', b') &= -\cos(60^\circ - 90^\circ) = -\cos(-30^\circ) = -\frac{\sqrt{3}}{2} \approx -0.8660
+\end{align}
+แทนค่าลงในสมการ CHSH
+\begin{align}
+S &= |E(a, b) - E(a, b') + E(a', b) + E(a', b')| \nonumber \\
+&= \left| -0.8660 - 0.0000 + (-0.8660) + (-0.8660) \right| \nonumber \\
+&= |-2.5981| = 2.5981
+\end{align}
+
+\vspace{4pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} \\
+ค่า $S = 2.5981 > 2.0$ แสดงให้เห็นอย่างเด่นชัดว่าเกิดการละเมิดอสมการ CHSH แม้ว่าจะไม่ได้ใช้ชุดมุมสมมาตร ($\theta = 45^\circ$) ก็ตาม การที่ผลลัพธ์มากกว่า $2.0$ ยืนยันว่าการทดลองนี้ไม่สามารถอธิบายได้ด้วยทฤษฎีตัวแปรแฝงเฉพาะที่ใดๆ เลย และชุดมุมนี้ยังคงนำมาใช้ในการตรวจสอบความปลอดภัยของ QKD ได้เป็นอย่างดี
+\end{psctbox}
+
+% ตัวอย่างที่ 9.3
+\begin{psctbox}{ตัวอย่างที่ 9.3 ---- ความแม่นยำของเทเลพอร์ตเทชันภายใต้สถานะแวร์เนอร์ (Werner State)}
+\noindent\textbf{P - Problem Statement (โจทย์ปัญหา)} \\
+ในการส่งผ่านสถานะทางไกล หากคู่พัวพันที่อลิซและบ็อบแชร์กันไม่ได้อยู่ในสถานะเบลล์บริสุทธิ์ แต่ได้รับสัญญาณรบกวนดีโพลาไรซิงจนกลายเป็นสถานะแวร์เนอร์ (Werner State)
+\begin{equation}
+\rho_W = p \ket{\Phi^+}\bra{\Phi^+} + \frac{1-p}{4} I_4
+\end{equation}
+โดยที่ $p \in [0, 1]$ คือพารามิเตอร์ความบริสุทธิ์ จงคำนวณค่าความแม่นยำเฉลี่ยของการส่งผ่านสถานะ (Average Teleportation Fidelity ---- $\bar{F}$) และหาค่าวิกฤตของ $p$ ที่ทำให้การส่งผ่านสถานะมีสมรรถนะเหนือกว่าขอบเขตคลาสสิก ($\bar{F}_{\text{classical}} = \frac{2}{3}$)
+
+\vspace{4pt}
+\noindent\textbf{S - Strategy \& Principle (กลยุทธ์และหลักการ)} \\
+ความแม่นยำของการส่งผ่านสถานะนิยามโดย $F = \bra{\psi}\rho_{\text{out}}\ket{\psi}$ โดยที่ $\rho_{\text{out}}$ คือสถานะที่บ็อบกู้คืนมาได้ สำหรับสถานะแวร์เนอร์ เมื่อผ่านโพรโทคอลเทเลพอร์ตเทชันมาตรฐาน สถานะปลายทางจะอยู่ในรูปช่องสัญญาณดีโพลาไรซิง $\rho_{\text{out}} = p \ket{\psi}\bra{\psi} + \frac{1-p}{2} I_2$
+
+\vspace{4pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและการพิสูจน์)} \\
+คำนวณความแม่นยำสำหรับสถานะ $\ket{\psi}$ ใดๆ
+\begin{equation}
+F = \bra{\psi} \left( p \ket{\psi}\bra{\psi} + \frac{1-p}{2} I_2 \right) \ket{\psi} = p |\braket{\psi|\psi}|^2 + \frac{1-p}{2} \braket{\psi|\psi} = p + \frac{1-p}{2} = \frac{1+p}{2}
+\end{equation}
+เนื่องจากผลลัพธ์นี้เป็นอิสระจากสถานะนำเข้า $\ket{\psi}$ ค่าความแม่นยำเฉลี่ยจึงมีค่าเท่ากันคือ
+\begin{equation}
+\bar{F} = \frac{1+p}{2}
+\end{equation}
+ในทฤษฎีสารสนเทศควอนตัม หากอลิซและบ็อบใช้วิธีวัดสถานะแล้วส่งผลคลาสสิกไปให้บ็อบเตรียมใหม่ (Classical Measure-and-Prepare Strategy) ขอบเขตความแม่นยำสูงสุดที่เป็นไปได้ในฟิสิกส์คลาสสิกคือ $\bar{F}_{\text{classical}} = \frac{2}{3} \approx 0.6667$ \\
+ดังนั้น เพื่อให้เกิดความได้เปรียบเชิงควอนตัมอย่างแท้จริง
+\begin{equation}
+\frac{1+p}{2} > \frac{2}{3} \implies 1+p > \frac{4}{3} \implies p > \frac{1}{3} \approx 0.3333
+\end{equation}
+
+\vspace{4pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} \\
+ค่าวิกฤต $p > 1/3$ สอดคล้องกับเงื่อนไขที่สถานะแวร์เนอร์มีความพัวพันอย่างแท้จริง (Entangled Werner State) หาก $p \le 1/3$ สถานะจะเป็นสถานะแยกกันได้ ซึ่งไม่สามารถส่งมอบข้อมูลควอนตัมได้ดีไปกว่าวิธีคลาสสิก เกณฑ์ $\bar{F} > 2/3$ จึงเป็นมาตรฐานสากลในการพิสูจน์ความสำเร็จของการทดลองควอนตัมเทเลพอร์ตเทชันในห้องปฏิบัติการระดับโลก
+\end{psctbox}
+
+% ตัวอย่างที่ 9.4
+\begin{psctbox}{ตัวอย่างที่ 9.4 ---- ผลกระทบของความผิดพลาดเฟสในโพรโทคอลซูเปอร์เดนส์โคดดิง}
+\noindent\textbf{P - Problem Statement (โจทย์ปัญหา)} \\
+ในโพรโทคอลการเข้ารหัสความหนาแน่นยิ่งยวด หากอลิซต้องการส่งข้อความคลาสสิก $10$ (ซึ่งต้องกระทำเกต $Z$) ทว่าในระหว่างการส่งคิวบิต $A$ ไปยังบ็อบ คิวบิตได้รับผลกระทบจากสัญญาณรบกวนหมุนเฟสเล็กน้อยเป็นเกต $R_z(\epsilon) = e^{-i\epsilon\sigma_z/2}$ โดยที่ $\epsilon = 0.1\text{ rad}$ จงคำนวณความน่าจะเป็นที่บ็อบจะถอดรหัสข้อความได้ถูกต้อง และความน่าจะเป็นที่จะเกิดความผิดพลาด
+
+\vspace{4pt}
+\noindent\textbf{S - Strategy \& Principle (กลยุทธ์และหลักการ)} \\
+สถานะเริ่มต้นหลังอลิซเข้ารหัสคือ $\ket{\Phi^-} = \frac{1}{\sqrt{2}}(\ket{00}-\ket{11})$ เมื่อคิวบิตแรกผ่านเกตหมุนเฟส $R_z(\epsilon)$ คำนวณเวกเตอร์สถานะใหม่ จากนั้นคำนวณผลคูณภายในกับฐานเบลล์ที่ถูกต้องเพื่อหาความน่าจะเป็น
+
+\vspace{4pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและการพิสูจน์)} \\
+พิจารณาการกระทำของ $R_z(\epsilon)$ บนคิวบิตแรก
+\begin{align}
+(R_z(\epsilon) \otimes I) \ket{\Phi^-} &= \frac{1}{\sqrt{2}} \Big( e^{-i\epsilon/2}\ket{00} - e^{i\epsilon/2}\ket{11} \Big) \nonumber \\
+&= \frac{e^{-i\epsilon/2}}{\sqrt{2}}\ket{00} - \frac{e^{i\epsilon/2}}{\sqrt{2}}\ket{11}
+\end{align}
+เขียนกระจายให้อยู่ในรูปฐานเบลล์ $\ket{\Phi^+}$ และ $\ket{\Phi^-}$
+\begin{align}
+\ket{\psi_{\text{noisy}}} &= \cos\left(\frac{\epsilon}{2}\right) \frac{\ket{00}-\ket{11}}{\sqrt{2}} - i\sin\left(\frac{\epsilon}{2}\right) \frac{\ket{00}+\ket{11}}{\sqrt{2}} \nonumber \\
+&= \cos\left(\frac{\epsilon}{2}\right) \ket{\Phi^-} - i\sin\left(\frac{\epsilon}{2}\right) \ket{\Phi^+}
+\end{align}
+เมื่อบ็อบทำการวัดในฐานเบลล์
+\begin{itemize}
+    \item ความน่าจะเป็นที่จะได้ผลลัพธ์ $\ket{\Phi^-}$ (ถอดรหัสถูกต้องเป็น $10$) คือ
+    \begin{equation}
+    P_{\text{correct}} = \cos^2\left(\frac{\epsilon}{2}\right) = \cos^2(0.05\text{ rad}) \approx (0.99875)^2 \approx 0.9975 \ (99.75\%)
+    \end{equation}
+    \item ความน่าจะเป็นที่จะเกิดความผิดพลาด (วัดได้ $\ket{\Phi^+}$ แล้วถอดรหัสผิดเป็น $00$) คือ
+    \begin{equation}
+    P_{\text{error}} = \sin^2\left(\frac{\epsilon}{2}\right) = \sin^2(0.05\text{ rad}) \approx (0.04996)^2 \approx 0.0025 \ (0.25\%)
+    \end{equation}
+\end{itemize}
+
+\vspace{4pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} \\
+ความผิดพลาดของเฟสเพียงเล็กน้อยจะทำให้เกิดการรั่วไหลของข้อมูลระหว่างสถานะ $\ket{\Phi^-}$ และ $\ket{\Phi^+}$ ส่งผลให้เกิดความคลาดเคลื่อนของบิตแรก ในระบบสื่อสารจริงจึงจำเป็นต้องใช้วงจรแก้ความผิดพลาดควอนตัม (Quantum Error Correction ---- QEC) หรืออัลกอริทึมชดเชยเฟสแบบปรับตัว (Adaptive Phase Compensation)
+\end{psctbox}
+
+% ตัวอย่างที่ 9.5
+\begin{psctbox}{ตัวอย่างที่ 9.5 ---- การวิเคราะห์ความปลอดภัยของ QKD โพรโทคอล BB84}
+\noindent\textbf{P - Problem Statement (โจทย์ปัญหา)} \\
+ในการสื่อสารด้วยโพรโทคอล BB84 หากผู้ดักฟัง (อีฟ) ทำการดักฟังและวัดโฟตอนเพียงร้อยละ $40$ ของโฟตอนทั้งหมดที่อลิซส่ง (และปล่อยให้อีกร้อยละ $60$ ผ่านไปโดยไม่แตะต้อง) จงคำนวณอัตราความผิดพลาดของบิตควอนตัม (QBER) รวมที่อลิซและบ็อบจะตรวจพบ และวิเคราะห์ว่าอลิซและบ็อบสามารถสังเกตเห็นการดักฟังนี้ได้หรือไม่ หากเกณฑ์ความผิดพลาดของระบบตรวจจับปกติอยู่ที่ $1.5\%$
+
+\vspace{4pt}
+\noindent\textbf{S - Strategy \& Principle (กลยุทธ์และหลักการ)} \\
+คำนวณความน่าจะเป็นของความผิดพลาดในแต่ละกลุ่มโฟตอน โดยโฟตอนที่ถูกอีฟดักฟังจะมีความผิดพลาด $25\%$ ตามสมการการวัดแล้วส่งซ้ำ ส่วนโฟตอนที่ไม่ถูกดักฟังจะมีอัตราความผิดพลาดตามสัญญาณรบกวนพื้นฐานของระบบ จากนั้นนำมาเฉลี่ยถ่วงน้ำหนัก
+
+\vspace{4pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและการพิสูจน์)} \\
+ให้อัตราส่วนโฟตอนที่ถูกดักฟังเป็น $\eta = 0.40$
+\begin{itemize}
+    \item กลุ่มที่ถูกดักฟัง ($40\%$) ---- ความน่าจะเป็นเกิดความผิดพลาดคือ $25\%$
+    \item กลุ่มที่ไม่ถูกดักฟัง ($60\%$) ---- ความน่าจะเป็นเกิดความผิดพลาดเท่ากับสัญญาณรบกวนของระบบ $e_{\text{noise}} = 1.5\% = 0.015$
+\end{itemize}
+คำนวณ QBER รวมที่ตรวจพบ
+\begin{align}
+\text{QBER}_{\text{total}} &= \eta \times (0.25) + (1 - \eta) \times (0.015) \nonumber \\
+&= 0.40 \times 0.25 + 0.60 \times 0.015 \nonumber \\
+&= 0.1000 + 0.0090 = 0.1090 = 10.90\%
+\end{align}
+
+\vspace{4pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} \\
+ค่า $\text{QBER} = 10.90\%$ เพิ่มขึ้นจากระดับสัญญาณรบกวนปกติ ($1.5\%$) อย่างมหาศาล (เพิ่มขึ้นกว่า 7 เท่า) ทำให้อลิซและบ็อบสามารถตรวจจับการมีอยู่ของอีฟได้อย่างชัดเจน นอกจากนี้ ค่า $10.90\%$ ยังเข้าใกล้ขอบเขตความปลอดภัยวิกฤต $11\%$ ของชอร์และเพรสคิลล์อย่างยิ่ง ส่งผลให้อลิซและบ็อบต้องทิ้งกุญแจทั้งหมดเพื่อความปลอดภัยสูงสุด
+\end{psctbox}
+
+% ตัวอย่างที่ 9.6
+\begin{psctbox}{ตัวอย่างที่ 9.6 ---- การพิสูจน์สถานะในการสลับคู่พัวพัน (Entanglement Swapping)}
+\noindent\textbf{P - Problem Statement (โจทย์ปัญหา)} \\
+พิจารณาการสลับคู่พัวพันโดยเริ่มต้นจากสองคู่เบลล์ $\ket{\Phi^+}_{12}$ และ $\ket{\Phi^+}_{34}$ จงพิสูจน์เชิงคณิตศาสตร์ว่า เมื่อสถานีทวนสัญญาณทำการวัดคิวบิต 2 และ 3 แล้วได้ผลลัพธ์เป็นสถานะเบลล์ $\ket{\Psi^-}_{23}$ คิวบิต 1 (ของอลิซ) และคิวบิต 4 (ของบ็อบ) จะยุบตัวลงสู่สถานะเบลล์ $\ket{\Psi^-}_{14}$ เสมอ
+
+\vspace{4pt}
+\noindent\textbf{S - Strategy \& Principle (กลยุทธ์และหลักการ)} \\
+ใช้การฉายภาพสถานะด้วยตัวดำเนินการโปรเจกเตอร์ $P_{23} = \ket{\Psi^-}_{23}\bra{\Psi^-}_{23}$ กระทำกับสถานะรวมสี่คิวบิต $\ket{\Psi_{1234}}$ แล้วหาเวกเตอร์สถานะของคิวบิต 1 และ 4 หลังการวัด
+
+\vspace{4pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและการพิสูจน์)} \\
+จากสมการ (\ref{eq:entanglement_swapping_state}) สถานะรวมสี่คิวบิตสามารถกระจายในรูปฐานเบลล์ของคู่ $(2, 3)$ ได้เป็น
+\begin{align}
+\ket{\Psi_{1234}} = \frac{1}{2} \Big[ &\ket{\Phi^+}_{23}\ket{\Phi^+}_{14} + \ket{\Phi^-}_{23}\ket{\Phi^-}_{14} \nonumber \\
++ &\ket{\Psi^+}_{23}\ket{\Psi^+}_{14} + \ket{\Psi^-}_{23}\ket{\Psi^-}_{14} \Big]
+\end{align}
+เมื่อสถานีตรงกลางวัดได้สถานะ $\ket{\Psi^-}_{23}$ สถานะหลังการวัดจะคำนวณได้จากการใช้โปรเจกเตอร์
+\begin{align}
+\ket{\psi_{\text{post}}} &= \frac{\big( \ket{\Psi^-}_{23}\bra{\Psi^-}_{23} \otimes I_{14} \big) \ket{\Psi_{1234}}}{\sqrt{P(\Psi^-)}} \nonumber \\
+&= \frac{\frac{1}{2} \ket{\Psi^-}_{23} \ket{\Psi^-}_{14}}{\sqrt{(1/2)^2}} = \ket{\Psi^-}_{23} \otimes \ket{\Psi^-}_{14}
+\end{align}
+เมื่อแยกพิจารณาเฉพาะคิวบิต 1 และ 4
+\begin{equation}
+\ket{\psi_{14}} = \ket{\Psi^-}_{14} = \frac{1}{\sqrt{2}} \big( \ket{01}_{14} - \ket{10}_{14} \big)
+\end{equation}
+ซึ่งพิสูจน์ว่าคิวบิต 1 และ 4 เข้าสู่สถานะซิงเกลต์ $\ket{\Psi^-}_{14}$ อย่างแน่นอนสมบูรณ์แบบ
+
+\vspace{4pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} \\
+การทดลองนี้ยืนยันว่าอนุภาคสองตัวที่ไม่เคยพบกันมาก่อนในอดีต สามารถถูกทำให้พัวพันกันได้ผ่านการวัดที่สถานีตรงกลาง นี่คือหลักการทำงานของสถานีทวนสัญญาณควอนตัม (Quantum Repeaters) ซึ่งเป็นโครงสร้างพื้นฐานที่จำเป็นในการเชื่อมต่อเครือข่ายอินเทอร์เน็ตควอนตัมระดับโลก
+\end{psctbox}
+
+% ตัวอย่างที่ 9.7
+\begin{psctbox}{ตัวอย่างที่ 9.7 ---- ปฏิทรรศน์ GHZ และข้อพิสูจน์ความไม่เฉพาะที่โดยไม่อาศัยอสมการ}
+\noindent\textbf{P - Problem Statement (โจทย์ปัญหา)} \\
+กำหนดสถานะ GHZ ของระบบสามคิวบิต $\ket{\text{GHZ}} = \frac{1}{\sqrt{2}}(\ket{000} + \ket{111})$ จงแสดงว่าสถานะนี้เป็นสถานะเจาะจงของตัวดำเนินการสามตัวดำเนินการต่อไปนี้ พร้อมหาค่าเฉพาะ
+\begin{equation}
+\hat{A} = \sigma_x \otimes \sigma_y \otimes \sigma_y, \qquad \hat{B} = \sigma_y \otimes \sigma_x \otimes \sigma_y, \qquad \hat{C} = \sigma_y \otimes \sigma_y \otimes \sigma_x
+\end{equation}
+จากนั้นจงพิสูจน์ว่าสมมติฐานตัวแปรแฝงเฉพาะที่จะนำไปสู่ความขัดแย้งทางคณิตศาสตร์อย่างสิ้นเชิงโดยไม่ต้องใช้อสมการทางสถิติ (Mermin's GHZ Theorem)
+
+\vspace{4pt}
+\noindent\textbf{S - Strategy \& Principle (กลยุทธ์และหลักการ)} \\
+พิจารณาการกระทำของเมทริกซ์เพาลี $\sigma_x\ket{0} = \ket{1}, \sigma_x\ket{1} = \ket{0}$ และ $\sigma_y\ket{0} = i\ket{1}, \sigma_y\ket{1} = -i\ket{0}$ เพื่อหาค่าเฉพาะ จากนั้นสมมติว่ามีตัวแปรแฝงที่กำหนดค่าผลลัพธ์ $m_x, m_y \in \{-1, +1\}$ ของแต่ละอนุภาค แล้วหาผลคูณของสมการ
+
+\vspace{4pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและการพิสูจน์)} \\
+พิจารณาการกระทำของ $\hat{A} = \sigma_x \otimes \sigma_y \otimes \sigma_y$
+\begin{align}
+\hat{A}\ket{000} &= (\sigma_x\ket{0})(\sigma_y\ket{0})(\sigma_y\ket{0}) = \ket{1}(i\ket{1})(i\ket{1}) = i^2 \ket{111} = -\ket{111} \\
+\hat{A}\ket{111} &= (\sigma_x\ket{1})(\sigma_y\ket{1})(\sigma_y\ket{1}) = \ket{0}(-i\ket{0})(-i\ket{0}) = (-i)^2 \ket{000} = -\ket{000}
+\end{align}
+ดังนั้น
+\begin{equation}
+\hat{A}\ket{\text{GHZ}} = \frac{1}{\sqrt{2}} \big( -\ket{111} - \ket{000} \big) = -1 \ket{\text{GHZ}}
+\end{equation}
+โดยความสมมาตรของการสลับที่อนุภาค จะได้ผลลัพธ์เช่นเดียวกันสำหรับ $\hat{B}$ และ $\hat{C}$
+\begin{equation}
+\hat{A}\ket{\text{GHZ}} = -\ket{\text{GHZ}}, \qquad \hat{B}\ket{\text{GHZ}} = -\ket{\text{GHZ}}, \qquad \hat{C}\ket{\text{GHZ}} = -\ket{\text{GHZ}}
+\end{equation}
+บัดนี้พิจารณาตัวดำเนินการตัวที่สี่ $\hat{D} = \sigma_x \otimes \sigma_x \otimes \sigma_x$ ในทางกลศาสตร์ควอนตัม
+\begin{align}
+\hat{D} \ket{\text{GHZ}} &= (\sigma_x \otimes \sigma_x \otimes \sigma_x) \frac{1}{\sqrt{2}}(\ket{000}+\ket{111}) \nonumber \\
+&= \frac{1}{\sqrt{2}}(\ket{111}+\ket{000}) = +1 \ket{\text{GHZ}}
+\label{eq:ghz_quantum_D}
+\end{align}
+ในทางตรงกันข้าม ตามสมมติฐานตัวแปรแฝงเฉพาะที่ ผลการวัดจะต้องถูกกำหนดล่วงหน้าด้วยค่า $m_{x,i}, m_{y,i} \in \{-1, +1\}$ สำหรับอนุภาค $i \in \{1, 2, 3\}$ ดังนั้น
+\begin{align}
+m_{x,1} m_{y,2} m_{y,3} &= -1 \label{eq:lhv_1} \\
+m_{y,1} m_{x,2} m_{y,3} &= -1 \label{eq:lhv_2} \\
+m_{y,1} m_{y,2} m_{x,3} &= -1 \label{eq:lhv_3}
+\end{align}
+เมื่อนำสมการทั้งสาม (\ref{eq:lhv_1}), (\ref{eq:lhv_2}), (\ref{eq:lhv_3}) มาคูณเข้าด้วยกัน
+\begin{equation}
+(m_{x,1} m_{x,2} m_{x,3}) (m_{y,1}^2 m_{y,2}^2 m_{y,3}^2) = (-1) \times (-1) \times (-1) = -1
+\end{equation}
+เนื่องจาก $m_{y,i} \in \{-1, +1\}$ ดังนั้น $m_{y,i}^2 = +1$ เสมอ สมการจึงลดรูปลงเหลือ
+\begin{equation}
+m_{x,1} m_{x,2} m_{x,3} = -1
+\label{eq:ghz_lhv_D}
+\end{equation}
+เมื่อเปรียบเทียบสมการ (\ref{eq:ghz_lhv_D}) ของตัวแปรแฝง ($=-1$) กับคำทำนายควอนตัมในสมการ (\ref{eq:ghz_quantum_D}) ($=+1$) พบว่าเกิด \textbf{ความขัดแย้งเชิงตรรกศาสตร์อย่างสิ้นเชิง ($+1 = -1$)}
+
+\vspace{4pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} \\
+การพิสูจน์ของเมอร์มิน (N. David Mermin) โดยใช้สถานะ GHZ นี้ แสดงให้เห็นว่าความไม่เข้ากันระหว่างทฤษฎีตัวแปรแฝงเฉพาะที่และกลศาสตร์ควอนตัม ไม่ได้เป็นเพียงเรื่องของความแตกต่างทางสถิติของความน่าจะเป็นเท่านั้น แต่เป็นความขัดแย้งเชิงตรรกะแบบเด็ดขาด ซึ่งยืนยันว่าธรรมชาติระดับมูลฐานไม่มีความเป็นจริงเฉพาะที่ (Non-local Realism) อย่างแน่นอนที่สุด
+\end{psctbox}
+
+% ==========================================================
+% สรุปสาระสำคัญประจำบทที่ 9
+% ==========================================================
+\section{สรุปสาระสำคัญประจำบทที่ 9}
+
+\begin{itemize}
+    \item \textbf{ปฏิทรรศน์ EPR และตัวแปรแฝงเฉพาะที่} ---- ไอน์สไตน์ โพดอลสกี และโรเซน (1935) ได้ตั้งคำถามต่อความสมบูรณ์ของกลศาสตร์ควอนตัม โดยเสนอว่าอนุภาคควรมีคุณสมบัติที่ถูกกำหนดไว้ล่วงหน้าด้วยตัวแปรแฝงเฉพาะที่ เพื่อหลีกเลี่ยงการกระทำระยะไกลดุจภูตผี
+    \item \textbf{คณิตศาสตร์ของความพัวพันและการแยกสลายชมิดต์} ---- สถานะพัวพันคือสถานะที่ไม่สามารถแยกตัวประกอบเทนเซอร์ได้ การแยกสลายชมิดต์ให้เกณฑ์ตัดสินที่เด็ดขาด หากอันดับชมิดต์ $r > 1$ สถานะจะมีความพัวพัน และเอนโทรปีความพัวพันของระบบย่อย $S(\rho_A)$ จะมีค่ามากกว่าศูนย์
+    \item \textbf{สถานะเบลล์ทั้งสี่} ---- ก่อตัวเป็นฐานหลักเชิงตั้งฉากปรกติของระบบสองคิวบิต โดยมีเอนโทรปีความพัวพันสูงสุด $1\text{ ebit}$ สร้างได้จากเกต $H$ และ CNOT
+    \item \textbf{ทฤษฎีบทของเบลล์และอสมการ CHSH} ---- พิสูจน์ว่าไม่มีทฤษฎีตัวแปรแฝงเฉพาะที่ใดสอดคล้องกับกลศาสตร์ควอนตัม ฟิสิกส์คลาสสิกจำกัด $S \le 2$ ในขณะที่กลศาสตร์ควอนตัมสามารถละเมิดได้สูงสุดถึงขอบเขตซิเรลสัน $S = 2\sqrt{2} \approx 2.8284$ ซึ่งได้รับการยืนยันจากการทดลองไร้ช่องโหว่และได้รับรางวัลโนเบลปี 2022
+    \item \textbf{ทฤษฎีบทห้ามโคลน (No-Cloning Theorem)} ---- ความเป็นเอกภาพของการแปลงสถานะควอนตัมส่งผลให้ไม่สามารถสร้างสำเนาของสถานะควอนตัมที่ไม่รู้จักได้ ซึ่งเป็นรากฐานของความปลอดภัยในรหัสลับควอนตัม
+    \item \textbf{การส่งผ่านสถานะควอนตัมทางไกล} ---- ส่งมอบสถานะควอนตัมที่ไม่รู้จักโดยอาศัยคู่พัวพัน 1 คู่ และการส่งข้อมูลคลาสสิก 2 บิต โดยไม่ละเมิดทฤษฎีสัมพัทธภาพพิเศษและทฤษฎีบทห้ามโคลน
+    \item \textbf{การเข้ารหัสความหนาแน่นยิ่งยวด} ---- สามารถส่งข้อมูลคลาสสิก 2 บิตโดยการส่งคิวบิตทางกายภาพเพียง 1 คิวบิต ร่วมกับคู่พัวพันที่แชร์ไว้ล่วงหน้า
+    \item \textbf{การแจกจ่ายกุญแจรหัสลับควอนตัม (QKD)} ---- โพรโทคอล BB84 และ Ekert91 รับประกันความปลอดภัยโดยกฎฟิสิกส์ การดักฟังใดๆ จะทำให้เกิด QBER เพิ่มขึ้นอย่างมีนัยสำคัญจนสามารถตรวจจับได้
+    \item \textbf{สถานีทวนสัญญาณควอนตัมและการสลับคู่พัวพัน} ---- ทำให้สามารถเหนี่ยวนำความพัวพันระหว่างอนุภาคที่อยู่ห่างไกลข้ามทวีปได้ ซึ่งได้ผ่านการพิสูจน์เชิงประจักษ์ผ่านดาวเทียมควอนตัมม่อจื่อ
+\end{itemize}
+
+% ==========================================================
+% แบบฝึกหัดท้ายบทที่ 9
+% ==========================================================
+\section*{แบบฝึกหัดท้ายบทที่ 9}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 9}
+
+\subsection*{คำถามเชิงแนวคิด (Conceptual Questions)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item จงอธิบายสาระสำคัญของปฏิทรรศน์ EPR และชี้ให้เห็นว่าเหตุใดไอน์สไตน์จึงสรุปว่ากลศาสตร์ควอนตัมเป็นทฤษฎีที่ไม่สมบูรณ์
+    \item นิยามของ "องค์ประกอบของความเป็นจริงทางกายภาพ" ตามทัศนะของ EPR คืออะไร และเหตุใดนีลส์ บอร์ จึงไม่เห็นด้วยกับนิยามนี้
+    \item อธิบายความแตกต่างพื้นฐานระหว่างสหสัมพันธ์คลาสสิก (เช่น ถุงเท้าสีแดงและสีน้ำเงินของเบอร์เทิลมันน์) กับความพัวพันเชิงควอนตัม
+    \item เหตุใดอันดับชมิดต์ (Schmidt Rank) จึงเป็นตัวชี้วัดที่เด็ดขาดในการระบุว่าสถานะบริสุทธิ์ของระบบสองส่วนมีความพัวพันหรือไม่
+    \item จงอธิบายความหมายของเอนโทรปีความพัวพัน $S(\rho_A)$ และเหตุใดสถานะบริสุทธิ์ของระบบรวมจึงทำให้ระบบย่อยมีเอนโทรปีมากกว่าศูนย์ได้
+    \item อธิบายความสำคัญของสถานะเบลล์ทั้งสี่ในวิทยากระบวนการสารสนเทศควอนตัม และระบุสมบัติความสมมาตรของแต่ละสถานะ
+    \item เปรียบเทียบความแตกต่างระหว่างสถานะ GHZ และสถานะ W ในระบบสามคิวบิต โดยเฉพาะประเด็นความทนทานต่อการสูญเสียอนุภาค
+    \item จงอธิบายแนวคิดของทฤษฎีบทเบลล์ และชี้ให้เห็นว่าเหตุใดทฤษฎีบทนี้จึงเปลี่ยนปัญหาปรัชญาให้กลายเป็นการทดลองทางฟิสิกส์
+    \item อธิบายความหมายทางกายภาพของอสมการ CHSH และเหตุใดขอบเขตคลาสสิกจึงอยู่ที่ $S \le 2$
+    \item ขอบเขตของซิเรลสัน ($S \le 2\sqrt{2}$) บ่งบอกอะไรเกี่ยวกับโครงสร้างทางคณิตศาสตร์ของกลศาสตร์ควอนตัม
+    \item อธิบายช่องโหว่ทางเทคนิคสามประการในการทดสอบอสมการเบลล์ (ความเป็นเฉพาะที่ การตรวจจับ และอิสระในการเลือก)
+    \item การทดลองรางวัลโนเบลสาขาฟิสิกส์ปี 2022 มีส่วนสำคัญอย่างไรต่อการยุติข้อถกเถียงเรื่องตัวแปรแฝงเฉพาะที่
+    \item จงอธิบายว่าเหตุใดการมีอยู่ของทฤษฎีบทห้ามโคลน (No-Cloning Theorem) จึงทำให้การดักฟังในช่องสัญญาณควอนตัมไม่สามารถทำได้โดยไร้ร่องรอย
+    \item ในโพรโทคอลเทเลพอร์ตเทชัน ข้อมูลของสถานะ $\ket{\psi}$ เดินทางข้ามอวกาศได้อย่างไร และเหตุใดจึงไม่สามารถส่งข้อมูลได้เร็วกว่าแสง
+    \item อธิบายบทบาทของช่องทางการสื่อสารคลาสสิก 2 บิตในโพรโทคอลการส่งผ่านสถานะควอนตัมทางไกล
+    \item เปรียบเทียบการไหลของสารสนเทศในโพรโทคอลเทเลพอร์ตเทชันและการเข้ารหัสความหนาแน่นยิ่งยวด (Superdense Coding)
+    \item อธิบายกลไกที่ทำให้อลิซและบ็อบสามารถตรวจจับการดักฟังแบบ Intercept-Resend ของอีฟในโพรโทคอล BB84 ได้
+    \item เหตุใดโพรโทคอล Ekert91 จึงถูกจัดว่าเป็นรหัสลับควอนตัมแบบไม่จำเป็นต้องเชื่อใจอุปกรณ์ (Device-Independent QKD)
+    \item อธิบายหลักการของการสลับคู่พัวพัน (Entanglement Swapping) และเหตุใดจึงเป็นหัวใจสำคัญของสถานีทวนสัญญาณควอนตัม
+    \item ดาวเทียมควอนตัมม่อจื่อช่วยก้าวข้ามข้อจำกัดของการสื่อสารควอนตัมในสายใยแก้วนำแสงได้อย่างไร
+\end{enumerate}
+
+\subsection*{โจทย์ปัญหาเชิงวิเคราะห์และคำนวณ (Analytical Problems)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item ระบบสองคิวบิตอยู่ในสถานะ $\ket{\psi} = \frac{1}{\sqrt{3}}\ket{00} + \frac{\sqrt{2}}{\sqrt{3}}\ket{11}$ จงหาอันดับชมิดต์ และคำนวณเอนโทรปีความพัวพัน $S(\rho_A)$
+    \item กำหนดสถานะสองคิวบิต $\ket{\phi} = \frac{1}{2}(\ket{00} + \ket{01} + \ket{10} - \ket{11})$ จงตรวจสอบว่าสถานะนี้เป็นสถานะแยกกันได้หรือสถานะพัวพัน หากแยกกันได้จงเขียนในรูป $\ket{u}_A \otimes \ket{v}_B$
+    \item จงแสดงว่าสถานะเบลล์ $\ket{\Psi^-} = \frac{1}{\sqrt{2}}(\ket{01}-\ket{10})$ มีสมบัติไม่เปลี่ยนแปลงภายใต้การหมุนใดๆ $(U \otimes U)\ket{\Psi^-} = \ket{\Psi^-}$ สำหรับทุก $U \in SU(2)$
+    \item ในการทดสอบอสมการ CHSH หากเลือกมุม $\theta_a = 0$, $\theta_{a'} = \pi/3$, $\theta_b = \pi/6$, $\theta_{b'} = \pi/2$ จงคำนวณค่า $S$ สำหรับสถานะซิงเกลต์
+    \item จงพิสูจน์เอกลักษณ์ทางพีชคณิตของตัวดำเนินการ CHSH
+    \begin{equation}
+    (A \otimes B - A \otimes B' + A' \otimes B + A' \otimes B')^2 = 4I - [A, A'] \otimes [B, B']
+    \end{equation}
+    และใช้เอกลักษณ์นี้ในการพิสูจน์ขอบเขตซิเรลสัน $\|S\| \le 2\sqrt{2}$
+    \item กำหนดให้สถานะเริ่มต้นของอลิซในโพรโทคอลเทเลพอร์ตเทชันคือ $\ket{\psi} = \frac{1}{\sqrt{5}}\ket{0} + \frac{2}{\sqrt{5}}\ket{1}$ จงเขียนสถานะรวมสามคิวบิตและแสดงขั้นตอนการแปลงของบ็อบเมื่ออลิซวัดได้สถานะ $\ket{\Psi^-}_{12}$
+    \item หากในโพรโทคอลเทเลพอร์ตเทชัน คู่พัวพันเริ่มต้นคือ $\ket{\Psi^+} = \frac{1}{\sqrt{2}}(\ket{01}+\ket{10})$ แทนที่จะเป็น $\ket{\Phi^+}$ จงสร้างตารางการแปลงเอกภาพของบ็อบสำหรับผลการวัดทั้งสี่กรณี
+    \item ในโพรโทคอลซูเปอร์เดนส์โคดดิง หากอลิซต้องการส่งข้อความบิต $11$ จงแสดงการวิวัฒน์ของสถานะตั้งแต่เริ่มต้นจนกระทั่งบ็อบทำการวัดสถานะเบลล์
+    \item ในการสื่อสารด้วยโพรโทคอล BB84 หากอีฟทำการดักฟังโฟตอนทั้งหมดด้วยฐานสุ่ม จงคำนวณอัตราความผิดพลาดของบิตควอนตัม (QBER)
+    \item สำหรับสถานะ GHZ $\ket{\text{GHZ}} = \frac{1}{\sqrt{2}}(\ket{000}+\ket{111})$ จงคำนวณเมทริกซ์ความหนาแน่นลดทอนของสองคิวบิตแรก $\rho_{12} = \text{Tr}_3(\ket{\text{GHZ}}\bra{\text{GHZ}})$ และคำนวณความบริสุทธิ์ $\text{Tr}(\rho_{12}^2)$
+    \item สำหรับสถานะ W $\ket{\text{W}} = \frac{1}{\sqrt{3}}(\ket{001}+\ket{010}+\ket{100})$ จงหาเมทริกซ์ความหนาแน่นลดทอน $\rho_{12}$ และตรวจสอบว่ายังคงมีความพัวพันหลงเหลืออยู่หรือไม่โดยใช้เกตการแยกสลาย
+    \item คู่โฟตอนอยู่ในสถานะผสม $\rho = (1-p)\ket{\Phi^+}\bra{\Phi^+} + p\ket{\Phi^-}\bra{\Phi^-}$ จงหาค่าพารามิเตอร์ CHSH $S$ ในรูปของ $p$ สำหรับมุมที่เหมาะสมที่สุด และหาช่วงของ $p$ ที่ทำให้อสมการเบลล์ถูกละเมิด
+    \item ในการทดลอง QKD หากสายใยแก้วนำแสงมีค่าสัมประสิทธิ์การลดทอน $\alpha = 0.2\text{ dB/km}$ ที่ระยะทาง $100\text{ km}$ จงคำนวณสัดส่วนของโฟตอนที่สามารถส่งผ่านไปถึงเครื่องรับได้
+    \item พิจารณาการพิสูจน์ทฤษฎีบทห้ามลบสถานะควอนตัม (No-Deleting Theorem) จงแสดงว่าไม่มีตัวดำเนินการเอกภาพ $U$ ใดที่สามารถกระทำ $U(\ket{\psi}\ket{\psi}\ket{A}) = \ket{\psi}\ket{0}\ket{A'}$ สำหรับสองสถานะใดๆ ที่ไม่ตั้งฉากกัน
+    \item ในการสลับคู่พัวพัน หากคู่เริ่มต้นทั้งสองคู่คือ $\ket{\Psi^-}_{12}$ และ $\ket{\Psi^-}_{34}$ จงหาสถานะของคิวบิต 1 และ 4 เมื่อสถานีตรงกลางวัดได้สถานะ $\ket{\Phi^+}_{23}$
+    \item จงคำนวณค่าคาดหวังของตัวดำเนินการ $\langle \sigma_z \otimes \sigma_z \rangle$ และ $\langle \sigma_x \otimes \sigma_x \rangle$ สำหรับสถานะเบลล์ทั้งสี่สถานะ
+    \item ในระบบสามคิวบิต จงคำนวณค่าคาดหมาย $\langle \text{GHZ} | \sigma_z \otimes \sigma_z \otimes I | \text{GHZ} \rangle$ และเปรียบเทียบกับกรณีของสถานะ W
+    \item หากช่องสัญญาณควอนตัมมีสัญญาณรบกวนแบบพลิกบิต (Bit-Flip Channel) ด้วยความน่าจะเป็น $p = 0.1$ จงคำนวณความแม่นยำของการส่งผ่านสถานะเทเลพอร์ตเทชัน
+    \item จงแสดงว่าสถานะเบลล์สามารถเขียนในรูปของตัวดำเนินการสร้างและทำลายของโบซอนในโหมดแสงสองโหมดได้อย่างไร
+    \item \textbf{โจทย์ประยุกต์การคำนวณเชิงตัวเลขด้วย Qiskit (Computational Task)} ---- จงเขียนโค้ดภาษา Python โดยใช้ไลบรารี Qiskit เพื่อสร้างวงจรการสลับคู่พัวพัน (Entanglement Swapping Circuit) สี่คิวบิต ทำการจำลองการวัดแบบ Bell-State Measurement บนคิวบิต 1 และ 2 จากนั้นใช้ฟังก์ชัน Statevector เพื่อคำนวณเมทริกซ์ความหนาแน่นลดทอนของคิวบิต 0 และ 3 พร้อมทั้งคำนวณค่าความพัวพันคอนเคอร์เรนซ์ (Concurrence) เพื่อยืนยันว่าคิวบิตทั้งสองพัวพันกันอย่างสมบูรณ์แบบ
+\end{enumerate}

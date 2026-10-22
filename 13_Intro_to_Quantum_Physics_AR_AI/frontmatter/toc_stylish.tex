@@ -1,0 +1,373 @@
+% !TEX program = xelatex
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,margin=0mm]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc,shadows.blur}
+\usepackage[skins]{tcolorbox}
+
+\setmainfont{Sarabun}
+\setsansfont{Sarabun}
+
+\definecolor{themeCol}{HTML}{060A17}
+\definecolor{bgEndCol}{HTML}{0B1329}
+\definecolor{accentCol}{HTML}{00E5FF}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay]
+    % พื้นหลังไล่เฉดสีล้ำสมัย
+    \shade[top color=themeCol, bottom color=bgEndCol] (current page.north west) rectangle (current page.south east);
+    
+    % เส้นประดับบนและล่าง
+    \fill[accentCol] ($(current page.north west)+(0, -3mm)$) rectangle ($(current page.north east)+(0, 0)$);
+    \fill[accentCol] ($(current page.south west)+(0, 0)$) rectangle ($(current page.south east)+(0, 3mm)$);
+\end{tikzpicture}
+
+\vspace*{0.8cm}
+\begin{center}
+    % กล่องหัวสารบัญเท่ๆ
+    \begin{tcolorbox}[
+        enhanced,
+        colback=black!70,
+        colframe=accentCol,
+        boxrule=1.5pt,
+        arc=6pt,
+        width=18.6cm,
+        drop fuzzy shadow=black!60,
+        top=7pt, bottom=7pt, left=12pt, right=12pt
+    ]
+        \begin{minipage}{0.68\textwidth}
+            {\fontsize{10pt}{12pt}\selectfont\bfseries\color{accentCol} 📑 สารบัญเนื้อหาและโครงสร้างบทเรียน • TABLE OF CONTENTS} \\[3pt]
+            {\fontsize{16pt}{20pt}\selectfont\bfseries\color{white} ควอนตัมฟิสิกส์เบื้องต้น} \\[2pt]
+            {\fontsize{10.5pt}{14pt}\selectfont\color{accentCol!90!white} Introduction to Quantum Physics with WebAR and AI}
+        \end{minipage}%
+        \hfill
+        \begin{minipage}{0.28\textwidth}
+            \raggedleft
+            \colorbox{accentCol!25}{\fontsize{9pt}{12pt}\selectfont\bfseries\color{accentCol} 10 UNITS / CHAPTERS} \\[3pt]
+            {\fontsize{8.5pt}{11pt}\selectfont\color{white!80} OBE Active Learning 2569}
+        \end{minipage}
+    \end{tcolorbox}
+    
+    \vspace{0.2cm}
+    
+    
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_prism.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 01 • CHAPTER 01} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} สมบัติเชิงอนุภาคของคลื่นแม่เหล็กไฟฟ้า} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} การแผ่รังสีของวัตถุดำ ปรากฏการณ์โฟโตอิเล็กทริก และการกระเจิงคอมป์ตัน}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 01}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_coordinate.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 02 • CHAPTER 02} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} สมบัติเชิงคลื่นของอนุภาคและทวิภาวะ} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} สมมติฐานของเดอบรอยล์ การเลี้ยวเบนของอิเล็กตรอน และหลักความไม่แน่นอน}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 02}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_integral.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 03 • CHAPTER 03} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} สมการชเรอดิงเงอร์และกลศาสตร์คลื่น} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} ฟังก์ชันคลื่น ความหนาแน่นความน่าจะเป็น และตัวดำเนินการฮาร์มิเชียน}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 03}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_matrix.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 04 • CHAPTER 04} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} บ่อศักย์และปรากฏการณ์การทะลุผ่านกำแพงศักย์} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} บ่อศักย์หนึ่งมิติ กำแพงศักย์ และ Quantum Tunneling เชิงตัวเลข}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 04}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_atom.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 05 • CHAPTER 05} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} ตัวแกว่งกวัดฮาร์มอนิกเชิงควอนตัม} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} พหุนามแอร์มีต พลังงานจุดศูนย์ และตัวดำเนินการบันไดขั้น}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 05}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_planet.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 06 • CHAPTER 06} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} อะตอมไฮโดรเจนและโมเมนตัมเชิงมุม} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} ฮาร์มอนิกทรงกลม สปินของอิเล็กตรอน และการทดลองสเติร์น-เกอร์แลก}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 06}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_cpu.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 07 • CHAPTER 07} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} ทฤษฎีการรบกวนและสถิติเชิงควอนตัม} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} Time-Independent Perturbation ปรากฏการณ์ซีมันน์ และสถิติควอนตัม}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 07}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_vr_glasses.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 08 • CHAPTER 08} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} สารสนเทศควอนตัมและคิวบิต} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} สถานะซูเปอร์โพซิชัน บล็อกสเฟียร์สามมิติ และควอนตัมเกตพื้นฐาน}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 08}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_hologram_hand.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 09 • CHAPTER 09} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} การพัวพันเชิงควอนตัมและการเคลื่อนย้ายสถานะ} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} สถานะเบลล์ EPR Paradox ทฤษฎีบทของเบลล์ และ Quantum Teleportation}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 09}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+
+        \begin{tcolorbox}[
+            enhanced,
+            colback=black!55,
+            colframe=accentCol!60,
+            boxrule=1pt,
+            arc=5pt,
+            width=18.6cm,
+            drop fuzzy shadow=black!50,
+            top=4pt, bottom=4pt, left=6pt, right=8pt
+        ]
+            \begin{minipage}[c]{1.4cm}
+                \centering
+                \includegraphics[width=1.25cm, height=1.25cm, keepaspectratio]{/Applications/XAMPP/xamppfiles/htdocs/G2_Education_Curriculum_Exam/ALL_BOOK_COVERS_G2/PIXAR_ICONS/icon_robot.png}
+            \end{minipage}%
+            \hspace{0.3cm}%
+            \begin{minipage}[c]{14.4cm}
+                {\fontsize{8pt}{10pt}\selectfont\bfseries\color{accentCol} บทที่ 10 • CHAPTER 10} \\[2pt]
+                {\fontsize{12pt}{15pt}\selectfont\bfseries\color{white} ควอนตัมอัลกอริทึมและพรมแดนวิจัย} \\[1pt]
+                {\fontsize{9pt}{12pt}\selectfont\color{accentCol!80!white} อัลกอริทึมของดอยช์ กรูเวอร์ โชร์ และการประยุกต์ Physics-Informed Neural Networks}
+            \end{minipage}%
+            \hfill
+            \begin{minipage}[c]{1.8cm}
+                \raggedleft
+                \colorbox{accentCol!20}{\fontsize{8.5pt}{11pt}\selectfont\bfseries\color{accentCol} UNIT 10}
+            \end{minipage}
+        \end{tcolorbox}
+        \vspace{1.5pt}
+        
+    
+    \vfill
+    
+    % แถบข้อมูลท้ายสารบัญ
+    \begin{tcolorbox}[
+        enhanced,
+        colback=black!65,
+        colframe=accentCol!70,
+        boxrule=1pt,
+        arc=4pt,
+        width=18.6cm,
+        top=4pt, bottom=4pt, left=10pt, right=10pt
+    ]
+        \begin{minipage}{0.7\textwidth}
+            {\fontsize{9pt}{12pt}\selectfont\color{white!90} \textbf{ผู้ช่วยศาสตราจารย์ ดร.ชีวะ  ทัศนา} • สาขาวิชาดิจิทัลการเกษตรและสิ่งแวดล้อม คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏรำไพพรรณี}
+        \end{minipage}%
+        \hfill
+        \begin{minipage}{0.28\textwidth}
+            \raggedleft
+            {\fontsize{8.5pt}{11pt}\selectfont\color{accentCol} RBRU Smart Courseware 2569}
+        \end{minipage}
+    \end{tcolorbox}
+\end{center}
+
+\end{document}

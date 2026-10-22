@@ -1,0 +1,1013 @@
+\chapter{ตัวแกว่งกวัดฮาร์มอนิกควอนตัมและพีชคณิตตัวดำเนินการ}
+\label{chap_harmonic_oscillator}
+\index{ตัวแกว่งกวัดฮาร์มอนิกควอนตัม (Quantum Harmonic Oscillator)}
+\index{พหุนามแอร์มีต (Hermite Polynomials)}
+\index{ตัวดำเนินการบันได (Ladder Operators)}
+\index{พลังงานจุดศูนย์ (Zero-Point Energy)}
+\index{สถานะอาพันธ์ (Coherent States)}
+\index{สถานะบีบอัด (Squeezed States)}
+\index{ฟังก์ชันวิกเนอร์ (Wigner Function)}
+\index{โฟนอน (Phonons)}
+\index{สเปกโทรสโกปีอินฟราเรด (FTIR Spectroscopy)}
+\index{วงจรเรโซเนเตอร์ควอนตัม (Quantum LC Resonator)}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 5
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 5}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 5}
+
+\begin{lessonplanbox}
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item พลวัตการสั่นขนาดเล็ก ศักย์ฮาร์มอนิก และการประมาณในระบบฟิสิกส์สากล
+    \item การแก้สมการชเรอดิงเงอร์เชิงวิเคราะห์ด้วยพหุนามแอร์มีตและฟังก์ชันก่อกำเนิด
+    \item พลังงานจุดศูนย์ ทฤษฎีบทไวรัล และผลสืบเนื่องทางอภิปรัชญาฟิสิกส์สุญญากาศ
+    \item วิธีการเชิงพีชคณิตของดิแรก ---- ตัวดำเนินการบันไดและแอลจีบราไฮเซนแบร์ก-ไวล์
+    \item การคำนวณค่าคาดหวังระดับสูงและการแทนตัวดำเนินการในรูปเมทริกซ์ฟ็อก
+    \item สถานะอาพันธ์ของกลอเบอร์ ตัวดำเนินการเลื่อนตำแหน่ง และการแจกแจงแบบปัวซง
+    \item สถานะบีบอัดของแสง การตรวจจับคลื่นความโน้มถ่วง LIGO และออปโตเมคานิกส์ควอนตัม
+    \item การประยุกต์ร่วมสมัย ---- โฟนอนในของแข็ง สเปกโทรสโกปี FTIR และวงจรควอนตัม LC
+    \item ห้องปฏิบัติการเสมือนจริง WebAR ตัวแกว่งกวัดควอนตัมและฟังก์ชันคลื่นแอร์มีต
+    \item การจำลองเชิงตัวเลขด้วยภาษา Python การหาค่าเจาะจงเมทริกซ์และฟังก์ชันวิกเนอร์ 2 มิติ
+    \item ตัวอย่างการแก้โจทย์ปัญหาเชิงวิเคราะห์แบบ P-S-C-T ครอบคลุม 7 สถานการณ์เชิงลึก
+    \item สรุปสาระสำคัญประจำบท คำถามเชิงมโนทัศน์ 20 ข้อ และแบบฝึกหัดคำนวณขั้นสูง 20 ข้อ
+\end{enumerate}
+
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
+    \item อธิบายความสำคัญเชิงสากลของศักย์ฮาร์มอนิกและการกระจายเทย์เลอร์รอบจุดสมดุลเสถียรได้อย่างถูกต้อง
+    \item แก้สมการชเรอดิงเงอร์ด้วยวิธีอนุกรมโฟรเบนิอุสและอนุพัทธ์พหุนามแอร์มีตเพื่อหาระดับพลังงาน $E_n = (n + 1/2)\hbar\omega$ ได้อย่างรัดกุม
+    \item พิสูจน์ที่มาของพลังงานจุดศูนย์ $E_0 = \frac{1}{2}\hbar\omega$ จากหลักความไม่แน่นอนของไฮเซนแบร์กและทฤษฎีบทไวรัลได้
+    \item ประยุกต์ใช้พีชคณิตตัวดำเนินการบันได $\hat{a}$ และ $\hat{a}^\dagger$ ในการคำนวณค่าคาดหวังของตัวแปร $\hat{x}^k$ และ $\hat{p}^k$ ได้อย่างรวดเร็ว
+    \item อนุพัทธ์สมบัติของสถานะอาพันธ์ $\ket{\alpha}$ และพิสูจน์การแจกแจงความน่าจะเป็นของจำนวนโฟตอนแบบปัวซงได้
+    \item วิเคราะห์กลไกการลดสัญญาณรบกวนควอนตัมในสถานะบีบอัดและการประยุกต์ในเครื่องตรวจวัดคลื่นความโน้มถ่วงได้
+    \item พัฒนาโปรแกรมภาษา Python เพื่อคำนวณระดับพลังงาน ฟังก์ชันคลื่น และฟังก์ชันวิกเนอร์ในปริภูมิเฟสได้อย่างแม่นยำ
+\end{enumerate}
+\end{lessonplanbox}
+
+\newpage
+
+% ==========================================================
+% 5.1 พลวัตการสั่นขนาดเล็ก ศักย์ฮาร์มอนิก และการประมาณในระบบฟิสิกส์สากล
+% ==========================================================
+\section{พลวัตการสั่นขนาดเล็ก ศักย์ฮาร์มอนิก และการประมาณในระบบฟิสิกส์สากล}
+\label{sec_small_oscillations_potential}
+\index{ศักย์ฮาร์มอนิก (Harmonic Potential)}
+\index{การกระจายอนุกรมเทย์เลอร์ (Taylor Series Expansion)}
+\index{ศักย์มอร์ส (Morse Potential)}
+\index{ศักย์เลนนาร์ด-โจนส์ (Lennard-Jones Potential)}
+
+ตัวแกว่งกวัดฮาร์มอนิก (Harmonic Oscillator) ถือเป็นระบบต้นแบบที่มีความสำคัญยิ่งยวดที่สุดระบบหนึ่งในวิชาฟิสิกส์ ไม่เพียงเฉพาะในกลศาสตร์ดั้งเดิม แต่ครอบคลุมไปถึงกลศาสตร์ควอนตัม ฟิสิกส์สถิติ ทัศนศาสตร์ควอนตัม และทฤษฎีสนามควอนตัม เหตุผลหลักที่ทำให้แบบจำลองนี้ปรากฏอยู่ทั่วไปในธรรมชาติคือ \textbf{ศักย์ราบเรียบใดๆ ที่มีจุดต่ำสุดสัมพัทธ์ (จุดสมดุลเสถียร) สามารถประมาณค่าด้วยศักย์ฮาร์มอนิกแบบพาราโบลาได้เสมอสำหรับการกระจัดขนาดเล็ก}
+
+\subsection{การกระจายอนุกรมเทย์เลอร์รอบจุดสมดุลเสถียร}
+พิจารณาอนุภาคที่เคลื่อนที่ในหนึ่งมิติภายใต้สนามพลังงานศักย์ราบเรียบ $V(x)$ สมมติให้ระบบมีจุดสมดุลเสถียร ณ ตำแหน่ง $x = x_0$ เมื่อทำการกระจายอนุกรมเทย์เลอร์รอบจุดดังกล่าว จะได้
+\begin{equation}
+V(x) = V(x_0) + \left. \frac{dV}{dx} \right|_{x_0} (x - x_0) + \frac{1}{2!} \left. \frac{d^2V}{dx^2} \right|_{x_0} (x - x_0)^2 + \frac{1}{3!} \left. \frac{d^3V}{dx^3} \right|_{x_0} (x - x_0)^3 + \dots
+\end{equation}
+
+เนื่องจาก $x_0$ เป็นจุดสมดุลเสถียร แรงลัพธ์ที่กระทำต่ออนุภาค ณ จุดนี้ต้องเป็นศูนย์ นั่นคือ
+\begin{equation}
+F(x_0) = -\left. \frac{dV}{dx} \right|_{x_0} = 0
+\end{equation}
+นอกจากนี้ เราสามารถนิยามระดับอ้างอิงของพลังงานศักย์ให้ $V(x_0) = 0$ ได้โดยไม่ส่งผลต่อฟิสิกส์ของแรง และกำหนดพิกัดใหม่ให้จุดสมดุลอยู่ที่จุดกำเนิด ($x_0 = 0$) เมื่อการสั่นมีแอมพลิจูดขนาดเล็กมาก ($|x| \ll 1$) เทอมอันดับสามขึ้นไปจะมีค่าน้อยมากจนสามารถตัดทิ้งได้ นำไปสู่การประมาณการสั่นขนาดเล็ก (Small Oscillations Approximation)
+\begin{equation}
+V(x) \approx \frac{1}{2} k x^2 = \frac{1}{2} m \omega^2 x^2
+\end{equation}
+โดยที่ค่าคงตัวสปริงยังผลกำหนดโดยอนุพันธ์อันดับสองของศักย์ ณ จุดสมดุล
+\begin{equation}
+k \equiv \left. \frac{d^2V}{dx^2} \right|_{x_0} > 0
+\end{equation}
+และความถี่เชิงมุมดั้งเดิมของการสั่นคือ $\omega = \sqrt{k/m}$
+
+\subsection{ตัวอย่างศักย์ในธรรมชาติ ---- ศักย์มอร์สและศักย์เลนนาร์ด-โจนส์}
+ในการอธิบายพันธะเคมีระหว่างอะตอมในโมเลกุลสองอะตอม (Diatomic Molecules) พลังงานศักย์จริงจะมีลักษณะไม่สมมาตรและเปิดโอกาสให้โมเลกุลแตกตัวได้ (Dissociation) ฟังก์ชันศักย์ที่นิยมใช้มากที่สุดคือ \textbf{ศักย์มอร์ส (Morse Potential)}
+\begin{equation}
+V_{\text{Morse}}(r) = D_e \left[ 1 - e^{-a(r - r_e)} \right]^2
+\end{equation}
+โดยที่ $D_e$ คือพลังงานความลึกของบ่อศักย์ และ $r_e$ คือระยะห่างสมดุลระหว่างนิวเคลียสทั้งสอง เมื่อกระจายรอบ $r = r_e$
+\begin{align}
+\left. \frac{dV_{\text{Morse}}}{dr} \right|_{r_e} &= 2 D_e a \left[ 1 - e^{-a(r - r_e)} \right] e^{-a(r - r_e)} \Big|_{r_e} = 0 \\
+k_{\text{eff}} = \left. \frac{d^2V_{\text{Morse}}}{dr^2} \right|_{r_e} &= 2 D_e a^2
+\end{align}
+ดังนั้น ใกล้จุดสมดุล ศักย์มอร์สจะลดรูปลงเป็นศักย์ฮาร์มอนิก $V(r) \approx D_e a^2 (r - r_e)^2$ อย่างสมบูรณ์แบบ
+
+ในทำนองเดียวกัน สำหรับอันตรกิริยาฟานเดอร์วาลส์ระหว่างอะตอมก๊าซมีตระกูล เช่น อาร์กอนหรือซีนอน \textbf{ศักย์เลนนาร์ด-โจนส์ (Lennard-Jones 6-12 Potential)} มีรูปแบบดังนี้
+\begin{equation}
+V_{\text{LJ}}(r) = 4\varepsilon \left[ \left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^6 \right]
+\end{equation}
+จุดสมดุลอยู่ที่ $r_0 = 2^{1/6}\sigma \approx 1.122\sigma$ และค่าคงตัวสปริงยังผลคือ
+\begin{equation}
+k_{\text{LJ}} = \left. \frac{d^2V_{\text{LJ}}}{dr^2} \right|_{r_0} = \frac{72\varepsilon}{2^{1/3}\sigma^2}
+\end{equation}
+การที่ระบบกายภาพทั้งสองลู่เข้าสู่พฤติกรรมฮาร์มอนิกยืนยันว่า ทฤษฎีตัวแกว่งกวัดฮาร์มอนิกควอนตัมเป็นหัวใจในการเข้าใจฟิสิกส์ของโมเลกุลและของแข็งในทุกระดับพลังงาน
+
+% ==========================================================
+% 5.2 การแก้สมการชเรอดิงเงอร์เชิงวิเคราะห์ด้วยพหุนามแอร์มีต
+% ==========================================================
+\section{การแก้สมการชเรอดิงเงอร์เชิงวิเคราะห์ด้วยพหุนามแอร์มีต}
+\label{sec_hermite_analytic_solution}
+\index{พหุนามแอร์มีต (Hermite Polynomials)}
+\index{วิธีอนุกรมโฟรเบนิอุส (Frobenius Method)}
+\index{สูตรโรดริกส์ (Rodrigues Formula)}
+\index{ฟังก์ชันก่อกำเนิด (Generating Function)}
+
+สมการชเรอดิงเงอร์ที่ไม่ขึ้นกับเวลาสำหรับตัวแกว่งกวัดฮาร์มอนิกหนึ่งมิติเขียนได้เป็น
+\begin{equation}
+-\frac{\hbar^2}{2m} \frac{d^2\psi(x)}{dx^2} + \frac{1}{2}m\omega^2 x^2 \psi(x) = E\psi(x) \label{eq_sho_tise_full}
+\end{equation}
+
+\subsection{การแปลงเป็นสมการไร้มิติและพฤติกรรมกำกับที่ระยะอนันต์}
+เพื่อขจัดค่าคงตัวทางกายภาพออกจากการวิเคราะห์ เรานิยามตัวแปรตำแหน่งไร้มิติ $\xi$ และตัวแปรพลังงานไร้มิติ $K$
+\begin{equation}
+\xi \equiv \sqrt{\frac{m\omega}{\hbar}} \, x, \qquad K \equiv \frac{2E}{\hbar\omega}
+\end{equation}
+เมื่อแทนตัวแปรใหม่ลงในสมการ \eqref{eq_sho_tise_full} จะได้สมการเชิงอนุพันธ์ไร้มิติ
+\begin{equation}
+\frac{d^2\psi}{d\xi^2} = (\xi^2 - K)\psi \label{eq_sho_dimensionless_form}
+\end{equation}
+
+พิจารณาพฤติกรรมกำกับเมื่ออนุภาคอยู่ห่างไกลจากจุดสมดุลมาก ($\xi \to \pm\infty$) เทอม $\xi^2$ จะมีค่ามากกว่า $K$ อย่างมหาศาล ทำให้สมการมีรูปประมาณเป็น $\frac{d^2\psi}{d\xi^2} \approx \xi^2 \psi$ ซึ่งมีผลเฉลยทั่วไปเป็น $\psi(\xi) \sim A e^{-\xi^2/2} + B e^{\xi^2/2}$ เนื่องจากฟังก์ชันคลื่นต้องสามารถนอร์มอลไลซ์ได้ทางกายภาพ ($\psi \to 0$ เมื่อ $|\xi| \to \infty$) ค่าคงตัว $B$ จึงต้องเป็นศูนย์อย่างเคร่งครัด
+
+ดังนั้น เราจึงตั้งสมมติฐานผลเฉลยที่สมบูรณ์ในรูปผลคูณระหว่างพฤติกรรมกำกับกับฟังก์ชันพหุนาม $H(\xi)$
+\begin{equation}
+\psi(\xi) = H(\xi) e^{-\xi^2/2}
+\end{equation}
+คำนวณอนุพันธ์อันดับหนึ่งและสองของ $\psi(\xi)$
+\begin{align}
+\frac{d\psi}{d\xi} &= \left( \frac{dH}{d\xi} - \xi H \right) e^{-\xi^2/2} \\
+\frac{d^2\psi}{d\xi^2} &= \left( \frac{d^2H}{d\xi^2} - 2\xi \frac{dH}{d\xi} + (\xi^2 - 1)H \right) e^{-\xi^2/2}
+\end{align}
+แทนค่ากลับลงในสมการ \eqref{eq_sho_dimensionless_form} จะได้ \textbf{สมการเชิงอนุพันธ์ของแอร์มีต (Hermite Differential Equation)}
+\begin{equation}
+\frac{d^2H}{d\xi^2} - 2\xi \frac{dH}{d\xi} + (K - 1)H = 0 \label{eq_hermite_diffeq}
+\end{equation}
+
+\subsection{การแก้สมการด้วยอนุกรมกำลังโฟรเบนิอุสและการควอนไตซ์พลังงาน}
+สมมติให้ฟังก์ชัน $H(\xi)$ สามารถเขียนในรูปอนุกรมกำลังรอบจุดกำเนิด
+\begin{equation}
+H(\xi) = \sum_{j=0}^\infty a_j \xi^j = a_0 + a_1 \xi + a_2 \xi^2 + \dots
+\end{equation}
+หาอนุพันธ์และแทนลงในสมการ \eqref{eq_hermite_diffeq}
+\begin{equation}
+\sum_{j=0}^\infty (j + 1)(j + 2) a_{j+2} \xi^j - \sum_{j=0}^\infty 2j a_j \xi^j + \sum_{j=0}^\infty (K - 1) a_j \xi^j = 0
+\end{equation}
+รวมสัมประสิทธิ์ของ $\xi^j$ แต่ละกำลังเข้าด้วยกัน จะได้ความสัมพันธ์เวียนเกิด (Recurrence Relation)
+\begin{equation}
+a_{j+2} = \frac{2j + 1 - K}{(j + 1)(j + 2)} a_j \label{eq_recurrence_relation}
+\end{equation}
+
+หากอนุกรมกำลังไม่สิ้นสุด สำหรับค่า $j$ ที่มีขนาดใหญ่มาก ($j \gg 1$)
+\begin{equation}
+\frac{a_{j+2}}{a_j} \approx \frac{2j}{j^2} = \frac{2}{j}
+\end{equation}
+ซึ่งเป็นพฤติกรรมการลู่ออกแบบเดียวกับการกระจายอนุกรมของฟังก์ชันเอกซ์โพเนนเชียล $e^{\xi^2} = \sum_{k=0}^\infty \frac{\xi^{2k}}{k!}$ โดยมีอัตราส่วนสัมประสิทธิ์ $\frac{c_{k+1}}{c_k} = \frac{1}{k+1} \approx \frac{2}{j}$ หากเป็นเช่นนั้น ฟังก์ชันคลื่นโดยรวมจะมีพฤติกรรมเป็น $\psi(\xi) \sim e^{\xi^2} e^{-\xi^2/2} = e^{\xi^2/2}$ ซึ่งจะลู่ออกสู่ค่าอนันต์ที่ระยะไกล และทำให้ไม่สามารถนอร์มอลไลซ์ได้
+
+เพื่อรักษาความเป็นไปได้ทางกายภาพ \textbf{อนุกรมกำลังจะต้องถูกตัดทอนให้สิ้นสุดกลายเป็นพหุนามอันดับจำกัด (Polynomial Truncation)} นั่นคือ ต้องมีจำนวนเต็ม $n \ge 0$ ที่ทำให้เศษของความสัมพันธ์เวียนเกิด \eqref{eq_recurrence_relation} กลายเป็นศูนย์เมื่อ $j = n$
+\begin{equation}
+2n + 1 - K = 0 \quad \Longrightarrow \quad K = 2n + 1
+\end{equation}
+เมื่อแทนค่า $K \equiv \frac{2E}{\hbar\omega}$ กลับคืน จะได้ระดับพลังงานควอนไตซ์ที่โด่งดังของตัวแกว่งกวัดฮาร์มอนิก
+\begin{equation}
+E_n = \left( n + \frac{1}{2} \right) \hbar\omega, \qquad n = 0, 1, 2, 3, \dots
+\end{equation}
+
+ข้อสังเกตที่สำคัญอย่างยิ่งคือ ระดับพลังงานแต่ละชั้นอยู่ห่างกันเท่ากันอย่างสม่ำเสมอเป็นระยะ $\Delta E = \hbar\omega$ ซึ่งเป็นสเปกตรัมพลังงานที่มีลักษณะสมมาตรแบบขั้นบันได และระดับพลังงานต่ำสุดที่ $n = 0$ ไม่ได้เป็นศูนย์ แต่มีค่าเท่ากับ $E_0 = \frac{1}{2}\hbar\omega$
+
+\subsection{คุณสมบัติของพหุนามแอร์มีตและฟังก์ชันคลื่นไอเกนสเตต}
+พหุนามที่ได้จากการตัดทอนอนุกรมกำลังนี้เรียกว่า \textbf{พหุนามแอร์มีต (Hermite Polynomials, $H_n(\xi)$)} ซึ่งสามารถสร้างได้จาก \textbf{สูตรโรดริกส์ (Rodrigues Formula)}
+\begin{equation}
+H_n(\xi) = (-1)^n e^{\xi^2} \frac{d^n}{d\xi^n} \left( e^{-\xi^2} \right)
+\end{equation}
+
+พหุนามแอร์มีต 6 ลำดับแรกมีรูปแบบดังนี้
+\begin{align}
+H_0(\xi) &= 1 \\
+H_1(\xi) &= 2\xi \\
+H_2(\xi) &= 4\xi^2 - 2 \\
+H_3(\xi) &= 8\xi^3 - 12\xi \\
+H_4(\xi) &= 16\xi^4 - 48\xi^2 + 12 \\
+H_5(\xi) &= 32\xi^5 - 160\xi^3 + 120\xi
+\end{align}
+
+นอกจากนี้ พหุนามแอร์มีตยังสามารถสร้างได้จาก \textbf{ฟังก์ชันก่อกำเนิด (Generating Function)}
+\begin{equation}
+\Phi(\xi, s) \equiv e^{-s^2 + 2s\xi} = \sum_{n=0}^\infty \frac{H_n(\xi)}{n!} s^n
+\end{equation}
+และสอดคล้องกับคุณสมบัติความตั้งฉากปรกติถ่วงน้ำหนัก (Orthogonality Relation)
+\begin{equation}
+\int_{-\infty}^\infty H_m(\xi) H_n(\xi) e^{-\xi^2} d\xi = \sqrt{\pi} 2^n n! \, \delta_{mn}
+\end{equation}
+
+เมื่อนำค่าคงตัวการนอร์มอลไลซ์มารวมเข้าด้วยกัน จะได้ฟังก์ชันคลื่นไอเกนสเตตที่สมบูรณ์ของตัวแกว่งกวัดฮาร์มอนิกควอนตัม
+\begin{equation}
+\psi_n(x) = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}} x\right) \exp\left( -\frac{m\omega}{2\hbar} x^2 \right) \label{eq_sho_normalized_wavefunction}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.15]
+    % Potential Parabola
+    \draw[-{Stealth}, darkNavy, line width=1.2pt] (-4.0, 0) -- (4.0, 0) node[right] {$x$};
+    \draw[-{Stealth}, darkNavy, line width=1.2pt] (0, -0.3) -- (0, 5.2) node[above] {$V(x), E$};
+    \draw[darkNavy, line width=2pt, domain=-2.8:2.8, samples=80] plot (\x, {0.6*\x*\x});
+    \node at (2.5, 4.2) [font=\bfseries\color{darkNavy}] {$V(x) = \frac{1}{2}m\omega^2 x^2$};
+    
+    % Level n=0
+    \draw[dashed, slateGrey!60] (-1.0, 0.6) -- (1.0, 0.6) node[right, font=\footnotesize] {$E_0 = \frac{1}{2}\hbar\omega$};
+    \draw[cyberBlue, line width=1.8pt, domain=-2.5:2.5, samples=80] plot (\x, {0.6 + 0.6*exp(-\x*\x)});
+    \node at (0, 1.45) [font=\footnotesize\bfseries\color{cyberBlue}] {$\psi_0(x)$};
+    
+    % Level n=1
+    \draw[dashed, slateGrey!60] (-1.7, 1.8) -- (1.7, 1.8) node[right, font=\footnotesize] {$E_1 = \frac{3}{2}\hbar\omega$};
+    \draw[neonPurple, line width=1.8pt, domain=-2.5:2.5, samples=80] plot (\x, {1.8 + 0.7*\x*exp(-\x*\x*0.7)});
+    \node at (0.8, 2.45) [font=\footnotesize\bfseries\color{neonPurple}] {$\psi_1(x)$};
+    
+    % Level n=2
+    \draw[dashed, slateGrey!60] (-2.2, 3.0) -- (2.2, 3.0) node[right, font=\footnotesize] {$E_2 = \frac{5}{2}\hbar\omega$};
+    \draw[rubyRed, line width=1.8pt, domain=-2.5:2.5, samples=100] plot (\x, {3.0 + 0.4*(2*\x*\x - 1)*exp(-\x*\x*0.5)});
+    \node at (0, 2.4) [font=\footnotesize\bfseries\color{rubyRed}] {$\psi_2(x)$};
+    
+    % Level n=3
+    \draw[dashed, slateGrey!60] (-2.6, 4.2) -- (2.6, 4.2) node[right, font=\footnotesize] {$E_3 = \frac{7}{2}\hbar\omega$};
+    \draw[emeraldGlow, line width=1.8pt, domain=-2.6:2.6, samples=100] plot (\x, {4.2 + 0.2*(2*\x*\x*\x - 3*\x)*exp(-\x*\x*0.4)});
+    \node at (1.2, 4.75) [font=\footnotesize\bfseries\color{emeraldGlow}] {$\psi_3(x)$};
+\end{tikzpicture}
+\caption{ฟังก์ชันคลื่นสถานะเจาะจง $\psi_n(x)$ สี่ระดับแรกซ้อนทับบนศักย์ฮาร์มอนิกพาราโบลา}
+\label{fig_sho_wavefunctions}
+\end{figure}
+
+จากรูปที่ \ref{fig_sho_wavefunctions} คุณสมบัติทางกายภาพที่โดดเด่นของฟังก์ชันคลื่นมีดังนี้
+\begin{enumerate}
+    \item \textbf{พาริตีที่แน่นอน} ---- ฟังก์ชันคลื่น $\psi_n(x)$ มีสมมาตรพาริตีที่สอดคล้องกับ $(-1)^n$ โดยสถานะ $n$ คู่จะเป็นฟังก์ชันคู่ ($\psi(-x) = \psi(x)$) และสถานะ $n$ คี่จะเป็นฟังก์ชันคี่ ($\psi(-x) = -\psi(x)$)
+    \item \textbf{ทฤษฎีบทจุดตัดศูนย์ (Nodal Theorem)} ---- ฟังก์ชันคลื่น $\psi_n(x)$ จะมีจำนวนจุดตัดศูนย์ (Nodes) ภายในบริเวณจำกัดเท่ากับ $n$ จุดพอดี
+    \item \textbf{การแทรกซึมในบริเวณต้องห้าม} ---- หางของฟังก์ชันคลื่นแบบเกาส์เซียน $e^{-\frac{m\omega}{2\hbar}x^2}$ แผ่ออกไปพ้นจุดวกกลับคลาสสิก $x_{\max} = \pm\sqrt{\frac{(2n+1)\hbar}{m\omega}}$ แสดงให้เห็นถึงโอกาสที่อนุภาคจะแทรกซึมเข้าไปในบริเวณที่คลาสสิกไม่อนุญาต
+\end{enumerate}
+
+% ==========================================================
+% 5.3 พลังงานจุดศูนย์และผลสืบเนื่องทางอภิปรัชญาฟิสิกส์
+% ==========================================================
+\section{พลังงานจุดศูนย์และผลสืบเนื่องทางอภิปรัชญาฟิสิกส์}
+\label{sec_zpe_vacuum}
+\index{พลังงานจุดศูนย์ (Zero-Point Energy)}
+\index{ทฤษฎีบทไวรัล (Virial Theorem)}
+\index{ความผันผวนสุญญากาศ (Vacuum Fluctuations)}
+\index{ปรากฏการณ์คาสิมีร์ (Casimir Effect)}
+
+ผลลัพธ์ที่น่าทึ่งที่สุดประการหนึ่งของกลศาสตร์ควอนตัมคือ การค้นพบว่าพลังงานต่ำสุดของตัวแกว่งกวัดฮาร์มอนิกไม่สามารถเป็นศูนย์ได้ แต่มีค่าจำกัดเท่ากับ
+\begin{equation}
+E_0 = \frac{1}{2}\hbar\omega > 0
+\end{equation}
+พลังงานนี้เรียกว่า \textbf{พลังงานจุดศูนย์ (Zero-Point Energy หรือ ZPE)} ซึ่งหมายความว่าแม้ที่อุณหภูมิศูนย์สัมบูรณ์ ($T = 0\text{ K}$) ที่ซึ่งตามทฤษฎีคลาสสิกการเคลื่อนที่ของโมเลกุลควรจะหยุดนิ่งสนิท อนุภาคควอนตัมก็ยังคงแกว่งกวัดอย่างไม่หยุดยั้ง
+
+\subsection{การอนุพัทธ์พลังงานจุดศูนย์จากหลักความไม่แน่นอน}
+เราสามารถพิสูจน์ได้ว่าพลังงานจุดศูนย์เป็นผลพวงโดยตรงที่ไม่อาจหลีกเลี่ยงได้ของหลักความไม่แน่นอนของไฮเซนแบร์ก สมมติให้อนุภาคมีความกว้างของการกระจายตำแหน่งเท่ากับ $\Delta x$ จากหลักความไม่แน่นอน
+\begin{equation}
+\Delta x \Delta p \ge \frac{\hbar}{2} \quad \Longrightarrow \quad \Delta p \ge \frac{\hbar}{2\Delta x}
+\end{equation}
+เนื่องจาก $\langle x \rangle = 0$ และ $\langle p \rangle = 0$ จากสมมาตร ค่าเฉลี่ยกำลังสองคือ $\langle x^2 \rangle = (\Delta x)^2$ และ $\langle p^2 \rangle \ge (\Delta p)^2 \ge \frac{\hbar^2}{4(\Delta x)^2}$
+
+พลังงานรวมเฉลี่ยของระบบเขียนได้เป็นฟังก์ชันของ $\Delta x$
+\begin{equation}
+E(\Delta x) = \langle T \rangle + \langle V \rangle = \frac{\langle p^2 \rangle}{2m} + \frac{1}{2}m\omega^2\langle x^2 \rangle \ge \frac{\hbar^2}{8m(\Delta x)^2} + \frac{1}{2}m\omega^2 (\Delta x)^2
+\end{equation}
+ในการหาค่าต่ำสุดของพลังงาน เราหาอนุพันธ์เทียบกับ $\Delta x$ และกำหนดให้เป็นศูนย์
+\begin{equation}
+\frac{dE}{d(\Delta x)} = -\frac{\hbar^2}{4m(\Delta x)^3} + m\omega^2(\Delta x) = 0 \quad \Longrightarrow \quad (\Delta x)^4 = \frac{\hbar^2}{4m^2\omega^2} \quad \Longrightarrow \quad (\Delta x)_0 = \sqrt{\frac{\hbar}{2m\omega}}
+\end{equation}
+แทน $(\Delta x)_0$ กลับลงในสมการพลังงาน จะได้
+\begin{equation}
+E_{\min} = \frac{\hbar^2}{8m \left(\frac{\hbar}{2m\omega}\right)} + \frac{1}{2}m\omega^2 \left(\frac{\hbar}{2m\omega}\right) = \frac{1}{4}\hbar\omega + \frac{1}{4}\hbar\omega = \frac{1}{2}\hbar\omega
+\end{equation}
+การคำนวณนี้แสดงให้เห็นว่า เพื่อที่จะลดพลังงานศักย์ลงสู่ศูนย์ อนุภาคจะต้องหยุดนิ่งอยู่ที่จุดกำเนิด ($\Delta x = 0$) แต่การทำเช่นนั้นจะทำให้โมเลกุลมีโมเมนตัมไม่แน่นอนเป็นอนันต์ ($\Delta p \to \infty$) ส่งผลให้พลังงานจลน์พุ่งสูงสู่ค่าอนันต์ ระบบจึงต้องประนีประนอมที่จุดสมดุลซึ่งพลังงานจลน์และพลังงานศักย์มีสัดส่วนเท่ากันพอดี
+
+\subsection{ทฤษฎีบทไวรัลสำหรับตัวแกว่งกวัดฮาร์มอนิก}
+ทฤษฎีบทไวรัล (Virial Theorem) สำหรับศักย์ที่มีรูปกำลัง $V(x) = c x^k$ ระบุว่าค่าคาดหวังของพลังงานจลน์และพลังงานศักย์มีความสัมพันธ์กันตามสมการ $2\langle T \rangle = k\langle V \rangle$ สำหรับตัวแกว่งกวัดฮาร์มอนิก $k = 2$ ทำให้ได้
+\begin{equation}
+\langle T \rangle_n = \langle V \rangle_n = \frac{1}{2}E_n = \frac{1}{2}\left(n + \frac{1}{2}\right)\hbar\omega
+\end{equation}
+ความเท่าเทียมกันอย่างสมบูรณ์แบบระหว่างพลังงานจลน์เฉลี่ยและพลังงานศักย์เฉลี่ยนี้เป็นจริงสำหรับทุกไอเกนสเตต $n$
+
+\subsection{ผลลัพธ์เชิงประจักษ์ในธรรมชาติ ---- ฮีเลียมเหลวและปรากฏการณ์คาสิมีร์}
+พลังงานจุดศูนย์มีผลสืบเนื่องทางกายภาพที่เป็นรูปธรรมอย่างลึกซึ้ง
+\begin{enumerate}
+    \item \textbf{สภาพของเหลวถาวรของฮีเลียม} ---- ธาตุฮีเลียม-4 ($^4\text{He}$) เป็นสสารชนิดเดียวในเอกภพที่ไม่ยอมแข็งตัวเป็นของแข็งแม้จะถูกทำให้เย็นลงจนถึงอุณหภูมิศูนย์สัมบูรณ์ภายใต้ความดันบรรยากาศปกติ สาเหตุเนื่องมาจากมวลอะตอมของฮีเลียมมีค่าน้อยและแรงดึงดูดฟานเดอร์วาลส์ระหว่างอะตอมอ่อนแอมาก ทำให้การสั่นของพลังงานจุดศูนย์มีขนาดใหญ่เพียงพอที่จะทำลายโครงผลึกของแข็งอย่างต่อเนื่อง ฮีเลียมจะตกผลึกเป็นของแข็งได้ก็ต่อเมื่อถูกอัดด้วยความดันภายนอกไม่น้อยกว่า 25 บรรยากาศเท่านั้น
+    \item \textbf{ปรากฏการณ์คาสิมีร์ (Casimir Effect)} ---- เมื่อพิจารณาสนามแม่เหล็กไฟฟ้าในสุญญากาศ โหมดการสั่นของคลื่นแม่เหล็กไฟฟ้าแต่ละโหมดสามารถจำลองได้ด้วยตัวแกว่งกวัดฮาร์มอนิกควอนตัม ซึ่งมีพลังงานจุดศูนย์ $\frac{1}{2}\hbar\omega_\mathbf{k}$ การวางแผ่นตัวนำคู่ขนานสองแผ่นที่ไม่มีประจุในสุญญากาศจะจำกัดโหมดการสั่นระหว่างแผ่น ทำให้พลังงานจุดศูนย์ในช่องว่างลดลงเมื่อเทียบกับภายนอก ก่อให้เกิดแรงดึงดูดสุทธิระหว่างแผ่นตัวนำตามทฤษฎีของเฮนดริก คาสิมีร์ (Hendrik Casimir 1948)
+    \begin{equation}
+    \frac{F}{A} = -\frac{\pi^2 \hbar c}{240 d^4}
+    \end{equation}
+    แรงนี้ได้รับการวัดอย่างแม่นยำในการทดลองทางนาโนเทคโนโลยี และเป็นหลักฐานที่ชัดเจนที่สุดของการมีอยู่จริงของความผันผวนสุญญากาศควอนตัม
+\end{enumerate}
+
+% ==========================================================
+% 5.4 วิธีการเชิงพีชคณิตของดิแรก: ตัวดำเนินการบันได
+% ==========================================================
+\section{วิธีการเชิงพีชคณิตของดิแรก ตัวดำเนินการบันไดและแอลจีบรา}
+\label{sec_dirac_ladder_algebra}
+\index{พีชคณิตตัวดำเนินการบันได (Ladder Operator Algebra)}
+\index{ตัวดำเนินการทำลาย (Annihilation Operator)}
+\index{ตัวดำเนินการสร้าง (Creation Operator)}
+\index{ตัวดำเนินการจำนวน (Number Operator)}
+
+พอล ดิแรก (Paul Dirac) ได้พัฒนาระเบียบวิธีเชิงพีชคณิตอันสง่างามและทรงพลังอย่างยิ่งในการแก้ปัญหาตัวแกว่งกวัดฮาร์มอนิก โดยไม่ต้องแก้สมการเชิงอนุพันธ์แม้แต่บรรทัดเดียว วิธีนี้อาศัยโครงสร้างพีชคณิตของตัวดำเนินการและเป็นต้นแบบของการสร้างทฤษฎีสนามควอนตัมในเวลาต่อมา
+
+\subsection{การนิยามตัวดำเนินการบันได}
+เริ่มต้นจากฮามิลโทเนียนของระบบ
+\begin{equation}
+\hat{H} = \frac{\hat{p}^2}{2m} + \frac{1}{2}m\omega^2 \hat{x}^2
+\end{equation}
+เรานิยามตัวดำเนินการไร้มิติสองตัว ได้แก่ \textbf{ตัวดำเนินการลดขั้นหรือทำลาย (Annihilation Operator, $\hat{a}$)} และ \textbf{ตัวดำเนินการเพิ่มขั้นหรือสร้าง (Creation Operator, $\hat{a}^\dagger$)} ดังนี้
+\begin{align}
+\hat{a} &\equiv \sqrt{\frac{m\omega}{2\hbar}}\left( \hat{x} + \frac{i}{m\omega}\hat{p} \right) \label{eq_def_ladder_a} \\
+\hat{a}^\dagger &\equiv \sqrt{\frac{m\omega}{2\hbar}}\left( \hat{x} - \frac{i}{m\omega}\hat{p} \right) \label{eq_def_ladder_adag}
+\end{align}
+
+สังเกตว่า $\hat{a}$ และ $\hat{a}^\dagger$ ไม่ใช่ตัวดำเนินการแฮร์มิเชียน ($\hat{a} \ne \hat{a}^\dagger$) และเป็นสังยุคแฮร์มิเชียนของกันและกัน
+
+คำนวณผลคูณของตัวดำเนินการทั้งสองโดยใช้กฎการสลับที่หลักมูล $[\hat{x}, \hat{p}] = i\hbar$
+\begin{align}
+\hat{a}\hat{a}^\dagger &= \frac{m\omega}{2\hbar}\left( \hat{x} + \frac{i}{m\omega}\hat{p} \right)\left( \hat{x} - \frac{i}{m\omega}\hat{p} \right) = \frac{m\omega}{2\hbar}\left( \hat{x}^2 + \frac{\hat{p}^2}{m^2\omega^2} - \frac{i}{m\omega}[\hat{x}, \hat{p}] \right) \nonumber \\
+&= \frac{1}{\hbar\omega}\left( \frac{\hat{p}^2}{2m} + \frac{1}{2}m\omega^2\hat{x}^2 \right) + \frac{1}{2} = \frac{\hat{H}}{\hbar\omega} + \frac{1}{2} \\
+\hat{a}^\dagger\hat{a} &= \frac{\hat{H}}{\hbar\omega} - \frac{1}{2}
+\end{align}
+จากผลลัพธ์ทั้งสอง เราได้ความสัมพันธ์การสลับที่พื้นฐานของพีชคณิตโบซอน
+\begin{equation}
+[\hat{a}, \hat{a}^\dagger] = \hat{a}\hat{a}^\dagger - \hat{a}^\dagger\hat{a} = 1 \label{eq_boson_commutation}
+\end{equation}
+และสามารถเขียนฮามิลโทเนียนให้อยู่ในรูปตัวดำเนินการบันไดได้อย่างเรียบง่าย
+\begin{equation}
+\hat{H} = \hbar\omega\left( \hat{a}^\dagger\hat{a} + \frac{1}{2} \right) = \hbar\omega\left( \hat{N} + \frac{1}{2} \right)
+\end{equation}
+โดยที่ $\hat{N} \equiv \hat{a}^\dagger\hat{a}$ เรียกว่า \textbf{ตัวดำเนินการจำนวน (Number Operator)} ซึ่งเป็นตัวดำเนินการแฮร์มิเชียน ($\hat{N}^\dagger = \hat{N}$)
+
+\subsection{การคำนวณสเปกตรัมและสถานะเจาะจง}
+คำนวณคอมมิวเตเตอร์ระหว่างตัวดำเนินการจำนวนกับตัวดำเนินการบันได
+\begin{align}
+[\hat{N}, \hat{a}] &= [\hat{a}^\dagger\hat{a}, \hat{a}] = [\hat{a}^\dagger, \hat{a}]\hat{a} = -\hat{a} \label{eq_comm_N_a} \\
+[\hat{N}, \hat{a}^\dagger] &= [\hat{a}^\dagger\hat{a}, \hat{a}^\dagger] = \hat{a}^\dagger[\hat{a}, \hat{a}^\dagger] = +\hat{a}^\dagger \label{eq_comm_N_adag}
+\end{align}
+
+ให้ $\ket{n}$ เป็นสถานะเจาะจงของ $\hat{N}$ ที่มีค่าเจาะจงเท่ากับ $n$ นั่นคือ $\hat{N}\ket{n} = n\ket{n}$
+พิจารณาสถานะใหม่ $\hat{a}\ket{n}$ โดยใช้สมการ \eqref{eq_comm_N_a}
+\begin{equation}
+\hat{N}(\hat{a}\ket{n}) = (\hat{a}\hat{N} + [\hat{N}, \hat{a}])\ket{n} = (\hat{a}n - \hat{a})\ket{n} = (n - 1)(\hat{a}\ket{n})
+\end{equation}
+สมการนี้แสดงให้เห็นว่า $\hat{a}\ket{n}$ เป็นสถานะเจาะจงของ $\hat{N}$ ที่มีค่าเจาะจงลดลงหนึ่งหน่วย ($n - 1$) ตัวดำเนินการ $\hat{a}$ จึงทำหน้าที่ \textbf{ลดระดับพลังงาน} ของระบบลงหนึ่งควอนตัม ($\hbar\omega$)
+
+ในทำนองเดียวกัน โดยใช้สมการ \eqref{eq_comm_N_adag}
+\begin{equation}
+\hat{N}(\hat{a}^\dagger\ket{n}) = (\hat{a}^\dagger\hat{N} + [\hat{N}, \hat{a}^\dagger])\ket{n} = (\hat{a}^\dagger n + \hat{a}^\dagger)\ket{n} = (n + 1)(\hat{a}^\dagger\ket{n})
+\end{equation}
+ตัวดำเนินการ $\hat{a}^\dagger$ จึงทำหน้าที่ \textbf{เพิ่มระดับพลังงาน} ของระบบขึ้นหนึ่งควอนตัม ($\hbar\omega$)
+
+เนื่องจากนอร์มของสเตตใดๆ ต้องไม่ติดลบ
+\begin{equation}
+\braket{\hat{a}n}{\hat{a}n} = \braket{n}{\hat{a}^\dagger\hat{a}|n} = \braket{n}{\hat{N}|n} = n\braket{n}{n} \ge 0 \quad \Longrightarrow \quad n \ge 0
+\end{equation}
+ค่าเจาะจง $n$ ต้องไม่เป็นลบ เพื่อไม่ให้การกระทำซ้ำๆ ของตัวดำเนินการลดขั้น $\hat{a}$ ทำให้ค่า $n$ ติดลบ อนุกรมการลดขั้นจะต้องสิ้นสุดลงที่สถานะต่ำสุดสถานะหนึ่ง เรียกว่า \textbf{สถานะพื้น (Ground State, $\ket{0}$)} ซึ่งสอดคล้องกับเงื่อนไข
+\begin{equation}
+\hat{a}\ket{0} = 0 \label{eq_annihilate_ground}
+\end{equation}
+เมื่อนำ $\hat{a}^\dagger$ มาคูณทางซ้าย จะได้ $\hat{N}\ket{0} = \hat{a}^\dagger\hat{a}\ket{0} = 0$ นั่นคือ ค่าเจาะจงต่ำสุดต้องเป็นศูนย์พอดี ($n = 0$) และค่าเจาะจงที่สูงขึ้นไปจะต้องเป็นจำนวนเต็มบวกเท่านั้น
+\begin{equation}
+n \in \{0, 1, 2, 3, \dots\}
+\end{equation}
+
+เมื่อคำนวณค่านอร์มอลไลเซชันของสถานะที่ถูกกระทำโดยตัวดำเนินการบันได
+\begin{align}
+\hat{a}\ket{n} &= \sqrt{n}\ket{n - 1} \label{eq_action_a} \\
+\hat{a}^\dagger\ket{n} &= \sqrt{n + 1}\ket{n + 1} \label{eq_action_adag}
+\end{align}
+และสถานะใดๆ สามารถสร้างขึ้นจากการกระทำซ้ำของตัวดำเนินการสร้างบนสถานะพื้น
+\begin{equation}
+\ket{n} = \frac{(\hat{a}^\dagger)^n}{\sqrt{n!}}\ket{0} \label{eq_state_creation_formula}
+\end{equation}
+
+\subsection{การแปลงกลับสู่พิกัดตำแหน่งและโมเมนตัม}
+จากนิยาม \eqref{eq_def_ladder_a} และ \eqref{eq_def_ladder_adag} เราสามารถแก้สมการย้อนกลับเพื่อเขียนตัวดำเนินการตำแหน่งและโมเมนตัมในรูปของตัวดำเนินการบันได
+\begin{align}
+\hat{x} &= \sqrt{\frac{\hbar}{2m\omega}}\left( \hat{a} + \hat{a}^\dagger \right) \label{eq_x_in_terms_of_a} \\
+\hat{p} &= -i\sqrt{\frac{m\hbar\omega}{2}}\left( \hat{a} - \hat{a}^\dagger \right) = i\sqrt{\frac{m\hbar\omega}{2}}\left( \hat{a}^\dagger - \hat{a} \right) \label{eq_p_in_terms_of_a}
+\end{align}
+
+ความสัมพันธ์ทั้งสองนี้มีประโยชน์มหาศาลในการคำนวณค่าคาดหวังในสถานะฟ็อก $\ket{n}$ เช่น
+\begin{align}
+\langle x \rangle_n &= \braket{n}{\hat{x}|n} = \sqrt{\frac{\hbar}{2m\omega}}\left( \braket{n}{\hat{a}|n} + \braket{n}{\hat{a}^\dagger|n} \right) = 0 \\
+\langle p \rangle_n &= \braket{n}{\hat{p}|n} = 0 \\
+\langle x^2 \rangle_n &= \frac{\hbar}{2m\omega}\braket{n}{(\hat{a} + \hat{a}^\dagger)(\hat{a} + \hat{a}^\dagger)|n} = \frac{\hbar}{2m\omega}\braket{n}{\hat{a}\hat{a} + \hat{a}\hat{a}^\dagger + \hat{a}^\dagger\hat{a} + \hat{a}^\dagger\hat{a}^\dagger|n} \nonumber \\
+&= \frac{\hbar}{2m\omega}(0 + (n + 1) + n + 0) = \frac{\hbar}{m\omega}\left(n + \frac{1}{2}\right) \\
+\langle p^2 \rangle_n &= -\frac{m\hbar\omega}{2}\braket{n}{(\hat{a} - \hat{a}^\dagger)(\hat{a} - \hat{a}^\dagger)|n} = m\hbar\omega\left(n + \frac{1}{2}\right)
+\end{align}
+คำนวณผลคูณความไม่แน่นอนของตำแหน่งและโมเมนตัม
+\begin{equation}
+\Delta x \Delta p = \sqrt{\langle x^2 \rangle}\sqrt{\langle p^2 \rangle} = \sqrt{\frac{\hbar}{m\omega}\left(n + \frac{1}{2}\right)}\sqrt{m\hbar\omega\left(n + \frac{1}{2}\right)} = \left(n + \frac{1}{2}\right)\hbar
+\end{equation}
+สำหรับสถานะพื้น ($n = 0$) จะได้ $\Delta x \Delta p = \frac{\hbar}{2}$ ซึ่งเป็นสถานะที่มีความไม่แน่นอนต่ำสุดที่เป็นไปได้ตามหลักความไม่แน่นอนของไฮเซนแบร์ก (Minimum Uncertainty State) พอดี
+
+% ==========================================================
+% 5.5 สถานะอาพันธ์ของกลอเบอร์และการแจกแจงแบบปัวซง
+% ==========================================================
+\section{สถานะอาพันธ์ของกลอเบอร์และการแจกแจงแบบปัวซง}
+\label{sec_coherent_states}
+\index{สถานะอาพันธ์ (Coherent State)}
+\index{รอย กลอเบอร์ (Roy Glauber)}
+\index{ตัวดำเนินการเลื่อนตำแหน่ง (Displacement Operator)}
+\index{การแจกแจงแบบปัวซง (Poissonian Distribution)}
+
+แม้ว่าไอเกนสเตตพลังงาน $\ket{n}$ จะมีความสำคัญในทางทฤษฎี แต่ฟังก์ชันความหนาแน่นความน่าจะเป็น $|\psi_n(x)|^2$ ของสถานะเหล่านี้เป็นสถานะคงตัวที่ไม่ขึ้นกับเวลา ซึ่งไม่สะท้อนพฤติกรรมการแกว่งกวัดไปมาตามเวลาแบบฟิสิกส์ดั้งเดิมของลูกตุ้มนาฬิกาหรือแสงเลเซอร์ เพื่อเชื่อมโยงโลกควอนตัมเข้ากับกลศาสตร์คลาสสิก รอย กลอเบอร์ (Roy J. Glauber) ได้เสนอแนวคิด \textbf{สถานะอาพันธ์ (Coherent States, $\ket{\alpha}$)} ในปี ค.ศ. 1963 ซึ่งทำให้เขาได้รับรางวัลโนเบลสาขาฟิสิกส์ในปี 2005
+
+\subsection{การนิยามสถานะอาพันธ์เป็นสถานะเจาะจงของตัวดำเนินการทำลาย}
+สถานะอาพันธ์นิยามเป็นสถานะเจาะจงของตัวดำเนินการทำลาย $\hat{a}$
+\begin{equation}
+\hat{a}\ket{\alpha} = \alpha\ket{\alpha} \label{eq_coherent_eigen_def}
+\end{equation}
+โดยที่ค่าเจาะจง $\alpha$ สามารถเป็นจำนวนเชิงซ้อนใดๆ ($\alpha = |\alpha|e^{i\theta} \in \mathbb{C}$)
+
+เนื่องจากเซตของสถานะจำนวน $\{\ket{n}\}$ ก่อร่างเป็นฐานสมบูรณ์ เราสามารถกระจายสถานะอาพันธ์ในรูป
+\begin{equation}
+\ket{\alpha} = \sum_{n=0}^\infty c_n \ket{n}
+\end{equation}
+แทนลงในสมการนิยาม \eqref{eq_coherent_eigen_def}
+\begin{equation}
+\hat{a}\sum_{n=0}^\infty c_n \ket{n} = \sum_{n=1}^\infty c_n \sqrt{n}\ket{n - 1} = \sum_{n=0}^\infty c_{n+1}\sqrt{n + 1}\ket{n} = \alpha\sum_{n=0}^\infty c_n \ket{n}
+\end{equation}
+เทียบสัมประสิทธิ์ของ $\ket{n}$ ในแต่ละพจน์
+\begin{equation}
+c_{n+1} = \frac{\alpha}{\sqrt{n + 1}} c_n \quad \Longrightarrow \quad c_n = \frac{\alpha^n}{\sqrt{n!}} c_0
+\end{equation}
+นอร์มอลไลซ์สถานะ $\braket{\alpha}{\alpha} = 1$
+\begin{equation}
+\sum_{n=0}^\infty |c_n|^2 = |c_0|^2 \sum_{n=0}^\infty \frac{|\alpha|^{2n}}{n!} = |c_0|^2 e^{|\alpha|^2} = 1 \quad \Longrightarrow \quad c_0 = e^{-|\alpha|^2/2}
+\end{equation}
+จะได้การกระจายตัวของสถานะอาพันธ์บนฐานฟ็อกอย่างสมบูรณ์
+\begin{equation}
+\ket{\alpha} = e^{-|\alpha|^2/2} \sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}} \ket{n} \label{eq_coherent_fock_expansion}
+\end{equation}
+
+\subsection{การแจกแจงแบบปัวซงและสถิติโฟตอน}
+ความน่าจะเป็นในการตรวจพบอนุภาคหรือโฟตอนจำนวน $n$ ตัวในสถานะอาพันธ์ $\ket{\alpha}$ คือ
+\begin{equation}
+P(n) = |\braket{n}{\alpha}|^2 = e^{-|\alpha|^2} \frac{|\alpha|^{2n}}{n!} = \frac{\bar{n}^n e^{-\bar{n}}}{n!} \label{eq_poisson_photon_dist}
+\end{equation}
+สมการนี้คือ \textbf{การแจกแจงแบบปัวซง (Poisson Distribution)} โดยที่จำนวนอนุภาคเฉลี่ย $\bar{n} = \langle n \rangle$ และความแปรปรวนของจำนวนอนุภาคคำนวณได้เป็น
+\begin{align}
+\langle n \rangle &= \braket{\alpha}{\hat{N}|\alpha} = \braket{\alpha}{\hat{a}^\dagger\hat{a}|\alpha} = \alpha^* \alpha = |\alpha|^2 \\
+\langle n^2 \rangle &= \braket{\alpha}{\hat{a}^\dagger\hat{a}\hat{a}^\dagger\hat{a}|\alpha} = \braket{\alpha}{\hat{a}^\dagger(\hat{a}^\dagger\hat{a} + 1)\hat{a}|\alpha} = |\alpha|^4 + |\alpha|^2 \\
+(\Delta n)^2 &= \langle n^2 \rangle - \langle n \rangle^2 = |\alpha|^2 = \langle n \rangle
+\end{align}
+ดังนั้น ความไม่แน่นอนสัมพัทธ์ของจำนวนโฟตอนจะลดลงเมื่อความเข้มของแสงเพิ่มขึ้น
+\begin{equation}
+\frac{\Delta n}{\langle n \rangle} = \frac{1}{\sqrt{\langle n \rangle}} = \frac{1}{|\alpha|}
+\end{equation}
+เมื่อความเข้มของสนามแสงสูงมาก ($\langle n \rangle \gg 1$) ความผันผวนควอนตัมของจำนวนโฟตอนจะมีค่าน้อยมากจนเข้าใกล้พฤติกรรมดั้งเดิมตามทฤษฎีคลื่นแม่เหล็กไฟฟ้าของแมกซ์เวลล์
+
+\subsection{วิวัฒนาการตามเวลาและการเคลื่อนที่แบบคลาสสิก}
+วิวัฒนาการตามเวลาของสถานะอาพันธ์คำนวณได้จากตัวดำเนินการวิวัฒนาการ $e^{-i\hat{H}t/\hbar}$
+\begin{align}
+\ket{\alpha(t)} &= e^{-i\hat{H}t/\hbar}\ket{\alpha} = e^{-|\alpha|^2/2} \sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}} e^{-i(n + 1/2)\omega t}\ket{n} \nonumber \\
+&= e^{-i\omega t/2} e^{-|\alpha|^2/2} \sum_{n=0}^\infty \frac{(\alpha e^{-i\omega t})^n}{\sqrt{n!}}\ket{n} = e^{-i\omega t/2} \ket{\alpha e^{-i\omega t}}
+\end{align}
+ผลลัพธ์นี้แสดงให้เห็นว่า \textbf{สถานะอาพันธ์จะยังคงรักษาสภาพความเป็นสถานะอาพันธ์ไว้ได้ตลอดเวลา} โดยพารามิเตอร์ $\alpha(t) = \alpha_0 e^{-i\omega t}$ จะหมุนไปในระนาบเชิงซ้อนด้วยความถี่เชิงมุม $\omega$
+
+เมื่อคำนวณค่าคาดหวังของตำแหน่งและโมเมนตัมตามเวลา สมมติให้ $\alpha_0 = |\alpha|e^{i\phi}$
+\begin{align}
+\langle x \rangle(t) &= \sqrt{\frac{2\hbar}{m\omega}} |\alpha| \cos(\omega t - \phi) = x_{\max} \cos(\omega t - \phi) \\
+\langle p \rangle(t) &= -\sqrt{2m\hbar\omega} |\alpha| \sin(\omega t - \phi) = -p_{\max} \sin(\omega t - \phi)
+\end{align}
+และที่สำคัญที่สุดคือ ความกว้างของกลุ่มคลื่น $\Delta x = \sqrt{\frac{\hbar}{2m\omega}}$ จะ \textbf{คงที่ตลอดกาลโดยไม่มีการแผ่กระจายตัวออก (No Wavepacket Spreading)} แตกต่างจากกลุ่มคลื่นของอนุภาคอิสระ กลุ่มคลื่นสถานะอาพันธ์จึงเคลื่อนที่แกว่งกวัดไปมาในบ่อศักย์เสมือนอนุภาคคลาสสิกอย่างแท้จริง
+
+% ==========================================================
+% 5.6 สถานะบีบอัดของแสงและทรานสดิวเซอร์ควอนตัมออปโตเมคานิกส์
+% ==========================================================
+\section{สถานะบีบอัดของแสงและทรานสดิวเซอร์ควอนตัมออปโตเมคานิกส์}
+\label{sec_squeezed_states_optomechanics}
+\index{สถานะบีบอัด (Squeezed State)}
+\index{ตัวดำเนินการบีบ (Squeeze Operator)}
+\index{หอดูดาวคลื่นความโน้มถ่วง (LIGO)}
+\index{ออปโตเมคานิกส์ควอนตัม (Quantum Optomechanics)}
+
+แม้ว่าสถานะอาพันธ์จะมีผลคูณความไม่แน่นอนต่ำสุด $\Delta x \Delta p = \hbar/2$ แต่ความไม่แน่นอนในแต่ละแกนจะถูกแบ่งเท่ากันอย่างสมมาตร ในการวัดความแม่นยำสูงยิ่งยวด นักฟิสิกส์สามารถดัดแปลงสถิติควอนตัมเพื่อสร้าง \textbf{สถานะบีบอัด (Squeezed States)} ซึ่งความไม่แน่นอนในมิติหนึ่งถูกบดอัดให้ลดลงต่ำกว่าขีดจำกัดของสถานะสุญญากาศ แลกกับการยอมให้ความไม่แน่นอนในอีกมิติหนึ่งขยายตัวสูงขึ้น
+
+\subsection{ตัวดำเนินการบีบและควอดราเจอร์}
+นิยามตัวดำเนินการควอดราเจอร์ไร้มิติสองมิติ ซึ่งสมนัยกับแอมพลิจูดและเฟสของสนามคลื่น
+\begin{equation}
+\hat{X}_1 \equiv \frac{\hat{a} + \hat{a}^\dagger}{2}, \qquad \hat{X}_2 \equiv \frac{\hat{a} - \hat{a}^\dagger}{2i}
+\end{equation}
+โดยสอดคล้องกับคอมมิวเตเตอร์ $[\hat{X}_1, \hat{X}_2] = \frac{i}{2}$ และความสัมพันธ์ความไม่แน่นอน $\Delta X_1 \Delta X_2 \ge \frac{1}{4}$
+สำหรับสถานะสุญญากาศและสถานะอาพันธ์ $\Delta X_1 = \Delta X_2 = \frac{1}{2}$
+
+\textbf{ตัวดำเนินการบีบ (Squeeze Operator, $\hat{S}(\xi)$)} นิยามโดย
+\begin{equation}
+\hat{S}(\xi) \equiv \exp\left[ \frac{1}{2}\left( \xi^* \hat{a}^2 - \xi (\hat{a}^\dagger)^2 \right) \right]
+\end{equation}
+โดยที่ $\xi = r e^{i\theta}$ คือพารามิเตอร์การบีบเชิงซ้อน เมื่อตัวดำเนินการนี้กระทำต่อสถานะสุญญากาศ จะสร้าง \textbf{สถานะสุญญากาศบีบอัด (Squeezed Vacuum State, $\ket{\xi} = \hat{S}(\xi)\ket{0}$)}
+
+สำหรับกรณี $\theta = 0$ ความแปรปรวนของควอดราเจอร์ทั้งสองจะกลายเป็น
+\begin{equation}
+(\Delta X_1)^2 = \frac{1}{4}e^{-2r}, \qquad (\Delta X_2)^2 = \frac{1}{4}e^{2r}
+\end{equation}
+จะเห็นได้ว่า ความไม่แน่นอนของควอดราเจอร์ $\hat{X}_1$ ถูกบีบอัดให้เล็กลงกว่าระดับสุญญากาศเดิม ($1/4$) เป็นสัดส่วน $e^{-2r}$ ในขณะที่ผลคูณความไม่แน่นอนยังคงรักษาค่าต่ำสุด $\Delta X_1 \Delta X_2 = 1/4$ ไว้อย่างสมบูรณ์
+
+\subsection{การประยุกต์ในการตรวจจับคลื่นความโน้มถ่วงระดับโลก LIGO}
+หอดูดาวคลื่นความโน้มถ่วงเลเซอร์อินเทอร์เฟอโรเมทรี (LIGO, Virgo, และ KAGRA) ใช้การฉีดแสงเลเซอร์สถานะสุญญากาศบีบอัด (Squeezed Light Injection) เข้าไปในพอร์ตมืดของอินเทอร์เฟอโรมิเตอร์ความยาวแขน 4 กิโลเมตร
+
+การบีบอัดความผันผวนควอนตัมของเฟสช่วยลดสัญญาณรบกวนช็อตนอยส์ (Shot Noise) ที่ความถี่สูง ขณะที่การบีบอัดแอมพลิจูดช่วยลดสัญญาณรบกวนจากแรงดันการแผ่รังสีควอนตัม (Radiation Pressure Noise) ที่ความถี่ต่ำ เทคนิคควอนตัมนี้ช่วยขยายปริมาตรการสำรวจเอกภพของ LIGO เพิ่มขึ้นกว่า $50\%$ ทำให้สามารถตรวจจับคลื่นความโน้มถ่วงจากการชนกันของหลุมดำและดาวนิวตรอนได้ถี่ขึ้นอย่างมีนัยสำคัญ
+
+% ==========================================================
+% 5.7 การประยุกต์ร่วมสมัย: โฟนอน สเปกโทรสโกปี FTIR และวงจร LC
+% ==========================================================
+\section{การประยุกต์ร่วมสมัย โฟนอน สเปกโทรสโกปี FTIR และวงจร LC}
+\label{sec_contemporary_applications}
+\index{โฟนอน (Phonons)}
+\index{สเปกโทรสโกปีฟูเรียร์ทรานส์ฟอร์มอินฟราเรด (FTIR)}
+\index{กฎการเลือก (Selection Rules)}
+\index{วงจรเรโซเนเตอร์ควอนตัม (Superconducting LC Circuit)}
+
+หลักการทางฟิสิกส์ของตัวแกว่งกวัดฮาร์มอนิกควอนตัมเป็นเสาหลักในการพัฒนาเทคโนโลยีร่วมสมัยในหลากหลายสาขา
+
+\subsection{โฟนอนและการนำความร้อนในโครงผลึกของแข็ง}
+ในผลึกของแข็ง อะตอมแต่ละอะตอมจะสั่นรอบตำแหน่งสมดุลของแลตทิซ เมื่อทำการแยกโหมดปกติ (Normal Mode Decomposition) ของการเคลื่อนที่ร่วมกันของอะตอมนับล้านล้านตัว ระบบจะแปลงรูปเป็นชุดของตัวแกว่งกวัดฮาร์มอนิกอิสระที่มีความถี่เชิงมุม $\omega(\mathbf{k})$
+
+การควอนไตซ์พลังงานของการสั่นในแต่ละโหมดก่อให้เกิดอนุภาคเสมือน (Quasi-particle) เรียกว่า \textbf{โฟนอน (Phonons)} ซึ่งมีพลังงานเป็นก้อน $E = \hbar\omega$ โฟนอนเป็นอนุภาคโบซอน (Bosons) ที่สอดคล้องกับสถิติโบส-ไอน์สไตน์ และเป็นตัวกลางหลักในการนำความร้อนในฉนวนและสารกึ่งตัวนำ รวมถึงเป็นกลไกสร้างแรงดึงดูดระหว่างคู่อิเล็กตรอนคูเปอร์ (Cooper Pairs) ในตัวนำยิ่งยวดดั้งเดิมตามทฤษฎี BCS
+
+\subsection{สเปกโทรสโกปี FTIR และกฎการเลือกทางควอนตัม}
+การสั่นของโมเลกุลสามารถตรวจสอบได้ด้วยเทคนิค \textbf{ฟูเรียร์ทรานส์ฟอร์มอินฟราเรดสเปกโทรสโกปี (FTIR)} เมื่อโมเลกุลดูดกลืนหรือเปล่งโฟตอนอินฟราเรด ความน่าจะเป็นในการเปลี่ยนระดับพลังงานระหว่างสถานะ $\ket{m}$ และ $\ket{n}$ จะขึ้นอยู่กับองค์ประกอบเมทริกซ์ของตัวดำเนินการโมเมนต์ไดโพลไฟฟ้า $\hat{\mu} = q\hat{x}$
+\begin{equation}
+\mu_{mn} = \braket{m}{\hat{\mu}|n} = q \sqrt{\frac{\hbar}{2m\omega}} \braket{m}{\hat{a} + \hat{a}^\dagger|n} = q \sqrt{\frac{\hbar}{2m\omega}}\left( \sqrt{n}\delta_{m, n-1} + \sqrt{n+1}\delta_{m, n+1} \right)
+\end{equation}
+สมการนี้กำหนด \textbf{กฎการเลือก (Selection Rule)} ที่เคร่งครัดสำหรับการเปลี่ยนระดับพลังงานของการสั่นฮาร์มอนิก
+\begin{equation}
+\Delta n = \pm 1
+\end{equation}
+นั่นคือ โมเลกุลสามารถดูดกลืนหรือคายโฟตอนได้เฉพาะที่มีความถี่ตรงกับความถี่การสั่นดั้งเดิม $\nu = \frac{\omega}{2\pi}$ เท่านั้น ซึ่งนำไปใช้วิเคราะห์องค์ประกอบของสารเคมี ก๊าซเรือนกระจกในชั้นบรรยากาศโลก ($CO_2, CH_4$) และสารชีวโมเลกุลในทางการแพทย์
+
+\subsection{วงจรไฟฟ้าตัวเหนี่ยวนำ-ตัวเก็บประจุควอนตัม (Quantum LC Circuit)}
+ในวงจรไฟฟ้าตัวนำยิ่งยวดที่ประกอบด้วยตัวเหนี่ยวนำ $L$ และตัวเก็บประจุ $C$ พลังงานแม่เหล็กไฟฟ้าในวงจรมีรูปแบบเป็น
+\begin{equation}
+H = \frac{Q^2}{2C} + \frac{\Phi^2}{2L}
+\end{equation}
+โดยที่ $Q$ คือประจุไฟฟ้าบนตัวเก็บประจุ และ $\Phi$ คือฟลักซ์แม่เหล็กผ่านตัวเหนี่ยวนำ เมื่อเทียบกับกลศาสตร์
+\begin{equation}
+\Phi \longleftrightarrow x, \qquad Q \longleftrightarrow p, \qquad L \longleftrightarrow \frac{1}{k} = \frac{1}{m\omega^2}, \qquad C \longleftrightarrow m
+\end{equation}
+ความถี่เรโซแนนซ์ควอนตัมของวงจรคือ $\omega = \frac{1}{\sqrt{LC}}$ เมื่อลดอุณหภูมิลงใกล้ศูนย์สัมบูรณ์ วงจรนี้จะแสดงพฤติกรรมควอนตัมของตัวแกว่งกวัดฮาร์มอนิกอย่างสมบูรณ์แบบ ซึ่งเป็นพื้นฐานของการสร้างตัวสะท้อนคลื่นไมโครเวฟ (Microwave Cavity Resonator) ในคอมพิวเตอร์ควอนตัมตัวนำยิ่งยวดของ IBM และ Google
+
+% ==========================================================
+% 5.8 ห้องปฏิบัติการเสมือนจริง WebAR ตัวแกว่งกวัดควอนตัม
+% ==========================================================
+\section{ห้องปฏิบัติการเสมือนจริง WebAR ตัวแกว่งกวัดควอนตัม}
+\label{sec_webar_lab05}
+
+\begin{qrcodelabbox}{การทดลองตัวแกว่งกวัดฮาร์มอนิกควอนตัมและสถานะอาพันธ์ WebAR}{https://tsanaphysics.github.io/ar-Quantum/lab05_harmonic_oscillator.html}
+\begin{minipage}[c]{0.70\textwidth}
+\textbf{คำแนะนำการทดลองเสมือนจริงสามมิติ (Interactive Harmonic Lab)}
+\begin{enumerate}
+    \item สแกนรหัสตอบสนองเร็ว (QR Code) ด้านขวา เพื่อเข้าสู่แบบจำลองตัวแกว่งกวัดควอนตัมเสมือนจริง
+    \item ส่องกล้องสมาร์ตโฟนเข้าหา \textbf{ภาพที่ \ref{fig_sho_wavefunctions}} เพื่อแสดงบ่อศักย์พาราโบลาสามมิติและระดับพลังงานควอนไตซ์
+    \item ปรับเลือกเลขควอนตัม $n = 0, 1, 2, \dots, 10$ เพื่อสังเกตการเพิ่มขึ้นของจำนวนจุดตัดศูนย์ (Nodes) และการกระจายตัวของฟังก์ชันคลื่นตามหลักความสอดคล้องคลาสสิก (Correspondence Principle)
+    \item ทดลองสร้าง \textbf{สถานะอาพันธ์ $\ket{\alpha}$} เพื่อดูการเคลื่อนที่แกว่งกวัดของกลุ่มคลื่นเกาส์เซียนในบ่อศักย์แบบเรียลไทม์โดยไม่มีการแผ่กระจายตัว
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.25\textwidth}
+\centering
+\qrcode[height=2.8cm]{https://tsanaphysics.github.io/ar-Quantum/lab05_harmonic_oscillator.html}
+\vspace{4pt}
+\scriptsize\textbf{สแกนเพื่อเปิด WebAR Lab 05}
+\end{minipage}
+\end{qrcodelabbox}
+
+% ==========================================================
+% 5.9 การจำลองเชิงตัวเลขด้วย Python: เมทริกซ์ไอเกนและฟังก์ชันวิกเนอร์
+% ==========================================================
+\section{การจำลองเชิงตัวเลขด้วยภาษา Python การหาค่าเจาะจงและฟังก์ชันวิกเนอร์}
+\label{sec_python_sho_wigner}
+\index{การจำลองด้วยภาษา Python (Python Simulation)}
+\index{ฟังก์ชันวิกเนอร์ (Wigner Function)}
+
+โปรแกรมภาษา Python ด้านล่างนี้คำนวณระดับพลังงาน ฟังก์ชันคลื่น และสร้างแผนภาพ \textbf{ฟังก์ชันวิกเนอร์ (Wigner Quasiprobability Distribution)} ในปริภูมิเฟส $(x, p)$ สำหรับสถานะฟ็อก $\ket{1}$ ซึ่งแสดงค่าความน่าจะเป็นติดลบ (Quantum Negativity) อันเป็นเอกลักษณ์เฉพาะของกลศาสตร์ควอนตัมที่ไม่มีในฟิสิกส์คลาสสิก
+
+\begin{lstlisting}[language=Python, caption={การจำลองตัวแกว่งกวัดฮาร์มอนิกควอนตัมและฟังก์ชันวิกเนอร์ด้วย Python}, label={code_sho_wigner}]
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.special import hermite
+from math import factorial
+
+# กำหนดพารามิเตอร์ไร้มิติ
+hbar = 1.0
+m = 1.0
+omega = 1.0
+
+def sho_wavefunction(n, x):
+    """คำนวณฟังก์ชันคลื่น psi_n(x) ที่ได้รับการนอร์มอลไลซ์แล้ว"""
+    xi = np.sqrt(m * omega / hbar) * x
+    norm = (m * omega / (np.pi * hbar))**0.25 / np.sqrt(2**n * factorial(n))
+    H_n = hermite(n)
+    return norm * H_n(xi) * np.exp(-0.5 * xi**2)
+
+def wigner_fock_state(n, X, P):
+    """
+    คำนวณฟังก์ชันวิกเนอร์เชิงวิเคราะห์ W(x, p) สำหรับสถานะฟ็อก |n>
+    W_n(x, p) = ((-1)^n / pi) * exp(-2H / hbar*omega) * L_n(4H / hbar*omega)
+    """
+    from scipy.special import genlaguerre
+    # พลังงานไร้มิติในปริภูมิเฟส
+    H_dimless = (P**2 / (2 * m) + 0.5 * m * omega**2 * X**2) / (hbar * omega)
+    L_n = genlaguerre(n, 0)
+    W = ((-1)**n / np.pi) * np.exp(-2.0 * H_dimless) * L_n(4.0 * H_dimless)
+    return W
+
+# สร้างกริดปริภูมิเฟส (x, p)
+x_vec = np.linspace(-3.5, 3.5, 300)
+p_vec = np.linspace(-3.5, 3.5, 300)
+X, P = np.meshgrid(x_vec, p_vec)
+
+# คำนวณฟังก์ชันวิกเนอร์สำหรับสถานะเร้าที่หนึ่ง n = 1
+W_1 = wigner_fock_state(1, X, P)
+
+# พล็อตคอนทัวร์ฟังก์ชันวิกเนอร์
+plt.figure(figsize=(9, 7))
+cp = plt.contourf(X, P, W_1, 60, cmap='coolwarm')
+cbar = plt.colorbar(cp)
+cbar.set_label('Wigner Function $W(x, p)$', fontsize=11)
+plt.axhline(0, color='k', linestyle=':', alpha=0.5)
+plt.axvline(0, color='k', linestyle=':', alpha=0.5)
+
+plt.title('Quantum Harmonic Oscillator: Wigner Phase-Space for State $|1\\rangle$', 
+          fontsize=12, fontweight='bold')
+plt.xlabel('Position Coordinate $x$', fontsize=11)
+plt.ylabel('Momentum Coordinate $p$', fontsize=11)
+plt.tight_layout()
+plt.savefig('sho_wigner_state1.png', dpi=300)
+plt.show()
+\end{lstlisting}
+
+% ==========================================================
+% 5.10 ตัวอย่างการแก้โจทย์ปัญหาเชิงวิเคราะห์แบบ P-S-C-T
+% ==========================================================
+\section{ตัวอย่างการแก้โจทย์ปัญหาเชิงวิเคราะห์แบบ P-S-C-T}
+\label{sec_psct_examples_ch05}
+
+ระเบียบวิธี P-S-C-T นำเสนอการวิเคราะห์โจทย์ 4 ขั้นตอนอย่างรัดกุม ได้แก่ Problem Statement (ระบุและจำแนกโจทย์), Strategy (วางยุทธศาสตร์ทางทฤษฎี), Calculation (คำนวณและพิสูจน์), และ Takeaway (ข้อคิดสรุปและบริบทสมัยใหม่)
+
+% ตัวอย่างที่ 1
+\begin{psctbox}{การคำนวณความถี่การสั่นและผลกระทบไอโซโทปของโมเลกุล CO}{ตัวอย่างที่หนึ่ง}
+\noindent\textbf{P - Problem Statement (วิเคราะห์โจทย์)} โมเลกุลคาร์บอนมอนอกไซด์ ($^{12}\text{C}^{16}\text{O}$) มีค่าคงตัวสปริงของพันธะเคมี $k = 1902\text{ N/m}$ จงคำนวณมวลยังผล $\mu$ ความถี่การสั่นดั้งเดิม $\nu$ พลังงานจุดศูนย์ $E_0$ (ในหน่วย $\text{eV}$) ความยาวคลื่นของการดูดกลืนแสง $\lambda$ ในการเปลี่ยนระดับ $n=0 \to 1$ และทำนายความยาวคลื่นดูดกลืนเมื่อเปลี่ยนเป็นไอโซโทป $^{13}\text{C}^{16}\text{O}$
+
+\vspace{6pt}
+\noindent\textbf{S - Strategy \& Principle (วางกลยุทธ์)} คำนวณมวลยังผล $\mu = \frac{m_1 m_2}{m_1 + m_2}$ จากนั้นหา $\omega = \sqrt{k/\mu}$ และ $\nu = \omega/(2\pi)$ สำหรับพลังงานจุดศูนย์ $E_0 = \frac{1}{2}h\nu$ และความยาวคลื่น $\lambda = c/\nu$ ผลกระทบไอโซโทปทำให้ $\omega \propto 1/\sqrt{\mu}$ โดยที่ค่าคงตัวสปริง $k$ คงเดิมเนื่องจากโครงสร้างอิเล็กตรอนของพันธะไม่เปลี่ยนแปลง
+
+\vspace{6pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและพิสูจน์)}
+ขั้นตอนที่หนึ่ง คำนวณมวลยังผลของ $^{12}\text{C}^{16}\text{O}$
+\begin{equation}
+\mu_1 = \frac{12.000 \times 15.995}{12.000 + 15.995} \, \text{u} = \frac{191.94}{27.995} \, \text{u} \approx 6.8562 \, \text{u} = 6.8562 \times 1.66054 \times 10^{-27}\text{ kg} \approx 1.1385 \times 10^{-26}\text{ kg}
+\end{equation}
+
+ขั้นตอนที่สอง คำนวณความถี่เชิงมุมและความถี่การสั่น
+\begin{align}
+\omega_1 &= \sqrt{\frac{1902\text{ N/m}}{1.1385 \times 10^{-26}\text{ kg}}} = \sqrt{1.6706 \times 10^{29}} \approx 4.0873 \times 10^{14}\text{ rad/s} \\
+\nu_1 &= \frac{\omega_1}{2\pi} = \frac{4.0873 \times 10^{14}}{2\pi} \approx 6.505 \times 10^{13}\text{ Hz}
+\end{align}
+
+ขั้นตอนที่สาม คำนวณพลังงานจุดศูนย์และความยาวคลื่น
+\begin{align}
+E_0 &= \frac{1}{2} h \nu_1 = \frac{1}{2}(4.1357 \times 10^{-15}\text{ eV}\cdot\text{s})(6.505 \times 10^{13}\text{ s}^{-1}) \approx 0.1345\text{ eV} \\
+\lambda_1 &= \frac{c}{\nu_1} = \frac{2.9979 \times 10^8\text{ m/s}}{6.505 \times 10^{13}\text{ s}^{-1}} \approx 4.608 \times 10^{-6}\text{ m} = 4.608\ \mu\text{m}
+\end{align}
+ซึ่งสมนัยกับเลขคลื่น $\tilde{\nu}_1 = 1/\lambda_1 \approx 2170\text{ cm}^{-1}$
+
+ขั้นตอนที่สี่ คำนวณผลกระทบไอโซโทปสำหรับ $^{13}\text{C}^{16}\text{O}$
+\begin{equation}
+\mu_2 = \frac{13.003 \times 15.995}{13.003 + 15.995} \, \text{u} = \frac{207.98}{28.998} \, \text{u} \approx 7.1722 \, \text{u}
+\end{equation}
+อัตราส่วนความยาวคลื่นแปรผันตาม $\sqrt{\mu}$
+\begin{equation}
+\lambda_2 = \lambda_1 \sqrt{\frac{\mu_2}{\mu_1}} = 4.608\ \mu\text{m} \times \sqrt{\frac{7.1722}{6.8562}} = 4.608 \times \sqrt{1.0461} = 4.608 \times 1.0228 \approx 4.713\ \mu\text{m}
+\end{equation}
+เลขคลื่นจะเลื่อนลงไปอยู่ที่ $\tilde{\nu}_2 \approx 2122\text{ cm}^{-1}$ (การเลื่อนไปทางแดง $\Delta\tilde{\nu} \approx 48\text{ cm}^{-1}$)
+
+\vspace{6pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} ความยาวคลื่น $4.61\ \mu\text{m}$ อยู่ในย่านอินฟราเรดคลื่นกลาง การเลื่อนของเลขคลื่น $48\text{ cm}^{-1}$ จากการเปลี่ยนไอโซโทปเป็นเครื่องมือหลักของนักดาราศาสตร์ฟิสิกส์ในการใช้กล้องโทรทรรศน์อวกาศเจมส์เว็บบ์ (JWST) เพื่อตรวจวัดอัตราส่วนไอโซโทปคาร์บอนในชั้นบรรยากาศของดาวเคราะห์นอกระบบสุริยะ
+\end{psctbox}
+
+% ตัวอย่างที่ 2
+\begin{psctbox}{การคำนวณค่าคาดหวังกำลังสี่ $\langle x^4 \rangle$ ด้วยพีชคณิตบันได}{ตัวอย่างที่สอง}
+\noindent\textbf{P - Problem Statement (วิเคราะห์โจทย์)} จงใช้คุณสมบัติของตัวดำเนินการบันได $\hat{a}$ และ $\hat{a}^\dagger$ คำนวณค่าคาดหวังของตำแหน่งกำลังสี่ $\langle x^4 \rangle_n = \braket{n}{\hat{x}^4}{n}$ ในสถานะไอเกนสเตตใดๆ $\ket{n}$ ของตัวแกว่งกวัดฮาร์มอนิก
+
+\vspace{6pt}
+\noindent\textbf{S - Strategy \& Principle (วางกลยุทธ์)} เขียน $\hat{x} = \sqrt{\frac{\hbar}{2m\omega}}(\hat{a} + \hat{a}^\dagger)$ จากนั้นกระจาย $(\hat{a} + \hat{a}^\dagger)^4$ แล้วเลือกเฉพาะพจน์ที่มีจำนวนตัวดำเนินการสร้างเท่ากับจำนวนตัวดำเนินการทำลายพอดี (พจน์ที่มี $\hat{a}$ สองตัวและ $\hat{a}^\dagger$ สองตัว) พจน์อื่นๆ จะให้ผลคูณภายในเป็นศูนย์จากความตั้งฉาก $\braket{n}{m} = \delta_{nm}$
+
+\vspace{6pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและพิสูจน์)}
+ขั้นตอนที่หนึ่ง กระจายพจน์ $(\hat{a} + \hat{a}^\dagger)^2$
+\begin{equation}
+(\hat{a} + \hat{a}^\dagger)^2 = \hat{a}^2 + \hat{a}\hat{a}^\dagger + \hat{a}^\dagger\hat{a} + (\hat{a}^\dagger)^2 = \hat{a}^2 + 2\hat{a}^\dagger\hat{a} + 1 + (\hat{a}^\dagger)^2
+\end{equation}
+
+ขั้นตอนที่สอง คำนวณกำลังสองของผลลัพธ์ข้างต้น
+\begin{equation}
+(\hat{a} + \hat{a}^\dagger)^4 = \left[ \hat{a}^2 + (2\hat{N} + 1) + (\hat{a}^\dagger)^2 \right]\left[ \hat{a}^2 + (2\hat{N} + 1) + (\hat{a}^\dagger)^2 \right]
+\end{equation}
+พจน์ที่ให้ผลรวมของตัวดำเนินการจำนวนสถานะเท่าเดิม มี 3 องค์ประกอบหลัก
+\begin{align}
+\text{องค์ประกอบที่ 1 } &\colon \quad \hat{a}^2 (\hat{a}^\dagger)^2 \\
+\text{องค์ประกอบที่ 2 } &\colon \quad (2\hat{N} + 1)^2 \\
+\text{องค์ประกอบที่ 3 } &\colon \quad (\hat{a}^\dagger)^2 \hat{a}^2
+\end{align}
+
+ขั้นตอนที่สาม คำนวณค่าคาดหวังของแต่ละองค์ประกอบในสถานะ $\ket{n}$
+\begin{align}
+\braket{n}{\hat{a}^2 (\hat{a}^\dagger)^2|n} &= \braket{n}{\hat{a}\hat{a}\hat{a}^\dagger\hat{a}^\dagger|n} = \sqrt{n+1}\sqrt{n+2}\braket{n}{\hat{a}\hat{a}|n+2} = (n+1)(n+2) \\
+\braket{n}{(2\hat{N} + 1)^2|n} &= (2n + 1)^2 = 4n^2 + 4n + 1 \\
+\braket{n}{(\hat{a}^\dagger)^2 \hat{a}^2|n} &= \sqrt{n}\sqrt{n-1}\braket{n}{(\hat{a}^\dagger)^2|n-2} = n(n - 1)
+\end{align}
+
+ขั้นตอนที่สี่ รวมทุกองค์ประกอบเข้าด้วยกัน
+\begin{align}
+\braket{n}{(\hat{a} + \hat{a}^\dagger)^4|n} &= (n^2 + 3n + 2) + (4n^2 + 4n + 1) + (n^2 - n) \nonumber \\
+&= 6n^2 + 6n + 3 = 3(2n^2 + 2n + 1)
+\end{align}
+ดังนั้น ค่าคาดหวังของตำแหน่งกำลังสี่คือ
+\begin{equation}
+\langle x^4 \rangle_n = \left(\frac{\hbar}{2m\omega}\right)^2 \times 3(2n^2 + 2n + 1) = \frac{3\hbar^2}{4m^2\omega^2}(2n^2 + 2n + 1)
+\end{equation}
+สำหรับสถานะพื้น ($n = 0$) จะได้ $\langle x^4 \rangle_0 = \frac{3\hbar^2}{4m^2\omega^2} = 3(\langle x^2 \rangle_0)^2$ ซึ่งสอดคล้องกับคุณสมบัติของโมเมนต์อันดับสี่ของการแจกแจงแบบเกาส์เซียนอย่างแม่นยำ
+
+\vspace{6pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} พีชคณิตตัวดำเนินการบันไดช่วยให้สามารถคำนวณอินทิกรัลที่ซับซ้อนอย่าง $\int_{-\infty}^\infty x^4 |\psi_n(x)|^2 dx$ ได้อย่างรวดเร็วภายในไม่กี่บรรทัดโดยไม่ต้องอินทิเกรตพหุนามแอร์มีตโดยตรง ผลลัพธ์ $\langle x^4 \rangle$ นี้เป็นหัวใจในการคำนวณการเลื่อนระดับพลังงานจากการรบกวนแบบแอนฮาร์มอนิก (Anharmonic Perturbation $\lambda x^4$) ในทรานซิสเตอร์แบบตัวนำยิ่งยวดทรานสมอน (Transmon Qubit)
+\end{psctbox}
+
+% ตัวอย่างที่ 3
+\begin{psctbox}{พลวัตของสถานะซ้อนทับและการแผ่รังสีไดโพล}{ตัวอย่างที่สาม}
+\noindent\textbf{P - Problem Statement (วิเคราะห์โจทย์)} อนุภาคมีประจุ $q$ มวล $m$ ในศักย์ฮาร์มอนิก อยู่ในสถานะซ้อนทับระหว่างสถานะพื้นและสถานะเร้าแรก $\ket{\Psi(0)} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$ ณ เวลา $t = 0$ จงหาสถานะ $\ket{\Psi(t)}$ คำนวณค่าคาดหวังของตำแหน่ง $\langle x \rangle(t)$ และคำนวณกำลังเฉลี่ยของการแผ่รังสีคลื่นแม่เหล็กไฟฟ้าตามสูตรของลาร์มอร์ (Larmor Formula)
+
+\vspace{6pt}
+\noindent\textbf{S - Strategy \& Principle (วางกลยุทธ์)} นำเทอมวิวัฒนาการตามเวลา $e^{-iE_n t/\hbar}$ มาคูณแต่ละสถานะ จากนั้นคำนวณ $\langle x \rangle(t) = \braket{\Psi(t)}{\hat{x}|\Psi(t)}$ การแกว่งกวัดของประจุด้วยความเร่ง $a(t) = \frac{d^2\langle x \rangle}{dt^2}$ จะทำให้เกิดการแผ่คลื่นแม่เหล็กไฟฟ้าด้วยกำลัง $P = \frac{q^2 a^2}{6\pi\varepsilon_0 c^3}$
+
+\vspace{6pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและพิสูจน์)}
+ขั้นตอนที่หนึ่ง วิวัฒนาการตามเวลาของฟังก์ชันคลื่น
+\begin{align}
+\ket{\Psi(t)} &= \frac{1}{\sqrt{2}} e^{-iE_0 t/\hbar}\ket{0} + \frac{1}{\sqrt{2}} e^{-iE_1 t/\hbar}\ket{1} = \frac{1}{\sqrt{2}} e^{-i\omega t/2}\left( \ket{0} + e^{-i\omega t}\ket{1} \right)
+\end{align}
+
+ขั้นตอนที่สอง คำนวณค่าคาดหวังตำแหน่ง
+\begin{align}
+\langle x \rangle(t) &= \braket{\Psi(t)}{\hat{x}|\Psi(t)} = \frac{1}{2} \left( \bra{0} + e^{i\omega t}\bra{1} \right) \sqrt{\frac{\hbar}{2m\omega}}(\hat{a} + \hat{a}^\dagger) \left( \ket{0} + e^{-i\omega t}\ket{1} \right) \\
+&= \frac{1}{2}\sqrt{\frac{\hbar}{2m\omega}} \left( e^{-i\omega t}\braket{0}{\hat{a}|1} + e^{i\omega t}\braket{1}{\hat{a}^\dagger|0} \right) = \frac{1}{2}\sqrt{\frac{\hbar}{2m\omega}} (e^{-i\omega t} + e^{i\omega t}) \\
+&= \sqrt{\frac{\hbar}{2m\omega}} \cos(\omega t) = x_0 \cos(\omega t)
+\end{align}
+โดยที่แอมพลิจูดคือ $x_0 = \sqrt{\frac{\hbar}{2m\omega}}$
+
+ขั้นตอนที่สาม คำนวณความเร่งและกำลังการแผ่รังสี
+\begin{equation}
+a(t) = \frac{d^2\langle x \rangle}{dt^2} = -\omega^2 x_0 \cos(\omega t) \quad \Longrightarrow \quad \langle a^2 \rangle = \frac{1}{2}\omega^4 x_0^2 = \frac{1}{2}\omega^4 \left(\frac{\hbar}{2m\omega}\right) = \frac{\hbar\omega^3}{4m}
+\end{equation}
+กำลังเฉลี่ยของการแผ่รังสีลาร์มอร์คือ
+\begin{equation}
+P_{\text{avg}} = \frac{q^2 \langle a^2 \rangle}{6\pi\varepsilon_0 c^3} = \frac{q^2 \hbar \omega^3}{24\pi\varepsilon_0 m c^3}
+\end{equation}
+
+\vspace{6pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} สถานะคงตัวเดี่ยวๆ ($\ket{n}$) จะไม่มีการแผ่รังสีคลื่นแม่เหล็กไฟฟ้าเลยเนื่องจาก $\langle x \rangle = 0$ คงที่ตลอดเวลา ทว่าเมื่อเกิดการซ้อนทับเชิงควอนตัมระหว่างสองสถานะ ($\ket{0}$ และ $\ket{1}$) ประจุจะแกว่งกวัดทางกายภาพและปลดปล่อยโฟตอนออกมา กำลังการแผ่รังสีที่คำนวณได้นี้สมนัยโดยตรงกับอัตราการคายพลังงานในตัวเองของไอน์สไตน์ (Einstein A Coefficient หรือ $A_{10} = \frac{P}{\hbar\omega}$) ซึ่งเป็นรากฐานของการเปล่งแสงแบบโฟโตลูมิเนสเซนซ์ในอะตอมและควอนตัมดอต
+\end{psctbox}
+
+% ตัวอย่างที่ 4
+\begin{psctbox}{สถิติโฟตอนและพารามิเตอร์แมนเดลของสถานะอาพันธ์}{ตัวอย่างที่สี่}
+\noindent\textbf{P - Problem Statement (วิเคราะห์โจทย์)} ลำแสงเลเซอร์ความยาวคลื่น $\lambda = 632.8\text{ nm}$ ถูกเตรียมให้อยู่ในสถานะอาพันธ์ $\ket{\alpha}$ ที่มีจำนวนโฟตอนเฉลี่ย $\langle n \rangle = 100$ โฟตอน จงคำนวณค่าสัมบูรณ์ $|\alpha|$ คำนวณความน่าจะเป็นในการพบโฟตอน 100 ตัวพอดี และคำนวณพารามิเตอร์แมนเดล (Mandel $Q$-parameter) เพื่อจำแนกสถิติแสง
+
+\vspace{6pt}
+\noindent\textbf{S - Strategy \& Principle (วางกลยุทธ์)} สำหรับสถานะอาพันธ์ $\langle n \rangle = |\alpha|^2$ ความน่าจะเป็นตามการแจกแจงแบบปัวซงคือ $P(n) = \frac{\bar{n}^n e^{-\bar{n}}}{n!}$ พารามิเตอร์แมนเดลนิยามโดย $Q = \frac{(\Delta n)^2 - \langle n \rangle}{\langle n \rangle}$ เพื่อวัดความเบี่ยงเบนจากสถิติปัวซง
+
+\vspace{6pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและพิสูจน์)}
+ขั้นตอนที่หนึ่ง คำนวณค่า $|\alpha|$
+\begin{equation}
+|\alpha| = \sqrt{\langle n \rangle} = \sqrt{100} = 10.0
+\end{equation}
+
+ขั้นตอนที่สอง คำนวณความน่าจะเป็น $P(100)$
+ใช้การประมาณค่าแฟกทอเรียลของสเตอร์ลิง $n! \approx \sqrt{2\pi n}(n/e)^n$
+\begin{equation}
+P(100) = \frac{100^{100} e^{-100}}{100!} \approx \frac{100^{100} e^{-100}}{\sqrt{2\pi \times 100}(100/e)^{100}} = \frac{1}{\sqrt{200\pi}} = \frac{1}{\sqrt{628.32}} \approx \frac{1}{25.066} \approx 0.0399 \quad (3.99\%)
+\end{equation}
+
+ขั้นตอนที่สาม คำนวณพารามิเตอร์แมนเดล $Q$
+เนื่องจากสถานะอาพันธ์มีความแปรปรวน $(\Delta n)^2 = \langle n \rangle = 100$
+\begin{equation}
+Q = \frac{(\Delta n)^2 - \langle n \rangle}{\langle n \rangle} = \frac{100 - 100}{100} = 0
+\end{equation}
+
+\vspace{6pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} พารามิเตอร์ $Q = 0$ บ่งชี้ว่าแสงเลเซอร์มีสถิติโฟตอนแบบปัวซงบริสุทธิ์ (Coherent Poissonian Light) ในทางทัศนศาสตร์ควอนตัม หาก $Q > 0$ จะเป็นแสงความร้อน (Thermal/Super-Poissonian) ที่มีโฟตอนจับกลุ่มกัน (Photon Bunching) และหาก $Q < 0$ จะเป็นแสงที่มีสมบัติควอนตัมแท้จริง (Sub-Poissonian / Anti-bunched Light) เช่น แหล่งกำเนิดโฟตอนเดี่ยวที่ใช้ในการเข้ารหัสลับควอนตัม (QKD)
+\end{psctbox}
+
+% ตัวอย่างที่ 5
+\begin{psctbox}{การลดทอนสัญญาณรบกวนในสถานะสุญญากาศบีบอัด}{ตัวอย่างที่ห้า}
+\noindent\textbf{P - Problem Statement (วิเคราะห์โจทย์)} ในระบบตรวจวัดคลื่นความโน้มถ่วง แสงเลเซอร์ถูกบีบอัดด้วยพารามิเตอร์การบีบ $r = 1.38$ (สอดคล้องกับการบีบอัด $12\text{ dB}$) จงคำนวณเปอร์เซ็นต์การลดลงของความไม่แน่นอนในควอดราเจอร์ $\Delta X_1$ เทียบกับระดับสุญญากาศมาตรฐาน และคำนวณการเพิ่มขึ้นของความไม่แน่นอนในควอดราเจอร์คู่ควบ $\Delta X_2$
+
+\vspace{6pt}
+\noindent\textbf{S - Strategy \& Principle (วางกลยุทธ์)} ในสถานะสุญญากาศบีบอัด $\Delta X_1 = \frac{1}{2}e^{-r}$ และ $\Delta X_2 = \frac{1}{2}e^r$ เทียบกับระดับสุญญากาศปกติ $\Delta X_0 = \frac{1}{2}$ ระดับการบีบอัดในหน่วยเดซิเบลคำนวณจาก $\text{dB} = -10 \log_{10}(e^{-2r}) = 20 r \log_{10}(e)$
+
+\vspace{6pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและพิสูจน์)}
+ขั้นตอนที่หนึ่ง คำนวณตัวคูณการลดทอน $e^{-r}$
+\begin{equation}
+e^{-r} = e^{-1.38} \approx 0.2516
+\end{equation}
+
+ขั้นตอนที่สอง คำนวณความไม่แน่นอน $\Delta X_1$ และเปอร์เซ็นต์การลดทอน
+\begin{align}
+\Delta X_1 &= \frac{1}{2}(0.2516) \approx 0.1258 \\
+\text{เปอร์เซ็นต์การลดลง} &= (1 - 0.2516) \times 100\% = 74.84\%
+\end{align}
+ความแปรปรวนของสัญญาณรบกวน $(\Delta X_1)^2 = \frac{1}{4}e^{-2(1.38)} = \frac{1}{4}(0.0633)$ ลดลงเหลือเพียง $6.33\%$ ของระดับปกติ (ลดลง $93.67\%$)
+
+ขั้นตอนที่สาม คำนวณความไม่แน่นอนในควอดราเจอร์ $\Delta X_2$
+\begin{equation}
+e^r = e^{1.38} \approx 3.9749 \quad \Longrightarrow \quad \Delta X_2 = \frac{1}{2}(3.9749) \approx 1.9875
+\end{equation}
+ความไม่แน่นอนเพิ่มขึ้นเกือบ 4 เท่า
+
+ขั้นตอนที่สี่ ตรวจสอบผลคูณความไม่แน่นอน
+\begin{equation}
+\Delta X_1 \Delta X_2 = (0.1258) \times (1.9875) \approx 0.2500 = \frac{1}{4}
+\end{equation}
+
+\vspace{6pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} การบีบอัดสัญญาณรบกวนควอนตัมลง $75\%$ (หรือ $12\text{ dB}$) ช่วยให้เครื่องตรวจจับ LIGO สามารถวัดการกระจัดของกระจกทดสอบที่มีขนาดเล็กกว่าขนาดของโปรตอนถึงหนึ่งหมื่นเท่า ($\Delta L \sim 10^{-19}\text{ m}$) ได้สำเร็จ นำไปสู่การค้นพบการชนกันของดาวนิวตรอน GW170817 ที่เปลี่ยนประวัติศาสตร์ดาราศาสตร์พหุพาหะ (Multi-messenger Astronomy)
+\end{psctbox}
+
+% ตัวอย่างที่ 6
+\begin{psctbox}{การแก้ไขพลังงานจากการรบกวนแบบแอนฮาร์มอนิก $\lambda x^4$}{ตัวอย่างที่หก}
+\noindent\textbf{P - Problem Statement (วิเคราะห์โจทย์)} ตัวแกว่งกวัดฮาร์มอนิกควอนตัมถูกรบกวนด้วยศักย์แอนฮาร์มอนิกกำลังสี่ $\hat{H}' = \lambda \hat{x}^4$ โดยที่ $\lambda > 0$ เป็นค่าคงตัวขนาดเล็ก จงใช้ทฤษฎีการรบกวนอันดับที่หนึ่ง (First-Order Perturbation Theory) เพื่อหาการเลื่อนของระดับพลังงาน $\Delta E_n^{(1)}$ ของสถานะ $\ket{n}$
+
+\vspace{6pt}
+\noindent\textbf{S - Strategy \& Principle (วางกลยุทธ์)} ตามทฤษฎีการรบกวน การแก้ไขพลังงานอันดับหนึ่งคำนวณจากค่าคาดหวังของฮามิลโทเนียนการรบกวนในสถานะเดิม $\Delta E_n^{(1)} = \braket{n}{\hat{H}'}{n} = \lambda \braket{n}{\hat{x}^4}{n}$ จากนั้นนำผลลัพธ์ $\langle x^4 \rangle_n$ ที่ได้จากตัวอย่างที่สองมาแทนค่าโดยตรง
+
+\vspace{6pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและพิสูจน์)}
+ขั้นตอนที่หนึ่ง ดึงผลลัพธ์ค่าคาดหวังของตำแหน่งกำลังสี่จากตัวอย่างที่สอง
+\begin{equation}
+\braket{n}{\hat{x}^4}{n} = \frac{3\hbar^2}{4m^2\omega^2}\left( 2n^2 + 2n + 1 \right)
+\end{equation}
+
+ขั้นตอนที่สอง คำนวณการแก้ไขระดับพลังงานอันดับที่หนึ่ง
+\begin{equation}
+\Delta E_n^{(1)} = \lambda \braket{n}{\hat{x}^4}{n} = \frac{3\lambda\hbar^2}{4m^2\omega^2}\left( 2n^2 + 2n + 1 \right)
+\end{equation}
+
+ขั้นตอนที่สาม เขียนระดับพลังงานรวมถึงอันดับที่หนึ่ง
+\begin{equation}
+E_n \approx \left(n + \frac{1}{2}\right)\hbar\omega + \frac{3\lambda\hbar^2}{4m^2\omega^2}\left( 2n^2 + 2n + 1 \right)
+\end{equation}
+คำนวณระยะห่างระหว่างระดับพลังงานที่อยู่ติดกัน
+\begin{align}
+\Delta E_{n \to n+1} &= E_{n+1} - E_n = \hbar\omega + \frac{3\lambda\hbar^2}{4m^2\omega^2}\left[ 2(n+1)^2 + 2(n+1) + 1 - (2n^2 + 2n + 1) \right] \nonumber \\
+&= \hbar\omega + \frac{3\lambda\hbar^2}{m^2\omega^2}(n + 1)
+\end{align}
+
+\vspace{6pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} พจน์รบกวน $\lambda x^4$ ทำลายสมมาตรขั้นบันไดของตัวแกว่งกวัดฮาร์มอนิก ส่งผลให้ระยะห่างระหว่างระดับพลังงานไม่เท่ากันอีกต่อไป ($\Delta E$ ขึ้นกับ $n$) ปรากฏการณ์แอนฮาร์มอนิกนี้มีความสำคัญอย่างยิ่งยวดในการสร้าง \textbf{คิวบิตแบบตัวนำยิ่งยวด (Superconducting Qubits เช่น Transmon)} เพราะหากระยะห่างของทุกระดับเท่ากัน แสงไมโครเวฟที่ยิงเข้าไปเพื่อกระตุ้นสถานะ $\ket{0} \to \ket{1}$ จะกระตุ้นสถานะ $\ket{1} \to \ket{2}$ ต่อไปอย่างไม่สิ้นสุด ความเป็นแอนฮาร์มอนิกจึงเป็นสิ่งที่จำเป็นในการกักขังการคำนวณให้อยู่เฉพาะในปริภูมิสองระดับของคิวบิต
+\end{psctbox}
+
+% ตัวอย่างที่ 7
+\begin{psctbox}{การระบายความร้อนตัวแกว่งกวัดออปโตเมคานิกส์สู่สถานะพื้น}{ตัวอย่างที่เจ็ด}
+\noindent\textbf{P - Problem Statement (วิเคราะห์โจทย์)} คานกลระดับไมโครเมตร (Micro-cantilever) ทำจากซิลิกอน มีมวลยังผล $m = 1.0\text{ ng} = 1.0 \times 10^{-12}\text{ kg}$ มีความถี่การสั่น $\nu = 10.0\text{ MHz}$ ทำงานที่อุณหภูมิห้อง $T = 300\text{ K}$ จงคำนวณจำนวนโฟนอนเฉลี่ย $\langle n_{\text{th}} \rangle$ ที่สมดุลความร้อน และคำนวณแอมพลิจูดการกระจัดของพลังงานจุดศูนย์ $x_{\text{zpf}}$
+
+\vspace{6pt}
+\noindent\textbf{S - Strategy \& Principle (วางกลยุทธ์)} จำนวนโฟนอนความร้อนคำนวณจากสถิติโบส-ไอน์สไตน์ $\langle n_{\text{th}} \rangle = \frac{1}{e^{\hbar\omega/k_B T} - 1} \approx \frac{k_B T}{\hbar\omega}$ เมื่อ $k_B T \gg \hbar\omega$ และความกว้างการกระจัดจุดศูนย์คือ $x_{\text{zpf}} = \sqrt{\frac{\hbar}{2m\omega}}$
+
+\vspace{6pt}
+\noindent\textbf{C - Calculation \& Proof (การคำนวณและพิสูจน์)}
+ขั้นตอนที่หนึ่ง คำนวณความถี่เชิงมุมและพลังงานควอนตัม
+\begin{align}
+\omega &= 2\pi\nu = 2\pi(1.0 \times 10^7\text{ s}^{-1}) \approx 6.283 \times 10^7\text{ rad/s} \\
+\hbar\omega &= (1.0546 \times 10^{-34}\text{ J}\cdot\text{s})(6.283 \times 10^7\text{ s}^{-1}) \approx 6.626 \times 10^{-27}\text{ J} \approx 4.136 \times 10^{-8}\text{ eV}
+\end{align}
+
+ขั้นตอนที่สอง คำนวณพลังงานความร้อนที่ $300\text{ K}$
+\begin{equation}
+k_B T = (1.3806 \times 10^{-23}\text{ J/K})(300\text{ K}) = 4.142 \times 10^{-21}\text{ J} \approx 0.02585\text{ eV}
+\end{equation}
+
+ขั้นตอนที่สาม คำนวณจำนวนโฟนอนความร้อนเฉลี่ย
+\begin{equation}
+\langle n_{\text{th}} \rangle \approx \frac{k_B T}{\hbar\omega} = \frac{4.142 \times 10^{-21}\text{ J}}{6.626 \times 10^{-27}\text{ J}} \approx 6.25 \times 10^5 \text{ โฟนอน}
+\end{equation}
+
+ขั้นตอนที่สี่ คำนวณการกระจัดของความผันผวนจุดศูนย์ $x_{\text{zpf}}$
+\begin{align}
+x_{\text{zpf}} &= \sqrt{\frac{\hbar}{2m\omega}} = \sqrt{\frac{1.0546 \times 10^{-34}\text{ J}\cdot\text{s}}{2 \times (1.0 \times 10^{-12}\text{ kg}) \times (6.283 \times 10^7\text{ rad/s})}} \\
+&= \sqrt{\frac{1.0546 \times 10^{-34}}{1.2566 \times 10^{-4}}} = \sqrt{8.392 \times 10^{-31}} \approx 9.16 \times 10^{-16}\text{ m} = 0.916\text{ fm}
+\end{align}
+
+\vspace{6pt}
+\noindent\textbf{T - Takeaway \& Modern Context (ข้อคิดสรุปและบริบทสมัยใหม่)} ที่อุณหภูมิห้อง คานกลมีโฟนอนความร้อนสะสมอยู่มากกว่า 6 แสนตัว การทำให้อุปกรณ์เข้าสู่สภาวะควอนตัมบริสุทธิ์จำเป็นต้องใช้เทคนิค \textbf{การทำความเย็นด้วยเลเซอร์แบบแถบข้าง (Sideband Laser Cooling)} ในช่องโพรงออปโตเมคานิกส์ เพื่อดูดซับโฟนอนออกไปจนเหลือ $\langle n \rangle < 1$ ซึ่งประสบความสำเร็จในห้องปฏิบัติการระดับโลกในปี 2010 และช่วยให้นักฟิสิกส์สามารถศึกษาผลกระทบควอนตัมในวัตถุขนาดมหภาคที่มองเห็นได้ด้วยกล้องจุลทรรศน์
+\end{psctbox}
+
+% ==========================================================
+% 5.11 สรุปสาระสำคัญประจำบทที่ 5
+% ==========================================================
+\section{สรุปสาระสำคัญประจำบทที่ 5}
+\label{sec_chapter_summary_ch05}
+
+\begin{enumerate}
+    \item \textbf{ความเป็นสากลของศักย์ฮาร์มอนิก} ---- ศักย์ราบเรียบใดๆ ที่มีจุดสมดุลเสถียรสามารถประมาณด้วยศักย์พาราโบลา $V(x) \approx \frac{1}{2}m\omega^2 x^2$ ได้เสมอสำหรับการสั่นขนาดเล็ก ทำให้แบบจำลองนี้เป็นแกนกลางของวิชาฟิสิกส์ทุกสาขา
+    
+    \item \textbf{การควอนไตซ์พลังงานแบบขั้นบันได} ---- ระดับพลังงานของตัวแกว่งกวัดฮาร์มอนิกถูกควอนไตซ์เป็น $E_n = (n + 1/2)\hbar\omega$ โดยที่แต่ละชั้นมีระยะห่างสม่ำเสมอเท่ากับ $\hbar\omega$
+    
+    \item \textbf{พลังงานจุดศูนย์และความผันผวนสุญญากาศ} ---- สถานะพื้นมีพลังงาน $E_0 = \frac{1}{2}\hbar\omega > 0$ ซึ่งเป็นผลพวงจากหลักความไม่แน่นอนของไฮเซนแบร์ก และได้รับการยืนยันเชิงประจักษ์จากปรากฏการณ์คาสิมีร์และสภาพของเหลวของฮีเลียม
+    
+    \item \textbf{ฟังก์ชันคลื่นแอร์มีต-เกาส์เซียน} ---- ไอเกนสเตตอยู่ในรูปผลคูณของพหุนามแอร์มีตกับหางเอกซ์โพเนนเชียลเกาส์เซียน $\psi_n(x) \propto H_n(\xi)e^{-\xi^2/2}$ ซึ่งมีพาริตี $(-1)^n$ และมีจำนวนจุดตัดศูนย์เท่ากับ $n$ จุด
+    
+    \item \textbf{ทฤษฎีบทไวรัล} ---- ค่าคาดหวังของพลังงานจลน์และพลังงานศักย์มีค่าเท่ากันพอดีในทุกไอเกนสเตต $\langle T \rangle_n = \langle V \rangle_n = \frac{1}{2}E_n$
+    
+    \item \textbf{พีชคณิตตัวดำเนินการบันไดของดิแรก} ---- ตัวดำเนินการลดขั้น $\hat{a}$ และเพิ่มขั้น $\hat{a}^\dagger$ สอดคล้องกับคอมมิวเตเตอร์ $[\hat{a}, \hat{a}^\dagger] = 1$ และช่วยให้คำนวณค่าคาดหวังของตัวดำเนินการได้อย่างรวดเร็วโดยไม่ต้องอินทิเกรต
+    
+    \item \textbf{สถานะอาพันธ์ของกลอเบอร์} ---- สถานะเจาะจงของตัวดำเนินการทำลาย $\hat{a}\ket{\alpha} = \alpha\ket{\alpha}$ มีการแจกแจงโฟตอนแบบปัวซงและเคลื่อนที่แกว่งกวัดตามเวลาโดยไม่แผ่กระจายตัวเสมือนอนุภาคคลาสสิก
+    
+    \item \textbf{สถานะบีบอัดของแสง} ---- การบีบอัดความไม่แน่นอนของควอดราเจอร์หนึ่งให้ต่ำกว่าขีดจำกัดสุญญากาศช่วยลดสัญญาณรบกวนควอนตัมในเครื่องตรวจวัดคลื่นความโน้มถ่วง LIGO
+    
+    \item \textbf{โฟนอนและสเปกโทรสโกปี FTIR} ---- การควอนไตซ์การสั่นในโครงผลึกก่อให้เกิดอนุภาคโฟนอน และการสั่นของโมเลกุลมีกฎการเลือก $\Delta n = \pm 1$ ซึ่งใช้ระบุชนิดสารเคมีในเทคนิค FTIR
+    
+    \item \textbf{วงจรควอนตัมตัวนำยิ่งยวด} ---- วงจร LC ตัวนำยิ่งยวดแสดงพฤติกรรมควอนตัมฮาร์มอนิก และการเพิ่มพจน์แอนฮาร์มอนิก $\lambda x^4$ เป็นหัวใจสำคัญในการสร้างคิวบิตทรานสมอนสำหรับคอมพิวเตอร์ควอนตัม
+\end{enumerate}
+
+% ==========================================================
+% 5.12 คำถามเชิงมโนทัศน์ประจำบทที่ 5 (20 ข้อ)
+% ==========================================================
+\section{คำถามเชิงมโนทัศน์ประจำบทที่ 5}
+\label{sec_conceptual_questions_ch05}
+
+\begin{enumerate}
+    \item เหตุใดศักย์ฮาร์มอนิกจึงเป็นแบบจำลองที่มีความสำคัญอย่างยิ่งยวดและปรากฏอยู่ในเกือบทุกสาขาของวิชาฟิสิกส์
+    \item จงอธิบายว่าเหตุใดการกระจายอนุกรมเทย์เลอร์ของพลังงานศักย์รอบจุดสมดุลเสถียรจึงไม่มีเทอมอนุพันธ์อันดับหนึ่งปรากฏอยู่
+    \item ในการแก้สมการชเรอดิงเงอร์เชิงวิเคราะห์ เหตุใดอนุกรมกำลังโฟรเบนิอุสจึงจำเป็นต้องถูกตัดทอนให้สิ้นสุดกลายเป็นพหุนามอันดับจำกัด
+    \item พลังงานจุดศูนย์ $E_0 = \frac{1}{2}\hbar\omega$ สามารถถูกดึงออกมาใช้งานเป็นพลังงานกลภายนอกได้หรือไม่ จงอธิบายตามหลักอุณหพลศาสตร์ควอนตัม
+    \item เหตุใดธาตุฮีเลียมจึงไม่แข็งตัวเป็นของแข็งที่ความดันบรรยากาศปกติแม้จะลดอุณหภูมิลงจนถึงศูนย์สัมบูรณ์
+    \item ทฤษฎีบทไวรัลระบุความสัมพันธ์ระหว่างพลังงานจลน์เฉลี่ยและพลังงานศักย์เฉลี่ยของตัวแกว่งกวัดฮาร์มอนิกอย่างไร และเหมือนหรือต่างจากระบบอะตอมไฮโดรเจนอย่างไร
+    \item ตัวดำเนินการบันได $\hat{a}$ และ $\hat{a}^\dagger$ เป็นตัวดำเนินการแฮร์มิเชียนหรือไม่ และมีปริมาณวัดได้ทางกายภาพที่สอดคล้องกับตัวดำเนินการเหล่านี้โดยตรงหรือไม่
+    \item จงอธิบายความหมายทางกายภาพของตัวดำเนินการจำนวน $\hat{N} = \hat{a}^\dagger\hat{a}$ และเหตุใดค่าเจาะจงของมันจึงต้องเป็นจำนวนเต็มบวกหรือศูนย์เท่านั้น
+    \item เหตุใดสถานะคงตัวเดี่ยวๆ $\ket{n}$ ของตัวแกว่งกวัดฮาร์มอนิกจึงมีค่าคาดหวังของตำแหน่งเป็นศูนย์ตลอดเวลา ไม่มีการแกว่งกวัดตามเวลา
+    \item สถานะอาพันธ์ $\ket{\alpha}$ แตกต่างจากสถานะคงตัว $\ket{n}$ อย่างไรในแง่ของความแน่นอนของจำนวนอนุภาคและเฟส
+    \item จงอธิบายว่าเหตุใดกลุ่มคลื่นของสถานะอาพันธ์จึงไม่เกิดการแผ่กระจายตัวออก (Wavepacket Spreading) ตามกาลเวลาเหมือนกับกลุ่มคลื่นของอนุภาคอิสระ
+    \item ในการแจกแจงความน่าจะเป็นแบบปัวซงของสถานะอาพันธ์ อัตราส่วนความผันผวนสัมพัทธ์ $\Delta n/\langle n \rangle$ แปรผันตามจำนวนโฟตอนเฉลี่ยอย่างไร
+    \item สถานะบีบอัด (Squeezed State) ละเมิดหลักความไม่แน่นอนของไฮเซนแบร์กหรือไม่ จงอธิบายอย่างรัดกุม
+    \item ในหอดูดาวคลื่นความโน้มถ่วง LIGO การฉีดแสงบีบอัด (Squeezed Light) ช่วยเพิ่มความไวในการวัดสัญญาณได้อย่างไร
+    \item กฎการเลือก $\Delta n = \pm 1$ ในสเปกโทรสโกปีอินฟราเรดมีที่มาทางคณิตศาสตร์จากคุณสมบัติใดของตัวดำเนินการตำแหน่ง
+    \item หากโมเลกุลมีศักย์การสั่นแบบแอนฮาร์มอนิก เช่น ศักย์มอร์ส กฎการเลือกจะยังคงเป็น $\Delta n = \pm 1$ อย่างเคร่งครัดหรือไม่ และจะเกิดแถบการดูดกลืนแสงแบบใดขึ้น
+    \item ผลกระทบไอโซโทป (Isotope Effect) ในสเปกตรัมการสั่นของโมเลกุลช่วยให้นักวิทยาศาสตร์ระบุโครงสร้างมวลได้อย่างไร
+    \item โฟนอน (Phonon) แตกต่างจากโฟตอน (Photon) อย่างไร และมีคุณสมบัติใดที่เหมือนกัน
+    \item ในวงจรไฟฟ้าตัวนำยิ่งยวด ปริมาณทางไฟฟ้าใดที่ทำหน้าที่สมนัยกับตำแหน่งและโมเมนตัมในกลศาสตร์ควอนตัม
+    \item เหตุใดคิวบิตแบบทรานสมอนจึงต้องใส่อุปกรณ์รอยต่อโจเซฟสันเพื่อสร้างความเป็นแอนฮาร์มอนิก แทนที่จะใช้วงจร LC ฮาร์มอนิกแบบธรรมดา
+\end{enumerate}
+
+% ==========================================================
+% 5.13 แบบฝึกหัดคำนวณและพิสูจน์เชิงวิเคราะห์ประจำบทที่ 5 (20 ข้อ)
+% ==========================================================
+\section{แบบฝึกหัดคำนวณและพิสูจน์เชิงวิเคราะห์ประจำบทที่ 5}
+\label{sec_analytical_problems_ch05}
+
+\begin{enumerate}
+    \item อนุภาคมวล $m$ เคลื่อนที่ภายใต้ศักย์ $V(x) = V_0 \left[ (x/a)^4 - 2(x/a)^2 \right]$ จงหาจุดสมดุลเสถียรทั้งหมด และคำนวณความถี่เชิงมุมของการสั่นขนาดเล็กรอบจุดสมดุลเสถียร
+    
+    \item จงใช้สูตรโรดริกส์เพื่ออนุพัทธ์พหุนามแอร์มีต $H_3(\xi)$ และ $H_4(\xi)$ พร้อมตรวจสอบว่าสอดคล้องกับสมการเชิงอนุพันธ์ของแอร์มีตหรือไม่
+    
+    \item จงพิสูจน์ความสัมพันธ์เวียนเกิดของพหุนามแอร์มีต $H_{n+1}(\xi) = 2\xi H_n(\xi) - 2n H_{n-1}(\xi)$ โดยใช้ฟังก์ชันก่อกำเนิด $\Phi(\xi, s) = e^{-s^2 + 2s\xi}$
+    
+    \item จงแสดงว่า ฟังก์ชันคลื่นสถานะพื้น $\psi_0(x) = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} e^{-\frac{m\omega}{2\hbar}x^2}$ สอดคล้องกับเงื่อนไขการถูกทำลาย $\hat{a}\psi_0(x) = 0$
+    
+    \item จงใช้ตัวดำเนินการสร้าง $\hat{a}^\dagger$ กระทำต่อฟังก์ชันคลื่นสถานะพื้น $\psi_0(x)$ เพื่อหาฟังก์ชันคลื่นสถานะเร้าแรก $\psi_1(x)$ ในพิกัดตำแหน่ง
+    
+    \item จงคำนวณค่าคาดหวัง $\langle x^3 \rangle$ และ $\langle p^3 \rangle$ ในสถานะไอเกนสเตต $\ket{n}$ ใดๆ โดยใช้พีชคณิตตัวดำเนินการบันได
+    
+    \item จงพิสูจน์ว่า ค่าคาดหวังของพลังงานจลน์กำลังสองมีค่าเท่ากับ $\langle T^2 \rangle_n = \frac{\hbar^2\omega^2}{8}(6n^2 + 6n + 3)$
+    
+    \item สำหรับสถานะซ้อนทับ $\ket{\Psi} = \frac{1}{\sqrt{5}}\ket{0} + \frac{2}{\sqrt{5}}\ket{2}$ จงคำนวณพลังงานเฉลี่ย $\langle H \rangle$ และค่าความไม่แน่นอนของพลังงาน $\Delta H$
+    
+    \item โมเลกุลไนโตรเจน ($^{14}\text{N}_2$) มีความถี่การสั่นดั้งเดิม $\nu = 7.07 \times 10^{13}\text{ Hz}$ จงคำนวณค่าคงตัวสปริงของพันธะสาม $k$ และพลังงานจุดศูนย์ในหน่วยจูล
+    
+    \item จงพิสูจน์เอกลักษณ์ตัวดำเนินการ $e^{\alpha \hat{a}^\dagger - \alpha^* \hat{a}} = e^{-|\alpha|^2/2} e^{\alpha \hat{a}^\dagger} e^{-\alpha^* \hat{a}}$ โดยใช้สูตรเบเกอร์-แคมป์เบลล์-เฮาส์ดอร์ฟ (BCH Formula)
+    
+    \item สำหรับสถานะอาพันธ์ $\ket{\alpha}$ จงพิสูจน์ว่าผลคูณภายในระหว่างสองสถานะอาพันธ์ที่ต่างกันคือ $|\braket{\beta}{\alpha}|^2 = e^{-|\beta - \alpha|^2}$ ซึ่งแสดงว่าสถานะอาพันธ์ไม่ตั้งฉากซึ่งกันและกัน (Non-orthogonal)
+    
+    \item จงแสดงว่าสถานะอาพันธ์สอดคล้องกับความสัมพันธ์ความสมบูรณ์แบบล้นเกิน (Overcomplete Resolution of Identity) $\frac{1}{\pi}\int \ket{\alpha}\bra{\alpha} d^2\alpha = \hat{I}$
+    
+    \item ในสถานะอาพันธ์ที่มี $\alpha = 3 + 4i$ จงคำนวณค่าคาดหวังของจำนวนโฟตอน $\langle n \rangle$ ค่าความแปรปรวน $(\Delta n)^2$ และค่าคาดหวังตำแหน่งสูงสุด $x_{\max}$
+    
+    \item จงพิสูจน์ว่าตัวดำเนินการบีบ $\hat{S}(\xi)$ เป็นตัวดำเนินการยูนิแทรี นั่นคือ $\hat{S}^\dagger(\xi)\hat{S}(\xi) = \hat{I}$
+    
+    \item สำหรับสถานะสุญญากาศบีบอัด $\ket{\xi}$ จงแสดงว่าค่าคาดหวังของจำนวนโฟตอนเฉลี่ยมีค่าเท่ากับ $\langle n \rangle = \sinh^2(r)$
+    
+    \item จงคำนวณหาความน่าจะเป็นที่จะพบโฟตอนเป็นจำนวนคี่ในสถานะสุญญากาศบีบอัด และอธิบายความหมายทางฟิสิกส์
+    
+    \item ตัวแกว่งกวัดฮาร์มอนิกถูกรบกวนด้วยสนามไฟฟ้าภายนอกสม่ำเสมอ $V'(x) = -q\mathcal{E}x$ จงหาระดับพลังงานที่แม่นตรงของระบบโดยการเปลี่ยนตัวแปรพิกัด (Completing the Square)
+    
+    \item สำหรับตัวแกว่งกวัดฮาร์มอนิกสามมิติแบบไอโซโทรปิก ($V(r) = \frac{1}{2}m\omega^2(x^2 + y^2 + z^2)$) จงหาระดับพลังงาน $E_N$ และพิสูจน์ว่าภาวะเสื่อมของระดับพลังงานชั้นที่ $N$ มีค่าเท่ากับ $g_N = \frac{1}{2}(N + 1)(N + 2)$
+    
+    \item วงจรควอนตัม LC ประกอบด้วย $L = 10\text{ nH}$ และ $C = 100\text{ fF}$ จงคำนวณความถี่เรโซแนนซ์ $\nu$ พลังงานจุดศูนย์ $E_0$ ในหน่วย $\mu\text{eV}$ และความผันผวนของฟลักซ์จุดศูนย์ $\Phi_{\text{zpf}} = \sqrt{\frac{\hbar Z_0}{2}}$ เมื่อ $Z_0 = \sqrt{L/C}$
+    
+    \item จงพิสูจน์ว่าฟังก์ชันวิกเนอร์ $W(x, p)$ ของสถานะพื้น $\ket{0}$ มีการกระจายเป็นรูปเกาส์เซียนสองมิติสมมาตร $W_0(x, p) = \frac{1}{\pi\hbar} \exp\left[ -\frac{m\omega}{\hbar}x^2 - \frac{p^2}{m\hbar\omega} \right]$
+\end{enumerate}

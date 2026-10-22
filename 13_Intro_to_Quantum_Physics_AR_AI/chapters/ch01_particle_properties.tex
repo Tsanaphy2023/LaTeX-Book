@@ -1,0 +1,1212 @@
+\chapter{สมบัติเชิงอนุภาคของรังสีและโฟตอนิกส์ยุคใหม่}
+\label{chap:particle_properties}
+\index{การแผ่รังสีวัตถุดำ (Blackbody Radiation)}
+\index{ปรากฏการณ์โฟโตอิเล็กทริก (Photoelectric Effect)}
+\index{การกระเจิงคอมป์ตัน (Compton Scattering)}
+\index{โฟตอน (Photon)}
+\index{โฟตอนิกส์ (Photonics)}
+\index{การสร้างคู่ (Pair Production)}
+\index{การประลัย (Annihilation)}
+\index{เครื่องชั่งคิบเบิล (Kibble Balance)}
+\index{ตัวตรวจวัดโฟตอนเดี่ยวตัวนำยิ่งยวด (SNSPD)}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 1
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 1}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 1}
+
+\begin{lessonplanbox}
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item ภูมิหลังทางประวัติศาสตร์และวิกฤตการณ์ฟิสิกส์คลาสสิกช่วงปลายคริสต์ศตวรรษที่ 19
+    \item ฟิสิกส์ของการแผ่รังสีวัตถุดำ โหมดคลื่นนิ่งในโพรง และกฎของเรย์ลีห์-จีนส์
+    \item การอนุพัทธ์กฎของพลังค์ฉบับสมบูรณ์และสมมติฐานการควอนไตซ์พลังงาน
+    \item การพิสูจน์กฎการกระจัดของวีน กฎสเตฟาน-โบลทซ์มัน และอุณหพลศาสตร์ของก๊าซโฟตอน
+    \item ปรากฏการณ์โฟโตอิเล็กทริก การทดลองของเลนนาร์ด และสมมติฐานโฟตอนของไอน์สไตน์
+    \item ข้อจำกัดของทฤษฎีคลื่นคลาสสิก การทดลองอันแม่นยำของมิลลิแกน และฟังก์ชันงาน
+    \item การกระเจิงคอมป์ตัน จลนศาสตร์สัมพัทธภาพฉบับเต็ม และการกระเจิงคอมป์ตันย้อนกลับ
+    \item การสร้างคู่อนุภาค-ปฏิอนุภาค เงื่อนไขอนุรักษ์โมเมนตัม โพซิตโรเนียม และการประลัย
+    \item พรมแดนงานวิจัยร่วมสมัย ---- เครื่องชั่งคิบเบิล การนิยามระบบหน่วยเอสไอใหม่ ตัวตรวจวัด SNSPD และโซลาร์เซลล์เพอรอฟสไกต์ควอนตัมดอต
+    \item ห้องปฏิบัติการเสมือนจริง WebAR การจำลองเชิงตัวเลขด้วย Python และการประยุกต์ P-S-C-T
+\end{enumerate}
+
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
+    \item อธิบายกลไกการเกิดวิกฤตการณ์อัลตราไวโอเลต และอนุพัทธ์ความหนาแน่นของโหมดคลื่นนิ่งในโพรงสามมิติได้อย่างถูกต้องตามหลักการทางคณิตศาสตร์
+    \item อนุพัทธ์กฎของพลังค์ กฎการกระจัดของวีน และกฎสเตฟาน-โบลทซ์มัน จากระเบียบวิธีกลศาสตร์สถิติควอนตัมได้อย่างเป็นระบบ
+    \item คำนวณพลังงานจลน์สูงสุด ศักย์หยุดยั้ง และอธิบายการคำนวณความล่าช้าเชิงเวลาในทฤษฎีคลื่นคลาสสิกเทียบกับข้อเท็จจริงเชิงควอนตัมได้อย่างลึกซึ้ง
+    \item แก้ปัญหาจลนศาสตร์สัมพัทธภาพของการกระเจิงคอมป์ตันและการสร้างคู่ในระบบ 4-โมเมนตัมได้อย่างแม่นยำ
+    \item ประยุกต์ความรู้ฟิสิกส์ควอนตัมเชิงอนุภาคเข้ากับการวิเคราะห์เทคโนโลยีมาตรวิทยาขั้นสูง (เครื่องชั่งคิบเบิล) และเทคโนโลยีโฟตอนิกส์ยุคปัจจุบัน พร้อมพัฒนาโปรแกรมจำลองผลเชิงตัวเลขได้
+\end{enumerate}
+\end{lessonplanbox}
+
+% ==========================================================
+% 1.1 ภูมิหลังทางประวัติศาสตร์และวิกฤตการณ์ฟิสิกส์คลาสสิก
+% ==========================================================
+\newpage
+\section{ภูมิหลังทางประวัติศาสตร์และวิกฤตการณ์ฟิสิกส์คลาสสิก}
+\index{วิกฤตการณ์อัลตราไวโอเลต (Ultraviolet Catastrophe)}
+\index{เมฆหมอกสองก้อนของเคลวิน (Kelvin's Two Clouds)}
+
+ในช่วงปลายคริสต์ศตวรรษที่ 19 ประชาคมนักฟิสิกส์มีความเชื่อมั่นเป็นอย่างยิ่งว่า โครงสร้างพื้นฐานของฟิสิกส์มีความสมบูรณ์และครอบคลุมปรากฏการณ์ธรรมชาติทั้งหมดแล้ว โดยมีเสาหลักสามประการที่ค้ำจุนจักรวาลเชิงทฤษฎี ได้แก่
+
+\begin{enumerate}
+    \item \textbf{กลศาสตร์นิวโตเนียน (Newtonian Mechanics)} ---- ที่พัฒนาต่อยอดโดยลากรองจ์ (Lagrange) และแฮมิลตัน (Hamilton) ซึ่งสามารถทำนายการเคลื่อนที่ของอนุภาคและวัตถุท้องฟ้าได้อย่างแม่นยำยิ่ง
+    \item \textbf{ทฤษฎีแม่เหล็กไฟฟ้าของแมกซ์เวลล์ (Maxwell's Electrodynamics)} ---- ซึ่งรวมปรากฏการณ์ทางไฟฟ้า แม่เหล็ก และทัศนศาสตร์ เข้าด้วยกันผ่านสมการคลื่นแม่เหล็กไฟฟ้า
+    \item \textbf{อุณหพลศาสตร์และกลศาสตร์สถิติ (Thermodynamics and Statistical Mechanics)} ---- นำโดยคาร์โนต์ (Carnot) เคลาซิอุส (Clausius) เคลวิน (Kelvin) และโบลทซ์มัน (Boltzmann) ที่อธิบายพฤติกรรมของสสารในระดับมหภาคผ่านการเคลื่อนที่เชิงสถิติของโมเลกุล
+\end{enumerate}
+
+ในคริสต์ศักราช 1900 ลอร์ดเคลวิน (Lord Kelvin หรือ William Thomson, 1824--1907) ได้กล่าวปาฐกถาอันมีชื่อเสียงต่อหน้าราชสมาคมแห่งเกรตบริเตน (Royal Institution of Great Britain) ความว่า บิวตี้และความชัดเจนของทฤษฎีพลศาสตร์ที่อธิบายความร้อนและแสงสว่างกำลังถูกบดบังด้วย \textbf{เมฆหมอกสองก้อน (Two Clouds on the Horizon of Physics)} ก้อนแรกคือ ผลการทดลองของไมเคิลสัน-มอร์ลีย์ (Michelson-Morley Experiment) ที่ตรวจไม่พบการเคลื่อนที่สัมพัทธ์ของอีเทอร์ ซึ่งนำไปสู่ทฤษฎีสัมพัทธภาพพิเศษของไอน์สไตน์ในเวลาต่อมา และก้อนที่สองคือ ความล้มเหลวของทฤษฎีบทการแบ่งเท่าพลังงาน (Equipartition Theorem) ในการอธิบายการแผ่รังสีความร้อนของวัตถุดำและความจุความร้อนจำเพาะของก๊าซและของแข็งที่อุณหภูมิต่ำ
+
+วิกฤตการณ์ของฟิสิกส์คลาสสิกไม่ได้เกิดขึ้นจากความบกพร่องทางคณิตศาสตร์ หากแต่เกิดจากข้อจำกัดพื้นฐานของกระบวนทัศน์ดั้งเดิมที่สันนิษฐานว่า \textbf{พลังงานและการถ่ายโอนพลังงานในธรรมชาติมีลักษณะต่อเนื่อง (Continuous)} ความขัดแย้งที่ไม่อาจประนีประนอมได้นี้ ได้นำไปสู่การก่อกำเนิดของกลศาสตร์ควอนตัม โดยเริ่มต้นจากการไขปริศนาการแผ่รังสีของวัตถุดำ
+
+% ==========================================================
+% 1.2 การแผ่รังสีวัตถุดำและกฎของเรย์ลีห์-จีนส์
+% ==========================================================
+\section{การแผ่รังสีวัตถุดำและกฎของเรย์ลีห์-จีนส์}
+\index{วัตถุดำ (Blackbody)}
+\index{กฎของเรย์ลีห์-จีนส์ (Rayleigh-Jeans Law)}
+\index{ความหนาแน่นของโหมด (Density of States)}
+
+\subsection{ธรรมชาติของวัตถุดำและแบบจำลองโพรงรังสี}
+
+วัตถุทุกชนิดที่มีอุณหภูมิสูงกว่าศูนย์สัมบูรณ์ ($T > 0~\text{K}$) จะแผ่คลื่นแม่เหล็กไฟฟ้าออกมาอย่างต่อเนื่อง เนื่องจากการสั่นไหวทางความร้อนของอนุภาคที่มีประจุไฟฟ้าภายในเนื้อสสาร \textbf{วัตถุดำอุดมคติ (Ideal Blackbody)} นิยามโดย กุสทัฟ เคียร์ชฮอฟฟ์ (Gustav Kirchhoff, 1824--1887) ในคริสต์ศักราช 1859 ว่าเป็นวัตถุที่ดูดกลืนรังสีแม่เหล็กไฟฟ้าทุกความถี่ที่ตกกระทบได้อย่างสมบูรณ์ โดยไม่มีการสะท้อนหรือทะลุผ่าน ($\alpha(\nu) = 1$ ทุกความถี่)
+
+จากกฎการแผ่รังสีของเคียร์ชฮอฟฟ์ (Kirchhoff's Law of Thermal Radiation) อัตราส่วนระหว่างสภาพเปล่งรังสี ($e(\nu, T)$) ต่อสภาพดูดกลืนรังสี ($\alpha(\nu, T)$) ของวัตถุใด ๆ ที่อยู่ในสมดุลความร้อนจะมีค่าเท่ากันเสมอ และมีค่าเท่ากับสภาพเปล่งรังสีของวัตถุดำ ($e_b(\nu, T)$) ซึ่งขึ้นกับความถี่และอุณหภูมิเท่านั้น โดยไม่ขึ้นกับรูปร่าง ขนาด หรือชนิดของวัสดุ
+
+\begin{equation}
+\frac{e(\nu, T)}{\alpha(\nu, T)} = e_b(\nu, T)
+\label{eq:kirchhoff_law}
+\end{equation}
+
+ในทางปฏิบัติ แบบจำลองที่ดีที่สุดของวัตถุดำคือ \textbf{โพรงกลวงที่มีรูเปิดขนาดเล็กมาก (Cavity Radiator)} ดังแสดงในภาพที่~\ref{fig:blackbody_cavity} เมื่อรังสีแม่เหล็กไฟฟ้าภายนอกลอดผ่านรูเปิดขนาดเล็กเข้าไปในโพรง รังสีจะสะท้อนไปมาระหว่างผนังภายในหลายครั้ง ในการสะท้อนแต่ละครั้ง ผนังจะดูดกลืนพลังงานรังสีไปบางส่วน เมื่อสะท้อนซ้ำไปซ้ำมา รังสีจะถูกดูดกลืนจนหมดเกลี้ยง โอกาสที่รังสีจะสะท้อนลอดกลับออกมาทางรูเปิดมีค่าน้อยมากจนเข้าใกล้ศูนย์ ดังนั้น รูเปิดของโพรงจึงทำหน้าที่เป็นพื้นผิวของวัตถุดำอุดมคติที่ดูดกลืนรังสีได้อย่างสมบูรณ์ และรังสีที่แผ่ออกมาจากรูเปิดเมื่อผนังโพรงได้รับความร้อนจนเข้าสู่สมดุลความร้อน ก็คือ \textbf{การแผ่รังสีของวัตถุดำ (Blackbody Radiation)}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1]
+    % Outer cavity shell
+    \draw[line width=3pt, darkNavy, fill=slateGrey!20] (0, 0) circle (2.8cm);
+    \fill[white] (-2.8, -0.4) rectangle (-2.7, 0.4); % Entrance aperture
+    
+    % Cavity interior
+    \fill[black!90] (0, 0) circle (2.5cm);
+    \draw[line width=1.5pt, cyberBlue] (0,0) circle (2.5cm);
+
+    % Multiple reflection path
+    \draw[-{Stealth}, line width=1.4pt, quantumGold] (-4.0, 0.2) -- (-2.7, 0.2);
+    \draw[-{Stealth}, line width=1.2pt, quantumGold] (-2.7, 0.2) -- (1.5, 1.8);
+    \draw[-{Stealth}, line width=1.2pt, quantumGold] (1.5, 1.8) -- (2.2, -0.8);
+    \draw[-{Stealth}, line width=1.1pt, quantumGold] (2.2, -0.8) -- (-0.8, -2.2);
+    \draw[-{Stealth}, line width=1.0pt, quantumGold] (-0.8, -2.2) -- (-1.8, -1.2);
+    \draw[-{Stealth}, line width=0.8pt, quantumGold] (-1.8, -1.2) -- (0.5, -0.5);
+
+    % Aperture label
+    \draw[-{Stealth}, neonPurple, line width=1.2pt] (-3.8, 1.5) -- (-2.8, 0.3);
+    \node at (-4.2, 1.8) [font=\small\bfseries\color{neonPurple}] {รูเปิดขนาดเล็ก (Aperture)};
+
+    % Cavity label
+    \node at (0, 0.8) [font=\bfseries\color{white}] {สนามรังสีในสมดุลความร้อน};
+    \node at (0, 0.2) [font=\small\color{cyan}] {$T = \text{const}$};
+    \node at (0, -0.5) [font=\footnotesize\color{slateGrey!50}] {ผนังดูดกลืนและเปล่งรังสี};
+\end{tikzpicture}
+\caption{แบบจำลองโพรงรังสีวัตถุดำ แสดงการสะท้อนภายในหลายครั้งจนรังสีถูกดูดกลืนอย่างสมบูรณ์ และรังสีที่เปล่งออกจากรูเปิดคือรังสีวัตถุดำ}
+\label{fig:blackbody_cavity}
+\end{figure}
+
+\subsection{การอนุพัทธ์ความหนาแน่นของโหมดคลื่นนิ่งในโพรงสามมิติ}
+
+พิจารณาโพรงสุญญากาศรูปลูกบาศก์ที่มีความยาวด้านละ $L$ มีปริมาตร $V = L^3$ ผนังทุกด้านเป็นตัวนำไฟฟ้าสมบูรณ์ สนามแม่เหล็กไฟฟ้าภายในโพรงจะสะท้อนกลับไปมาระหว่างผนังและเกิดการแทรกสอดจนกลายเป็น \textbf{คลื่นนิ่งแม่เหล็กไฟฟ้า (Electromagnetic Standing Waves)} 
+
+เงื่อนไขขอบเขตสำหรับสนามไฟฟ้าสัมผัสกับผนังตัวนำสมบูรณ์คือ $E_{\parallel} = 0$ ที่ผนัง $x = 0, L$ และ $y = 0, L$ และ $z = 0, L$ ส่งผลให้เวกเตอร์คลื่น $\vec{k} = (k_x, k_y, k_z)$ ถูกจำกัดค่าตามเงื่อนไข
+
+\begin{equation}
+k_x = \frac{n_x \pi}{L}, \quad k_y = \frac{n_y \pi}{L}, \quad k_z = \frac{n_z \pi}{L}
+\label{eq:wavevector_components}
+\end{equation}
+
+โดยที่ $n_x, n_y, n_z$ เป็นจำนวนเต็มบวก ($1, 2, 3, \dots$) ความถี่ของการแกว่งกวัดสัมพันธ์กับขนาดของเวกเตอร์คลื่นตามสมการการกระจายตัวของคลื่นแม่เหล็กไฟฟ้าในสุญญากาศ
+
+\begin{equation}
+\nu = \frac{c k}{2\pi} = \frac{c}{2\pi}\sqrt{k_x^2 + k_y^2 + k_z^2} = \frac{c}{2L}\sqrt{n_x^2 + n_y^2 + n_z^2}
+\label{eq:frequency_modes}
+\end{equation}
+
+นิยามรัศมีในปริภูมิจำนวนเต็ม $n = \sqrt{n_x^2 + n_y^2 + n_z^2} = \frac{2L\nu}{c}$ จำนวนโหมดทั้งหมดที่มีความถี่น้อยกว่าหรือเท่ากับ $\nu$ สอดคล้องกับปริมาตรของทรงกลมหนึ่งในแปด (Octant) ในปริภูมิ $n$-space (เนื่องจาก $n_x, n_y, n_z > 0$) คูณด้วย 2 เพื่อคิดรวมสถานะโพลาไรเซชันอิสระสองสถานะของคลื่นแม่เหล็กไฟฟ้าตามขวาง
+
+\begin{equation}
+N(\nu) = 2 \times \frac{1}{8} \times \left( \frac{4}{3}\pi n^3 \right) = \frac{\pi}{3} n^3 = \frac{\pi}{3} \left( \frac{2L\nu}{c} \right)^3 = \frac{8\pi L^3}{3 c^3} \nu^3 = \frac{8\pi V}{3 c^3} \nu^3
+\label{eq:total_modes}
+\end{equation}
+
+จำนวนโหมดคลื่นนิ่งต่อหน่วยปริมาตรในช่วงความถี่ระหว่าง $\nu$ ถึง $\nu + d\nu$ คือ \textbf{ความหนาแน่นของโหมด (Density of States, $g(\nu)$)} หาได้จากการหาอนุพันธ์ของ $N(\nu)/V$ เทียบกับ $\nu$
+
+\begin{equation}
+g(\nu) d\nu = \frac{1}{V}\frac{dN}{d\nu} d\nu = \frac{8\pi\nu^2}{c^3} d\nu
+\label{eq:density_of_states}
+\end{equation}
+
+หากพิจารณาในเทอมของความยาวคลื่น $\lambda$ โดยใช้ความสัมพันธ์ $\nu = c/\lambda$ และ $|d\nu| = (c/\lambda^2)d\lambda$ จะได้ความหนาแน่นของโหมดต่อหน่วยความยาวคลื่น
+
+\begin{equation}
+g(\lambda) d\lambda = \frac{8\pi}{\lambda^4} d\lambda
+\label{eq:density_of_states_lambda}
+\end{equation}
+
+สมการ~\eqref{eq:density_of_states} และ~\eqref{eq:density_of_states_lambda} เป็นผลลัพธ์เชิงเรขาคณิตและทฤษฎีคลื่นคลาสสิกที่ถูกต้องสมบูรณ์ และไม่มีข้อโต้แย้งใด ๆ ในทางฟิสิกส์
+
+\subsection{ทฤษฎีบทการแบ่งเท่าพลังงานและความล้มเหลวของกฎเรย์ลีห์-จีนส์}
+
+ในการหาความหนาแน่นพลังงานเชิงสเปกตรัม $u(\nu, T)$ ฟิสิกส์คลาสสิกอาศัย \textbf{ทฤษฎีบทการแบ่งเท่าพลังงาน (Equipartition Theorem)} ของวิลเลียม ทอมสัน และเจมส์ เคลิร์ก แมกซ์เวลล์ ซึ่งระบุว่า สำหรับระบบที่อยู่ในสมดุลความร้อนที่อุณหภูมิสัมบูรณ์ $T$ ระดับขั้นความเสรีเชิงกำลังสอง (Quadratic Degree of Freedom) แต่ละระดับจะมีพลังงานเฉลี่ยเท่ากับ $\frac{1}{2}k_B T$
+
+เนื่องจากคลื่นนิ่งแม่เหล็กไฟฟ้าแต่ละโหมดเทียบเท่ากับตัวแกว่งกวัดฮาร์มอนิกอย่างง่าย (Simple Harmonic Oscillator) ที่มีทั้งพลังงานจลน์ (สนามแม่เหล็ก) และพลังงานศักย์ (สนามไฟฟ้า) จึงมีระดับขั้นความเสรีสองระดับ พลังงานเฉลี่ยของแต่ละโหมดในทางคลาสสิกจึงมีค่าเท่ากับ
+
+\begin{equation}
+\langle \varepsilon \rangle_{\text{classical}} = \frac{1}{2}k_B T + \frac{1}{2}k_B T = k_B T
+\label{eq:classical_mean_energy}
+\end{equation}
+
+เมื่อนำพลังงานเฉลี่ยไปคูณกับความหนาแน่นของโหมด จะได้ \textbf{กฎการแผ่รังสีของเรย์ลีห์-จีนส์ (Rayleigh-Jeans Law)} ที่เสนอในคริสต์ศักราช 1900 และปรับปรุงในคริสต์ศักราช 1905
+
+\begin{equation}
+u(\nu, T) d\nu = g(\nu) \langle \varepsilon \rangle_{\text{classical}} d\nu = \frac{8\pi\nu^2}{c^3} k_B T d\nu
+\label{eq:rayleigh_jeans_full}
+\end{equation}
+
+หรือในรูปของความยาวคลื่น
+
+\begin{equation}
+u(\lambda, T) d\lambda = \frac{8\pi k_B T}{\lambda^4} d\lambda
+\label{eq:rayleigh_jeans_lambda_full}
+\end{equation}
+
+พิจารณาผลลัพธ์ของสมการ~\eqref{eq:rayleigh_jeans_full} เมื่อคำนวณพลังงานรวมทั้งหมดต่อหน่วยปริมาตรของรังสีในโพรง โดยการอินทิเกรตตลอดทุกช่วงความถี่ตั้งแต่ศูนย์ถึงอนันต์
+
+\begin{equation}
+u_{\text{total}} = \int_0^\infty u(\nu, T) d\nu = \frac{8\pi k_B T}{c^3} \int_0^\infty \nu^2 d\nu = \infty
+\label{eq:uv_catastrophe_integral}
+\end{equation}
+
+ผลลัพธ์ที่เป็นอนันต์นี้ ชี้ว่าวัตถุที่อุณหภูมิใด ๆ เหนือศูนย์สัมบูรณ์จะแผ่รังสีพลังงานสูง (ย่านอัลตราไวโอเลต รังสีเอกซ์ และรังสีแกมมา) ออกมาอย่างมหาศาลไม่สิ้นสุด ซึ่งขัดแย้งกับการทดลองและการดำรงอยู่ของสสารในเอกภพอย่างสิ้นเชิง ความล้มเหลวเชิงทฤษฎีนี้ถูกขนานนามโดย พอล เอห์เรนเฟสต์ (Paul Ehrenfest, 1880--1933) ว่า \textbf{วิกฤตการณ์อัลตราไวโอเลต (Ultraviolet Catastrophe)}
+
+% ==========================================================
+% 1.3 การอนุพัทธ์กฎของพลังค์ฉบับสมบูรณ์
+% ==========================================================
+\section{การอนุพัทธ์กฎของพลังค์ฉบับสมบูรณ์และสมมติฐานควอนตัม}
+\index{กฎของพลังค์ (Planck's Law)}
+\index{การควอนไตซ์พลังงาน (Energy Quantization)}
+\index{ค่าคงตัวพลังค์ (Planck's Constant)}
+
+\subsection{สมมติฐานการควอนไตซ์พลังงานของพลังค์}
+
+มัคซ์ พลังค์ (Max Planck) ตระหนักว่าปัญหาไม่ได้อยู่ที่การนับจำนวนโหมด $g(\nu)$ แต่อยู่ที่การคำนวณพลังงานเฉลี่ย $\langle \varepsilon \rangle$ ของตัวแกว่งกวัด พลังค์จึงได้ตั้งสมมติฐานอันกล้าหาญเมื่อวันที่ 14 ธันวาคม คริสต์ศักราช 1900 ซึ่งถือเป็นวันกำเนิดของฟิสิกส์ควอนตัม โดยระบุว่า
+
+\begin{quote}
+\textit{ตัวแกว่งกวัดของอะตอมในผนังโพรง ไม่สามารถดูดกลืนหรือปลดปล่อยพลังงานได้อย่างต่อเนื่องตามใจชอบ หากแต่พลังงานของตัวแกว่งกวัดจะต้องถูกจำกัดให้อยู่ในรูปของกลุ่มก้อนพลังงานย่อยที่เรียกว่า ควอนตัม (Quantum) โดยเป็นจำนวนเต็มเท่าของปริมาณพลังงานมูลฐาน $h\nu$}
+\end{quote}
+
+\begin{equation}
+\varepsilon_n = n h\nu = n \hbar \omega, \quad n = 0, 1, 2, 3, \dots
+\label{eq:planck_energy_levels}
+\end{equation}
+
+โดยที่ $h = 6.62607015 \times 10^{-34}~\text{J}\cdot\text{s}$ คือ \textbf{ค่าคงตัวพลังค์ (Planck's Constant)} ซึ่งเป็นค่าคงตัวมูลฐานของเอกภพ และ $\hbar = h/(2\pi) = 1.054571817 \times 10^{-34}~\text{J}\cdot\text{s}$ คือค่าคงตัวพลังค์ลด (Reduced Planck Constant หรือ Dirac Constant)
+
+\subsection{การคำนวณพลังงานเฉลี่ยตามสถิติของโบลทซ์มัน}
+
+ในสถิติแบบดั้งเดิมของแมกซ์เวลล์-โบลทซ์มัน โอกาสที่ตัวแกว่งกวัดจะมีพลังงาน $\varepsilon_n$ แปรผันตามตัวคูณโบลทซ์มัน $e^{-\varepsilon_n / (k_B T)} = e^{-n h\nu / (k_B T)}$ นิยามตัวแปรเสริม $\beta = \frac{1}{k_B T}$ และกำหนดให้ $x = \beta h\nu = \frac{h\nu}{k_B T}$
+
+ฟังก์ชันแบ่งส่วน (Partition Function, $Z$) ของตัวแกว่งกวัดหนึ่งตัวคำนวณได้จากการบวกผลรวมอนันต์ของอนุกรมเรขาคณิต
+
+\begin{equation}
+Z = \sum_{n=0}^\infty e^{-n \beta h\nu} = \sum_{n=0}^\infty \left( e^{-\beta h\nu} \right)^n = \frac{1}{1 - e^{-\beta h\nu}}
+\label{eq:partition_function}
+\end{equation}
+
+พลังงานเฉลี่ย $\langle \varepsilon \rangle$ คำนวณได้จากนิยามค่าคาดหมายทางสถิติ
+
+\begin{equation}
+\langle \varepsilon \rangle = \frac{\sum_{n=0}^\infty \varepsilon_n e^{-\beta \varepsilon_n}}{\sum_{n=0}^\infty e^{-\beta \varepsilon_n}} = -\frac{1}{Z}\frac{\partial Z}{\partial \beta} = -\frac{\partial}{\partial \beta}\ln Z
+\label{eq:mean_energy_derivation_1}
+\end{equation}
+
+แทนค่า $Z$ จากสมการ~\eqref{eq:partition_function} ลงในสมการ~\eqref{eq:mean_energy_derivation_1}
+
+\begin{align}
+\langle \varepsilon \rangle &= -\frac{\partial}{\partial \beta} \ln \left( \frac{1}{1 - e^{-\beta h\nu}} \right) = \frac{\partial}{\partial \beta} \ln \left( 1 - e^{-\beta h\nu} \right) \nonumber \\
+&= \frac{1}{1 - e^{-\beta h\nu}} \cdot \left( -e^{-\beta h\nu} \right) \cdot (-h\nu) \nonumber \\
+&= \frac{h\nu e^{-\beta h\nu}}{1 - e^{-\beta h\nu}} = \frac{h\nu}{e^{\beta h\nu} - 1}
+\label{eq:mean_energy_derivation_2}
+\end{align}
+
+ดังนั้น พลังงานเฉลี่ยของตัวแกว่งกวัดควอนตัมที่มีความถี่ $\nu$ ณ อุณหภูมิ $T$ คือ
+
+\begin{equation}
+\langle \varepsilon \rangle_{\text{Planck}} = \frac{h\nu}{e^{h\nu / (k_B T)} - 1}
+\label{eq:planck_mean_energy}
+\end{equation}
+
+\subsection{การวิเคราะห์พฤติกรรมของพลังงานเฉลี่ยในสองขีดจำกัด}
+
+เมื่อพิจารณาสมการ~\eqref{eq:planck_mean_energy} ในช่วงขีดจำกัดทางกายภาพที่แตกต่างกัน
+
+\begin{enumerate}
+    \item \textbf{ขีดจำกัดความถี่ต่ำ หรือ อุณหภูมิสูง ($h\nu \ll k_B T$ หรือ $x \ll 1$)} \\
+    กระจายฟังก์ชันเลขชี้กำลังด้วยอนุกรมเทย์เลอร์ $e^x = 1 + x + \frac{x^2}{2!} + \dots \approx 1 + x$
+    \begin{equation}
+    \langle \varepsilon \rangle \approx \frac{h\nu}{(1 + \frac{h\nu}{k_B T}) - 1} = \frac{h\nu}{\frac{h\nu}{k_B T}} = k_B T
+    \end{equation}
+    พลังงานเฉลี่ยลดรูปกลับไปเป็นผลลัพธ์ของฟิสิกส์คลาสสิกตามทฤษฎีบทการแบ่งเท่าพลังงาน ซึ่งอธิบายว่าเหตุใดกฎของเรย์ลีห์-จีนส์จึงใช้ได้ดีเฉพาะในย่านความถี่ต่ำ (คลื่นวิทยุและอินฟราเรดไกล)
+    
+    \item \textbf{ขีดจำกัดความถี่สูง หรือ อุณหภูมิต่ำ ($h\nu \gg k_B T$ หรือ $x \gg 1$)} \\
+    ในกรณีนี้ $e^{h\nu/(k_B T)} \gg 1$ ทำให้ตัดเลข 1 ในตัวส่วนทิ้งได้
+    \begin{equation}
+    \langle \varepsilon \rangle \approx h\nu e^{-h\nu / (k_B T)} \xrightarrow{\nu \to \infty} 0
+    \end{equation}
+    พลังงานเฉลี่ยจะลดลงอย่างรวดเร็วในลักษณะเอ็กซ์โพเนนเชียลเข้าสู่ศูนย์เมื่อความถี่สูงขึ้น เนื่องจากขนาดของควอนตัมพลังงาน $h\nu$ มีค่าใหญ่โตมหาศาลเกินกว่าที่พลังงานความร้อนเฉลี่ย $k_B T$ จะสามารถกระตุ้นให้ตัวแกว่งกวัดเปลี่ยนสถานะขึ้นไปครอบครองระดับพลังงานนั้นได้ ปรากฏการณ์นี้เรียกว่า \textbf{การแช่แข็งของระดับขั้นความเสรี (Freezing out of degrees of freedom)} ซึ่งช่วยกำจัดวิกฤตการณ์อัลตราไวโอเลตได้อย่างหมดจด
+\end{enumerate}
+
+\subsection{สมการการกระจายพลังงานของพลังค์}
+
+เมื่อนำความหนาแน่นของโหมด $g(\nu)$ จากสมการ~\eqref{eq:density_of_states} มาคูณกับพลังงานเฉลี่ยตามควอนตัม $\langle \varepsilon \rangle_{\text{Planck}}$ จากสมการ~\eqref{eq:planck_mean_energy} จะได้ \textbf{กฎการแผ่รังสีของพลังค์ (Planck's Radiation Law)}
+
+\begin{equation}
+u(\nu, T) d\nu = \frac{8\pi h\nu^3}{c^3} \frac{1}{e^{h\nu/(k_B T)} - 1} d\nu
+\label{eq:planck_spectrum_nu}
+\end{equation}
+
+ในการแปลงเป็นฟังก์ชันของความยาวคลื่น $u(\lambda, T)$ ต้องใช้เงื่อนไขการอนุรักษ์ความหนาแน่นพลังงาน $u(\lambda, T)|d\lambda| = u(\nu, T)|d\nu|$ โดยที่ $\nu = c/\lambda$ และ $d\nu = -\frac{c}{\lambda^2}d\lambda$
+
+\begin{equation}
+u(\lambda, T) = u(\nu, T) \left| \frac{d\nu}{d\lambda} \right| = \frac{8\pi h(c/\lambda)^3}{c^3} \frac{1}{e^{hc/(\lambda k_B T)} - 1} \left( \frac{c}{\lambda^2} \right)
+\end{equation}
+
+\begin{equation}
+u(\lambda, T) d\lambda = \frac{8\pi h c}{\lambda^5} \frac{1}{e^{hc/(\lambda k_B T)} - 1} d\lambda
+\label{eq:planck_spectrum_lambda}
+\end{equation}
+
+สำหรับสภาพเปล่งรังสีสเปกตรัมต่อหน่วยพื้นที่ผิว $I(\lambda, T)$ (Spectral Radiance) สัมพันธ์กับความหนาแน่นพลังงานในโพรงตามความสัมพันธ์เชิงทัศนศาสตร์ $I(\lambda, T) = \frac{c}{4\pi} u(\lambda, T)$ หรือหากพิจารณากำลังการแผ่รังสีที่เปล่งออกสู่ครึ่งทรงกลมด้านหน้า (Hemispherical Emissive Power) $R(\lambda, T) = \frac{c}{4} u(\lambda, T)$ จะได้
+
+\begin{equation}
+R(\lambda, T) = \frac{2\pi h c^2}{\lambda^5} \frac{1}{e^{hc/(\lambda k_B T)} - 1}
+\label{eq:planck_radiance_R}
+\end{equation}
+
+% ==========================================================
+% 1.4 การพิสูจน์กฎการกระจัดของวีนและกฎสเตฟาน-โบลทซ์มัน
+% ==========================================================
+\section{การพิสูจน์กฎการกระจัดของวีนและกฎสเตฟาน-โบลทซ์มัน}
+\index{กฎการกระจัดของวีน (Wien's Displacement Law)}
+\index{กฎสเตฟาน-โบลทซ์มัน (Stefan-Boltzmann Law)}
+\index{ความดันการแผ่รังสี (Radiation Pressure)}
+
+กฎการแผ่รังสีของพลังค์เป็นกฎมูลฐานระดับเอกภพที่ครอบคลุมกฎการแผ่รังสีเชิงประจักษ์ทั้งหมดที่เคยค้นพบมาก่อนหน้านี้ ดังการพิสูจน์เชิงวิเคราะห์อย่างเข้มงวดต่อไปนี้
+
+\subsection{การอนุพัทธ์กฎการกระจัดของวีนฉบับสมบูรณ์}
+
+วิลเฮล์ม วีน (Wilhelm Wien, 1864--1928) ได้ค้นพบในคริสต์ศักราช 1893 ว่า จุดยอดสูงสุดของสเปกตรัมการแผ่รังสีวัตถุดำ ($\lambda_{\max}$) จะเลื่อนไปยังความยาวคลื่นที่สั้นลงเมื่ออุณหภูมิของวัตถุดำสูงขึ้น การหาค่า $\lambda_{\max}$ ทำได้โดยการหาอนุพันธ์ของ $u(\lambda, T)$ ในสมการ~\eqref{eq:planck_spectrum_lambda} เทียบกับ $\lambda$ แล้วกำหนดให้มีค่าเท่ากับศูนย์
+
+\begin{equation}
+\left. \frac{\partial u(\lambda, T)}{\partial \lambda} \right|_{\lambda = \lambda_{\max}} = 0
+\label{eq:wien_extremum_condition}
+\end{equation}
+
+กำหนดตัวแปรไร้มิติ $x = \frac{hc}{\lambda k_B T}$ ดังนั้น $\lambda = \frac{hc}{k_B T x}$ เขียนฟังก์ชัน $u(\lambda, T)$ ในรูปของ $x$ ได้เป็น
+
+\begin{equation}
+u(\lambda, T) = 8\pi h c \left( \frac{k_B T}{hc} \right)^5 \frac{x^5}{e^x - 1}
+\end{equation}
+
+การหาอนุพันธ์เทียบกับ $\lambda$ สัมพันธ์กับการหาอนุพันธ์เทียบกับ $x$ ผ่านกฎลูกโซ่ $\frac{d}{d\lambda} = \frac{dx}{d\lambda}\frac{d}{dx} = -\frac{x}{\lambda}\frac{d}{dx}$ ดังนั้นเงื่อนไขอนุพันธ์เท่ากับศูนย์เทียบเท่ากับ
+
+\begin{equation}
+\frac{d}{dx}\left( \frac{x^5}{e^x - 1} \right) = 0
+\end{equation}
+
+ใช้กฎการหารอนุพันธ์
+
+\begin{equation}
+\frac{5x^4(e^x - 1) - x^5 e^x}{(e^x - 1)^2} = 0
+\end{equation}
+
+เนื่องจาก $x \neq 0$ สามารถตัดพจน์ $x^4$ และส่วนออกได้
+
+\begin{equation}
+5(e^x - 1) - x e^x = 0 \implies 5 - 5e^{-x} - x = 0
+\end{equation}
+
+จัดรูปใหม่จะได้ \textbf{สมการอดิศัย (Transcendental Equation)}
+
+\begin{equation}
+x = 5(1 - e^{-x})
+\label{eq:wien_transcendental}
+\end{equation}
+
+สมการ~\eqref{eq:wien_transcendental} ไม่สามารถแก้ได้ด้วยพีชคณิตมูลฐาน แต่สามารถหาผลเฉลยเชิงตัวเลขได้อย่างแม่นยำด้วยวิธีนิวตัน-ราฟสัน (Newton-Raphson Method) โดยให้ผลลัพธ์คือ
+
+\begin{equation}
+x_0 \approx 4.9651142317
+\label{eq:wien_root}
+\end{equation}
+
+แทนค่า $x_0 = \frac{hc}{\lambda_{\max} k_B T}$ ย้ายข้างเพื่อหาผลคูณ $\lambda_{\max} T$
+
+\begin{equation}
+\lambda_{\max} T = \frac{hc}{x_0 k_B} = \frac{(6.62607015 \times 10^{-34}~\text{J}\cdot\text{s})(2.99792458 \times 10^8~\text{m/s})}{(4.96511423)(1.380649 \times 10^{-23}~\text{J/K})}
+\end{equation}
+
+\begin{equation}
+\lambda_{\max} T = b = 2.897771955 \times 10^{-3}~\text{m}\cdot\text{K} \approx 2.898 \times 10^{-3}~\text{m}\cdot\text{K}
+\label{eq:wien_law_derived}
+\end{equation}
+
+โดยที่ $b$ เรียกว่า \textbf{ค่าคงตัวการกระจัดของวีน (Wien's Displacement Constant)}
+
+\subsection{การอนุพัทธ์กฎสเตฟาน-โบลทซ์มันและการอินทิเกรตฟังก์ชันซีตา}
+
+โยเซฟ สเตฟาน (Josef Stefan, 1835--1893) เสนอความสัมพันธ์เชิงประจักษ์ในคริสต์ศักราช 1879 ว่า กำลังการแผ่รังสีรวมแปรผันตรงกับ $T^4$ ต่อมา ลุดวิก โบลทซ์มัน (Ludwig Boltzmann, 1844--1906) ได้พิสูจน์กฎนี้จากหลักการอุณหพลศาสตร์คลาสสิกในคริสต์ศักราช 1884
+
+ในการอนุพัทธ์กฎนี้โดยตรงจากกฎของพลังค์ พิจารณาความหนาแน่นพลังงานรวม $u_{\text{total}}(T)$
+
+\begin{equation}
+u_{\text{total}}(T) = \int_0^\infty u(\nu, T) d\nu = \frac{8\pi h}{c^3} \int_0^\infty \frac{\nu^3}{e^{h\nu/(k_B T)} - 1} d\nu
+\label{eq:stefan_integral_start}
+\end{equation}
+
+กำหนดตัวแปรเปลี่ยนรูป $x = \frac{h\nu}{k_B T}$ ดังนั้น $\nu = \frac{k_B T}{h}x$ และ $d\nu = \frac{k_B T}{h}dx$ ขอบเขตการอินทิเกรตจาก $0$ ถึง $\infty$ ยังคงเดิม
+
+\begin{equation}
+u_{\text{total}}(T) = \frac{8\pi h}{c^3} \left( \frac{k_B T}{h} \right)^4 \int_0^\infty \frac{x^3}{e^x - 1} dx = \frac{8\pi k_B^4 T^4}{c^3 h^3} \int_0^\infty \frac{x^3}{e^x - 1} dx
+\label{eq:stefan_substitution}
+\end{equation}
+
+ปริพันธ์เฉพาะข้างต้นเป็นปริพันธ์มาตรฐานที่เชื่อมโยงกับ \textbf{ฟังก์ชันซีตาของรีมันน์ (Riemann Zeta Function, $\zeta(s)$)} และ \textbf{ฟังก์ชันแกมมา (Gamma Function, $\Gamma(s)$)} โดยใช้การกระจายอนุกรมเรขาคณิต
+
+\begin{align}
+\int_0^\infty \frac{x^3}{e^x - 1} dx &= \int_0^\infty x^3 e^{-x}\frac{1}{1 - e^{-x}} dx = \int_0^\infty x^3 e^{-x} \sum_{n=0}^\infty e^{-nx} dx \nonumber \\
+&= \sum_{m=1}^\infty \int_0^\infty x^3 e^{-mx} dx
+\end{align}
+
+ให้ $y = mx$ ดังนั้น $dx = dy/m$
+
+\begin{equation}
+\int_0^\infty x^3 e^{-mx} dx = \frac{1}{m^4} \int_0^\infty y^3 e^{-y} dy = \frac{\Gamma(4)}{m^4} = \frac{3!}{m^4} = \frac{6}{m^4}
+\end{equation}
+
+นำกลับไปแทนในผลรวมอนันต์
+
+\begin{equation}
+\int_0^\infty \frac{x^3}{e^x - 1} dx = 6 \sum_{m=1}^\infty \frac{1}{m^4} = 6 \zeta(4)
+\end{equation}
+
+จากทฤษฎีจำนวนของออยเลอร์ (Euler) ทราบว่า $\zeta(4) = \frac{\pi^4}{90}$ ดังนั้น
+
+\begin{equation}
+\int_0^\infty \frac{x^3}{e^x - 1} dx = 6 \left( \frac{\pi^4}{90} \right) = \frac{\pi^4}{15}
+\label{eq:zeta_integral_result}
+\end{equation}
+
+แทนค่าปริพันธ์สมการ~\eqref{eq:zeta_integral_result} ลงในสมการ~\eqref{eq:stefan_substitution}
+
+\begin{equation}
+u_{\text{total}}(T) = \frac{8\pi k_B^4 T^4}{c^3 h^3} \left( \frac{\pi^4}{15} \right) = \left( \frac{8\pi^5 k_B^4}{15 c^3 h^3} \right) T^4 = a T^4
+\label{eq:energy_density_T4}
+\end{equation}
+
+โดยที่ $a = \frac{8\pi^5 k_B^4}{15 c^3 h^3} = 7.5657 \times 10^{-16}~\text{J}\cdot\text{m}^{-3}\cdot\text{K}^{-4}$ คือ \textbf{ค่าคงตัวความหนาแน่นรังสี (Radiation Constant)}
+
+สำหรับกำลังการแผ่รังสีรวมต่อหน่วยพื้นที่ผิวที่เปล่งออกสู่ครึ่งทรงกลม $R(T) = \frac{c}{4} u_{\text{total}}(T)$
+
+\begin{equation}
+R(T) = \frac{c}{4} \left( \frac{8\pi^5 k_B^4}{15 c^3 h^3} \right) T^4 = \left( \frac{2\pi^5 k_B^4}{15 c^2 h^3} \right) T^4 = \sigma T^4
+\label{eq:stefan_boltzmann_derived}
+\end{equation}
+
+สมการ~\eqref{eq:stefan_boltzmann_derived} คือ \textbf{กฎสเตฟาน-โบลทซ์มัน (Stefan-Boltzmann Law)} อย่างแม่นยำ โดยที่ \textbf{ค่าคงตัวสเตฟาน-โบลทซ์มัน (Stefan-Boltzmann Constant, $\sigma$)} มีค่าตามทฤษฎีควอนตัมเท่ากับ
+
+\begin{equation}
+\sigma = \frac{2\pi^5 k_B^4}{15 c^2 h^3} = 5.670374419 \times 10^{-8}~\text{W}\cdot\text{m}^{-2}\cdot\text{K}^{-4}
+\label{eq:sigma_value}
+\end{equation}
+
+\subsection{อุณหพลศาสตร์และความดันการแผ่รังสีของก๊าซโฟตอน}
+
+คลื่นแม่เหล็กไฟฟ้าในโพรงมีโมเมนตัม เมื่อตกกระทบและสะท้อนจากผนังโพรงจะถ่ายโอนโมเมนตัม ก่อให้เกิด \textbf{ความดันการแผ่รังสี (Radiation Pressure, $P$)} จากทฤษฎีแม่เหล็กไฟฟ้าคลาสสิกและทฤษฎีจลน์ของก๊าซโฟตอนสามมิติที่มีการกระจายทิศทางแบบไอโซทรอปิก (Isotropic) ความดันการแผ่รังสีสัมพันธ์กับความหนาแน่นพลังงานตามสมการ
+
+\begin{equation}
+P = \frac{1}{3}u = \frac{1}{3}a T^4
+\label{eq:radiation_pressure}
+\end{equation}
+
+พลังงานภายในรวมของก๊าซโฟตอนในปริมาตร $V$ คือ $U = u V = a V T^4$ จากกฎข้อที่หนึ่งของอุณหพลศาสตร์ $dU = T dS - P dV$ สามารถอนุพัทธ์เอนโทรปี ($S$) ของก๊าซโฟตอนได้ดังนี้
+
+\begin{equation}
+dS = \frac{dU + P dV}{T} = \frac{4 a V T^3 dT + a T^4 dV + \frac{1}{3}a T^4 dV}{T} = 4 a V T^2 dT + \frac{4}{3}a T^3 dV
+\end{equation}
+
+ทำการอินทิเกรตจะได้ฟังก์ชันเอนโทรปีของสนามรังสีวัตถุดำ
+
+\begin{equation}
+S = \frac{4}{3}a V T^3 = \frac{4}{3}\frac{U}{T}
+\label{eq:photon_gas_entropy}
+\end{equation}
+
+สมการ~\eqref{eq:photon_gas_entropy} แสดงให้เห็นว่าในกระบวนการขยายตัวแบบแอเดียแบติก ($S = \text{const}$) ของเอกภพที่มีรังสีโฟตอนบรรจุอยู่ ผลคูณ $V T^3 = \text{const}$ นั่นคือ $T \propto V^{-1/3} \propto R^{-1}$ เมื่อ $R$ คือรัศมีสเกลการขยายตัวของเอกภพ ซึ่งเป็นพื้นฐานสำคัญยิ่งในการอธิบายการเย็นตัวของรังสีไมโครเวฟพื้นหลังของเอกภพ (Cosmic Microwave Background Radiation --- CMBR) จากอุณหภูมิหลายพันเคลวินในยุคบิ๊กแบงลงมาเหลือเพียง $2.7255~\text{K}$ ในยุคปัจจุบัน
+
+% ==========================================================
+% 1.5 ปรากฏการณ์โฟโตอิเล็กทริกและสมมติฐานโฟตอน
+% ==========================================================
+\section{ปรากฏการณ์โฟโตอิเล็กทริกและสมมติฐานโฟตอนของไอน์สไตน์}
+\index{ปรากฏการณ์โฟโตอิเล็กทริก (Photoelectric Effect)}
+\index{ฟังก์ชันงาน (Work Function)}
+\index{ความถี่ขีดเริ่ม (Threshold Frequency)}
+\index{ศักย์หยุดยั้ง (Stopping Potential)}
+
+\subsection{การทดลองของเลนนาร์ดและข้อเท็จจริงเชิงประจักษ์}
+
+ในคริสต์ศักราช 1887 ไฮน์ริช แฮร์ตซ์ (Heinrich Hertz) ค้นพบโดยบังเอิญระหว่างการทดลองสร้างคลื่นแม่เหล็กไฟฟ้าว่า ประกายไฟข้ามช่องว่างระหว่างขั้วไฟฟ้าจะเกิดขึ้นได้ง่ายขึ้นเมื่อมีแสงอัลตราไวโอเลตส่องกระทบขั้วไฟฟ้า ต่อมาในคริสต์ศักราช 1902 ฟิลิป เลนนาร์ด (Philipp Lenard) ได้ออกแบบอุปกรณ์สุญญากาศเพื่อศึกษาคุณลักษณะของอิเล็กตรอนที่หลุดออกจากผิวโลหะอย่างละเอียด ดังแสดงในภาพที่~\ref{fig:photoelectric_apparatus}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    % Vacuum tube
+    \draw[line width=2pt, darkNavy, fill=cyberBlue!5] (-3.5, -2.0) rectangle (3.5, 2.0);
+    \node at (0, 2.3) [font=\bfseries\color{darkNavy}] {หลอดสุญญากาศ (Vacuum Phototube)};
+
+    % Quartz window
+    \draw[line width=2.5pt, cyan] (-3.5, 0.5) -- (-3.5, 1.8);
+    \node at (-4.2, 1.2) [font=\scriptsize\bfseries\color{cyan}, align=right] {หน้าต่างควอตซ์\\(Quartz)};
+
+    % Light rays
+    \foreach \y in {0.8, 1.1, 1.4} {
+        \draw[-{Stealth}, line width=1.5pt, quantumGold] (-5.2, \y + 0.3) -- (-2.2, \y - 0.5);
+    }
+    \node at (-5.0, 2.0) [font=\small\bfseries\color{quantumGold}] {แสงตกกระทบ ($h\nu$)};
+
+    % Emitter Plate (Cathode)
+    \draw[line width=4pt, darkNavy] (-2.0, -1.2) -- (-2.0, 1.2);
+    \node at (-2.0, -1.6) [font=\small\bfseries\color{darkNavy}] {แผ่นแคโทด (C)};
+
+    % Collector Plate (Anode)
+    \draw[line width=4pt, slateGrey] (2.0, -1.2) -- (2.0, 1.2);
+    \node at (2.0, -1.6) [font=\small\bfseries\color{slateGrey}] {แผ่นแอโนด (A)};
+
+    % Emitted electrons
+    \foreach \y in {-0.6, -0.2, 0.2, 0.6} {
+        \draw[-{Stealth}, line width=1.2pt, entanglePink, dashed] (-1.8, \y) -- (1.6, \y + 0.1);
+        \fill[entanglePink] (-1.0, \y + 0.05) circle (2.5pt);
+    }
+    \node at (0, 0.9) [font=\footnotesize\bfseries\color{entanglePink}] {โฟโตอิเล็กตรอน ($e^-$)};
+
+    % External circuit
+    \draw[line width=1.2pt, darkNavy] (-2.0, -1.2) -- (-2.0, -3.2) -- (-0.8, -3.2);
+    \draw[line width=1.2pt, darkNavy] (2.0, -1.2) -- (2.0, -3.2) -- (0.8, -3.2);
+
+    % Microammeter
+    \draw[line width=1.2pt, darkNavy, fill=white] (0, -3.2) circle (0.5cm);
+    \node at (0, -3.2) [font=\small\bfseries] {$\mu\text{A}$};
+
+    % Variable voltage supply
+    \draw[line width=1.2pt, darkNavy] (-2.0, -3.2) -- (-2.0, -4.5) -- (-0.5, -4.5);
+    \draw[line width=1.2pt, darkNavy] (2.0, -3.2) -- (2.0, -4.5) -- (0.5, -4.5);
+    \draw[line width=1.5pt, neonPurple] (-0.5, -4.8) rectangle (0.5, -4.2);
+    \node at (0, -4.5) [font=\scriptsize\bfseries\color{neonPurple}] {$V$ ปรับค่าได้};
+\end{tikzpicture}
+\caption{แผนผังอุปกรณ์การทดลองปรากฏการณ์โฟโตอิเล็กทริก แสดงแผ่นขั้วแคโทดเป้า หน้าต่างควอตซ์ แอมมิเตอร์วัดกระแส และแหล่งจ่ายความต่างศักย์ปรับค่าได้}
+\label{fig:photoelectric_apparatus}
+\end{figure}
+
+การทดลองแสดงคุณลักษณะที่ขัดแย้งกับทฤษฎีคลื่นคลาสสิกอย่างสิ้นเชิง ดังนี้
+
+\begin{enumerate}
+    \item \textbf{การมีอยู่ของความถี่ขีดเริ่ม (Threshold Frequency, $\nu_0$)} ---- หากแสงตกกระทบมีความถี่ต่ำกว่า $\nu_0$ จะไม่มีโฟโตอิเล็กตรอนหลุดออกมาเลยแม้แต่ตัวเดียว ไม่ว่าจะเพิ่มความเข้มแสงให้สูงเพียงใด หรือส่องสว่างเป็นเวลานานเท่าใดก็ตาม ซึ่งทฤษฎีคลื่นทำนายว่าคลื่นแสงที่มีความเข้มสูงย่อมมีสนามไฟฟ้าแรงพอที่จะดึงอิเล็กตรอนให้หลุดออกได้เสมอไม่ว่าจะใช้ความถี่ใด
+    \item \textbf{พลังงานจลน์สูงสุดขึ้นกับความถี่เท่านั้น} ---- เมื่อวัดพลังงานจลน์สูงสุดของอิเล็กตรอน ($K_{\max}$) โดยการปรับศักย์หยุดยั้ง ($V_0$) จนกระทั่งกระแสโฟโตอิเล็กทริกเป็นศูนย์ ($K_{\max} = e V_0$) พบว่า $K_{\max}$ มีค่าแปรผันตรงเชิงเส้นกับความถี่ $\nu$ ของแสงตกกระทบ และไม่ขึ้นกับความเข้มแสงเลย ในขณะที่ทฤษฎีคลื่นทำนายว่าแสงที่มีความเข้มสูง (แอมพลิจูดสนามไฟฟ้าใหญ่) ต้องถ่ายทอดพลังงานให้อิเล็กตรอนมีพลังงานจลน์สูงกว่าแสงความเข้มน้อย
+    \item \textbf{การเกิดขึ้นในทันทีทันใด (Instantaneous Emission)} ---- โฟโตอิเล็กตรอนถูกปลดปล่อยออกมาแทบจะในทันทีหลังแสงตกกระทบ โดยมีระยะเวลาหน่วงน้อยกว่า $10^{-9}$ วินาที (1 นาโนวินาที) ในขณะที่ทฤษฎีคลื่นคลาสสิกทำนายว่าจะต้องใช้เวลาสะสมพลังงานนานนับชั่วโมงหรือหลายวัน
+\end{enumerate}
+
+\subsection{การคำนวณความล่าช้าเชิงเวลาในทฤษฎีคลื่นคลาสสิก}
+
+เพื่อแสดงให้เห็นความล้มเหลวของทฤษฎีคลื่นคลาสสิกอย่างเป็นรูปธรรม พิจารณาการคำนวณเชิงตัวเลขต่อไปนี้ กำหนดให้แหล่งกำเนิดแสงมีกำลัง $P = 1.0~\text{W}$ วางอยู่ห่างจากแผ่นโลหะเป้าเป็นระยะทาง $r = 1.0~\text{m}$ โลหะเป้ามีฟังก์ชันงาน $\phi = 2.2~\text{eV} = 3.52 \times 10^{-19}~\text{J}$ สมมติว่าพลังงานของคลื่นแสงกระจายแผ่ออกไปสม่ำเสมอบนหน้าคลื่นทรงกลม ความเข้มของคลื่นแสงที่ตกกระทบผิวโลหะคือ
+
+\begin{equation}
+I = \frac{P}{4\pi r^2} = \frac{1.0~\text{W}}{4\pi(1.0~\text{m})^2} \approx 0.0796~\text{W/m}^2
+\end{equation}
+
+สมมติให้อิเล็กตรอนในผิวโลหะจับพลังงานคลื่นแสงที่ตกกระทบในพื้นที่หน้าตัดระดับอะตอม รัศมีอะตอม $r_{\text{atom}} \approx 0.1~\text{nm} = 10^{-10}~\text{m}$ พื้นที่หน้าตัดที่รับรังสีคือ
+
+\begin{equation}
+A_{\text{atom}} = \pi r_{\text{atom}}^2 = \pi(10^{-10}~\text{m})^2 \approx 3.14 \times 10^{-20}~\text{m}^2
+\end{equation}
+
+อัตราการดูดกลืนพลังงานของอิเล็กตรอนหนึ่งตัวตามทฤษฎีคลื่นคลาสสิกคือ
+
+\begin{equation}
+\frac{dE}{dt} = I \times A_{\text{atom}} = (0.0796~\text{W/m}^2)(3.14 \times 10^{-20}~\text{m}^2) \approx 2.50 \times 10^{-21}~\text{J/s}
+\end{equation}
+
+เวลา $\Delta t$ ที่อิเล็กตรอนต้องใช้ในการสะสมพลังงานคลื่นอย่างต่อเนื่องจนกระทั่งสะสมพลังงานได้เท่ากับฟังก์ชันงาน $\phi$ เพื่อหลุดเป็นอิสระ คือ
+
+\begin{equation}
+\Delta t = \frac{\phi}{dE/dt} = \frac{3.52 \times 10^{-19}~\text{J}}{2.50 \times 10^{-21}~\text{J/s}} \approx 141~\text{วินาที} \approx 2.35~\text{นาที}
+\end{equation}
+
+หากลดความเข้มของแสงลงเป็น $10^{-6}~\text{W}$ เวลาหน่วงที่คำนวณได้จะยาวนานถึงหลายเดือน ทว่าในการทดลองจริง แม้จะใช้ความเข้มแสงที่หรี่ต่ำมากจนโฟตอนตกกระทบผิวโลหะเพียงไม่กี่ตัวต่อวินาที อิเล็กตรอนตัวแรกก็ยังคงหลุดออกมาในทันทีทันใดภายในเวลาไม่ถึงระดับนาโนวินาที ข้อเท็จจริงนี้พิสูจน์อย่างเด็ดขาดว่าพลังงานแสงไม่ได้กระจายตัวแผ่ออกไปอย่างต่อเนื่องบนหน้าคลื่น
+
+\subsection{คำอธิบายเชิงปฏิวัติของไอน์สไตน์และสมการโฟโตอิเล็กทริก}
+
+ในคริสต์ศักราช 1905 อัลเบิร์ต ไอน์สไตน์ (Albert Einstein) ได้ตีพิมพ์บทความวิทยาศาสตร์ในวารสาร \textit{Annalen der Physik} เสนอ \textbf{สมมติฐานควอนตัมแสง (Light Quantum Hypothesis)} โดยขยายแนวคิดของพลังค์จากเดิมที่จำกัดอยู่เฉพาะตัวแกว่งกวัดในผนังโพรง ไปสู่ธรรมชาติของคลื่นแม่เหล็กไฟฟ้าเอง ไอน์สไตน์เสนอว่า
+
+\begin{quote}
+\textit{ลำแสงไม่ได้เป็นคลื่นที่มีพลังงานแผ่กระจายอย่างต่อเนื่องในอวกาศ หากแต่ประกอบด้วยกลุ่มก้อนพลังงานเฉพาะจุดที่เคลื่อนที่ไปในปริภูมิโดยไม่แตกกระจาย แต่ละกลุ่มก้อนคืออนุภาคพลังงาน (ต่อมาเรียกว่า โฟตอน ---- Photon) ซึ่งมีพลังงานเฉพาะตัวเท่ากับ $E = h\nu$}
+\end{quote}
+
+เมื่อโฟตอนหนึ่งตัวตกกระทบผิวโลหะ กระบวนการดูดกลืนพลังงานจะเป็นการปฏิสัมพันธ์แบบหนึ่งต่อหนึ่งระหว่างโฟตอนตัวหนึ่งกับอิเล็กตรอนตัวหนึ่งอย่างสมบูรณ์ (All-or-nothing process) พลังงานทั้งหมดของโฟตอน ($h\nu$) จะถูกถ่ายโอนให้อิเล็กตรอนทันที พลังงานส่วนหนึ่งจะถูกใช้ไปในการเอาชนะพลังงานยึดเหนี่ยวของอิเล็กตรอนในโครงผลึกโลหะ เรียกว่า \textbf{ฟังก์ชันงาน (Work Function, $\phi$)} และพลังงานที่เหลือจะกลายเป็นพลังงานจลน์สูงสุด ($K_{\max}$) ของอิเล็กตรอนที่หลุดออกมา
+
+\begin{equation}
+K_{\max} = h\nu - \phi = h(\nu - \nu_0)
+\label{eq:einstein_photoelectric_full}
+\end{equation}
+
+เนื่องจาก $K_{\max} = e V_0$ โดยที่ $V_0$ คือศักย์หยุดยั้ง และ $e$ คือประจุของอิเล็กตรอน สามารถเขียนความสัมพันธ์ระหว่างศักย์หยุดยั้งกับความถี่ได้เป็น
+
+\begin{equation}
+V_0 = \left( \frac{h}{e} \right)\nu - \frac{\phi}{e}
+\label{eq:stopping_potential_linear}
+\end{equation}
+
+สมการ~\eqref{eq:stopping_potential_linear} อธิบายผลการทดลองทั้งหมดได้อย่างสมบูรณ์แบบ
+\begin{enumerate}
+    \item ความสัมพันธ์ระหว่าง $V_0$ กับความถี่ $\nu$ เป็นเส้นตรงที่มีความชันเท่ากับ $\frac{h}{e}$ ซึ่งเป็นค่าคงตัวสากลที่ไม่ขึ้นกับชนิดของโลหะเลย
+    \item จุดตัดแกนนอนคือ \textbf{ความถี่ขีดเริ่ม} $\nu_0 = \frac{\phi}{h}$ หรือความยาวคลื่นขีดเริ่ม $\lambda_0 = \frac{hc}{\phi}$ หากความถี่ต่ำกว่านี้ $h\nu < \phi$ จะไม่มีอิเล็กตรอนหลุดออกมา
+    \item จุดตัดแกนตั้งคือ $-\frac{\phi}{e}$ ซึ่งให้ค่าฟังก์ชันงานของโลหะชนิดนั้น ๆ โดยตรง
+    \item การเพิ่มความเข้มแสงหมายถึงการเพิ่มจำนวนโฟตอนต่อหน่วยเวลา จึงทำให้อัตราการปลดปล่อยอิเล็กตรอน (กระแสโฟโตอิเล็กทริก) เพิ่มขึ้นเป็นสัดส่วนตรง โดยไม่เปลี่ยนพลังงานจลน์สูงสุดของอิเล็กตรอนแต่ละตัว
+\end{enumerate}
+
+ในคริสต์ศักราช 1916 โรเบิร์ต แอนดรูส์ มิลลิแกน (Robert Andrews Millikan, 1868--1953) ซึ่งเดิมตั้งเป้าหมายที่จะทำการทดลองเพื่อพิสูจน์หักล้างสมมติฐานโฟตอนของไอน์สไตน์ ได้สร้างเครื่องมือทดลองตัดผิวโลหะในสุญญากาศสูงอย่างประณีต ผลการทดลองของมิลลิแกนยืนยันสมการเชิงเส้นของไอน์สไตน์อย่างแม่นยำยิ่งยวด และสามารถวัดค่าคงตัวพลังค์ได้ $h = 6.57 \times 10^{-34}~\text{J}\cdot\text{s}$ ซึ่งคลาดเคลื่อนจากค่าปัจจุบันไม่ถึง $1\%$ ผลงานนี้ทำให้ไอน์สไตน์ได้รับรางวัลโนเบลสาขาฟิสิกส์ในคริสต์ศักราช 1921 และมิลลิแกนได้รับรางวัลโนเบลในคริสต์ศักราช 1923
+
+\begin{table}[H]
+\centering
+\caption{ค่าฟังก์ชันงาน ความถี่ขีดเริ่ม และความยาวคลื่นขีดเริ่มของวัสดุสำคัญในเทคโนโลยีโฟตอนิกส์}
+\label{tab:comprehensive_work_functions}
+\begin{tabularx}{0.95\textwidth}{ZZZZ}
+\toprule
+\textbf{วัสดุ} & \textbf{ฟังก์ชันงาน $\phi$ (eV)} & \textbf{ความถี่ขีดเริ่ม $\nu_0$ ($10^{14}$ Hz)} & \textbf{ความยาวคลื่นขีดเริ่ม $\lambda_0$ (nm)} \\
+\midrule
+ซีเซียม (Cs) & 2.14 & 5.17 & 579 (แสงสีเหลือง) \\
+โพแทสเซียม (K) & 2.30 & 5.56 & 539 (แสงสีเขียว) \\
+โซเดียม (Na) & 2.36 & 5.70 & 525 (แสงสีเขียว) \\
+แบเรียม (Ba) & 2.52 & 6.09 & 492 (แสงสีน้ำเงิน) \\
+ลิเทียม (Li) & 2.90 & 7.01 & 428 (แสงสีม่วง) \\
+แมกนีเซียม (Mg) & 3.68 & 8.89 & 337 (อัลตราไวโอเลต) \\
+สังกะสี (Zn) & 4.33 & 10.47 & 286 (อัลตราไวโอเลต) \\
+กราฟีน (Graphene) & 4.50 & 10.88 & 276 (อัลตราไวโอเลต) \\
+ทองแดง (Cu) & 4.65 & 11.24 & 267 (อัลตราไวโอเลต) \\
+เงิน (Ag) & 4.73 & 11.44 & 262 (อัลตราไวโอเลต) \\
+ทองคำ (Au) & 5.10 & 12.33 & 243 (อัลตราไวโอเลต) \\
+แพลทินัม (Pt) & 5.65 & 13.66 & 219 (อัลตราไวโอเลต) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ==========================================================
+% 1.6 การกระเจิงคอมป์ตันและจลนศาสตร์สัมพัทธภาพ
+% ==========================================================
+\section{การกระเจิงคอมป์ตันและจลนศาสตร์สัมพัทธภาพ}
+\index{การกระเจิงคอมป์ตัน (Compton Scattering)}
+\index{ความยาวคลื่นคอมป์ตัน (Compton Wavelength)}
+\index{จลนศาสตร์สัมพัทธภาพ (Relativistic Kinematics)}
+\index{การกระเจิงคอมป์ตันย้อนกลับ (Inverse Compton Scattering)}
+
+แม้ว่าปรากฏการณ์โฟโตอิเล็กทริกจะชี้ว่าแสงมีการแลกเปลี่ยนพลังงานเป็นก้อนควอนตัม แต่นักฟิสิกส์ร่วมสมัยจำนวนมากยังคงกังขาว่า โฟตอนเป็นอนุภาคจริง ๆ ที่มีโมเมนตัมเชิงกลเหมือนลูกบิลเลียดหรือไม่ หลักฐานที่เด็ดขาดและปราศจากข้อกังขาเกิดขึ้นในคริสต์ศักราช 1923 เมื่อ อาเทอร์ เอช. คอมป์ตัน (Arthur H. Compton) ทำการทดลองยิงรังสีเอกซ์ความยาวคลื่นเดี่ยว ($\lambda = 0.0709~\text{nm}$ จากเป้าโมลิบดีนัม) ชนกับอิเล็กตรอนในเป้าคาร์บอนแกรไฟต์
+
+\subsection{การอนุพัทธ์สมการการเลื่อนความยาวคลื่นคอมป์ตันด้วย 4-โมเมนตัม}
+
+การวิเคราะห์การชนระหว่างโฟตอนกับอิเล็กตรอนต้องใช้ทฤษฎีสัมพัทธภาพพิเศษ เนื่องจากอิเล็กตรอนที่ถูกชนอาจมีความเร็วสูงเข้าใกล้ความเร็วแสง พิจารณากรอบอ้างอิงห้องปฏิบัติการที่อิเล็กตรอนเริ่มต้นอยู่นิ่ง
+
+กำหนด 4-โมเมนตัม (Four-Momentum, $P^\mu = (E/c, \vec{p})$) โดยใช้เมตริกมินคอฟสกี $\eta_{\mu\nu} = \text{diag}(+1, -1, -1, -1)$
+\begin{itemize}
+    \item โฟตอนก่อนชน ---- $P_\gamma^\mu = \left( \frac{h\nu}{c}, \frac{h\nu}{c}\hat{i} \right)$
+    \item อิเล็กตรอนก่อนชน (อยู่นิ่ง) ---- $P_e^\mu = (m_e c, \vec{0})$
+    \item โฟตอนหลังชน (กระเจิงทำมุม $\theta$) ---- $P_\gamma'^\mu = \left( \frac{h\nu'}{c}, \frac{h\nu'}{c}\cos\theta\,\hat{i} + \frac{h\nu'}{c}\sin\theta\,\hat{j} \right)$
+    \item อิเล็กตรอนหลังชน ---- $P_e'^\mu = \left( \frac{E_e'}{c}, \vec{p}_e \right)$
+\end{itemize}
+
+จากกฎอนุรักษ์ 4-โมเมนตัมของระบบโดดเดี่ยว
+
+\begin{equation}
+P_\gamma^\mu + P_e^\mu = P_\gamma'^\mu + P_e'^\mu \implies P_e'^\mu = (P_\gamma^\mu - P_\gamma'^\mu) + P_e^\mu
+\label{eq:four_momentum_conservation}
+\end{equation}
+
+หาผลคูณสเกลาร์สัมพัทธภาพเชิงไม่แปรเปลี่ยน (Lorentz Invariant Scalar Product) ของ 4-โมเมนตัมอิเล็กตรอนหลังชน $(P_e')_\mu (P_e')^\mu = m_e^2 c^2$
+
+\begin{equation}
+m_e^2 c^2 = \left[ (P_\gamma - P_\gamma') + P_e \right]_\mu \left[ (P_\gamma - P_\gamma') + P_e \right]^\mu
+\end{equation}
+
+กระจายผลคูณสเกลาร์
+
+\begin{equation}
+m_e^2 c^2 = (P_\gamma - P_\gamma')^2 + 2 P_e \cdot (P_\gamma - P_\gamma') + P_e^2
+\label{eq:scalar_expansion}
+\end{equation}
+
+เนื่องจาก $P_e^2 = m_e^2 c^2$ จึงตัดกันทั้งสองข้าง และสำหรับโฟตอนที่มีมวลนิ่งเป็นศูนย์ $P_\gamma^2 = 0$ และ $P_\gamma'^2 = 0$ ทำให้ $(P_\gamma - P_\gamma')^2 = -2 P_\gamma \cdot P_\gamma'$ สมการ~\eqref{eq:scalar_expansion} จึงลดรูปลงเหลือ
+
+\begin{equation}
+-2 P_\gamma \cdot P_\gamma' + 2 P_e \cdot (P_\gamma - P_\gamma') = 0 \implies P_e \cdot (P_\gamma - P_\gamma') = P_\gamma \cdot P_\gamma'
+\label{eq:scalar_equality}
+\end{equation}
+
+คำนวณผลคูณสเกลาร์แต่ละพจน์
+\begin{align}
+P_e \cdot (P_\gamma - P_\gamma') &= (m_e c)\left( \frac{h\nu}{c} - \frac{h\nu'}{c} \right) - \vec{0}\cdot(\vec{p}_\gamma - \vec{p}_\gamma') = m_e (h\nu - h\nu') \\
+P_\gamma \cdot P_\gamma' &= \left( \frac{h\nu}{c} \right)\left( \frac{h\nu'}{c} \right) - \vec{p}_\gamma \cdot \vec{p}_\gamma' = \frac{h^2 \nu\nu'}{c^2} - \frac{h^2 \nu\nu'}{c^2}\cos\theta = \frac{h^2 \nu\nu'}{c^2}(1 - \cos\theta)
+\end{align}
+
+แทนค่ากลับลงในสมการ~\eqref{eq:scalar_equality}
+
+\begin{equation}
+m_e (h\nu - h\nu') = \frac{h^2 \nu\nu'}{c^2}(1 - \cos\theta)
+\end{equation}
+
+หารตลอดทั้งสองข้างด้วย $m_e h c \nu \nu'$
+
+\begin{equation}
+\frac{h\nu - h\nu'}{h\nu\nu'} = \frac{h}{m_e c^2}(1 - \cos\theta) \implies \frac{1}{\nu'} - \frac{1}{\nu} = \frac{h}{m_e c^2}(1 - \cos\theta)
+\end{equation}
+
+คูณด้วยความเร็วแสง $c$ ทั้งสองข้าง และใช้ความสัมพันธ์ $\lambda = c/\nu$ และ $\lambda' = c/\nu'$
+
+\begin{equation}
+\Delta\lambda = \lambda' - \lambda = \frac{h}{m_e c}(1 - \cos\theta) = \lambda_C (1 - \cos\theta)
+\label{eq:compton_formula_master}
+\end{equation}
+
+สมการ~\eqref{eq:compton_formula_master} คือ \textbf{สมการการเลื่อนความยาวคลื่นของคอมป์ตัน (Compton Scattering Formula)} โดยที่ปริมาณคงตัว
+
+\begin{equation}
+\lambda_C = \frac{h}{m_e c} = 2.42631023867 \times 10^{-12}~\text{m} = 2.426~\text{pm} = 0.002426~\text{nm}
+\label{eq:compton_wavelength_value}
+\end{equation}
+
+เรียกว่า \textbf{ความยาวคลื่นคอมป์ตันของอิเล็กตรอน (Compton Wavelength of the Electron)}
+
+\subsection{การวิเคราะห์พลังงานจลน์และมุมการเคลื่อนที่ของอิเล็กตรอน}
+
+จากกฎอนุรักษ์พลังงาน พลังงานจลน์ที่ถ่ายโอนให้อิเล็กตรอนหลังชน ($K_e$) คือผลต่างของพลังงานโฟตอนก่อนและหลังชน
+
+\begin{equation}
+K_e = h\nu - h\nu' = hc\left( \frac{1}{\lambda} - \frac{1}{\lambda'} \right) = hc \frac{\Delta\lambda}{\lambda \lambda'} = hc \frac{\lambda_C(1 - \cos\theta)}{\lambda [\lambda + \lambda_C(1 - \cos\theta)]}
+\end{equation}
+
+นิยามพารามิเตอร์พลังงานโฟตอนไร้มิติ $\alpha = \frac{h\nu}{m_e c^2} = \frac{\lambda_C}{\lambda}$ จะได้
+
+\begin{equation}
+K_e = h\nu \left[ \frac{\alpha(1 - \cos\theta)}{1 + \alpha(1 - \cos\theta)} \right]
+\label{eq:electron_kinetic_energy}
+\end{equation}
+
+สำหรับมุมการกระเจิงของอิเล็กตรอน ($\phi$) สัมพันธ์กับมุมกระเจิงของโฟตอน ($\theta$) ผ่านการอนุรักษ์โมเมนตัมในแนวขนานและตั้งฉาก
+
+\begin{equation}
+\cot\phi = (1 + \alpha)\tan\left( \frac{\theta}{2} \right)
+\label{eq:recoil_angle_relation}
+\end{equation}
+
+\subsection{กรณีขีดจำกัดสำคัญของการกระเจิงคอมป์ตัน}
+
+\begin{enumerate}
+    \item \textbf{การกระเจิงไปข้างหน้า ($\theta = 0^\circ$)} ---- $\cos 0^\circ = 1$ ทำให้ $\Delta\lambda = 0$ โฟตอนไม่สูญเสียพลังงานเลย $K_e = 0$
+    \item \textbf{การกระเจิงตั้งฉาก ($\theta = 90^\circ$)} ---- $\cos 90^\circ = 0$ ทำให้ $\Delta\lambda = \lambda_C = 2.426~\text{pm}$
+    \item \textbf{การกระเจิงย้อนกลับสมบูรณ์ ($\theta = 180^\circ$)} ---- $\cos 180^\circ = -1$ ทำให้การเลื่อนความยาวคลื่นมีค่าสูงสุด
+    \begin{equation}
+    \Delta\lambda_{\max} = 2\lambda_C = \frac{2h}{m_e c} = 4.853~\text{pm}
+    \label{eq:max_compton_shift}
+    \end{equation}
+    และอิเล็กตรอนจะได้รับพลังงานจลน์สูงสุด ซึ่งเป็นสาเหตุของการเกิดจุดตัดคอมป์ตัน (Compton Edge) ในสเปกโตรสโกปีของรังสีแกมมา
+\end{enumerate}
+
+\subsection{การกระเจิงคอมป์ตันย้อนกลับในฟิสิกส์ดาราศาสตร์}
+
+เมื่อโฟตอนพลังงานต่ำ (เช่น โฟตอนของรังสีไมโครเวฟพื้นหลังของเอกภพ CMBR) ชนกับอิเล็กตรอนพลังงานสูงยิ่งยวดเชิงสัมพัทธภาพ ($\gamma \gg 1$) ในก๊าซพลาสมาของกระจุกกาแล็กซี โฟตอนจะได้รับพลังงานมหาศาลจากอิเล็กตรอน ส่งผลให้ความถี่ของโฟตอนเพิ่มขึ้นเป็น $\nu' \sim \gamma^2 \nu$ ปรากฏการณ์นี้เรียกว่า \textbf{การกระเจิงคอมป์ตันย้อนกลับ (Inverse Compton Scattering)} ซึ่งเป็นกลไกหลักที่ก่อให้เกิด \textbf{ปรากฏการณ์ซุนยาเยฟ-เซลโดวิช (Sunyaev-Zel'dovich Effect)} ทำให้นักดาราศาสตร์สามารถทำแผนที่การกระจายตัวของสสารมืดและก๊าซร้อนในเอกภพได้อย่างแม่นยำ
+
+% ==========================================================
+% 1.7 การสร้างคู่อนุภาค-ปฏิอนุภาคและการประลัย
+% ==========================================================
+\section{การสร้างคู่อนุภาค-ปฏิอนุภาคและการประลัย}
+\index{การสร้างคู่ (Pair Production)}
+\index{การประลัย (Annihilation)}
+\index{โพซิตโรเนียม (Positronium)}
+\index{การถ่ายภาพรังสีระนาบโพซิตรอน (PET Scan)}
+
+\subsection{การสร้างคู่และความจำเป็นของนิวเคลียสสะท้อน}
+
+เมื่อโฟตอนรังสีแกมมามีพลังงานสูงมากเคลื่อนที่ผ่านเข้าไปในสนามไฟฟ้าที่มีความเข้มสูงใกล้กับนิวเคลียสของอะตอม โฟตอนสามารถอันตรธานหายไปและให้กำเนิดคู่อนุภาคและปฏิอนุภาค ได้แก่ อิเล็กตรอน ($e^-$) และโพซิตรอน ($e^+$)
+
+\begin{equation}
+\gamma + \text{Nucleus} \longrightarrow e^- + e^+ + \text{Nucleus}'
+\label{eq:pair_production_full}
+\end{equation}
+
+\textbf{การพิสูจน์ว่าการสร้างคู่ไม่สามารถเกิดขึ้นได้ในสุญญากาศบริสุทธิ์}
+
+สมมติว่าเกิดการสร้างคู่ในสุญญากาศโดยไม่มีนิวเคลียสช่วยรับโมเมนตัม $\gamma \to e^- + e^+$ พิจารณาในกรอบศูนย์กลางมวล (Center of Momentum Frame) ของคู่อิเล็กตรอน-โพซิตรอน ซึ่งโมเมนตัมรวมของคู่อนุภาคเป็นศูนย์ ($\vec{p}_{\text{total}} = \vec{p}_{e^-} + \vec{p}_{e^+} = \vec{0}$) ดังนั้น พลังงานรวมของคู่อนุภาคในกรอบนี้คือ $E_{\text{total}} \ge 2 m_e c^2 > 0$
+
+ทว่าสำหรับโฟตอนเดี่ยวในสุญญากาศ ความสัมพันธ์ระหว่างพลังงานกับโมเมนตัมคือ $E_\gamma = p_\gamma c$ หากโมเมนตัมรวมของระบบเป็นศูนย์ในกรอบนี้ ย่อมบังคับให้ $p_\gamma = 0$ ซึ่งส่งผลให้ $E_\gamma = 0$ ขัดแย้งกับข้อเท็จจริงที่พลังงานของคู่อนุภาคมีค่ามากกว่าศูนย์อย่างสิ้นเชิง ดังนั้น \textbf{การสร้างคู่อนุภาคจากโฟตอนเดี่ยวในสุญญากาศจึงเป็นไปไม่ได้ในทางกายภาพ} เนื่องจากไม่สามารถอนุรักษ์ทั้งพลังงานและโมเมนตัมพร้อมกันได้ การสร้างคู่จำเป็นต้องมีวัตถุที่สาม (เช่น นิวเคลียสของอะตอม) มาทำหน้าที่ดูดซับโมเมนตัมส่วนเกิน
+
+\subsection{พลังงานขีดเริ่มสำหรับการสร้างคู่}
+
+เนื่องจากมวลนิ่งของนิวเคลียส ($M$) มีค่ามากกว่ามวลของอิเล็กตรอนมหาศาล ($M \gg m_e$) พลังงานจลน์ที่ถ่ายโอนให้นิวเคลียสจึงมีค่าน้อยมากจนเกือบตัดทิ้งได้ พลังงานขีดเริ่มขั้นต่ำสุด ($E_{\text{threshold}}$) ของรังสีแกมมาจึงมีค่าเท่ากับผลรวมของพลังงานนิ่งของคู่อนุภาค
+
+\begin{equation}
+E_{\text{threshold}} \approx 2 m_e c^2 = 2(0.51099895~\text{MeV}) = 1.021998~\text{MeV} \approx 1.022~\text{MeV}
+\label{eq:pair_threshold}
+\end{equation}
+
+ความยาวคลื่นสูงสุดของโฟตอนที่สามารถเกิดการสร้างคู่ได้คือ
+
+\begin{equation}
+\lambda_{\max} = \frac{hc}{2 m_e c^2} = \frac{\lambda_C}{2} = 1.213~\text{pm}
+\end{equation}
+
+หากโฟตอนมีพลังงาน $h\nu > 2m_e c^2$ พลังงานส่วนเกินจะกลายเป็นพลังงานจลน์ของอิเล็กตรอนและโพซิตรอน
+
+\begin{equation}
+h\nu - 2 m_e c^2 = K_{e^-} + K_{e^+}
+\label{eq:pair_kinetic_excess}
+\end{equation}
+
+\subsection{การประลัยและโพซิตโรเนียม}
+
+กระบวนการย้อนกลับของการสร้างคู่คือ \textbf{การประลัยคู่อนุภาค-ปฏิอนุภาค (Matter-Antimatter Annihilation)} เมื่อโพซิตรอนสูญเสียพลังงานจลน์จนชะลอความเร็วลง มันจะจับคู่กับอิเล็กตรอนกลายเป็นสถานะผูกพันคล้ายอะตอมไฮโดรเจน เรียกว่า \textbf{โพซิตโรเนียม (Positronium, Ps)} ซึ่งมีสองสถานะตามการจัดเรียงสปิน
+\begin{enumerate}
+    \item \textbf{พาราโพซิตโรเนียม (Para-positronium, $p$-Ps)} ---- สปินรวมเป็นศูนย์ (Singlet state, $S = 0$) สลายตัวอย่างรวดเร็วด้วยอายุขัยเฉลี่ย $125~\text{ps}$ ให้โฟตอนรังสีแกมมา 2 ตัว ($p\text{-Ps} \to 2\gamma$)
+    \item \textbf{ออร์โทโพซิตโรเนียม (Ortho-positronium, $o$-Ps)} ---- สปินรวมเป็นหนึ่ง (Triplet state, $S = 1$) สลายตัวช้ากว่าด้วยอายุขัยเฉลี่ย $142~\text{ns}$ ต้องให้โฟตอนรังสีแกมมาอย่างน้อย 3 ตัว ($o\text{-Ps} \to 3\gamma$) เพื่ออนุรักษ์ความสมมาตรพาริตีประจุ (C-parity)
+\end{enumerate}
+
+ในกรณีการสลายตัวเป็นรังสีแกมมา 2 ตัวในกรอบนิ่ง เพื่ออนุรักษ์โมเมนตัมเชิงเส้น โฟตอนทั้งสองจะต้องเคลื่อนที่ในทิศทางตรงกันข้ามกัน ($180^\circ$) พอดี และมีพลังงานเท่ากันตัวละ
+
+\begin{equation}
+E_\gamma = m_e c^2 = 511.0~\text{keV} = 0.511~\text{MeV}
+\label{eq:annihilation_photon_energy}
+\end{equation}
+
+หลักการเปล่งโฟตอน $511~\text{keV}$ แบบตรงข้ามกัน $180^\circ$ นี้ เป็นรากฐานของเครื่องมือทางการแพทย์ขั้นสูงคือ \textbf{เครื่องถ่ายภาพรังสีระนาบโพซิตรอน (Positron Emission Tomography --- PET Scan)} โดยใช้ระบบตรวจจับการเกิดร่วม (Coincidence Detection) เพื่อระบุตำแหน่งของเซลล์มะเร็งในร่างกายได้อย่างแม่นยำในระดับมิลลิเมตร
+
+% ==========================================================
+% 1.8 พรมแดนงานวิจัยร่วมสมัยและเทคโนโลยีโฟตอนิกส์
+% ==========================================================
+\section{พรมแดนงานวิจัยร่วมสมัยและเทคโนโลยีโฟตอนิกส์}
+\index{เครื่องชั่งคิบเบิล (Kibble Balance)}
+\index{ระบบหน่วยเอสไอใหม่ (New SI 2019)}
+\index{ตัวตรวจวัดโฟตอนเดี่ยวตัวนำยิ่งยวด (SNSPD)}
+\index{เซลล์แสงอาทิตย์เพอรอฟสไกต์ (Perovskite Solar Cells)}
+\index{การกระจายกุญแจควอนตัม (QKD)}
+
+\subsection{การนิยามระบบหน่วยเอสไอใหม่และการตรึงค่าคงตัวพลังค์}
+
+ในวันที่ 20 พฤษภาคม คริสต์ศักราช 2019 ที่ประชุมสมัชชาใหญ่ว่าด้วยการชั่งตวงวัด (General Conference on Weights and Measures --- CGPM) ได้ประกาศบังคับใช้การปฏิรูประบบหน่วยวัดสากล (SI Redefinition) ครั้งประวัติศาสตร์ โดยยกเลิกการใช้มวลต้นแบบกิโลกรัมระหว่างประเทศ (International Prototype of the Kilogram --- IPK) ที่ทำจากโลหะผสมแพลทินัม-อิริเดียม และหันมากำหนดนิยามหน่วยกิโลกรัมผ่านการตรึงค่าตัวเลขที่แน่นอนของ \textbf{ค่าคงตัวพลังค์}
+
+\begin{equation}
+h = 6.626\,070\,15 \times 10^{-34}~\text{kg}\cdot\text{m}^2\cdot\text{s}^{-1} \quad (\text{ค่าแม่นตรงสมบูรณ์ ไม่มีค่าความไม่แน่นอน})
+\label{eq:exact_planck_value}
+\end{equation}
+
+เครื่องมือทางมาตรวิทยาที่ใช้เชื่อมโยงมวลเชิงกลมหภาคเข้ากับค่าคงตัวพลังค์คือ \textbf{เครื่องชั่งคิบเบิล (Kibble Balance)} ซึ่งเดิมเรียกว่าเครื่องชั่งวัตต์ (Watt Balance) คิดค้นโดย ไบรอัน คิบเบิล (Bryan Kibble, 1938--2016) ทำงานโดยการเปรียบเทียบกำลังเชิงกล ($P_{\text{mech}} = m g v$) เข้ากับกำลังไฟฟ้า ($P_{\text{elec}} = V I$) ผ่านปรากฏการณ์ควอนตัมระดับมหภาคสองปรากฏการณ์ ได้แก่
+
+\begin{enumerate}
+    \item \textbf{ปรากฏการณ์โจเซฟสัน (Josephson Effect)} ---- กำหนดมาตรฐานความต่างศักย์ไฟฟ้า $V = n \left(\frac{h}{2e}\right) f$ โดยที่ $f$ คือความถี่ไมโครเวฟที่ควบคุมด้วยนาฬิกาอะตอม
+    \item \textbf{ปรากฏการณ์ควอนตัมฮอลล์ (Quantum Hall Effect)} ---- กำหนดมาตรฐานความต้านทานไฟฟ้า $R = \frac{1}{i}\left(\frac{h}{e^2}\right) = \frac{R_K}{i}$ โดยที่ $R_K$ คือค่าคงตัวฟอนคลิทซิง
+\end{enumerate}
+
+เมื่อนำทั้งสองความสัมพันธ์มารวมกัน จะได้สมการหลักของเครื่องชั่งคิบเบิล
+
+\begin{equation}
+m = \frac{C f_1 f_2}{g v} h
+\label{eq:kibble_balance_equation}
+\end{equation}
+
+โดยที่ $C$ คือค่าคงตัวทางเรขาคณิตของการวัด $f_1, f_2$ คือความถี่ $g$ คือความเร่งโน้มถ่วงท้องถิ่น และ $v$ คือความเร็วในการเคลื่อนที่ของขดลวด สมการนี้แสดงให้เห็นว่ามวล $m$ ในระดับกิโลกรัมสามารถวัดได้โดยตรงจากค่าคงตัวพลังค์ $h$ ด้วยความเที่ยงตรงสูงกว่าหนึ่งในร้อยล้านส่วน ($< 10^{-8}$)
+
+\subsection{ตัวตรวจวัดโฟตอนเดี่ยวตัวนำยิ่งยวด (SNSPD) และมาตรวิทยาควอนตัม}
+
+ในการสื่อสารควอนตัมและการประมวลผลสารสนเทศเชิงแสง ตัวตรวจวัดแสงความไวสูงระดับตรวจจับอนุภาคโฟตอนเดี่ยว (Single-Photon Detectors) มีความสำคัญยิ่งยวด ปัจจุบัน เทคโนโลยีที่ทรงประสิทธิภาพที่สุดคือ \textbf{ตัวตรวจวัดโฟตอนเดี่ยวเส้นลวดนาโนตัวนำยิ่งยวด (Superconducting Nanowire Single-Photon Detector --- SNSPD)} 
+
+SNSPD ทำจากเส้นลวดนาโนตัวนำยิ่งยวด (เช่น ไนโอเบียมไนไตรด์ NbN หรือโมลิบดีนัมเรเนียม MoRe) ความกว้างประมาณ $50--100~\text{nm}$ หนาประมาณ $5~\text{nm}$ ขดเป็นแถบซิกแซก ได้รับการหล่อเย็นจนอุณหภูมิต่ำกว่าอุณหภูมิวิกฤต ($T < 4~\text{K}$) และจ่ายกระแสไบอัส $I_b$ ต่ำกว่ากระแสวิกฤตเล็กน้อย ($I_b \lesssim I_c$)
+
+เมื่อโฟตอนเดี่ยวตกกระทบเส้นลวดนาโน พลังงานของโฟตอน $E = h\nu$ จะทำลายคู่คูเปอร์ (Cooper pairs) ทำให้เกิดบริเวณจุดร้อน (Hotspot) ที่สภาพตัวนำยิ่งยวดถูกทำลาย กระแสไฟฟ้าจึงถูกเบี่ยงเบนไปยังวงจรขยายภายนอก เกิดเป็นพัลส์แรงดันไฟฟ้าขนาดไมโครโวลต์ที่มีความแม่นยำเชิงเวลาสูงมาก (Timing Jitter ต่ำกว่า 3 พิโกวินาที) และมีประสิทธิภาพการตรวจจับระบบ (System Detection Efficiency) สูงเกินกว่า $98\%$ ในย่านความยาวคลื่นโทรคมนาคม ($1550~\text{nm}$) ปัจจุบัน SNSPD ถูกนำมาใช้เป็นมาตรฐานปฐมภูมิสำหรับการวัดกำลังแสงเชิงควอนตัม (Quantum Radiometry) โดยตรง
+
+\subsection{เซลล์แสงอาทิตย์เพอรอฟสไกต์ควอนตัมดอตและขีดจำกัดชอกลีย์-ไควเซอร์}
+
+ในเทคโนโลยีพลังงานแสงอาทิตย์ การแปลงพลังงานของโฟตอนเป็นกระแสไฟฟ้าถูกจำกัดทางทฤษฎีโดย \textbf{ขีดจำกัดชอกลีย์-ไควเซอร์ (Shockley-Queisser Limit)} ซึ่งระบุว่า เซลล์แสงอาทิตย์แบบรอยต่อเดี่ยว (Single-junction) ที่มีช่องว่างพลังงาน $E_g \approx 1.34~\text{eV}$ จะมีประสิทธิภาพทางทฤษฎีสูงสุดไม่เกิน $33.7\%$ เนื่องจากโฟตอนที่มีพลังงานต่ำกว่า $E_g$ จะไม่ถูกดูดกลืน ส่วนโฟตอนที่มีพลังงานสูงกว่า $E_g$ จะสูญเสียพลังงานส่วนเกินในรูปของความร้อนผ่านการคลายตัวทางความร้อน (Thermalization)
+
+เพื่อก้าวข้ามขีดจำกัดนี้ งานวิจัยร่วมสมัยได้พัฒนา \textbf{เซลล์แสงอาทิตย์เพอรอฟสไกต์แทนเดม (Perovskite-Silicon Tandem Solar Cells)} และ \textbf{ควอนตัมดอตเพอรอฟสไกต์ (Perovskite Quantum Dots)} ซึ่งอาศัยปรากฏการณ์การสร้างเอ็กซิตอนทวีคูณ (Multiple Exciton Generation --- MEG) เมื่อโฟตอนพลังงานสูงตกกระทบ สามารถสร้างคู่อิเล็กตรอน-โฮลได้มากกว่าหนึ่งคู่ ส่งผลให้ประสิทธิภาพการแปลงพลังงานในห้องปฏิบัติการทะลุผ่าน $34\%$ ในปัจจุบัน
+
+% ==========================================================
+% กล่องปฏิบัติการ WebAR
+% ==========================================================
+\begin{qrcodelabbox}{การทดลองเสมือนจริง สเปกตรัมวัตถุดำและโฟโตอิเล็กทริก WebAR}{https://tsanaphysics.github.io/ar-Quantum/lab01_blackbody_photoelectric.html}
+\begin{minipage}[c]{0.70\textwidth}
+\textbf{คำแนะนำการทดลองเสมือนจริงสามมิติ (Interactive WebAR Simulation)}
+\begin{enumerate}
+    \item สแกน QR Code ด้วยสมาร์ทโฟนหรือแท็บเล็ตเพื่อเปิดแอปพลิเคชันเสมือนจริง WebAR
+    \item ปรับตัวเลื่อนอุณหภูมิ ($T = 1000~\text{K}$ ถึง $10{,}000~\text{K}$) เพื่อสังเกตการขยับของจุดยอดสเปกตรัมตามกฎวีน และพื้นที่ใต้กราฟตามกฎสเตฟาน-โบลทซ์มัน
+    \item เลือกชนิดโลหะเป้า (Cs, Na, Zn, Pt) เพื่อสังเกตการเปลี่ยนแปลงของความถี่ขีดเริ่มและศักย์หยุดยั้ง
+    \item ทดสอบใช้ระบบ MediaPipe Hands ขยับมือหน้ากล้องเพื่อหมุนมุมมองกราฟสเปกตรัมแบบสามมิติ
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.25\textwidth}
+\centering
+\qrcode[height=2.8cm]{https://tsanaphysics.github.io/ar-Quantum/lab01_blackbody_photoelectric.html}
+\end{minipage}
+\end{qrcodelabbox}
+
+% ==========================================================
+% ตัวอย่างโจทย์ P-S-C-T 5 ข้อเข้มข้น
+% ==========================================================
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+
+\begin{psctbox}{การวิเคราะห์รังสีไมโครเวฟพื้นหลังของเอกภพ (CMBR)}
+\textbf{Problem (โจทย์ปัญหา)}
+
+การสำรวจอวกาศด้วยดาวเทียม COBE และดาวเทียมพลังค์ (Planck Satellite) วัดอุณหภูมิของรังสีไมโครเวฟพื้นหลังของเอกภพ (Cosmic Microwave Background Radiation --- CMBR) ได้แม่นยำเท่ากับ $T = 2.7255~\text{K}$
+\begin{enumerate}
+    \item จงคำนวณหาความยาวคลื่นที่ให้ความหนาแน่นพลังงานสูงสุด ($\lambda_{\max}$) ตามกฎการกระจัดของวีน
+    \item จงหาความหนาแน่นพลังงานรวม ($u_{\text{total}}$) ของรังสี CMBR ในห้วงอวกาศ
+    \item จงประมาณจำนวนโฟตอน CMBR ต่อลูกบาศก์เซนติเมตรในอวกาศ
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} คำนวณหา $\lambda_{\max}$ จากกฎการกระจัดของวีน
+\begin{equation*}
+\lambda_{\max} = \frac{b}{T} = \frac{2.89777 \times 10^{-3}~\text{m}\cdot\text{K}}{2.7255~\text{K}} = 1.0632 \times 10^{-3}~\text{m} = 1.0632~\text{mm}
+\end{equation*}
+รังสีมีความยาวคลื่นสูงสุดอยู่ในย่านไมโครเวฟพอดี
+
+\textbf{ขั้นตอนที่ 2} คำนวณหาความหนาแน่นพลังงานรวมจาก $u_{\text{total}} = a T^4$
+\begin{equation*}
+u_{\text{total}} = (7.5657 \times 10^{-16}~\text{J}\cdot\text{m}^{-3}\cdot\text{K}^{-4})(2.7255~\text{K})^4 = 4.175 \times 10^{-14}~\text{J/m}^3
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} หาจำนวนโฟตอนต่อหน่วยปริมาตร ($n_\gamma$) โดยการอินทิเกรต
+\begin{equation*}
+n_\gamma = \int_0^\infty \frac{u(\nu, T)}{h\nu} d\nu = \frac{8\pi}{c^3}\left( \frac{k_B T}{h} \right)^3 \int_0^\infty \frac{x^2}{e^x - 1} dx = \frac{8\pi}{c^3}\left( \frac{k_B T}{h} \right)^3 \times 2\zeta(3)
+\end{equation*}
+เนื่องจาก $\zeta(3) \approx 1.202057$ จะได้สูตรสำเร็จ $n_\gamma \approx 20.287 \times T^3~\text{โฟตอน/m}^3$
+\begin{equation*}
+n_\gamma = 20.287 \times (2.7255)^3 \approx 411~\text{โฟตอน/cm}^3 = 4.11 \times 10^8~\text{โฟตอน/m}^3
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ความยาวคลื่นระดับมิลลิเมตรสอดคล้องกับชื่อรังสีไมโครเวฟ และความหนาแน่นพลังงานน้อยกว่าแสงอาทิตย์บนโลก ($1.36 \times 10^3~\text{W/m}^2$) มหาศาล สอดคล้องกับสภาพอุณหภูมิเยือกแข็งของอวกาศลึก
+
+\textbf{Think (คิดต่อ)} ---- จำนวนโฟตอน CMBR มีปริมาณมากกว่าจำนวนบาริออน (โปรตอนและนิวตรอน) ในเอกภพถึงประมาณพันล้านเท่า ($n_\gamma / n_b \sim 10^9$) แสดงว่าเอกภพของเราถูกครอบงำด้วยเอนโทรปีของโฟตอนตั้งแต่ยุคกำเนิดบิ๊กแบง
+\end{psctbox}
+
+\begin{psctbox}{การวิเคราะห์ผลการทดลองโฟโตอิเล็กทริกและการหาค่าคงตัวพลังค์}
+\textbf{Problem (โจทย์ปัญหา)}
+
+ในการทดลองโฟโตอิเล็กทริกโดยใช้ผิวโลหะชนิดหนึ่ง นักศึกษาบันทึกค่าศักย์หยุดยั้ง ($V_0$) ที่ความยาวคลื่นต่าง ๆ ได้ดังตาราง
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+$\lambda$ (nm) & 300 & 350 & 400 & 450 \\
+\midrule
+$V_0$ (V) & 1.85 & 1.26 & 0.82 & 0.47 \\
+\bottomrule
+\end{tabular}
+\end{center}
+จงใช้ระเบียบวิธีกำลังสองน้อยที่สุด (Linear Least-Squares Fit) เพื่อหา
+\begin{enumerate}
+    \item ค่าคงตัวพลังค์ ($h$) และร้อยละความคลาดเคลื่อนเทียบกับค่ามาตรฐาน
+    \item ฟังก์ชันงาน ($\phi$) ของโลหะเป็นหน่วยอิเล็กตรอนโวลต์ (eV)
+    \item ความยาวคลื่นขีดเริ่ม ($\lambda_0$)
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} แปลงความยาวคลื่นเป็นความถี่ $\nu = c/\lambda$
+\begin{align*}
+\nu_1 &= 3.00 \times 10^8 / (300 \times 10^{-9}) = 1.000 \times 10^{15}~\text{Hz} \\
+\nu_2 &= 3.00 \times 10^8 / (350 \times 10^{-9}) = 0.857 \times 10^{15}~\text{Hz} \\
+\nu_3 &= 3.00 \times 10^8 / (400 \times 10^{-9}) = 0.750 \times 10^{15}~\text{Hz} \\
+\nu_4 &= 3.00 \times 10^8 / (450 \times 10^{-9}) = 0.667 \times 10^{15}~\text{Hz}
+\end{align*}
+
+\textbf{ขั้นตอนที่ 2} วิเคราะห์ความสัมพันธ์เชิงเส้น $V_0 = m \nu + c_0$ โดยที่ความชัน $m = h/e$
+จากการคำนวณการถดถอยเชิงเส้นจะได้ความชัน $m \approx 4.144 \times 10^{-15}~\text{V}\cdot\text{s}$ และจุดตัดแกน $c_0 \approx -2.292~\text{V}$
+
+\textbf{ขั้นตอนที่ 3} คำนวณค่าคงตัวพลังค์
+\begin{equation*}
+h = m \cdot e = (4.144 \times 10^{-15}~\text{V}\cdot\text{s})(1.602 \times 10^{-19}~\text{C}) = 6.638 \times 10^{-34}~\text{J}\cdot\text{s}
+\end{equation*}
+ร้อยละความคลาดเคลื่อน
+\begin{equation*}
+\% \text{Error} = \frac{|6.638 - 6.626|}{6.626} \times 100\% \approx 0.18\%
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 4} หาค่าฟังก์ชันงานและความยาวคลื่นขีดเริ่ม
+\begin{align*}
+\phi &= -e \cdot c_0 = 2.29~\text{eV} \\
+\lambda_0 &= \frac{hc}{\phi} = \frac{1240~\text{eV}\cdot\text{nm}}{2.29~\text{eV}} \approx 541~\text{nm}
+\end{align*}
+
+\textbf{Check (ตรวจสอบ)} ---- ค่าฟังก์ชันงาน $2.29~\text{eV}$ ใกล้เคียงกับโลหะโซเดียมมาก และค่าความชันให้ค่าคงตัวพลังค์ที่มีความถูกต้องสูงมาก
+
+\textbf{Think (คิดต่อ)} ---- เทคนิคการพล็อต $V_0$ กับ $\nu$ นี้ เป็นวิธีเดียวกับที่มิลลิแกนใช้ในปี 1916 ซึ่งต้องขูดทำความสะอาดผิวโลหะในสุญญากาศเพื่อป้องกันการเกิดชั้นออกไซด์ที่ทำให้ค่าฟังก์ชันงานเพี้ยนไป
+\end{psctbox}
+
+\begin{psctbox}{การกระเจิงคอมป์ตันแบบย้อนกลับสมบูรณ์ที่มุม 180 องศา}
+\textbf{Problem (โจทย์ปัญหา)}
+
+โฟตอนรังสีแกมมาที่มีพลังงาน $E_\gamma = 1.00~\text{MeV}$ พุ่งชนอิเล็กตรอนที่อยู่นิ่ง และกระเจิงย้อนกลับในแนวเดิมตรงข้ามกับทิศทางตกกระทบ ($\theta = 180^\circ$)
+\begin{enumerate}
+    \item จงหาพลังงานของโฟตอนกระเจิง ($E_\gamma'$)
+    \item จงหาพลังงานจลน์ของอิเล็กตรอนที่ถอยร่น ($K_e$)
+    \item จงหาความเร็วของอิเล็กตรอนในรูปสัดส่วนของความเร็วแสง ($v/c$)
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} คำนวณพารามิเตอร์พลังงานไร้มิติ $\alpha$
+\begin{equation*}
+\alpha = \frac{E_\gamma}{m_e c^2} = \frac{1.00~\text{MeV}}{0.511~\text{MeV}} \approx 1.957
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณพลังงานโฟตอนกระเจิงที่มุม $\theta = 180^\circ$ ($\cos 180^\circ = -1$)
+\begin{equation*}
+E_\gamma' = \frac{E_\gamma}{1 + \alpha(1 - \cos 180^\circ)} = \frac{1.00~\text{MeV}}{1 + 1.957(2)} = \frac{1.00}{1 + 3.914} = \frac{1.00}{4.914} \approx 0.2035~\text{MeV} = 203.5~\text{keV}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} หาพลังงานจลน์ของอิเล็กตรอนจากกฎอนุรักษ์พลังงาน
+\begin{equation*}
+K_e = E_\gamma - E_\gamma' = 1.0000 - 0.2035 = 0.7965~\text{MeV} = 796.5~\text{keV}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 4} หาความเร็วของอิเล็กตรอนโดยใช้ทฤษฎีสัมพัทธภาพพิเศษ
+\begin{equation*}
+E_e = K_e + m_e c^2 = \gamma m_e c^2 \implies \gamma = 1 + \frac{K_e}{m_e c^2} = 1 + \frac{0.7965}{0.511} \approx 2.5587
+\end{equation*}
+จากนิยาม $\gamma = \frac{1}{\sqrt{1 - \beta^2}}$ จะได้
+\begin{equation*}
+\beta = \frac{v}{c} = \sqrt{1 - \frac{1}{\gamma^2}} = \sqrt{1 - \frac{1}{(2.5587)^2}} = \sqrt{1 - 0.1527} = \sqrt{0.8473} \approx 0.9205
+\end{equation*}
+ความเร็วของอิเล็กตรอนมีค่าประมาณ $92.05\%$ ของความเร็วแสง ($v \approx 2.76 \times 10^8~\text{m/s}$)
+
+\textbf{Check (ตรวจสอบ)} ---- การที่ $K_e > m_e c^2$ ยืนยันว่าการใช้กลศาสตร์สัมพัทธภาพมีความจำเป็นอย่างยิ่ง และความเร็วที่ได้ไม่เกินความเร็วแสง
+
+\textbf{Think (คิดต่อ)} ---- พลังงานจลน์ $796.5~\text{keV}$ นี้คือขอบเขตพลังงานสูงสุดที่อิเล็กตรอนจะได้รับจากการกระเจิงคอมป์ตัน เรียกว่า Compton Edge ในสเปกตรัมของเครื่องตรวจวัดรังสีแกมมา
+\end{psctbox}
+
+\begin{psctbox}{เงื่อนไขพลังงานและโมเมนตัมของการสร้างคู่ใกล้กับนิวเคลียสตะกั่ว}
+\textbf{Problem (โจทย์ปัญหา)}
+
+โฟตอนรังสีแกมมาพลังงาน $E_\gamma = 5.00~\text{MeV}$ เกิดการสร้างคู่อิเล็กตรอน-โพซิตรอนในอาณาเขตสนามไฟฟ้าของนิวเคลียสตะกั่ว ($^{208}_{82}\text{Pb}$) ซึ่งมีมวลนิ่ง $M \approx 208 \times 931.5~\text{MeV}/c^2 \approx 1.94 \times 10^5~\text{MeV}/c^2$
+\begin{enumerate}
+    \item จงคำนวณพลังงานจลน์สูงสุดที่ถ่ายโอนให้กับนิวเคลียสตะกั่วเพื่ออนุรักษ์โมเมนตัม
+    \item จงแสดงว่าสมมติฐานที่ตัดพลังงานจลน์ของนิวเคลียสทิ้งมีความถูกต้องเพียงใด
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} ในกรณีที่นิวเคลียสได้รับโมเมนตัมถ่ายโอนสูงสุด คือกรณีที่คู่อนุภาค $e^-$ และ $e^+$ เคลื่อนที่ไปข้างหน้าพร้อมกัน หรือโมเมนตัมทั้งหมดของโฟตอนตกกระทบถูกถ่ายโอนไปยังนิวเคลียส $p_N \approx p_\gamma = E_\gamma / c$
+
+\textbf{ขั้นตอนที่ 2} เนื่องจากมวลนิ่งของนิวเคลียสมีขนาดมหภาคเมื่อเทียบกับพลังงานโฟตอน ($M c^2 \gg E_\gamma$) เราจึงสามารถใช้สูตรพลังงานจลน์คลาสสิกของนิวเคลียสได้
+\begin{equation*}
+K_N = \frac{p_N^2}{2M} \approx \frac{(E_\gamma / c)^2}{2M} = \frac{E_\gamma^2}{2 M c^2}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} แทนค่าตัวเลข
+\begin{equation*}
+K_N = \frac{(5.00~\text{MeV})^2}{2(1.94 \times 10^5~\text{MeV})} = \frac{25}{3.88 \times 10^5}~\text{MeV} \approx 6.44 \times 10^{-5}~\text{MeV} = 64.4~\text{eV}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- พลังงานจลน์ที่นิวเคลียสรับไปมีค่าเพียง $64.4~\text{eV}$ ซึ่งคิดเป็นเพียงประมาณ $0.0013\%$ ของพลังงานโฟตอนทั้งหมด $5.00~\text{MeV}$ 
+
+\textbf{Think (คิดต่อ)} ---- แม้นิวเคลียสจะรับพลังงานจลน์ไปน้อยมากจนตัดทิ้งได้ในการคำนวณพลังงาน แต่บทบาทของนิวเคลียสมีความสำคัญอย่างยิ่งยวดในการรับโมเมนตัม $p_\gamma$ เพื่อให้ระบบสามารถเกิดปฏิกิริยาได้โดยไม่ละเมิดกฎอนุรักษ์โมเมนตัม
+\end{psctbox}
+
+\begin{psctbox}{การวัดค่ามวลกิโลกรัมด้วยเครื่องชั่งคิบเบิลตามระบบเอสไอใหม่}
+\textbf{Problem (โจทย์ปัญหา)}
+
+ในสถาบันมาตรวิทยาแห่งชาติ เครื่องชั่งคิบเบิลทำงานในโหมดชั่งน้ำหนัก (Weighing Mode) และโหมดเคลื่อนที่ (Velocity Mode) โดยควบคุมด้วยการทดลองเชิงควอนตัม
+\begin{enumerate}
+    \item ในโหมดการเคลื่อนที่ ขดลวดเคลื่อนที่ด้วยความเร็วคงที่ $v = 1.5000000 \times 10^{-3}~\text{m/s}$ ผ่านสนามแม่เหล็ก เหนี่ยวนำให้เกิดแรงดันไฟฟ้า $V_1 = 1.2500000~\text{V}$
+    \item ในโหมดการชั่งน้ำหนัก ขดลวดรับกระแสไฟฟ้า $I = 12.748350~\text{mA}$ เพื่อสร้างแรงแม่เหล็กยันมวลมาตรฐาน $m$ ให้สมดุลพอดีภายใต้แรงโน้มถ่วงท้องถิ่น $g = 9.8066500~\text{m/s}^2$
+    \item แรงดันไฟฟ้าและกระแสวัดผ่านโจเซฟสันและควอนตัมฮอลล์ที่ตรึงกับค่าคงตัวพลังค์ $h = 6.62607015 \times 10^{-34}~\text{J}\cdot\text{s}$
+\end{enumerate}
+จงคำนวณหามวล $m$ ที่วัดได้
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} จากหลักการของเครื่องชั่งคิบเบิล กำลังเชิงกลเท่ากับกำลังไฟฟ้าเสมือน
+\begin{equation*}
+m g v = V I \implies m = \frac{V I}{g v}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} แทนค่าตัวเลขลงในสมการ
+\begin{equation*}
+m = \frac{(1.2500000~\text{V})(12.748350 \times 10^{-3}~\text{A})}{(9.8066500~\text{m/s}^2)(1.5000000 \times 10^{-3}~\text{m/s})}
+\end{equation*}
+คำนวณตัวเศษ
+\begin{equation*}
+P = (1.2500000)(0.012748350) = 0.0159354375~\text{W}
+\end{equation*}
+คำนวณตัวส่วน
+\begin{equation*}
+g v = (9.8066500)(0.0015000000) = 0.0147099750~\text{m}^2/\text{s}^3
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} หาผลหาร
+\begin{equation*}
+m = \frac{0.0159354375}{0.0147099750} \approx 1.08330826~\text{kg}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- มวลอยู่ในระดับประมาณหนึ่งกิโลกรัม สอดคล้องกับพิกัดการทำงานของเครื่องชั่งคิบเบิลระดับห้องปฏิบัติการมาตรฐานแห่งชาติ
+
+\textbf{Think (คิดต่อ)} ---- ความแม่นยำของการวัดมวลนี้ขึ้นอยู่กับความแม่นยำในการวัดความถี่ของไมโครเวฟและความเร่ง $g$ จากมาตรวัดความเร่งโน้มถ่วงสัมบูรณ์ (Absolute Gravimeter) ซึ่งปัจจุบันทำได้แม่นยำในระดับ $10^{-9}$
+\end{psctbox}
+
+% ==========================================================
+% 1.10 สรุปสาระสำคัญประจำบท
+% ==========================================================
+\section{สรุปสาระสำคัญประจำบทที่ 1}
+
+\begin{enumerate}
+    \item \textbf{วิกฤตการณ์ฟิสิกส์คลาสสิก} ---- ทฤษฎีบทการแบ่งเท่าพลังงานของกลศาสตร์สถิติคลาสสิกนำไปสู่วิกฤตการณ์อัลตราไวโอเลต ซึ่งทำนายว่าความหนาแน่นพลังงานรังสีของวัตถุดำจะลู่เข้าสู่อันันต์ที่ความถี่สูง
+    \item \textbf{การควอนไตซ์ของพลังค์} ---- มัคซ์ พลังค์เสนอว่าตัวแกว่งกวัดแลกเปลี่ยนพลังงานเป็นก้อนควอนตัม $\varepsilon = n h\nu$ ทำให้พลังงานเฉลี่ยลดลงแบบเอกซ์โพเนนเชียลที่ความถี่สูง และกำจัดวิกฤตการณ์อัลตราไวโอเลตได้สำเร็จ
+    \item \textbf{กฎที่อนุพัทธ์จากกฎของพลังค์} ---- กฎการกระจัดของวีน ($\lambda_{\max} T = b$) ได้จากการหาจุดสูงสุดของสเปกตรัม และกฎสเตฟาน-โบลทซ์มัน ($R = \sigma T^4$) ได้จากการอินทิเกรตกฎของพลังค์ตลอดทุกช่วงความถี่
+    \item \textbf{สมมติฐานโฟตอนของไอน์สไตน์} ---- ไอน์สไตน์เสนอว่าแสงประกอบด้วยอนุภาคพลังงาน (โฟตอน) $E = h\nu$ อธิบายผลการทดลองโฟโตอิเล็กทริกเรื่องความถี่ขีดเริ่ม ศักย์หยุดยั้ง และการเกิดขึ้นในทันทีได้อย่างสมบูรณ์
+    \item \textbf{การกระเจิงคอมป์ตัน} ---- การชนระหว่างรังสีเอกซ์กับอิเล็กตรอนทำให้ความยาวคลื่นเลื่อน $\Delta\lambda = \lambda_C(1-\cos\theta)$ พิสูจน์ว่าโฟตอนมีโมเมนตัมเชิงกล $p = h/\lambda$ ตามทฤษฎีสัมพัทธภาพพิเศษ
+    \item \textbf{การสร้างคู่และการประลัย} ---- แสดงให้เห็นความสมมูลของมวลและพลังงาน $E = mc^2$ โดยการสร้างคู่จำเป็นต้องมีนิวเคลียสรับโมเมนตัม และการประลัยคู่อิเล็กตรอน-โพซิตรอนปลดปล่อยรังสีแกมมา $511~\text{keV}$ สองตัวในทิศทางตรงกันข้าม
+    \item \textbf{พรมแดนโฟตอนิกส์และมาตรวิทยา} ---- ค่าคงตัวพลังค์ถูกใช้ตรึงนิยามหน่วยกิโลกรัมในระบบเอสไอใหม่ผ่านเครื่องชั่งคิบเบิล ขณะที่ตัวตรวจวัด SNSPD และเซลล์แสงอาทิตย์เพอรอฟสไกต์ผลักดันขีดความสามารถของโฟตอนิกส์สู่ระดับควอนตัมเดี่ยว
+\end{enumerate}
+
+% ==========================================================
+% คำถามเชิงมโนทัศน์ 20 ข้อ
+% ==========================================================
+\section{คำถามเชิงมโนทัศน์ประจำบทที่ 1}
+
+\begin{enumerate}
+    \item เหตุใดรูเปิดขนาดเล็กของเตาเผาที่ปิดมิดชิดจึงมีพฤติกรรมเป็นวัตถุดำได้ดีกว่าพื้นผิวของวัสดุสีดำทั่วไป
+    \item จงอธิบายความหมายทางกายภาพของคำว่า วิกฤตการณ์อัลตราไวโอเลต และเหตุใดจึงถือเป็นจุดเปลี่ยนทางกระบวนทัศน์ของฟิสิกส์
+    \item เหตุใดการสมมติให้ระดับพลังงานของตัวแกว่งกวัดเป็นค่าไม่ต่อเนื่อง ($\varepsilon = nh\nu$) จึงทำให้พลังงานเฉลี่ยที่ความถี่สูงลดลงเข้าสู่ศูนย์
+    \item หากค่าคงตัวพลังค์มีค่ามากกว่าความเป็นจริงพันล้านเท่า ($h \sim 1~\text{J}\cdot\text{s}$) โลกในชีวิตประจำวันของเราจะเปลี่ยนไปอย่างไร
+    \item ในการหา $\lambda_{\max}$ จาก $u(\lambda)$ และการหา $\nu_{\max}$ จาก $u(\nu)$ เหตุใดผลคูณ $\lambda_{\max}\nu_{\max}$ จึงไม่เท่ากับความเร็วแสง $c$
+    \item จงอธิบายว่าเหตุใดการเพิ่มความเข้มของแสงจึงไม่ช่วยเพิ่มพลังงานจลน์สูงสุดของโฟโตอิเล็กตรอน
+    \item เหตุใดโลหะอัลคาไล (เช่น Cs, Na) จึงนิยมนำมาใช้ทำแผ่นแคโทดในหลอดโฟโตมัลติพลายเออร์มากกว่าโลหะมีตระกูล (เช่น Au, Pt)
+    \item ในปรากฏการณ์โฟโตอิเล็กทริก เหตุใดกระแสโฟโตอิเล็กทริกจึงไม่อิ่มตัวในทันทีเมื่อความต่างศักย์เป็นบวกเล็กน้อย
+    \item แสงสีแดงที่มีความเข้มมหาศาลจากเลเซอร์กำลังวัตต์สูง สามารถทำให้อิเล็กตรอนหลุดจากแผ่นทองคำ ($\phi = 5.1~\text{eV}$) ได้หรือไม่ เพราะเหตุใด
+    \item จงเปรียบเทียบความแตกต่างระหว่างการกระเจิงทอมสัน (Thomson Scattering) และการกระเจิงคอมป์ตัน (Compton Scattering)
+    \item เหตุใดในการทดลองของคอมป์ตันจึงต้องใช้รังสีเอกซ์หรือรังสีแกมมา แทนที่จะใช้แสงในย่านที่ตามองเห็น
+    \item ในการกระเจิงคอมป์ตัน เหตุใดเราจึงสังเกตเห็นยอดสเปกตรัมที่มีความยาวคลื่นเท่าเดิม ($\Delta\lambda = 0$) ปรากฏร่วมกับยอดสเปกตรัมที่เลื่อนความยาวคลื่นเสมอ
+    \item โฟตอนเดี่ยวในอวกาศว่างเปล่าสามารถสลายตัวกลายเป็นคู่อิเล็กตรอน-โพซิตรอนได้หรือไม่ จงอธิบายโดยใช้หลักอนุรักษ์ 4-โมเมนตัม
+    \item เหตุใดการสลายตัวของพาราโพซิตโรเนียมจึงให้โฟตอน 2 ตัว ในขณะที่ออร์โทโพซิตโรเนียมต้องให้โฟตอน 3 ตัว
+    \item หลักการ Coincidence Detection ในเครื่อง PET scan อาศัยสมบัติเชิงควอนตัมใดของการประลัยอนุภาค
+    \item จงอธิบายว่าเหตุใดการนิยามหน่วยกิโลกรัมใหม่ในระบบเอสไอ ค.ศ. 2019 จึงต้องใช้ค่าคงตัวพลังค์แทนที่จะใช้มวลของอะตอมคาร์บอน-12 เดี่ยว ๆ
+    \item เครื่องชั่งคิบเบิลสามารถวัดมวลได้อย่างแม่นยำโดยไม่ต้องพึ่งพาสนามแม่เหล็กที่มีความสม่ำเสมอสมบูรณ์แบบได้อย่างไร
+    \item ข้อได้เปรียบหลักของตัวตรวจวัด SNSPD เมื่อเทียบกับตัวตรวจวัดโฟโตไดโอดหิมะถล่ม (APD) ในการสื่อสารควอนตัมคืออะไร
+    \item จงอธิบายขีดจำกัดชอกลีย์-ไควเซอร์ และแนวคิดที่ทำให้เซลล์แสงอาทิตย์แบบเพอรอฟสไกต์แทนเดมสามารถก้าวข้ามขีดจำกัดนี้ได้
+    \item โฟตอนมีมวลนิ่งเป็นศูนย์ แต่เหตุใดจึงมีโมเมนตัมและแรงดันการแผ่รังสีได้ จงอธิบายความสัมพันธ์เชิงสัมพัทธภาพ
+\end{enumerate}
+
+% ==========================================================
+% แบบฝึกหัดคำนวณและพิสูจน์เชิงวิเคราะห์ 20 ข้อ
+% ==========================================================
+\section{แบบฝึกหัดคำนวณและพิสูจน์เชิงวิเคราะห์ประจำบทที่ 1}
+
+\begin{enumerate}
+    \item เตาหลอมโลหะมีช่องมองทรงกลมรัศมี $2.5~\text{cm}$ ผนังภายในมีอุณหภูมิ $1750^\circ\text{C}$ จงคำนวณกำลังการแผ่รังสีทั้งหมดที่เล็ดลอดออกจากช่องมองนี้ (กำหนดให้ช่องมองทำหน้าที่เป็นวัตถุดำสมบูรณ์)
+    \item ดาวฤกษ์ดวงหนึ่งแผ่รังสีสูงสุดที่ความยาวคลื่น $\lambda_{\max} = 450~\text{nm}$ จงคำนวณอุณหภูมิพื้นผิวของดาวฤกษ์ และคำนวณกำลังการแผ่รังสีต่อหน่วยพื้นที่ผิว
+    \item จงแสดงว่ากำลังการแผ่รังสีสเปกตรัมของพลังค์ $u(\nu, T)$ มีจุดสูงสุดที่ความถี่ $\nu_{\max}$ ซึ่งสอดคล้องกับสมการอดิศัย $3(1 - e^{-y}) = y$ โดยที่ $y = h\nu_{\max}/(k_B T)$ และจงหาค่า $y$ เชิงตัวเลข
+    \item จงพิสูจน์ว่าอัตราส่วนระหว่างความหนาแน่นพลังงานที่แผ่ออกมาในช่วงความยาวคลื่นระหว่าง $\lambda$ ถึง $\lambda + d\lambda$ ตามกฎของเรย์ลีห์-จีนส์ ต่อกฎของพลังค์ คือ $\frac{u_{\text{RJ}}}{u_{\text{Planck}}} = \frac{e^x - 1}{x}$ โดยที่ $x = hc/(\lambda k_B T)$
+    \item แสงอัลตราไวโอเลตความยาวคลื่น $220~\text{nm}$ ตกกระทบผิวทองคำ ($\phi = 5.10~\text{eV}$) จงหา
+    \begin{enumerate}
+        \item พลังงานของโฟตอนในหน่วย eV
+        \item พลังงานจลน์สูงสุดของโฟโตอิเล็กตรอน
+        \item ศักย์หยุดยั้งที่ต้องใช้
+    \end{enumerate}
+    \item เมื่อฉายแสงความถี่ $1.20 \times 10^{15}~\text{Hz}$ ลงบนผิวโลหะ พบว่าต้องใช้ศักย์หยุดยั้ง $2.40~\text{V}$ และเมื่อเปลี่ยนความถี่เป็น $1.80 \times 10^{15}~\text{Hz}$ ต้องใช้ศักย์หยุดยั้ง $4.88~\text{V}$ จงคำนวณหาค่าคงตัวพลังค์และฟังก์ชันงานของโลหะนี้
+    \item ลำแสงเลเซอร์ฮีเลียม-นีออน ($\lambda = 632.8~\text{nm}$) มีกำลัง $5.0~\text{mW}$ จงคำนวณหาจำนวนโฟตอนที่เลเซอร์นี้ปลดปล่อยออกมาในหนึ่งวินาที และคำนวณหาแรงที่ลำแสงนี้กระทำต่อฉากที่ดูดกลืนแสงได้อย่างสมบูรณ์
+    \item รังสีเอกซ์ความยาวคลื่น $0.0200~\text{nm}$ กระเจิงจากอิเล็กตรอนอิสระทำมุม $\theta = 60^\circ$ จงหา
+    \begin{enumerate}
+        \item ความยาวคลื่นของรังสีเอกซ์ที่กระเจิง
+        \item พลังงานจลน์ของอิเล็กตรอนที่ถอยร่น
+        \item มุมการเคลื่อนที่ของอิเล็กตรอน ($\phi$)
+    \end{enumerate}
+    \item ในการกระเจิงคอมป์ตัน จงแสดงว่าพลังงานจลน์สูงสุดของอิเล็กตรอนที่ถอยร่นสามารถเขียนได้ในรูป $K_{\max} = \frac{2 h\nu}{2 + m_e c^2 / (h\nu)}$
+    \item โฟตอนรังสีแกมมาพลังงาน $1.50~\text{MeV}$ ชนกับอิเล็กตรอนที่อยู่นิ่ง จงคำนวณหาพลังงานของโฟตอนกระเจิงที่มุม $\theta = 45^\circ, 90^\circ, 180^\circ$
+    \item จงพิสูจน์ความสัมพันธ์ระหว่างมุมกระเจิงของโฟตอน ($\theta$) และมุมการเคลื่อนที่ของอิเล็กตรอน ($\phi$) ตามสมการ~\eqref{eq:recoil_angle_relation} โดยละเอียด
+    \item จงคำนวณหาพลังงานขีดเริ่มต่ำสุดของโฟตอนรังสีแกมมาที่สามารถสร้างคู่อิเล็กตรอน-โพซิตรอน เมื่อชนกับโปรตอนอิสระที่อยู่นิ่ง ($m_p \approx 1836 m_e$)
+    \item ในการประลัยของโพซิตโรเนียมที่อยู่นิ่งเป็นโฟตอน 2 ตัว จงแสดงว่าความยาวคลื่นของโฟตอนแต่ละตัวมีค่าเท่ากับความยาวคลื่นคอมป์ตันของอิเล็กตรอนพอดี ($\lambda = \lambda_C$)
+    \item ในเครื่องเร่งอนุภาค ลำอิเล็กตรอนพลังงาน $10~\text{GeV}$ พุ่งชนประสานงากับโฟตอนของเลเซอร์สีเขียว ($\lambda = 532~\text{nm}$) จงคำนวณพลังงานของโฟตอนหลังการกระเจิงคอมป์ตันย้อนกลับในทิศทางไปข้างหน้า
+    \item เซลล์แสงอาทิตย์ซิลิกอนมีช่องว่างพลังงาน $E_g = 1.12~\text{eV}$ จงหาความยาวคลื่นสูงสุดของแสงอาทิตย์ที่สามารถสร้างคู่อิเล็กตรอน-โฮลได้
+    \item จงคำนวณหาความดันการแผ่รังสีที่จุดศูนย์กลางของดวงอาทิตย์ หากสมมติให้อุณหภูมิภายในเท่ากับ $T = 1.5 \times 10^7~\text{K}$
+    \item ในการทดลองเครื่องชั่งคิบเบิล ถ้าต้องการวัดมวล $m = 500.00000~\text{g}$ โดยกำหนดให้ความเร็วขดลวด $v = 2.000000~\text{mm/s}$ และความเร่ง $g = 9.80665~\text{m/s}^2$ หากวัดแรงดันไฟฟ้าได้ $1.000000~\text{V}$ จงหากระแสไฟฟ้าที่ต้องจ่ายเข้าสู่ขดลวด
+    \item จงแสดงว่าเอนโทรปีของก๊าซโฟตอนสามารถเขียนได้ในรูป $S = \frac{4}{3}\frac{U}{T}$ โดยเริ่มจากกฎข้อที่หนึ่งของอุณหพลศาสตร์
+    \item จงคำนวณการเลื่อนดอปเปลอร์เชิงควอนตัมของโฟตอนเมื่อสะท้อนจากกระจกที่กำลังเคลื่อนที่ด้วยความเร็วสัมพัทธภาพ $v$
+    \item จงพิสูจน์ว่าความจุความร้อนต่อหน่วยปริมาตรของสนามรังสีวัตถุดำคือ $C_v = 4 a T^3$
+\end{enumerate}
+
+% ==========================================================
+% โครงงานจำลองเชิงคำนวณด้วย Python
+% ==========================================================
+\section{โครงงานจำลองเชิงคำนวณด้วยภาษา Python}
+
+เพื่อเสริมสร้างทักษะการคำนวณทางฟิสิกส์เชิงตัวเลข นักศึกษาควรศึกษาและทดลองรันโค้ดภาษา Python ต่อไปนี้ เพื่อจำลองปรากฏการณ์สเปกตรัมการแผ่รังสีของวัตถุดำและการทดลองโฟโตอิเล็กทริก
+
+\begin{lstlisting}[language=Python, caption={โปรแกรม Python จำลองสเปกตรัมวัตถุดำและเปรียบเทียบกฎของพลังค์กับกฎเรย์ลีห์-จีนส์}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ค่าคงตัวมูลฐานทางฟิสิกส์ (SI units)
+h = 6.62607015e-34    # Planck constant (J*s)
+c = 2.99792458e8      # Speed of light (m/s)
+k_B = 1.380649e-23    # Boltzmann constant (J/K)
+
+def planck_law(lam, T):
+    """คำนวณความหนาแน่นพลังงานตามกฎของพลังค์ u(lambda, T)"""
+    x = (h * c) / (lam * k_B * T)
+    # ป้องกัน overflow ในฟังก์ชัน exp
+    x = np.clip(x, 0, 700)
+    return (8.0 * np.pi * h * c) / (lam**5 * (np.exp(x) - 1.0))
+
+def rayleigh_jeans_law(lam, T):
+    """คำนวณความหนาแน่นพลังงานตามกฎของเรย์ลีห์-จีนส์"""
+    return (8.0 * np.pi * k_B * T) / (lam**4)
+
+# กำหนดช่วงความยาวคลื่น 100 nm ถึง 3000 nm
+wavelengths = np.linspace(100e-9, 3000e-9, 1000)
+
+plt.figure(figsize=(10, 6))
+
+temperatures = [4000, 5000, 6000]
+colors = ['#00F0FF', '#FF007F', '#FFB800']
+
+for T, col in zip(temperatures, colors):
+    u_planck = planck_law(wavelengths, T)
+    # คำนวณยอดสเปกตรัมตามกฎวีน
+    lam_max = 2.89777e-3 / T
+    u_max = planck_law(lam_max, T)
+    
+    plt.plot(wavelengths * 1e9, u_planck, label=f'Planck T = {T} K', color=col, lw=2)
+    plt.plot(lam_max * 1e9, u_max, 'o', color=col, markersize=8)
+
+# พล็อตเปรียบเทียบกฎเรย์ลีห์-จีนส์ที่ 6000 K
+u_rj = rayleigh_jeans_law(wavelengths, 6000)
+plt.plot(wavelengths * 1e9, u_rj, '--', label='Rayleigh-Jeans (6000 K)', color='gray', lw=1.5)
+
+plt.xlim(100, 3000)
+plt.ylim(0, 1.6e-15)
+plt.xlabel('Wavelength (nm)', fontsize=12)
+plt.ylabel('Energy Density $u(\\lambda, T)$ (J/m$^4$)', fontsize=12)
+plt.title('Comparison of Planck Law and Rayleigh-Jeans Ultraviolet Catastrophe', fontsize=14)
+plt.grid(True, linestyle=':', alpha=0.6)
+plt.legend(fontsize=11)
+plt.tight_layout()
+plt.savefig('blackbody_spectrum_python.png', dpi=300)
+plt.show()
+\end{lstlisting}

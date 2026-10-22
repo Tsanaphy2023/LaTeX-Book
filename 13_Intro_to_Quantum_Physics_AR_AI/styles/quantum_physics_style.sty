@@ -1,0 +1,260 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/quantum_physics_style}[2026/10/22 Quantum Physics with AR/XR & AI Deep Learning Master Style]
+
+% 1. Page Geometry (RBRU Academic Standard: 6x9 Trade or A4; Default: Left 1.5in, Top 1.5in, Right 1.0in, Bottom 1.0in)
+\RequirePackage{geometry}
+\geometry{
+    a4paper,
+    top=1.5in,
+    bottom=1.0in,
+    left=1.5in,
+    right=1.0in,
+    headheight=36pt,
+    headsep=12pt,
+    footskip=0.5in
+}
+
+% 1.1 Thai Linebreak & Hyphenation for XeLaTeX
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 2pt minus 0.5pt
+\setlength{\emergencystretch}{2.5em}
+
+% 1.2 Paragraph Indentation (RBRU Academic Standard: 1 Tab = 1.25cm)
+\RequirePackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+
+% 1.3 Thai Academic Terminology (RBRU Standard without colons)
+\renewcommand{\chaptername}{บทที่}
+\renewcommand{\figurename}{ภาพที่}
+\renewcommand{\tablename}{ตารางที่}
+\renewcommand{\contentsname}{สารบัญ}
+\renewcommand{\listfigurename}{สารบัญภาพ}
+\renewcommand{\listtablename}{สารบัญตาราง}
+\renewcommand{\appendixname}{ภาคผนวก}
+\renewcommand{\bibname}{บรรณานุกรม}
+\renewcommand{\indexname}{ดัชนีสืบค้นคำสำคัญ}
+
+% 2. Math & Physics Packages
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\allowdisplaybreaks
+\RequirePackage{bm}
+\RequirePackage{siunitx}
+\RequirePackage{physics}
+\RequirePackage{esint}
+\RequirePackage{enumitem}
+
+% 3. Graphics, TikZ, Tables & Floats
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{thaisep}{\quad}
+\captionsetup{labelsep=thaisep}
+\captionsetup[table]{position=top, skip=6pt, labelfont={bf,color=darkNavy}, textfont={normalfont}, labelsep=thaisep}
+\captionsetup[figure]{position=bottom, skip=8pt, labelfont={bf,color=darkNavy}, textfont={normalfont}, labelsep=thaisep}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+
+% 3.1 Vector QR Code Generation
+\RequirePackage{qrcode}
+
+% 3.2 Indexing System
+\RequirePackage{imakeidx}
+\makeindex[columns=2, title=ดัชนีสืบค้นคำสำคัญ, intoc]
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,calc,patterns,decorations.pathmorphing,decorations.pathreplacing,3d}
+
+% 4. Color Palette (Cyber Quantum / Deep Science Identity)
+\RequirePackage{xcolor}
+\definecolor{cyberBlue}{HTML}{0284C7}
+\definecolor{darkNavy}{HTML}{0A1128}
+\definecolor{neonPurple}{HTML}{7C3AED}
+\definecolor{emeraldGlow}{HTML}{10B981}
+\definecolor{quantumGold}{HTML}{F59E0B}
+\definecolor{qubitBlue}{HTML}{00F0FF}
+\definecolor{entanglePink}{HTML}{EC4899}
+\definecolor{rbruLightBg}{HTML}{F8FAFC}
+\definecolor{codeBackground}{HTML}{0F172A}
+\definecolor{slateGrey}{HTML}{4A5568}
+\definecolor{rubyRed}{HTML}{E11D48}
+\definecolor{goldAccent}{HTML}{D97706}
+
+% 5. Chapter & Section Formatting
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{titlesec}
+
+% Dynamic Chapter Motif based on \value{chapter}
+\newcommand{\renderquantumchaptermotif}{%
+    \ifcase\value{chapter}%
+        % 0: Default
+        \begin{scope}[opacity=0.22]
+            \draw[qubitBlue!60!white, line width=0.5pt, step=0.6cm] (0.2, 0.2) grid (6.8, 5.2);
+            \draw[quantumGold, line width=1.4pt, domain=0.8:6.4, samples=80] plot (\x, {2.2 + 0.9*sin(3.0*\x r)*exp(-0.1*(\x-3.2)*(\x-3.2))});
+        \end{scope}
+    \or% 1: Particle properties & Blackbody
+        \begin{scope}[opacity=0.25]
+            \draw[qubitBlue!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \draw[quantumGold, line width=1.6pt, domain=0.5:6.2, samples=60] plot (\x, {4.2 * ((\x/1.8)^3) / (exp(\x/1.8) - 1 + 0.05)});
+            \node at (4.8, 4.2) [font=\tiny\bfseries\color{quantumGold}] {Planck Spectrum};
+        \end{scope}
+    \or% 2: Wave properties & Gaussian packet
+        \begin{scope}[opacity=0.25]
+            \draw[emeraldGlow!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \draw[qubitBlue, line width=1.4pt, domain=0.5:6.5, samples=90] plot (\x, {2.4 + 1.8*exp(-0.8*(\x-3.5)*(\x-3.5))*cos(12*(\x-3.5) r)});
+            \node at (4.8, 4.3) [font=\tiny\bfseries\color{qubitBlue}] {$\Delta x \Delta p \ge \hbar/2$};
+        \end{scope}
+    \or% 3: Schrödinger & Dirac Notation
+        \begin{scope}[opacity=0.25]
+            \draw[neonPurple!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \node at (3.5, 2.5) [font=\large\bfseries\color{neonPurple!80!white}] {$i\hbar\frac{\partial}{\partial t}\ket{\Psi} = \hat{H}\ket{\Psi}$};
+        \end{scope}
+    \or% 4: Quantum Tunneling & STM
+        \begin{scope}[opacity=0.25]
+            \draw[qubitBlue!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \draw[white, line width=2pt] (2.8, 0.5) -- (2.8, 4.0) -- (4.2, 4.0) -- (4.2, 0.5);
+            \draw[quantumGold, line width=1.4pt, domain=0.5:2.8, samples=40] plot (\x, {2.2 + 0.8*sin(6*\x r)});
+            \draw[quantumGold, line width=1.4pt, domain=2.8:4.2, samples=30] plot (\x, {2.2 + 0.8*exp(-1.5*(\x-2.8))});
+            \draw[quantumGold, line width=1.4pt, domain=4.2:6.5, samples=40] plot (\x, {2.2 + 0.3*sin(6*(\x-4.2) r)});
+            \node at (3.5, 4.4) [font=\tiny\bfseries\color{white}] {Barrier $V_0$};
+        \end{scope}
+    \or% 5: Harmonic Oscillator
+        \begin{scope}[opacity=0.25]
+            \draw[quantumGold!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \draw[qubitBlue, line width=1.5pt, domain=1.0:6.0, samples=50] plot (\x, {0.6 + 0.3*(\x-3.5)*(\x-3.5)});
+            \foreach \lvl in {1.0, 1.8, 2.6, 3.4} {
+                \draw[emeraldGlow, line width=1.2pt] (2.2, \lvl) -- (4.8, \lvl);
+            }
+            \node at (5.2, 3.4) [font=\tiny\bfseries\color{emeraldGlow}] {$E_n = (n+\frac{1}{2})\hbar\omega$};
+        \end{scope}
+    \or% 6: Hydrogen Atom & Orbitals
+        \begin{scope}[opacity=0.25]
+            \draw[qubitBlue!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \fill[quantumGold] (3.5, 2.5) circle (3pt);
+            \draw[qubitBlue, line width=1.2pt, dashed] (3.5, 2.5) circle (1.2cm);
+            \draw[emeraldGlow, line width=1.2pt, dashed] (3.5, 2.5) circle (2.2cm);
+            \draw[entanglePink, line width=1.2pt] (3.5, 2.5) ellipse (2.4cm and 0.9cm);
+        \end{scope}
+    \or% 7: Perturbation Theory & BEC
+        \begin{scope}[opacity=0.25]
+            \draw[neonPurple!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \draw[white, line width=1.2pt] (1.0, 2.5) -- (3.0, 2.5);
+            \draw[-{Stealth}, white, line width=1.0pt] (3.0, 2.5) -- (4.5, 3.4);
+            \draw[-{Stealth}, white, line width=1.0pt] (3.0, 2.5) -- (4.5, 1.6);
+            \draw[quantumGold, line width=1.2pt] (4.5, 3.4) -- (6.2, 3.4);
+            \draw[quantumGold, line width=1.2pt] (4.5, 1.6) -- (6.2, 1.6);
+            \node at (5.3, 4.0) [font=\tiny\bfseries\color{quantumGold}] {Stark Splitting};
+        \end{scope}
+    \or% 8: Qubits & Bloch Sphere
+        \begin{scope}[opacity=0.28]
+            \draw[qubitBlue, line width=1.3pt] (3.5, 2.5) circle (1.8cm);
+            \draw[qubitBlue!70!white, dashed, line width=0.8pt] (3.5, 2.5) ellipse (1.8cm and 0.6cm);
+            \draw[-{Stealth}, white, line width=1.2pt] (3.5, 0.4) -- (3.5, 4.6) node[above, font=\tiny\bfseries\color{white}] {$\ket{0}$};
+            \draw[-{Stealth}, white, line width=1.2pt] (1.4, 2.5) -- (5.6, 2.5) node[right, font=\tiny\bfseries\color{white}] {$\ket{+y}$};
+            \draw[-{Stealth[scale=1.2]}, quantumGold, line width=1.8pt] (3.5, 2.5) -- (4.7, 3.7) node[above right, font=\tiny\bfseries\color{quantumGold}] {$\ket{\psi}$};
+            \node at (3.5, 0.1) [font=\tiny\bfseries\color{white}] {$\ket{1}$};
+        \end{scope}
+    \or% 9: Quantum Entanglement & Teleportation
+        \begin{scope}[opacity=0.28]
+            \fill[qubitBlue] (1.8, 2.5) circle (4pt) node[below=4pt, font=\tiny\bfseries\color{qubitBlue}] {Alice};
+            \fill[entanglePink] (5.2, 2.5) circle (4pt) node[below=4pt, font=\tiny\bfseries\color{entanglePink}] {Bob};
+            \draw[quantumGold, line width=1.4pt, decoration={snake, amplitude=1.5mm, segment length=5mm}, decorate] (1.8, 2.5) -- (5.2, 2.5);
+            \node at (3.5, 3.3) [font=\tiny\bfseries\color{quantumGold}] {$\frac{\ket{00}+\ket{11}}{\sqrt{2}}$};
+        \end{scope}
+    \or% 10: Quantum Algorithms & PINNs AI
+        \begin{scope}[opacity=0.28]
+            \draw[qubitBlue!50!white, step=0.5cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+            \node at (3.5, 3.8) [font=\small\bfseries\color{qubitBlue}] {Grover \& PINNs AI};
+            \draw[emeraldGlow, line width=1.2pt] (1.2, 2.2) -- (2.0, 2.2) -- (2.0, 2.8) -- (2.8, 2.8) -- (2.8, 1.4) -- (4.2, 1.4) -- (4.2, 2.2) -- (5.8, 2.2);
+            \node at (4.5, 1.0) [font=\tiny\bfseries\color{emeraldGlow}] {$\mathcal{L}_{\text{PINN}} = \|\hat{H}\psi - E\psi\|^2$};
+        \end{scope}
+    \else
+        \begin{scope}[opacity=0.20]
+            \draw[qubitBlue!50!white, step=0.6cm, line width=0.3pt] (0.2, 0.2) grid (6.8, 5.0);
+        \end{scope}
+    \fi
+}
+
+% 6. Pedagogical Boxes (tcolorbox)
+
+% 6.1 Lesson Plan Box (แผนบริหารการสอน)
+\newtcolorbox{lessonplanbox}{
+    colback=rbruLightBg,
+    colframe=darkNavy,
+    fonttitle=\bfseries\color{white},
+    title={แผนบริหารการสอนประจำบท},
+    arc=4mm,
+    boxrule=1.5pt,
+    left=14pt, right=14pt, top=12pt, bottom=12pt,
+    before skip=14pt, after skip=18pt,
+    colbacktitle=darkNavy
+}
+
+% 6.2 WebAR & QR Code Lab Box
+\newtcolorbox{qrcodelabbox}[3][]{
+    colback=white,
+    colframe=cyberBlue,
+    fonttitle=\bfseries\color{white},
+    title={\textbf{🔬 ห้องปฏิบัติการเสมือนจริง 3 มิติ \& WebAR ---- #2}},
+    arc=3mm,
+    boxrule=1.2pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    before skip=12pt, after skip=16pt,
+    colbacktitle=cyberBlue,
+    #1
+}
+
+% 6.3 Physics-Informed Neural Network (PINNs) AI Box
+\newtcolorbox{pinnbox}[2][]{
+    colback=codeBackground,
+    colframe=emeraldGlow,
+    fonttitle=\bfseries\color{white},
+    title={\textbf{🧠 ปฏิบัติการ AI Deep Learning (PINNs / Python) ---- #2}},
+    arc=3mm,
+    boxrule=1.2pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    before skip=12pt, after skip=16pt,
+    colbacktitle=darkNavy,
+    #1
+}
+
+% 6.4 P-S-C-T Problem Solving Box
+\newtcolorbox{psctbox}[2][]{
+    colback=rbruLightBg,
+    colframe=neonPurple,
+    fonttitle=\bfseries\color{white},
+    title={\textbf{💡 ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T ---- #2}},
+    arc=3mm,
+    boxrule=1.2pt,
+    left=12pt, right=12pt, top=10pt, bottom=10pt,
+    before skip=12pt, after skip=16pt,
+    colbacktitle=neonPurple,
+    #1
+}
+
+% 7. Custom Section Headings without colons
+\titleformat{\chapter}[display]
+{\normalfont\Large\bfseries\color{darkNavy}}
+{\filright\color{cyberBlue}\Large\textbf{\chaptername}\Huge\ \textbf{\thechapter}}
+{8pt}
+{\Huge\bfseries}
+[\vspace{6pt}\hrule height 1.8pt\relax\vspace{12pt}]
+
+\titleformat{\section}
+{\normalfont\large\bfseries\color{darkNavy}}
+{\thesection}
+{0.8em}
+{}
+
+\titleformat{\subsection}
+{\normalfont\normalsize\bfseries\color{slateGrey}}
+{\thesubsection}
+{0.6em}
+{}
+
+\endinput

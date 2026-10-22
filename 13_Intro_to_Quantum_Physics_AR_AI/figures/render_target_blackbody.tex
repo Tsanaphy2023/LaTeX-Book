@@ -1,0 +1,45 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{amsmath,amssymb}
+\usepackage{fontspec}
+\setmainfont{Sarabun}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{xcolor}
+
+\definecolor{cyberBlue}{HTML}{0284C7}
+\definecolor{darkNavy}{HTML}{0A1128}
+\definecolor{neonPurple}{HTML}{7C3AED}
+\definecolor{quantumGold}{HTML}{F59E0B}
+\definecolor{slateGrey}{HTML}{4A5568}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.4]
+    % Outer cavity shell
+    \draw[line width=4pt, darkNavy, fill=slateGrey!15] (0, 0) circle (2.8cm);
+    \fill[white] (-2.8, -0.4) rectangle (-2.68, 0.4); % Entrance aperture
+    
+    % Cavity interior
+    \fill[black!95] (0, 0) circle (2.5cm);
+    \draw[line width=2pt, cyberBlue] (0,0) circle (2.5cm);
+
+    % Multiple reflection path
+    \draw[-{Stealth[scale=1.2]}, line width=1.6pt, quantumGold] (-4.2, 0.2) -- (-2.68, 0.2);
+    \draw[-{Stealth[scale=1.2]}, line width=1.4pt, quantumGold] (-2.68, 0.2) -- (1.5, 1.8);
+    \draw[-{Stealth[scale=1.2]}, line width=1.3pt, quantumGold] (1.5, 1.8) -- (2.2, -0.8);
+    \draw[-{Stealth[scale=1.2]}, line width=1.2pt, quantumGold] (2.2, -0.8) -- (-0.8, -2.2);
+    \draw[-{Stealth[scale=1.2]}, line width=1.1pt, quantumGold] (-0.8, -2.2) -- (-1.8, -1.2);
+    \draw[-{Stealth[scale=1.2]}, line width=0.9pt, quantumGold] (-1.8, -1.2) -- (0.5, -0.5);
+
+    % Aperture label
+    \draw[-{Stealth[scale=1.2]}, neonPurple, line width=1.4pt] (-3.8, 1.5) -- (-2.8, 0.3);
+    \node at (-4.2, 1.8) [font=\bfseries\color{neonPurple}] {รูเปิดขนาดเล็ก (Aperture)};
+
+    % Cavity labels
+    \node at (0, 1.0) [font=\bfseries\color{white}] {สนามรังสีในสมดุลความร้อน};
+    \node at (0, 0.3) [font=\large\bfseries\color{cyan}] {$T = \mathrm{const}$};
+    \node at (0, -0.5) [font=\color{slateGrey!50}] {ผนังดูดกลืนและเปล่งรังสี};
+    
+    % Title Tag for AR Tracking Marker
+    \node at (0, -3.2) [font=\bfseries\color{darkNavy}] {ภาพที่ 1.1 แบบจำลองโพรงรังสีวัตถุดำ (Blackbody Cavity Model)};
+\end{tikzpicture}
+\end{document}

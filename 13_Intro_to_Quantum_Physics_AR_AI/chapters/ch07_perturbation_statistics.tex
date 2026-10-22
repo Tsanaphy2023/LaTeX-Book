@@ -1,0 +1,1117 @@
+\chapter{ทฤษฎีการรบกวน สถิติควอนตัม และสสารควอนตัมสถานะควบแน่น}
+\label{chap:perturbation_statistics}
+\index{ทฤษฎีการรบกวนไม่ขึ้นกับเวลา (Time-Independent Perturbation Theory)}
+\index{ทฤษฎีการรบกวนแบบเสื่อม (Degenerate Perturbation Theory)}
+\index{ระเบียบวิธีแปรผัน (Variational Method)}
+\index{กฎทองของแฟร์มี (Fermi's Golden Rule)}
+\index{อนุภาคที่เหมือนกันทุกประการ (Identical Particles)}
+\index{สถิติเฟอร์มิ-ดิแรก (Fermi-Dirac Statistics)}
+\index{สถิติโบส-ไอน์สไตน์ (Bose-Einstein Statistics)}
+\index{การควบแน่นแบบโบส-ไอน์สไตน์ (Bose-Einstein Condensation)}
+\index{พลังงานแฟร์มี (Fermi Energy)}
+\index{สภาพนำยิ่งยวด (Superconductivity)}
+
+% ==========================================================
+% แผนบริหารการสอนประจำบทที่ 7
+% ==========================================================
+\section*{แผนบริหารการสอนประจำบทที่ 7}
+\addcontentsline{toc}{section}{แผนบริหารการสอนประจำบทที่ 7}
+
+\begin{lessonplanbox}
+\noindent\textbf{หัวข้อเนื้อหาประจำบท}
+\begin{enumerate}
+    \item ทฤษฎีการรบกวนที่ไม่ขึ้นกับเวลาแบบไม่เสื่อม อันดับหนึ่งและอันดับสอง
+    \item ทฤษฎีการรบกวนแบบเสื่อมและปรากฏการณ์สตาร์กเชิงเส้น
+    \item ระเบียบวิธีแปรผันของเรย์ลี-ริตซ์และการประเมินสถานะพื้นของฮีเลียม
+    \item ทฤษฎีการรบกวนขึ้นกับเวลา ภาพอันตรกิริยา และกฎทองของแฟร์มี
+    \item อนุภาคที่เหมือนกันทุกประการ สมมาตรการสลับที่ และหลักการกีดกันของเพาลี
+    \item สถิติควอนตัม ---- การอนุพัทธ์แมกซ์เวลล์-โบลต์ซมันน์ เฟอร์มิ-ดิแรก และโบส-ไอน์สไตน์
+    \item ก๊าซแฟร์มีอิสระ พลังงานแฟร์มี และความดันควอนตัมดีเจเนอเรซีในดาราศาสตร์ฟิสิกส์
+    \item การควบแน่นแบบโบส-ไอน์สไตน์ (BEC) สมการกรอสส์-พิตาเยฟสกี และสภาพของไหลยิ่งยวด
+    \item สภาพนำยิ่งยวด ทฤษฎีคู่คูเปอร์ BCS และสควิดเซนเซอร์ (SQUID)
+    \item การประยุกต์เทคโนโลยีควอนตัมสมัยใหม่ นาฬิกาอะตอม BEC และตัวนำยิ่งยวดอุณหภูมิสูง
+    \item ห้องปฏิบัติการเสมือนจริง 3 มิติ WebAR จำลองการแจกแจงสถิติควอนตัม
+    \item ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
+    \item สคริปต์การคำนวณเชิงตัวเลขภาษา Python จำลองสถิติควอนตัมและ BEC
+    \item สรุปสาระสำคัญและแบบฝึกหัดท้ายบท
+\end{enumerate}
+
+\noindent\textbf{วัตถุประสงค์เชิงพฤติกรรม}
+\begin{enumerate}
+    \item คำนวณการแก้ไขพลังงานและฟังก์ชันคลื่นอันดับหนึ่งและอันดับสองในทฤษฎีการรบกวนไม่เสื่อมได้
+    \item แก้สมการเซคิวลาร์ในทฤษฎีการรบกวนแบบเสื่อมเพื่อหาการแยกตัวของระดับพลังงานในปรากฏการณ์สตาร์กได้
+    \item ประยุกต์ระเบียบวิธีแปรผันในการประมาณขอบเขตบนของพลังงานสถานะพื้นของระบบหลายอนุภาคได้
+    \item อนุพัทธ์อัตราการเปลี่ยนสถานะควอนตัมด้วยกฎทองของแฟร์มีสำหรับสัญญาณรบกวนแบบฮาร์มอนิกได้
+    \item จำแนกคุณสมบัติของโบซอนและเฟอร์มิออนตามสมมาตรของฟังก์ชันคลื่นรวมและสร้างดีเทอร์มิแนนต์สเลเตอร์ได้
+    \item คำนวณพลังงานแฟร์มี อุณหภูมิแฟร์มี และความหนาแน่นสถานะของอิเล็กตรอนอิสระในของแข็งได้
+    \item อธิบายกลไกทางอุณหพลศาสตร์ของการเกิดการควบแน่นแบบโบส-ไอน์สไตน์ และคำนวณอุณหภูมิวิกฤต $T_c$ ได้
+    \item วิเคราะห์การประยุกต์ใช้ปรากฏการณ์สภาพนำยิ่งยวดและสสารควบแน่นในเทคโนโลยีเซนเซอร์ควอนตัมได้
+\end{enumerate}
+\end{lessonplanbox}
+
+% ==========================================================
+% 7.1 ทฤษฎีการรบกวนที่ไม่ขึ้นกับเวลาแบบไม่เสื่อม
+% ==========================================================
+\newpage
+\section{ทฤษฎีการรบกวนที่ไม่ขึ้นกับเวลาแบบไม่เสื่อม}
+\index{ทฤษฎีการรบกวนไม่ขึ้นกับเวลา (Time-Independent Perturbation Theory)}
+\index{การแก้ไขพลังงานอันดับหนึ่ง (First-Order Energy Correction)}
+\index{การแก้ไขพลังงานอันดับสอง (Second-Order Energy Correction)}
+
+ในวิชากลศาสตร์ควอนตัม ระบบกายภาพที่สามารถแก้สมการชเรอดิงเงอร์เพื่อหาผลเฉลยแม่นตรงเชิงวิเคราะห์ (Exact Analytical Solutions) มีอยู่เพียงไม่กี่ระบบเท่านั้น ได้แก่ บ่อศักย์ลึกอนันต์ ตัวแกว่งกวัดฮาร์มอนิก และอะตอมไฮโดรเจน สำหรับระบบส่วนใหญ่ในธรรมชาติ เช่น อะตอมที่มีอิเล็กตรอนตั้งแต่สองตัวขึ้นไป โมเลกุล หรืออะตอมที่อยู่ภายใต้สนามภายนอก เราจำเป็นต้องใช้ \textbf{ทฤษฎีการรบกวน (Perturbation Theory)} ซึ่งเป็นวิธีการประมาณค่าเชิงระบบที่มีความแม่นยำสูงยิ่ง
+
+พิจารณาฮามิลโทเนียนรวม $\hat{H}$ ซึ่งเขียนอยู่ในรูปผลรวมของฮามิลโทเนียนระบบที่ไม่ถูกรบกวน $\hat{H}_0$ (ซึ่งเราทราบผลเฉลยแม่นตรงแล้ว) กับเทอมการรบกวนขนาดเล็ก $\hat{H}'$
+\begin{equation}
+\hat{H} = \hat{H}_0 + \lambda \hat{H}'
+\label{eq:perturbation_hamiltonian}
+\end{equation}
+โดยที่ $\lambda \in [0, 1]$ คือพารามิเตอร์ไร้มิติสมมติที่ใช้เป็นตัวติดตามอันดับของการรบกวน ในการคำนวณขั้นสุดท้ายเราจะแทนค่า $\lambda = 1$ เพื่อคืนค่าสู่ระบบจริง
+
+สมมติว่าสถานะเจาะจงและค่าเจาะจงของระบบที่ไม่ถูกรบกวนเป็นที่ทราบอย่างสมบูรณ์
+\begin{equation}
+\hat{H}_0 \ket{\psi_n^{(0)}} = E_n^{(0)} \ket{\psi_n^{(0)}}
+\end{equation}
+โดยที่เซตของสถานะ $\{ \ket{\psi_n^{(0)}} \}$ เป็นเซตฐานตั้งฉากปรกติที่สมบูรณ์ ($\braket{\psi_m^{(0)}}{\psi_n^{(0)}} = \delta_{mn}$) และในหัวข้อนี้เราจะพิจารณากรณีที่ระดับพลังงาน $E_n^{(0)}$ \textbf{ไม่มีภาวะเสื่อม (Non-degenerate)} กล่าวคือ ไม่มีสถานะอื่นใดที่มีพลังงานเท่ากับ $E_n^{(0)}$
+
+\subsection{การกระจายอนุกรมกำลังของการรบกวน}
+เรากระจายทั้งค่าเจาะจงพลังงาน $E_n$ และสถานะเจาะจง $\ket{\psi_n}$ ในรูปอนุกรมกำลังของพารามิเตอร์ $\lambda$
+\begin{align}
+E_n &= E_n^{(0)} + \lambda E_n^{(1)} + \lambda^2 E_n^{(2)} + \lambda^3 E_n^{(3)} + \dots \label{eq:e_series} \\
+\ket{\psi_n} &= \ket{\psi_n^{(0)}} + \lambda \ket{\psi_n^{(1)}} + \lambda^2 \ket{\psi_n^{(2)}} + \lambda^3 \ket{\psi_n^{(3)}} + \dots \label{eq:psi_series}
+\end{align}
+
+แทนสมการ~\eqref{eq:e_series} และ~\eqref{eq:psi_series} ลงในสมการชเรอดิงเงอร์ไม่ขึ้นกับเวลา $(\hat{H}_0 + \lambda \hat{H}')\ket{\psi_n} = E_n \ket{\psi_n}$
+\begin{align}
+(\hat{H}_0 + \lambda \hat{H}') \Big( \ket{\psi_n^{(0)}} + \lambda \ket{\psi_n^{(1)}} + \lambda^2 \ket{\psi_n^{(2)}} + \dots \Big) \nonumber \\
+= \Big( E_n^{(0)} + \lambda E_n^{(1)} + \lambda^2 E_n^{(2)} + \dots \Big) \Big( \ket{\psi_n^{(0)}} + \lambda \ket{\psi_n^{(1)}} + \lambda^2 \ket{\psi_n^{(2)}} + \dots \Big)
+\end{align}
+
+จัดกลุ่มสัมประสิทธิ์ของกำลัง $\lambda$ ในแต่ละอันดับ
+\begin{align}
+\lambda^0 &---- \hat{H}_0 \ket{\psi_n^{(0)}} = E_n^{(0)} \ket{\psi_n^{(0)}} \label{eq:order_0} \\
+\lambda^1 &---- \hat{H}_0 \ket{\psi_n^{(1)}} + \hat{H}' \ket{\psi_n^{(0)}} = E_n^{(0)} \ket{\psi_n^{(1)}} + E_n^{(1)} \ket{\psi_n^{(0)}} \label{eq:order_1} \\
+\lambda^2 &---- \hat{H}_0 \ket{\psi_n^{(2)}} + \hat{H}' \ket{\psi_n^{(1)}} = E_n^{(0)} \ket{\psi_n^{(2)}} + E_n^{(1)} \ket{\psi_n^{(1)}} + E_n^{(2)} \ket{\psi_n^{(0)}} \label{eq:order_2}
+\end{align}
+
+\subsection{การแก้ไขพลังงานอันดับหนึ่ง}
+นำบรา $\bra{\psi_n^{(0)}}$ คูณด้านซ้ายของสมการอันดับหนึ่ง~\eqref{eq:order_1}
+\begin{equation}
+\bra{\psi_n^{(0)}} \hat{H}_0 \ket{\psi_n^{(1)}} + \bra{\psi_n^{(0)}} \hat{H}' \ket{\psi_n^{(0)}} = E_n^{(0)} \braket{\psi_n^{(0)}}{\psi_n^{(1)}} + E_n^{(1)} \braket{\psi_n^{(0)}}{\psi_n^{(0)}}
+\end{equation}
+เนื่องจาก $\hat{H}_0$ เป็นตัวดำเนินการแฮร์มิเชียน $\bra{\psi_n^{(0)}}\hat{H}_0 = E_n^{(0)}\bra{\psi_n^{(0)}}$ เทอมแรกทางซ้ายจึงหักล้างกับเทอมแรกทางขวาพอดี และเนื่องจากฐานเดิมนอร์มอลไลซ์แล้ว ($\braket{\psi_n^{(0)}}{\psi_n^{(0)}} = 1$) เราได้สูตร \textbf{การแก้ไขพลังงานอันดับหนึ่ง}
+\begin{equation}
+E_n^{(1)} = \bra{\psi_n^{(0)}} \hat{H}' \ket{\psi_n^{(0)}} \equiv H'_{nn}
+\label{eq:first_order_energy_formula}
+\end{equation}
+นั่นคือ การแก้ไขพลังงานอันดับหนึ่งมีค่าเท่ากับ \textbf{ค่าคาดหวังของตัวดำเนินการรบกวนในสถานะเดิมที่ไม่ถูกรบกวน}
+
+\subsection{การแก้ไขฟังก์ชันคลื่นอันดับหนึ่งและพลังงานอันดับสอง}
+เรากระจายสถานะแก้ไขอันดับหนึ่ง $\ket{\psi_n^{(1)}}$ บนเซตฐานที่สมบูรณ์ของระบบเดิม
+\begin{equation}
+\ket{\psi_n^{(1)}} = \sum_k c_k^{(1)} \ket{\psi_k^{(0)}}
+\label{eq:psi1_expansion}
+\end{equation}
+เราสามารถเลือกเงื่อนไขการนอร์มอลไลซ์แบบตั้งฉากส่วนเพิ่ม (Intermediate Normalization) $\braket{\psi_n^{(0)}}{\psi_n} = 1$ ซึ่งส่งผลให้ $c_n^{(1)} = 0$ ดังนั้นผลบวกจะครอบคลุมเฉพาะ $k \neq n$
+
+นำบรา $\bra{\psi_m^{(0)}}$ (โดยที่ $m \neq n$) คูณด้านซ้ายของสมการ~\eqref{eq:order_1}
+\begin{equation}
+\bra{\psi_m^{(0)}} \hat{H}_0 \ket{\psi_n^{(1)}} + \bra{\psi_m^{(0)}} \hat{H}' \ket{\psi_n^{(0)}} = E_n^{(0)} \braket{\psi_m^{(0)}}{\psi_n^{(1)}} + E_n^{(1)} \braket{\psi_m^{(0)}}{\psi_n^{(0)}}
+\end{equation}
+เนื่องจาก $\bra{\psi_m^{(0)}}\hat{H}_0 = E_m^{(0)}\bra{\psi_m^{(0)}}$ และ $\braket{\psi_m^{(0)}}{\psi_n^{(0)}} = 0$ (เมื่อ $m \neq n$)
+\begin{equation}
+E_m^{(0)} \braket{\psi_m^{(0)}}{\psi_n^{(1)}} + \bra{\psi_m^{(0)}} \hat{H}' \ket{\psi_n^{(0)}} = E_n^{(0)} \braket{\psi_m^{(0)}}{\psi_n^{(1)}}
+\end{equation}
+แทน $\braket{\psi_m^{(0)}}{\psi_n^{(1)}} = c_m^{(1)}$ จะได้
+\begin{equation}
+c_m^{(1)} = \frac{\bra{\psi_m^{(0)}} \hat{H}' \ket{\psi_n^{(0)}}}{E_n^{(0)} - E_m^{(0)}} \equiv \frac{H'_{mn}}{E_n^{(0)} - E_m^{(0)}} \quad (m \neq n)
+\end{equation}
+
+ดังนั้น \textbf{การแก้ไขสถานะฟังก์ชันคลื่นอันดับหนึ่ง} คือ
+\begin{equation}
+\ket{\psi_n^{(1)}} = \sum_{k \neq n} \frac{\bra{\psi_k^{(0)}} \hat{H}' \ket{\psi_n^{(0)}}}{E_n^{(0)} - E_k^{(0)}} \ket{\psi_k^{(0)}}
+\label{eq:first_order_state_formula}
+\end{equation}
+
+เพื่อหา \textbf{การแก้ไขพลังงานอันดับสอง ($E_n^{(2)}$)} เรานำบรา $\bra{\psi_n^{(0)}}$ คูณด้านซ้ายของสมการอันดับสอง~\eqref{eq:order_2}
+\begin{equation}
+\bra{\psi_n^{(0)}} \hat{H}_0 \ket{\psi_n^{(2)}} + \bra{\psi_n^{(0)}} \hat{H}' \ket{\psi_n^{(1)}} = E_n^{(0)} \braket{\psi_n^{(0)}}{\psi_n^{(2)}} + E_n^{(1)} \braket{\psi_n^{(0)}}{\psi_n^{(1)}} + E_n^{(2)} \braket{\psi_n^{(0)}}{\psi_n^{(0)}}
+\end{equation}
+เทอมแรกทั้งสองฝั่งตัดกัน และเทอม $\braket{\psi_n^{(0)}}{\psi_n^{(1)}} = 0$ จะได้
+\begin{equation}
+E_n^{(2)} = \bra{\psi_n^{(0)}} \hat{H}' \ket{\psi_n^{(1)}}
+\end{equation}
+แทนสมการ~\eqref{eq:first_order_state_formula} ลงไป จะได้สูตรการแก้ไขพลังงานอันดับสองที่สมบูรณ์
+\begin{equation}
+E_n^{(2)} = \sum_{k \neq n} \frac{|\bra{\psi_k^{(0)}} \hat{H}' \ket{\psi_n^{(0)}}|^2}{E_n^{(0)} - E_k^{(0)}} = \sum_{k \neq n} \frac{|H'_{kn}|^2}{E_n^{(0)} - E_k^{(0)}}
+\label{eq:second_order_energy_formula}
+\end{equation}
+
+\subsection{สมบัติสำคัญของการแก้ไขพลังงานอันดับสองของสถานะพื้น}
+พิจารณาสถานะพื้น ($n = 0$) ซึ่งมีพลังงานต่ำที่สุดในระบบ $E_0^{(0)} < E_k^{(0)}$ สำหรับทุกๆ $k \neq 0$
+ส่งผลให้ตัวส่วนในสมการ~\eqref{eq:second_order_energy_formula} มีค่าเป็นลบเสมอ ($E_0^{(0)} - E_k^{(0)} < 0$) ในขณะที่ตัวเศษเป็นขนาดกำลังสองจึงเป็นบวกเสมอ ดังนั้น
+\begin{equation}
+E_0^{(2)} = \sum_{k \neq 0} \frac{|H'_{k0}|^2}{E_0^{(0)} - E_k^{(0)}} \le 0
+\label{eq:ground_state_second_order_negative}
+\end{equation}
+นั่นคือ \textbf{การแก้ไขพลังงานอันดับสองของสถานะพื้นจะมีค่าเป็นลบหรือศูนย์เสมอ} การรบกวนใดๆ ในอันดับสองจะผลักให้ระดับพลังงานของสถานะพื้นลดต่ำลงเสมอ (Level Repulsion)
+
+เกณฑ์ความถูกต้องของทฤษฎีการรบกวนคือ สมาชิกเมทริกซ์การรบกวนต้องมีขนาดเล็กมากเมื่อเทียบกับผลต่างของระดับพลังงานที่ไม่ถูกรบกวน
+\begin{equation}
+|\bra{\psi_k^{(0)}} \hat{H}' \ket{\psi_n^{(0)}}| \ll |E_n^{(0)} - E_k^{(0)}|
+\end{equation}
+หากมีสถานะ $k$ ที่มีพลังงานใกล้เคียงกับสถานะ $n$ หรือเท่ากันพอดี ($E_k^{(0)} \approx E_n^{(0)}$) ตัวส่วนจะเข้าใกล้ศูนย์และทำให้อนุกรมระเบิดลู่ออก ในกรณีนี้เราต้องใช้ทฤษฎีการรบกวนแบบเสื่อม
+
+% ==========================================================
+% 7.2 ทฤษฎีการรบกวนแบบเสื่อมและปรากฏการณ์สตาร์กเชิงเส้น
+% ==========================================================
+\section{ทฤษฎีการรบกวนแบบเสื่อมและปรากฏการณ์สตาร์กเชิงเส้น}
+\index{ทฤษฎีการรบกวนแบบเสื่อม (Degenerate Perturbation Theory)}
+\index{ปรากฏการณ์สตาร์ก (Stark Effect)}
+\index{สมการเซคิวลาร์ (Secular Equation)}
+
+เมื่อระบบที่ไม่ถูกรบกวนมี \textbf{ภาวะเสื่อม (Degeneracy)} กล่าวคือ มีหลายสถานะที่มีค่าเจาะจงพลังงานเท่ากันพอดี ทฤษฎีการรบกวนแบบไม่เสื่อมจะใช้การไม่ได้เนื่องจากเกิดการหารด้วยศูนย์ในสมการ~\eqref{eq:first_order_state_formula}
+
+สมมติว่าระดับพลังงาน $E_n^{(0)}$ มีภาวะเสื่อม $d$ เท่า โดยมีเซตของสถานะเจาะจง $\{ \ket{\psi_{n, 1}^{(0)}}, \ket{\psi_{n, 2}^{(0)}}, \dots, \ket{\psi_{n, d}^{(0)}} \}$ ซึ่งสร้างปริภูมิย่อยเสื่อม $\mathcal{D}_n$ มิติ $d$ สถานะเริ่มต้นที่แท้จริงภายในการรบกวนจะเป็นการรวมเชิงเส้นของสถานะเหล่านี้
+\begin{equation}
+\ket{\phi^{(0)}} = \sum_{\alpha=1}^d c_\alpha \ket{\psi_{n, \alpha}^{(0)}}
+\end{equation}
+
+เมื่อแทนลงในสมการชเรอดิงเงอร์อันดับหนึ่งและฉายลงบนสถานะในปริภูมิย่อยเสื่อม จะได้ระบบสมการพีชคณิตเชิงเส้น
+\begin{equation}
+\sum_{\beta=1}^d \bra{\psi_{n, \alpha}^{(0)}} \hat{H}' \ket{\psi_{n, \beta}^{(0)}} c_\beta = E_n^{(1)} c_\alpha \quad (\alpha = 1, 2, \dots, d)
+\end{equation}
+หรือเขียนในรูปเมทริกซ์ $W \mathbf{c} = E_n^{(1)} \mathbf{c}$ โดยที่สมาชิกเมทริกซ์คือ $W_{\alpha\beta} \equiv \bra{\psi_{n, \alpha}^{(0)}} \hat{H}' \ket{\psi_{n, \beta}^{(0)}}$ การหาผลเฉลยที่ไม่เป็นศูนย์จะเกิดขึ้นได้ก็ต่อเมื่อดีเทอร์มิแนนต์เป็นศูนย์ ซึ่งเรียกว่า \textbf{สมการเซคิวลาร์ (Secular Equation)}
+\begin{equation}
+\det\big( W_{\alpha\beta} - E_n^{(1)} \delta_{\alpha\beta} \big) = 0
+\label{eq:secular_equation}
+\end{equation}
+
+รากของสมการเซคิวลาร์ทั้ง $d$ ค่า คือการแก้ไขพลังงานอันดับหนึ่ง $E_n^{(1)}$ ซึ่งโดยทั่วไปจะมีค่าแตกต่างกัน ส่งผลให้ระดับพลังงานที่เคยเสื่อมกันเกิด \textbf{การยกเลิกความเสื่อม (Lifting of Degeneracy)} และแยกออกเป็นระดับย่อย
+
+\subsection{ปรากฏการณ์สตาร์กเชิงเส้นในอะตอมไฮโดรเจน ($n=2$)}
+ตัวอย่างการประยุกต์ทฤษฎีการรบกวนแบบเสื่อมที่สำคัญที่สุดในประวัติศาสตร์ฟิสิกส์คือ \textbf{ปรากฏการณ์สตาร์ก (Stark Effect)} ซึ่งค้นพบโดย โยฮันเนส สตาร์ก (Johannes Stark, 1874--1957) เมื่อนำอะตอมไฮโดรเจนไปวางในสนามไฟฟ้าสม่ำเสมอภายนอก $\mathbf{E}_{\text{ext}} = \mathcal{E} \hat{\mathbf{k}}$
+
+ฮามิลโทเนียนการรบกวนคือพลังงานศักย์ของขั้วคู่ไฟฟ้า
+\begin{equation}
+\hat{H}' = -\mathbf{p}_e \cdot \mathbf{E}_{\text{ext}} = -(-e \mathbf{r})\cdot (\mathcal{E}\hat{\mathbf{k}}) = e\mathcal{E} z = e\mathcal{E} r\cos\theta
+\label{eq:stark_hamiltonian}
+\end{equation}
+
+สำหรับระดับ $n = 2$ มีความเสื่อมเชิงพื้นที่ 4 เท่า ($d = 2^2 = 4$) ได้แก่
+\begin{equation}
+\ket{1} \equiv \ket{2, 0, 0} = \ket{2s}, \quad \ket{2} \equiv \ket{2, 1, 0} = \ket{2p_z}, \quad \ket{3} \equiv \ket{2, 1, 1}, \quad \ket{4} \equiv \ket{2, 1, -1}
+\end{equation}
+
+เราคำนวณสมาชิกเมทริกซ์ $W_{\alpha\beta} = \bra{\alpha} e\mathcal{E} z \ket{\beta}$
+\begin{enumerate}
+    \item \textbf{สมมาตรพาริตี} ---- ตัวดำเนินการ $z$ มีพาริตีเป็นคี่ ($\hat{\Pi} z \hat{\Pi}^\dagger = -z$) สมาชิกทแยงมุมทั้งหมดจึงเป็นศูนย์ $\bra{\alpha} z \ket{\alpha} = 0$ เพราะอินทิกรัลของฟังก์ชันคี่บนโดเมนสมมาตรเป็นศูนย์
+    \item \textbf{การอนุรักษ์เลขควอนตัมแม่เหล็ก} ---- ตัวดำเนินการ $z = r\cos\theta$ ไม่ขึ้นกับมุม $\phi$ อินทิกรัลมุม $\phi$ คือ $\int_0^{2\pi} e^{i(m_\beta - m_\alpha)\phi} d\phi = 2\pi \delta_{m_\alpha m_\beta}$ สมาชิกเมทริกซ์จะเป็นศูนย์เสมอถ้า $m_\alpha \neq m_\beta$
+\end{enumerate}
+
+สมาชิกที่ไม่เป็นศูนย์เพียงตัวเดียว (และสังยุคแฮร์มิเชียน) คือระหว่างสถานะ $\ket{2s}$ และ $\ket{2p_z}$ ($m = 0$)
+\begin{align}
+\bra{2s} e\mathcal{E} z \ket{2p_z} &= e\mathcal{E} \int_0^\infty r^3 R_{20}(r) R_{21}(r) dr \int_0^\pi \cos\theta Y_0^0(\theta) Y_1^0(\theta) \sin\theta d\theta \int_0^{2\pi} d\phi \nonumber \\
+&= -3 e \mathcal{E} a_0
+\end{align}
+
+เมทริกซ์การรบกวน $W$ ในฐาน $(\ket{2s}, \ket{2p_z}, \ket{2,1,1}, \ket{2,1,-1})$ จึงเขียนได้ดังนี้
+\begin{equation}
+W = \begin{pmatrix}
+0 & -3e\mathcal{E}a_0 & 0 & 0 \\
+-3e\mathcal{E}a_0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0
+\end{pmatrix}
+\end{equation}
+
+สมการเซคิวลาร์คือ
+\begin{equation}
+\det(W - E^{(1)} I) = \big[ (E^{(1)})^2 - (3e\mathcal{E}a_0)^2 \big] (E^{(1)})^2 = 0
+\end{equation}
+ซึ่งให้รากของพลังงาน 4 ค่า
+\begin{equation}
+E^{(1)} = +3e\mathcal{E}a_0, \qquad E^{(1)} = -3e\mathcal{E}a_0, \qquad E^{(1)} = 0 \quad (\text{เสื่อม 2 เท่า})
+\end{equation}
+
+ระดับพลังงาน $n = 2$ จึงแยกตัวออกเป็นสามระดับย่อยในสนามไฟฟ้า โดยระดับพลังงานแปรผันตรงเชิงเส้นกับความเข้มสนามไฟฟ้า $\mathcal{E}$ เรียกว่า \textbf{ปรากฏการณ์สตาร์กเชิงเส้น (Linear Stark Effect)} ซึ่งสะท้อนการมีอยู่ของโมเมนต์ขั้วคู่ไฟฟ้าถาวรของสถานะผสมในอะตอมไฮโดรเจน
+
+% ==========================================================
+% 7.3 ระเบียบวิธีแปรผันของเรย์ลี-ริตซ์
+% ==========================================================
+\section{ระเบียบวิธีแปรผันของเรย์ลี-ริตซ์}
+\index{ระเบียบวิธีแปรผัน (Variational Method)}
+\index{หลักการของเรย์ลี-ริตซ์ (Rayleigh-Ritz Principle)}
+\index{อะตอมฮีเลียม (Helium Atom)}
+
+สำหรับระบบควอนตัมที่ไม่มีเทอมอ้างอิง $\hat{H}_0$ ที่แก้ได้แม่นตรง หรือเทอมปฏิสัมพันธ์มีขนาดใหญ่จนไม่อาจถือว่าเป็นการรบกวนขนาดเล็กได้ \textbf{ระเบียบวิธีแปรผัน (Variational Method)} เป็นเครื่องมือที่ทรงพลังที่สุดในการประมาณค่าพลังงานสถานะพื้นและฟังก์ชันคลื่น
+
+\subsection{หลักการแปรผัน (The Variational Principle)}
+กำหนดให้ $\hat{H}$ เป็นฮามิลโทเนียนของระบบใดๆ ที่มีสถานะพื้น $E_0$ สำหรับฟังก์ชันคลื่นทดลอง (Trial Wavefunction, $\psi_{\text{trial}}$) ใดๆ ที่สามารถนอร์มอลไลซ์ได้ ค่าคาดหวังของฮามิลโทเนียนจะมีค่า \textbf{มากกว่าหรือเท่ากับพลังงานสถานะพื้นที่แท้จริงเสมอ}
+\begin{equation}
+E[\psi_{\text{trial}}] \equiv \frac{\bra{\psi_{\text{trial}}} \hat{H} \ket{\psi_{\text{trial}}}}{\braket{\psi_{\text{trial}}}{\psi_{\text{trial}}}} \ge E_0
+\label{eq:variational_principle}
+\end{equation}
+เครื่องหมายเท่ากับจะเกิดขึ้นก็ต่อเมื่อ $\psi_{\text{trial}}$ เป็นฟังก์ชันคลื่นสถานะพื้นที่แท้จริงพอดี
+
+\textbf{การพิสูจน์} ---- เนื่องจากสถานะเจาะจง $\{ \ket{\psi_n} \}$ ของ $\hat{H}$ เป็นเซตฐานที่สมบูรณ์ ($\hat{H}\ket{\psi_n} = E_n\ket{\psi_n}$) เราสามารถกระจายฟังก์ชันทดลองได้เป็น $\ket{\psi_{\text{trial}}} = \sum_n c_n \ket{\psi_n}$
+\begin{equation}
+\bra{\psi_{\text{trial}}} \hat{H} \ket{\psi_{\text{trial}}} = \sum_{m, n} c_m^* c_n \bra{\psi_m}\hat{H}\ket{\psi_n} = \sum_n |c_n|^2 E_n
+\end{equation}
+เนื่องจาก $E_n \ge E_0$ สำหรับทุกๆ $n$
+\begin{equation}
+\bra{\psi_{\text{trial}}} \hat{H} \ket{\psi_{\text{trial}}} \ge \sum_n |c_n|^2 E_0 = E_0 \sum_n |c_n|^2 = E_0 \braket{\psi_{\text{trial}}}{\psi_{\text{trial}}}
+\end{equation}
+หารด้วย $\braket{\psi_{\text{trial}}}{\psi_{\text{trial}}}$ จะได้ $E[\psi_{\text{trial}}] \ge E_0$ เสมอ $\blacksquare$
+
+กลยุทธ์การคำนวณคือ เรากำหนดฟังก์ชันทดลองที่บรรจุพารามิเตอร์แปรผัน $\alpha_1, \alpha_2, \dots$ แล้วหาจุดต่ำสุดของพลังงานโดยการกำหนดให้อนุพันธ์ย่อยเทียบกับพารามิเตอร์แต่ละตัวเป็นศูนย์
+\begin{equation}
+\frac{\partial E(\alpha_1, \alpha_2, \dots)}{\partial \alpha_i} = 0
+\end{equation}
+
+\subsection{การประเมินพลังงานสถานะพื้นของอะตอมฮีเลียม}
+อะตอมฮีเลียม ($Z = 2$) ประกอบด้วยนิวเคลียสประจุ $+2e$ และอิเล็กตรอน 2 ตัว ฮามิลโทเนียนรวมคือ
+\begin{equation}
+\hat{H} = -\frac{\hbar^2}{2m_e}(\nabla_1^2 + \nabla_2^2) - \frac{2e^2}{4\pi\varepsilon_0 r_1} - \frac{2e^2}{4\pi\varepsilon_0 r_2} + \frac{e^2}{4\pi\varepsilon_0 |\mathbf{r}_1 - \mathbf{r}_2|}
+\end{equation}
+เทอมสุดท้ายคือแรงผลักคูลอมบ์ระหว่างอิเล็กตรอนทั้งสอง ซึ่งทำให้สมการไม่สามารถแยกตัวแปรได้
+
+หากละเลยเทอมแรงผลัก อิเล็กตรอนแต่ละตัวจะอยู่ในสถานะไฮโดรเจนิกที่มีประจุ $Z = 2$ ฟังก์ชันคลื่นรวมคือผลคูณของสองสถานะ $1s$ แต่เนื่องจากอิเล็กตรอนตัวหนึ่งจะช่วย \textbf{กำบังประจุบวกของนิวเคลียส (Screening Effect)} ให้แก่อิเล็กตรอนอีกตัวหนึ่ง เราจึงเลือกฟังก์ชันทดลองโดยใช้นิวเคลียร์ชาร์จยังผล $Z_{\text{eff}}$ เป็นพารามิเตอร์แปรผัน
+\begin{equation}
+\psi_{\text{trial}}(\mathbf{r}_1, \mathbf{r}_2) = \frac{Z_{\text{eff}}^3}{\pi a_0^3} \exp\left( -\frac{Z_{\text{eff}}(r_1 + r_2)}{a_0} \right)
+\end{equation}
+
+เมื่อคำนวณค่าคาดหวังของฮามิลโทเนียนเป็นฟังก์ชันของ $Z_{\text{eff}}$
+\begin{equation}
+\langle H \rangle(Z_{\text{eff}}) = 2 E_1(Z_{\text{eff}}) + \left\langle \frac{e^2}{4\pi\varepsilon_0 r_{12}} \right\rangle + 2(Z - Z_{\text{eff}})\left\langle \frac{e^2}{4\pi\varepsilon_0 r} \right\rangle
+\end{equation}
+โดยการคำนวณอินทิกรัลไฟฟ้าสถิตจะได้
+\begin{equation}
+\langle H \rangle(Z_{\text{eff}}) = \left[ 2 Z_{\text{eff}}^2 - 4 Z Z_{\text{eff}} + \frac{5}{8} Z_{\text{eff}} \right] |E_1|
+\end{equation}
+โดยที่ $|E_1| = 13.606~\text{eV}$
+
+หาค่าต่ำสุดโดยการดิฟเฟอเรนชิเอตเทียบกับ $Z_{\text{eff}}$
+\begin{equation}
+\frac{d\langle H \rangle}{dZ_{\text{eff}}} = \left[ 4 Z_{\text{eff}} - 4Z + \frac{5}{8} \right] |E_1| = 0 \quad \implies \quad Z_{\text{eff}} = Z - \frac{5}{16}
+\end{equation}
+สำหรับฮีเลียม ($Z = 2$) จะได้ประจุยังผลที่เหมาะสมที่สุดคือ
+\begin{equation}
+Z_{\text{eff}} = 2 - \frac{5}{16} = 1.6875
+\end{equation}
+และค่าพลังงานประมาณสถานะพื้นคือ
+\begin{equation}
+E_0 \le \langle H \rangle_{\text{min}} = -2\left( 2 - \frac{5}{16} \right)^2 |E_1| = -2(1.6875)^2 (13.606~\text{eV}) \approx -77.49~\text{eV}
+\end{equation}
+ผลลัพธ์นี้ใกล้เคียงกับค่าที่วัดได้จริงจากการทดลอง ($-79.005~\text{eV}$) อย่างน่าทึ่ง โดยมีความคลาดเคลื่อนเพียง $1.9\%$ เท่านั้น
+
+% ==========================================================
+% 7.4 ทฤษฎีการรบกวนขึ้นกับเวลาและกฎทองของแฟร์มี
+% ==========================================================
+\section{ทฤษฎีการรบกวนขึ้นกับเวลาและกฎทองของแฟร์มี}
+\index{ทฤษฎีการรบกวนขึ้นกับเวลา (Time-Dependent Perturbation Theory)}
+\index{กฎทองของแฟร์มี (Fermi's Golden Rule)}
+\index{อัตราการเปลี่ยนสถานะ (Transition Rate)}
+
+เมื่อระบบควอนตัมถูกกระตุ้นด้วยสนามภายนอกที่ขึ้นกับเวลา เช่น คลื่นแม่เหล็กไฟฟ้าของแสงเลเซอร์ หรือการชนกับอนุภาคอื่น ฮามิลโทเนียนของระบบจะไม่คงที่ตามเวลา
+\begin{equation}
+\hat{H}(t) = \hat{H}_0 + \hat{V}(t)
+\end{equation}
+ในกรณีนี้ พลังงานของระบบจะไม่ได้รับการอนุรักษ์ และเป้าหมายสำคัญทางฟิสิกส์คือการคำนวณ \textbf{ความน่าจะเป็นในการเปลี่ยนสถานะ (Transition Probability)} จากสถานะเริ่มต้น $\ket{i}$ ไปสู่สถานะสุดท้าย $\ket{f}$
+
+\subsection{การอนุพัทธ์ในภาพอันตรกิริยา}
+สมมติว่าที่เวลา $t = 0$ ระบบอยู่ในสถานะเจาะจง $\ket{i}$ ของ $\hat{H}_0$ เรากระจายสถานะที่เวลา $t > 0$ บนฐานของ $\hat{H}_0$
+\begin{equation}
+\ket{\Psi(t)} = \sum_n c_n(t) e^{-i E_n^{(0)} t/\hbar} \ket{\psi_n^{(0)}}
+\end{equation}
+แทนลงในสมการชเรอดิงเงอร์ขึ้นกับเวลา $i\hbar \frac{\partial}{\partial t}\ket{\Psi(t)} = \hat{H}(t)\ket{\Psi(t)}$ จะได้สมการเชิงอนุพันธ์คู่ควบสำหรับสัมประสิทธิ์แอมพลิจูด $c_f(t)$
+\begin{equation}
+i\hbar \frac{dc_f}{dt} = \sum_n \bra{\psi_f^{(0)}} \hat{V}(t) \ket{\psi_n^{(0)}} e^{i\omega_{fn} t} c_n(t)
+\end{equation}
+โดยที่ $\omega_{fn} \equiv \frac{E_f^{(0)} - E_n^{(0)}}{\hbar}$ คือความถี่บอร์ของการเปลี่ยนสถานะ
+
+ในอันดับที่หนึ่งของการรบกวน กำหนดเงื่อนไขเริ่มต้น $c_n(0) = \delta_{ni}$
+\begin{equation}
+c_f^{(1)}(t) = -\frac{i}{\hbar} \int_0^t \bra{\psi_f^{(0)}} \hat{V}(t') \ket{\psi_i^{(0)}} e^{i\omega_{fi} t'} dt' \quad (f \neq i)
+\label{eq:first_order_amplitude}
+\end{equation}
+
+\subsection{การรบกวนแบบฮาร์มอนิกและกฎทองของแฟร์มี}
+พิจารณาการรบกวนแบบสั่นฮาร์มอนิกด้วยความถี่เชิงมุม $\omega$ เช่น คลื่นแสงตกกระทบ
+\begin{equation}
+\hat{V}(t) = \hat{F} e^{-i\omega t} + \hat{F}^\dagger e^{i\omega t}
+\end{equation}
+การอินทิเกรตสมการ~\eqref{eq:first_order_amplitude} สำหรับเทอมการดูดกลืนแสง ($e^{-i\omega t}$) ให้แอมพลิจูด
+\begin{equation}
+c_f^{(1)}(t) = -\frac{i}{\hbar} F_{fi} \int_0^t e^{i(\omega_{fi} - \omega)t'} dt' = -\frac{F_{fi}}{\hbar} \frac{e^{i(\omega_{fi} - \omega)t} - 1}{\omega_{fi} - \omega}
+\end{equation}
+ความน่าจะเป็นในการเปลี่ยนสถานะคือ $P_{i \to f}(t) = |c_f^{(1)}(t)|^2$
+\begin{equation}
+P_{i \to f}(t) = \frac{|F_{fi}|^2}{\hbar^2} \frac{\sin^2\big( (\omega_{fi} - \omega)t/2 \big)}{\big( (\omega_{fi} - \omega)/2 \big)^2}
+\end{equation}
+
+เมื่อเวลา $t$ ผ่านไปนานมากเมื่อเทียบกับคาบการสั่นของคลื่น ($t \to \infty$) ฟังก์ชันการกระจายจะบีบตัวแคบลงและสูงขึ้นจนกลายเป็นฟังก์ชันเดลตาของดิแรก
+\begin{equation}
+\lim_{t \to \infty} \frac{\sin^2(\Delta\omega t/2)}{(\Delta\omega/2)^2 t} = 2\pi \delta(\Delta\omega) = 2\pi\hbar \delta(E_f - E_i - \hbar\omega)
+\end{equation}
+
+อัตราการเปลี่ยนสถานะต่อหนึ่งหน่วยเวลา $\Gamma_{i \to f} \equiv \frac{dP_{i \to f}}{dt}$ คือ
+\begin{equation}
+\Gamma_{i \to f} = \frac{2\pi}{\hbar} |F_{fi}|^2 \delta(E_f - E_i - \hbar\omega)
+\end{equation}
+หากสถานะสุดท้ายเป็นสเปกตรัมต่อเนื่องที่มี \textbf{ความหนาแน่นสถานะ (Density of States, $\rho(E_f)$)} อินทิเกรตรวมทุกสถานะสุดท้ายจะได้สูตรที่มีชื่อเสียงที่สุดในฟิสิกส์ยุคใหม่ คือ \textbf{กฎทองของแฟร์มี (Fermi's Golden Rule)}
+\begin{equation}
+\Gamma_{i \to f} = \frac{2\pi}{\hbar} |\bra{f} \hat{F} \ket{i}|^2 \rho(E_f)
+\label{eq:fermi_golden_rule}
+\end{equation}
+
+กฎทองของแฟร์มีเป็นเสาหลักที่ใช้อธิบายปรากฏการณ์นับไม่ถ้วนในธรรมชาติ ตั้งแต่อัตราการดูดกลืนและการคายโฟตอนของอะตอมในเลเซอร์ การสลายตัวให้อนุภาคบีตาในฟิสิกส์นิวเคลียร์ ไปจนถึงการกระเจิงของอิเล็กตรอนโดยโฟนอนในสารกึ่งตัวนำ
+
+% ==========================================================
+% 7.5 อนุภาคที่เหมือนกันทุกประการและสมมาตรการสลับที่
+% ==========================================================
+\section{อนุภาคที่เหมือนกันทุกประการและสมมาตรการสลับที่}
+\index{อนุภาคที่เหมือนกันทุกประการ (Identical Particles)}
+\index{สมมาตรการสลับที่ (Exchange Symmetry)}
+\index{หลักการกีดกันของเพาลี (Pauli Exclusion Principle)}
+\index{ดีเทอร์มิแนนต์สเลเตอร์ (Slater Determinant)}
+
+ในกลศาสตร์คลาสสิก อนุภาคสองตัวที่เหมือนกันทุกประการ (เช่น ลูกบิลเลียดสองลูกที่มีมวลและขนาดเท่ากัน) ยังคงสามารถจำแนกความแตกต่างได้เสมอผ่านการติดตามเส้นทางการเคลื่อนที่อย่างต่อเนื่องในกาล-อวกาศ (Trajectory Tracking) ทว่าในกลศาสตร์ควอนตัม อนุภาคที่เหมือนกันทุกประการ (เช่น อิเล็กตรอนสองตัว) \textbf{ไม่สามารถจำแนกความแตกต่างได้โดยสิ้นเชิง (Fundamental Indistinguishability)} เนื่องจากฟังก์ชันคลื่นของอนุภาคมีการแผ่ขยายเชิงพื้นที่และทับซ้อนกันตามหลักความไม่แน่นอน
+
+\subsection{ตัวดำเนินการสลับที่และสัจพจน์การทำให้สมมาตร}
+พิจารณาระบบของสองอนุภาคที่เหมือนกันทุกประการ ตัวดำเนินการสลับที่ (Permutation Operator, $\hat{P}_{12}$) ทำหน้าที่สลับพิกัดตำแหน่งและสปินของอนุภาคที่ 1 และ 2
+\begin{equation}
+\hat{P}_{12} \Psi(\mathbf{r}_1, s_1; \mathbf{r}_2, s_2) = \Psi(\mathbf{r}_2, s_2; \mathbf{r}_1, s_1)
+\end{equation}
+การสลับที่สองครั้งติดต่อกันย่อมคืนสู่สถานะเดิม $\hat{P}_{12}^2 = I$ ค่าเจาะจงของ $\hat{P}_{12}$ จึงมีได้เพียงสองค่าเท่านั้นคือ $\pm 1$
+
+\textbf{สัจพจน์การทำให้สมมาตร (Symmetrization Postulate)} ระบุว่า อนุภาคทุกชนิดในเอกภพแบ่งออกเป็นสองตระกูลใหญ่ตามทฤษฎีบทสปิน-สถิติ (Spin-Statistics Theorem)
+\begin{enumerate}
+    \item \textbf{โบซอน (Bosons)} ---- อนุภาคที่มีสปินเป็นจำนวนเต็ม ($s = 0, 1, 2, \dots$ เช่น โฟตอน, กลูออน, อนุภาคฮิกส์, อะตอม $^4\text{He}$) ฟังก์ชันคลื่นรวมต้องมี \textbf{สมมาตร (Symmetric)} ภายใต้การสลับที่
+    \begin{equation}
+    \hat{P}_{12} \Psi_{\text{boson}} = +\Psi_{\text{boson}}
+    \end{equation}
+    \item \textbf{เฟอร์มิออน (Fermions)} ---- อนุภาคที่มีสปินเป็นจำนวนครึ่ง ($s = 1/2, 3/2, 5/2, \dots$ เช่น อิเล็กตรอน, โปรตอน, นิวตรอน, ควาร์ก, นิวทริโน) ฟังก์ชันคลื่นรวมต้องมี \textbf{ปฏิสมมาตร (Antisymmetric)} ภายใต้การสลับที่
+    \begin{equation}
+    \hat{P}_{12} \Psi_{\text{fermion}} = -\Psi_{\text{fermion}}
+    \end{equation}
+\end{enumerate}
+
+\subsection{หลักการกีดกันของเพาลีและดีเทอร์มิแนนต์สเลเตอร์}
+สำหรับระบบสองเฟอร์มิออนที่ไม่มีปฏิสัมพันธ์กัน หากอนุภาคหนึ่งอยู่ในสถานะควอนตัมเดี่ยว $\psi_a$ และอีกอนุภาคอยู่ในสถานะ $\psi_b$ ฟังก์ชันคลื่นรวมปฏิสมมาตรที่ถูกต้องคือ
+\begin{equation}
+\Psi(\mathbf{r}_1, \mathbf{r}_2) = \frac{1}{\sqrt{2}} \Big[ \psi_a(\mathbf{r}_1)\psi_b(\mathbf{r}_2) - \psi_b(\mathbf{r}_1)\psi_a(\mathbf{r}_2) \Big]
+\label{eq:two_fermion_state}
+\end{equation}
+
+หากเราพยายามบังคับให้อนุภาคทั้งสองอยู่ในสถานะควอนตัมเดียวกันทุกประการ ($a = b$) จะพบว่า
+\begin{equation}
+\Psi(\mathbf{r}_1, \mathbf{r}_2) = \frac{1}{\sqrt{2}} \Big[ \psi_a(\mathbf{r}_1)\psi_a(\mathbf{r}_2) - \psi_a(\mathbf{r}_1)\psi_a(\mathbf{r}_2) \Big] = 0
+\end{equation}
+ฟังก์ชันคลื่นรวมจะกลายเป็นศูนย์โดยสิ้นเชิง นั่นคือ \textbf{ไม่มีทางที่เฟอร์มิออนที่เหมือนกันสองตัวจะครอบครองสถานะควอนตัมเดียวกันได้พร้อมกัน} นี่คือข้อพิสูจน์ทางคณิตศาสตร์ของ \textbf{หลักการกีดกันของเพาลี (Pauli Exclusion Principle)}
+
+สำหรับระบบ $N$ เฟอร์มิออน ฟังก์ชันคลื่นปฏิสมมาตรทั่วไปสามารถเขียนในรูปของ \textbf{ดีเทอร์มิแนนต์สเลเตอร์ (Slater Determinant)} ซึ่งคิดค้นโดย จอห์น สเลเตอร์ (John Slater, 1900--1976)
+\begin{equation}
+\Psi(\mathbf{r}_1, \dots, \mathbf{r}_N) = \frac{1}{\sqrt{N!}} \begin{vmatrix}
+\psi_1(\mathbf{r}_1) & \psi_2(\mathbf{r}_1) & \dots & \psi_N(\mathbf{r}_1) \\
+\psi_1(\mathbf{r}_2) & \psi_2(\mathbf{r}_2) & \dots & \psi_N(\mathbf{r}_2) \\
+\vdots & \vdots & \ddots & \vdots \\
+\psi_1(\mathbf{r}_N) & \psi_2(\mathbf{r}_N) & \dots & \psi_N(\mathbf{r}_N)
+\end{vmatrix}
+\label{eq:slater_determinant}
+\end{equation}
+หากมีสถานะควอนตัมเดี่ยวสองสถานะใดๆ ซ้ำกัน สองคอลัมน์ในดีเทอร์มิแนนต์จะเหมือนกัน ส่งผลให้ค่าดีเทอร์มิแนนต์เป็นศูนย์ทันทีตามกฎพีชคณิตเชิงเส้น
+
+% ==========================================================
+% 7.6 สถิติควอนตัม ---- MB, FD และ BE
+% ==========================================================
+\section{สถิติควอนตัม ---- MB, FD และ BE}
+\index{สถิติควอนตัม (Quantum Statistics)}
+\index{การแจกแจงเฟอร์มิ-ดิแรก (Fermi-Dirac Distribution)}
+\index{การแจกแจงโบส-ไอน์สไตน์ (Bose-Einstein Distribution)}
+\index{ศักย์เคมี (Chemical Potential)}
+
+เมื่อเราศึกษาระบบที่มีอนุภาคจำนวนมหาศาลในระดับมหภาค เช่น อิเล็กตรอนในเนื้อโลหะ ($N \sim 10^{23}$) หรือโฟตอนในกล่องรังสีวัตถุดำ การติดตามฟังก์ชันคลื่นของอนุภาคแต่ละตัวเป็นสิ่งที่เป็นไปไม่ได้ เราจำเป็นต้องใช้ \textbf{กลศาสตร์สถิติควอนตัม (Quantum Statistical Mechanics)}
+
+ในชุดกึ่งคาโนนิคัล (Grand Canonical Ensemble) ที่ระบบสามารถแลกเปลี่ยนได้ทั้งพลังงานและจำนวนอนุภาคกับแหล่งกักเก็บความร้อน ฟังก์ชันการแจกแจงจำนวนอนุภาคเฉลี่ย $\bar{n}(\varepsilon)$ ที่ระดับพลังงาน $\varepsilon$ ขึ้นอยู่กับสมมาตรควอนตัมของอนุภาค
+
+\subsection{การเปรียบเทียบฟังก์ชันการแจกแจงทั้งสามแบบ}
+\begin{enumerate}
+    \item \textbf{สถิติแมกซ์เวลล์-โบลต์ซมันน์ (Maxwell-Boltzmann Statistics, MB)} ---- สำหรับอนุภาคคลาสสิกที่สามารถแยกแยะความแตกต่างได้ และไม่จำกัดจำนวนอนุภาคต่อสถานะ
+    \begin{equation}
+    \bar{n}_{\text{MB}}(\varepsilon) = \frac{1}{e^{(\varepsilon - \mu)/k_B T}} = e^{-(\varepsilon - \mu)/k_B T}
+    \label{eq:mb_dist}
+    \end{equation}
+    \item \textbf{สถิติเฟอร์มิ-ดิแรก (Fermi-Dirac Statistics, FD)} ---- สำหรับเฟอร์มิออนที่แยกแยะความแตกต่างไม่ได้ ภายใต้หลักการกีดกันของเพาลี ($n \in \{0, 1\}$)
+    \begin{equation}
+    \bar{n}_{\text{FD}}(\varepsilon) = \frac{1}{e^{(\varepsilon - \mu)/k_B T} + 1}
+    \label{eq:fd_dist}
+    \end{equation}
+    สังเกตว่า $\bar{n}_{\text{FD}}(\varepsilon) \le 1$ เสมอ ไม่ว่าพลังงานหรืออุณหภูมิจะมีค่าเท่าใด
+    \item \textbf{สถิติโบส-ไอน์สไตน์ (Bose-Einstein Statistics, BE)} ---- สำหรับโบซอนที่แยกแยะความแตกต่างไม่ได้ โดยไม่มีข้อจำกัดด้านจำนวนอนุภาคต่อสถานะ ($n \in \{0, 1, 2, \dots, \infty\}$)
+    \begin{equation}
+    \bar{n}_{\text{BE}}(\varepsilon) = \frac{1}{e^{(\varepsilon - \mu)/k_B T} - 1}
+    \label{eq:be_dist}
+    \end{equation}
+    เพื่อให้จำนวนอนุภาคเฉลี่ยมีค่าเป็นบวก ศักย์เคมีของโบซอนจะต้องมีค่าน้อยกว่าพลังงานสถานะต่ำที่สุดเสมอ ($\mu < \varepsilon_0$)
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.1, >=Stealth]
+    % Axes
+    \draw[->, thick, slateGrey] (-3.5, 0) -- (4.0, 0) node[right, font=\small\bfseries] {$(\varepsilon - \mu)/k_B T$};
+    \draw[->, thick, slateGrey] (0, 0) -- (0, 3.6) node[above, font=\small\bfseries] {$\bar{n}(\varepsilon)$};
+
+    % Ticks
+    \draw (0, 1.8) -- (-0.1, 1.8) node[left, font=\scriptsize] {$1.0$};
+    \draw (0, 0.9) -- (-0.1, 0.9) node[left, font=\scriptsize] {$0.5$};
+    \draw[dashed, slateGrey!60] (-3.5, 1.8) -- (4.0, 1.8);
+
+    % Fermi-Dirac (Pink)
+    \draw[line width=1.5pt, entanglePink, domain=-3.5:3.8, samples=100] 
+        plot (\x, {1.8 / (exp(\x) + 1)});
+    \node at (2.2, 0.4) [font=\small\bfseries\color{entanglePink}] {Fermi-Dirac};
+
+    % Maxwell-Boltzmann (Gold, dashed)
+    \draw[line width=1.3pt, quantumGold, dashed, domain=-0.5:3.8, samples=100] 
+        plot (\x, {1.8 * exp(-\x)});
+    \node at (2.8, 1.1) [font=\small\bfseries\color{quantumGold}] {Maxwell-Boltzmann};
+
+    % Bose-Einstein (Blue)
+    \draw[line width=1.5pt, cyberBlue, domain=0.25:3.8, samples=100] 
+        plot (\x, {1.8 / (exp(\x) - 1)});
+    \node at (1.5, 2.7) [font=\small\bfseries\color{cyberBlue}] {Bose-Einstein};
+\end{tikzpicture}
+\caption{การเปรียบเทียบฟังก์ชันการแจกแจงสถิติเฟอร์มิ-ดิแรก โบส-ไอน์สไตน์ และแมกซ์เวลล์-โบลต์ซมันน์}
+\label{fig:quantum_statistics_compare}
+\end{figure}
+
+\subsection{ลิมิตคลาสสิกและความยาวคลื่นเดอบรอยล์เชิงความร้อน}
+เมื่อพลังงานมีค่าสูงกว่าศักย์เคมีมากๆ ($\varepsilon - \mu \gg k_B T$) พจน์ $e^{(\varepsilon - \mu)/k_B T} \gg 1$ ค่าคงตัว $\pm 1$ ในตัวส่วนของสถิติควอนตัมจะไม่มีนัยสำคัญ
+\begin{equation}
+\lim_{\frac{\varepsilon - \mu}{k_B T} \gg 1} \bar{n}_{\text{FD}}(\varepsilon) = \lim_{\frac{\varepsilon - \mu}{k_B T} \gg 1} \bar{n}_{\text{BE}}(\varepsilon) = e^{-(\varepsilon - \mu)/k_B T} = \bar{n}_{\text{MB}}(\varepsilon)
+\end{equation}
+นั่นคือ สถิติควอนตัมทั้งสองแบบจะลู่เข้าสู่สถิติดั้งเดิมของแมกซ์เวลล์-โบลต์ซมันน์เสมอในลิมิตอุณหภูมิสูงและความหนาแน่นต่ำ
+
+เงื่อนไขเชิงปริมาณของการก้าวเข้าสู่ขอบเขตควอนตัมกำหนดโดย \textbf{ความยาวคลื่นเดอบรอยล์เชิงความร้อน (Thermal de Broglie Wavelength, $\lambda_{\text{th}}$)}
+\begin{equation}
+\lambda_{\text{th}} \equiv \frac{h}{\sqrt{2\pi m k_B T}}
+\label{eq:thermal_debroglie}
+\end{equation}
+\begin{itemize}
+    \item หากระยะห่างเฉลี่ยระหว่างอนุภาค $d \sim n^{-1/3} \gg \lambda_{\text{th}}$ ฟังก์ชันคลื่นของอนุภาคแต่ละตัวไม่ทับซ้อนกัน ระบบประพฤติตนตามฟิสิกส์คลาสสิก
+    \item หากระยะห่างเฉลี่ย $d \le \lambda_{\text{th}}$ หรือพารามิเตอร์ความเสื่อม $n \lambda_{\text{th}}^3 \ge 1$ ฟังก์ชันคลื่นจะทับซ้อนกันอย่างรุนแรง และผลของสมมาตรควอนตัมจะครอบงำพฤติกรรมทั้งหมดของระบบ
+\end{itemize}
+
+% ==========================================================
+% 7.7 ก๊าซแฟร์มีอิสระและฟิสิกส์สสารควบแน่น
+% ==========================================================
+\section{ก๊าซแฟร์มีอิสระและฟิสิกส์สสารควบแน่น}
+\index{ก๊าซแฟร์มี (Fermi Gas)}
+\index{พลังงานแฟร์มี (Fermi Energy)}
+\index{ทรงกลมแฟร์มี (Fermi Sphere)}
+\index{ความดันดีเจเนอเรซี (Degeneracy Pressure)}
+
+แบบจำลองอิเล็กตรอนอิสระของซอมเมอร์เฟลด์ (Sommerfeld Free Electron Model) มองว่าอิเล็กตรอนนำไฟฟ้าในโลหะเคลื่อนที่อย่างอิสระภายในปริมาตร $V = L^3$ ภายใต้ศักย์ศูนย์ โดยมีสปิน $s = 1/2$
+
+\subsection{ทรงกลมแฟร์มีและพลังงานแฟร์มีที่ศูนย์สัมบูรณ์ ($T = 0\text{ K}$)}
+ที่อุณหภูมิศูนย์สัมบูรณ์ ฟังก์ชันการแจกแจงเฟอร์มิ-ดิแรกจะกลายเป็นฟังก์ชันขั้นบันไดสมบูรณ์แบบ
+\begin{equation}
+\bar{n}_{\text{FD}}(\varepsilon) = \begin{cases} 1 & \text{เมื่อ } \varepsilon < E_F \\ 0 & \text{เมื่อ } \varepsilon > E_F \end{cases}
+\end{equation}
+โดยที่ $E_F \equiv \mu(T=0)$ เรียกว่า \textbf{พลังงานแฟร์มี (Fermi Energy)} ซึ่งเป็นระดับพลังงานที่ถูกบรรจุจนเต็มสถานะสูงสุด
+
+ในปริภูมิเวกเตอร์คลื่น ($k$-space) สถานะที่ถูกบรรจุจะรวมตัวกันเป็นรูปทรงกลมตัน เรียกว่า \textbf{ทรงกลมแฟร์มี (Fermi Sphere)} ที่มีรัศมี $k_F$ ปริมาตรของสถานะเดี่ยวหนึ่งสถานะใน $k$-space คือ $(2\pi/L)^3 = 8\pi^3/V$ เนื่องจากอิเล็กตรอนแต่ละสถานะ $k$ สามารถบรรจุสปินได้ 2 ตัว ($m_s = \pm 1/2$) จำนวนอิเล็กตรอนรวม $N$ คือ
+\begin{equation}
+N = 2 \times \frac{\text{ปริมาตรของทรงกลมแฟร์มี}}{\text{ปริมาตรต่อหนึ่งสถานะ}} = 2 \times \frac{\frac{4}{3}\pi k_F^3}{(2\pi)^3/V} = \frac{V k_F^3}{3\pi^2}
+\end{equation}
+
+ดังนั้น \textbf{เวกเตอร์คลื่นแฟร์มี (Fermi Wavevector, $k_F$)} ขึ้นอยู่กับความหนาแน่นอิเล็กตรอนต่อหน่วยปริมาตร $n \equiv N/V$ เพียงอย่างเดียว
+\begin{equation}
+k_F = (3\pi^2 n)^{1/3}
+\label{eq:fermi_wavevector}
+\end{equation}
+ทำให้ได้สูตรของ \textbf{พลังงานแฟร์มี}
+\begin{equation}
+E_F = \frac{\hbar^2 k_F^2}{2m_e} = \frac{\hbar^2}{2m_e} (3\pi^2 n)^{2/3}
+\label{eq:fermi_energy_formula}
+\end{equation}
+และนิยาม \textbf{อุณหภูมิแฟร์มี (Fermi Temperature)}
+\begin{equation}
+T_F \equiv \frac{E_F}{k_B}
+\end{equation}
+
+สำหรับโลหะทั่วไป เช่น ทองแดง ($n \approx 8.5 \times 10^{28}\text{ m}^{-3}$) พลังงานแฟร์มีมีค่าสูงถึง $E_F \approx 7.0~\text{eV}$ ซึ่งสอดคล้องกับอุณหภูมิแฟร์มี $T_F \approx 80,000~\text{K}$! เนื่องจากอุณหภูมิห้อง ($T \approx 300~\text{K}$) ต่ำกว่า $T_F$ มากมายมหาศาล อิเล็กตรอนในโลหะจึงอยู่ในสภาวะ \textbf{ก๊าซควอนตัมเสื่อมยิ่งยวด (Extremely Degenerate Quantum Gas)} ตลอดเวลา ซึ่งอธิบายได้ทันทีว่าเหตุใดความจุความร้อนของอิเล็กตรอนจึงมีค่าน้อยกว่าที่ฟิสิกส์คลาสสิกทำนายไว้หลายร้อยเท่า
+
+\subsection{ความดันควอนตัมดีเจเนอเรซีในดาราศาสตร์ฟิสิกส์}
+พลังงานรวมของก๊าซแฟร์มีที่ $T = 0\text{ K}$ หาได้จากการอินทิเกรตบนทรงกลมแฟร์มี
+\begin{equation}
+E_{\text{total}} = \int_0^{k_F} \left(\frac{\hbar^2 k^2}{2m}\right) \frac{V k^2}{\pi^2} dk = \frac{\hbar^2 V}{2m\pi^2} \frac{k_F^5}{5} = \frac{3}{5} N E_F
+\label{eq:fermi_total_energy}
+\end{equation}
+พลังงานเฉลี่ยต่อหนึ่งอนุภาคคือ $\bar{E} = \frac{3}{5} E_F$
+
+แม้ที่อุณหภูมิศูนย์สัมบูรณ์ ก๊าซเฟอร์มิออนก็ยังมีแรงดันมหาศาลเนื่องจากหลักการกีดกันของเพาลีบังคับให้อนุภาคต้องครอบครองสถานะโมเมนตัมสูง ความดันนี้เรียกว่า \textbf{ความดันควอนตัมดีเจเนอเรซี (Degeneracy Pressure, $P$)}
+\begin{equation}
+P = -\left( \frac{\partial E_{\text{total}}}{\partial V} \right)_N = \frac{2}{3} \frac{E_{\text{total}}}{V} = \frac{2}{5} n E_F = \frac{(3\pi^2)^{2/3}\hbar^2}{5m} n^{5/3}
+\label{eq:degeneracy_pressure}
+\end{equation}
+
+ความดันดีเจเนอเรซีของอิเล็กตรอนนี้คือแรงพยุงทางฟิสิกส์ที่ค้ำจุน \textbf{ดาวแคระขาว (White Dwarfs)} ไม่ให้ยุบตัวลงภายใต้แรงโน้มถ่วงมหาศาลของตัวเอง และเมื่อดาวมีมวลเกินขีดจำกัดจันทรเศขร (Chandrasekhar Limit, $\approx 1.44 M_\odot$) อิเล็กตรอนจะรวมตัวกับโปรตอนกลายเป็นนิวตรอน โดยมี \textbf{ความดันดีเจเนอเรซีของนิวตรอน} คอยค้ำจุน \textbf{ดาวนิวตรอน (Neutron Stars)} เอาไว้
+
+% ==========================================================
+% 7.8 การควบแน่นแบบโบส-ไอน์สไตน์และสภาพนำยิ่งยวด
+% ==========================================================
+\section{การควบแน่นแบบโบส-ไอน์สไตน์และสภาพนำยิ่งยวด}
+\index{การควบแน่นแบบโบส-ไอน์สไตน์ (Bose-Einstein Condensation)}
+\index{อุณหภูมิวิกฤต (Critical Temperature)}
+\index{สมการกรอสส์-พิตาเยฟสกี (Gross-Pitaevskii Equation)}
+\index{สภาพนำยิ่งยวด (Superconductivity)}
+\index{คู่คูเปอร์ (Cooper Pairs)}
+
+ในปี ค.ศ. 1924 สัตเยนทระ นาถ โบส (Satyendra Nath Bose, 1894--1974) และอัลเบิร์ต ไอน์สไตน์ (Albert Einstein, 1879--1955) ได้ทำนายปรากฏการณ์ทางควอนตัมที่น่าทึ่งที่สุดประการหนึ่ง กล่าวคือ เมื่อก๊าซของโบซอนถูกทำให้อุณหภูมิลดต่ำลงจนถึงจุดวิกฤต อนุภาคจำนวนมหาศาลระดับมหภาคจะพร้อมใจกันตกลงสู่ \textbf{สถานะควอนตัมพื้นสถานะเดียวกัน ($p = 0$)} และสูญเสียความเป็นเอกเทศ กลายสภาพเป็น \textbf{คลื่นยักษ์ควอนตัมมหภาคเพียงหนึ่งเดียว (Macroscopic Quantum Wave)} ปรากฏการณ์นี้เรียกว่า \textbf{การควบแน่นแบบโบส-ไอน์สไตน์ (Bose-Einstein Condensation, BEC)}
+
+\subsection{อุณหภูมิวิกฤต $T_c$ และสัดส่วนการควบแน่น}
+จำนวนโบซอนทั้งหมดในระบบที่มีปริมาตร $V$ คือผลรวมระหว่างอนุภาคในสถานะพื้น ($N_0$) กับอนุภาคในสถานะกระตุ้น ($N_{\text{excited}}$)
+\begin{equation}
+N = N_0 + \sum_{\varepsilon > 0} \frac{1}{e^{(\varepsilon - \mu)/k_B T} - 1}
+\end{equation}
+เมื่ออุณหภูมิลดลง ศักย์เคมี $\mu$ จะเพิ่มขึ้นเข้าใกล้ศูนย์ ($\mu \to 0^-$) จำนวนอนุภาคสูงสุดที่สถานะกระตุ้นสามารถรองรับได้คือ
+\begin{equation}
+N_{\text{excited}}^{\text{max}} = \int_0^\infty \frac{g(\varepsilon)}{e^{\varepsilon/k_B T} - 1} d\varepsilon = V \left( \frac{m k_B T}{2\pi\hbar^2} \right)^{3/2} \zeta(3/2)
+\end{equation}
+โดยที่ $\zeta(3/2) \approx 2.612375$ คือค่าของฟังก์ชันซีตาของรีมันน์ (Riemann Zeta Function)
+
+เมื่อจำนวนอนุภาคจริง $N$ มีค่ามากกว่าขีดจำกัดการรองรับนี้ อนุภาคส่วนเกินทั้งหมดจะถูกบังคับให้ควบแน่นลงสู่สถานะพื้น $N_0$ โดยมี \textbf{อุณหภูมิวิกฤต (Critical Temperature, $T_c$)} กำหนดโดยเงื่อนไข $N_{\text{excited}}^{\text{max}}(T_c) = N$
+\begin{equation}
+T_c = \frac{2\pi\hbar^2}{m k_B} \left( \frac{n}{\zeta(3/2)} \right)^{2/3} \approx 3.3125 \frac{\hbar^2 n^{2/3}}{m k_B}
+\label{eq:bec_tc_formula}
+\end{equation}
+
+สำหรับอุณหภูมิที่ต่ำกว่าอุณหภูมิวิกฤต ($T < T_c$) สัดส่วนของอนุภาคที่ควบแน่นในสถานะพื้นคือ
+\begin{equation}
+\frac{N_0}{N} = 1 - \left( \frac{T}{T_c} \right)^{3/2}
+\label{eq:bec_condensate_fraction}
+\end{equation}
+เมื่อ $T \to 0\text{ K}$ สัดส่วนการควบแน่นจะเข้าใกล้ 100\% เต็ม
+
+การสังเกตการณ์ BEC ในห้องปฏิบัติการทำได้สำเร็จเป็นครั้งแรกของโลกในปี ค.ศ. 1995 โดย เอริก คอร์เนลล์ (Eric Cornell), คาร์ล วีแมน (Carl Wieman) ณ สถาบัน JILA จากไอของอะตอมรูบิเดียม-87 ($^{87}\text{Rb}$) ที่อุณหภูมิต่ำยิ่งยวดเพียง $170~\text{nK}$ และวูล์ฟกัง เคทเทอร์เล (Wolfgang Ketterle) ณ MIT จากอะตอมโซเดียม-23 ($^{23}\text{Na}$) ซึ่งร่วมกันได้รับรางวัลโนเบลสาขาฟิสิกส์ในปี ค.ศ. 2001
+
+\subsection{สมการกรอสส์-พิตาเยฟสกีและสภาพของไหลยิ่งยวด}
+สถานะควบแน่น BEC ในระดับมหภาคสามารถอธิบายได้ด้วยฟังก์ชันคลื่นมหภาคเพียงหนึ่งเดียว $\Psi(\mathbf{r}, t)$ เรียกว่า \textbf{พารามิเตอร์อันดับ (Order Parameter)} ซึ่งสอดคล้องกับ \textbf{สมการกรอสส์-พิตาเยฟสกี (Gross-Pitaevskii Equation, GPE)}
+\begin{equation}
+i\hbar \frac{\partial \Psi(\mathbf{r}, t)}{\partial t} = \left[ -\frac{\hbar^2}{2m} \nabla^2 + V_{\text{trap}}(\mathbf{r}) + g |\Psi(\mathbf{r}, t)|^2 \right] \Psi(\mathbf{r}, t)
+\label{eq:gross_pitaevskii_eq}
+\end{equation}
+โดยที่ $V_{\text{trap}}$ คือศักย์ดักจับอะตอมของแม่เหล็กและเลเซอร์ และ $g \equiv \frac{4\pi\hbar^2 a_s}{m}$ คือความแรงของอันตรกิริยาระหว่างอะตอมผ่านความยาวการกระเจิงแบบคลื่นเอส ($a_s$)
+
+BEC มีคุณสมบัติ \textbf{สภาพของไหลยิ่งยวด (Superfluidity)} ซึ่งสามารถไหลผ่านช่องแคบหรือท่อได้โดยปราศจากแรงเสียดทานหนืดใดๆ ตามเกณฑ์ของลันเดา (Landau Critical Velocity) และเมื่อถูกกวนให้หมุน การหมุนจะควอนไตซ์เป็น \textbf{กระแสวนควอนตัม (Quantized Vortices)} ที่มีความเร็วเวียนรอบคงที่ในรูปพหุคูณของ $h/m$
+
+\subsection{สภาพนำยิ่งยวดและทฤษฎีคู่คูเปอร์ BCS}
+ปรากฏการณ์ \textbf{สภาพนำยิ่งยวด (Superconductivity)} ซึ่งค้นพบโดย ไฮเก กาเมอร์ลิง ออนเนส (Heike Kamerlingh Onnes) ในปี ค.ศ. 1911 ในปรอทแข็งที่อุณหภูมิ $4.2\text{ K}$ แสดงคุณสมบัติเด่นสองประการ
+\begin{enumerate}
+    \item ความต้านทานไฟฟ้ากระแสตรงเป็นศูนย์อย่างสมบูรณ์แบบ ($R = 0$)
+    \item การขับสนามแม่เหล็กออกจากเนื้อสารอย่างสมบูรณ์ เรียกว่า \textbf{ปรากฏการณ์ไมส์สเนอร์-อ็อคเซนเฟลด์ (Meissner-Ochsenfeld Effect)}
+\end{enumerate}
+
+ในคริสต์ศักราช 1957 จอห์น บาร์ดีน (John Bardeen), ลีออน คูเปอร์ (Leon Cooper) และจอห์น รอเบิร์ต ชริฟเฟอร์ (John Robert Schrieffer) ได้เสนอ \textbf{ทฤษฎี BCS} ซึ่งอธิบายว่า แม้ว่าอิเล็กตรอนจะเป็นเฟอร์มิออนที่มีแรงผลักคูลอมบ์ต่อกัน แต่เมื่อเคลื่อนที่ผ่านโครงผลึกแลตทิซ ประจุลบของอิเล็กตรอนจะดึงดูดไอออนบวกให้ขยับเข้าใกล้ เกิดการบิดเบี้ยวของแลตทิซที่ทิ้งร่องรอยของความหนาแน่นประจุบวกไว้ การสั่นของผลึกนี้คือการแลกเปลี่ยน \textbf{โฟนอนเสมือน (Virtual Phonons)} ซึ่งเหนี่ยวนำให้เกิด \textbf{แรงดึงดูดสุทธิแบบอ่อน} ระหว่างอิเล็กตรอนสองตัวที่มีโมเมนตัมและสปินตรงกันข้าม ($\mathbf{k}\uparrow, -\mathbf{k}\downarrow$)
+
+คู่อิเล็กตรอนที่ผูกพันกันนี้เรียกว่า \textbf{คู่คูเปอร์ (Cooper Pairs)} เนื่องจากแต่ละคู่มีสปินรวมเป็นศูนย์ ($S = 0$) คู่คูเปอร์จึงทำหน้าที่เสมือนเป็น \textbf{โบซอนประกอบ (Composite Bosons)} ที่สามารถควบแน่นลงสู่สถานะควอนตัมมหภาค BEC เดียวกันได้ ก่อให้เกิดช่องว่างพลังงานยิ่งยวด (Superconducting Energy Gap, $\Delta(T)$) ที่ปกป้องไม่ให้อิเล็กตรอนเกิดการกระเจิงกับสิ่งเจือปน ทำให้กระแสไฟฟ้าไหลได้ตลอดกาลโดยไม่มีการสูญเสียพลังงาน
+
+% ==========================================================
+% 7.9 การประยุกต์เทคโนโลยีควอนตัมสมัยใหม่
+% ==========================================================
+\section{การประยุกต์เทคโนโลยีควอนตัมสมัยใหม่}
+\index{สควิดเซนเซอร์ (SQUID)}
+\index{นาฬิกาอะตอมเชิงแสง (Optical Lattice Clock)}
+\index{ตัวนำยิ่งยวดอุณหภูมิสูง (High-Tc Superconductors)}
+
+ความก้าวหน้าในวิชาสถิติควอนตัมและสสารควบแน่นได้แปรเปลี่ยนเป็นเทคโนโลยีควอนตัมขั้นสูงที่มีบทบาทสำคัญในโลกปัจจุบัน
+\begin{enumerate}
+    \item \textbf{อุปกรณ์สควิด (SQUID ---- Superconducting Quantum Interference Device)} ---- ใช้รอยต่อโจเซฟสัน (Josephson Junctions) สองรอยต่อในการวัดการแทรกสอดของคลื่นฟังก์ชันควอนตัมของคู่คูเปอร์ ทำให้เป็นเซนเซอร์ที่สามารถตรวจจับสนามแม่เหล็กที่อ่อนที่สุดในเอกภพได้ถึงระดับ $10^{-15}~\text{Tesla}$ (เฟมโตเทสลา) ใช้ในการตรวจคลื่นแม่เหล็กสมอง (MEG) และการสำรวจแร่ธาตุใต้พิภพ
+    \item \textbf{นาฬิกาอะตอมแลตทิซเชิงแสงและเซนเซอร์วัดความโน้มถ่วง (Quantum Gravimeters)} ---- อะตอมสตรอนเชียม ($^{87}\text{Sr}$) หรืออิตเทอร์เบียมที่ถูกทำให้เย็นจัดจนเข้าใกล้ขีดจำกัดควอนตัมถูกกักขังในแลตทิซแสงเลเซอร์ สามารถสร้างนาฬิกาที่มีความเที่ยงตรงสูงยิ่งยวด คลาดเคลื่อนไม่เกิน 1 วินาทีในเวลาหมื่นล้านปี ใช้ตรวจจับการเลื่อนของเวลาเนื่องจากความโน้มถ่วงของไอน์สไตน์และการเคลื่อนตัวของเปลือกโลก
+    \item \textbf{ตัวนำยิ่งยวดอุณหภูมิสูง (High-$T_c$ Superconductors)} ---- การค้นพบสารประกอบคิวเพรต (Cuprates) เช่น YBCO ($T_c \approx 93\text{ K}$) และสารกลุ่มนิกเคเลต (Nickelates ในงานวิจัยปี 2020--2026) ช่วยให้สามารถใช้ไนโตรเจนเหลวราคาถูกในการหล่อเย็น นำไปใช้สร้างแม่เหล็กตัวนำยิ่งยวดสำหรับเตาปฏิกรณ์นิวเคลียร์ฟิวชัน ITER รถไฟพลังแม่เหล็ก Maglev และสายส่งกำลังไฟฟ้าความสูญเสียต่ำ
+\end{enumerate}
+
+% ==========================================================
+% ห้องปฏิบัติการเสมือนจริง 3 มิติ WebAR
+% ==========================================================
+\section{ห้องปฏิบัติการเสมือนจริง 3 มิติ WebAR จำลองการแจกแจงสถิติควอนตัม}
+\index{ห้องปฏิบัติการเสมือนจริง (WebAR Lab)}
+
+\begin{qrcodelabbox}{การแจกแจงสถิติควอนตัมและการควบแน่นโบส-ไอน์สไตน์ WebAR}{https://tsanaphysics.github.io/ar-Quantum/lab07_bec_quantum_statistics.html}
+\begin{minipage}[c]{0.70\textwidth}
+\textbf{ขั้นตอนการทดลองและกิจกรรมการเรียนรู้}
+\begin{enumerate}
+    \item สแกน QR Code เพื่อเปิดห้องปฏิบัติการจำลอง 3 มิติบนเว็บเบราว์เซอร์
+    \item ปรับแถบเลื่อนอุณหภูมิ $T$ ตั้งแต่ $1000\text{ K}$ ลดลงมาจนถึงระดับ $100\text{ nK}$ เพื่อสังเกตการเปลี่ยนผ่านของประชากรอนุภาค
+    \item เปรียบเทียบกราฟการกระจายตัวของอนุภาคใน $k$-space ระหว่างเฟอร์มิออน (การสร้างผิวทรงกลมแฟร์มี) และโบซอน (การพุ่งขึ้นสู่จุดเอกฐานที่ $\mathbf{k}=0$)
+    \item สังเกตปรากฏการณ์ BEC เมื่ออุณหภูมิลดลงต่ำกว่า $T_c$ กลุ่มหมอกอะตอมจะยุบตัวลงรวมกันที่ใจกลางกับดักแม่เหล็ก กลายเป็นพูความหนาแน่นสูงที่มีความพร้อมเพรียงเชิงเฟส
+    \item ทดลองสร้างกระแสวนควอนตัม (Quantum Vortex) ในหยดของไหลยิ่งยวดด้วยการกวนเลเซอร์
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.25\textwidth}
+\centering
+\qrcode[height=2.8cm]{https://tsanaphysics.github.io/ar-Quantum/lab07_bec_quantum_statistics.html}
+\end{minipage}
+\end{qrcodelabbox}
+
+% ==========================================================
+% ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T
+% ==========================================================
+\section{ตัวอย่างการแก้โจทย์เชิงวิเคราะห์ตามระเบียบวิธี P-S-C-T}
+\index{ระเบียบวิธี P-S-C-T (P-S-C-T Method)}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 7.1
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 7.1 ---- ทฤษฎีการรบกวนสำหรับบ่อศักย์ลึกอนันต์ที่มีสิ่งกีดขวางฟังก์ชันเดลตา}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+อนุภาคมวล $m$ เคลื่อนที่ในบ่อศักย์ลึกอนันต์หนึ่งมิติความกว้าง $L$ ($0 \le x \le L$) ต่อมามีศักย์รบกวนรูปฟังก์ชันเดลตาของดิแรกเกิดขึ้นที่กึ่งกลางบ่อพอดี
+\begin{equation*}
+\hat{H}' = \alpha \delta\left( x - \frac{L}{2} \right)
+\end{equation*}
+โดยที่ $\alpha > 0$ คือค่าคงตัวความแรงของการรบกวน
+\begin{enumerate}
+    \item จงคำนวณการแก้ไขพลังงานอันดับหนึ่ง $E_n^{(1)}$ สำหรับทุกระดับพลังงาน $n = 1, 2, 3, \dots$
+    \item จงอธิบายว่าเหตุใดระดับพลังงานที่เป็นเลขคู่ ($n = 2, 4, 6, \dots$) จึงไม่ได้รับการแก้ไขพลังงานเลย
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} เขียนฟังก์ชันคลื่นที่ไม่ถูกรบกวนของบ่อศักย์ลึกอนันต์
+\begin{equation*}
+\psi_n^{(0)}(x) = \sqrt{\frac{2}{L}} \sin\left( \frac{n\pi x}{L} \right)
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณการแก้ไขพลังงานอันดับหนึ่ง $E_n^{(1)}$
+จากสูตรการแก้ไขพลังงานอันดับหนึ่ง สมการ~\eqref{eq:first_order_energy_formula}
+\begin{align*}
+E_n^{(1)} &= \bra{\psi_n^{(0)}} \hat{H}' \ket{\psi_n^{(0)}} = \int_0^L \psi_n^{(0)}(x)^* \left[ \alpha \delta\left(x - \frac{L}{2}\right) \right] \psi_n^{(0)}(x) dx \\
+&= \alpha \left[ \psi_n^{(0)}\left(\frac{L}{2}\right) \right]^2 = \alpha \left( \sqrt{\frac{2}{L}} \sin\left( \frac{n\pi}{2} \right) \right)^2 = \frac{2\alpha}{L} \sin^2\left( \frac{n\pi}{2} \right)
+\end{align*}
+
+\textbf{ขั้นตอนที่ 3} วิเคราะห์ผลลัพธ์แยกตามค่า $n$
+\begin{itemize}
+    \item กรณี $n$ เป็นเลขคู่ ($n = 2, 4, 6, \dots$) ---- $\sin(n\pi/2) = \sin(k\pi) = 0$
+    \begin{equation*}
+    E_n^{(1)} = 0 \quad (\text{สำหรับ } n \text{ คู่})
+    \end{equation*}
+    \item กรณี $n$ เป็นเลขคี่ ($n = 1, 3, 5, \dots$) ---- $\sin^2(n\pi/2) = (\pm 1)^2 = 1$
+    \begin{equation*}
+    E_n^{(1)} = \frac{2\alpha}{L} \quad (\text{สำหรับ } n \text{ คี่})
+    \end{equation*}
+\end{itemize}
+
+\textbf{Check (ตรวจสอบ)} ---- มิติของ $\alpha$ มีหน่วยเป็นพลังงาน $\times$ ความยาว ($\text{J}\cdot\text{m}$) เมื่อหารด้วย $L$ ($\text{m}$) จะได้หน่วยของพลังงาน ($\text{J}$) อย่างถูกต้อง
+
+\textbf{Think (คิดต่อ)} ---- สาเหตุที่สถานะ $n$ คู่ไม่มีการเลื่อนของระดับพลังงานเลย ($E_n^{(1)} = 0$) เป็นเพราะสถานะเหล่านี้มี \textbf{จุดบัพ (Node)} อยู่ที่กึ่งกลางบ่อพอดี $\psi_n(L/2) = 0$ อนุภาคจึงมีโอกาสเป็นศูนย์ที่จะปรากฏตัวที่ตำแหน่ง $x = L/2$ ทำให้ไม่สัมผัสถึงการมีอยู่ของสิ่งกีดขวางเดลตาเลยแม้แต่น้อย
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 7.2
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 7.2 ---- การประมาณพลังงานสถานะพื้นของตัวแกว่งกวัดฮาร์มอนิกด้วยวิธีแปรผัน}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+พิจารณาตัวแกว่งกวัดฮาร์มอนิกหนึ่งมิติ $\hat{H} = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + \frac{1}{2}m\omega^2 x^2$ จงใช้ระเบียบวิธีแปรผันของเรย์ลี-ริตซ์โดยใช้ฟังก์ชันคลื่นทดลองแบบลอเรนท์เซียน (Lorentzian Trial Function)
+\begin{equation*}
+\psi_{\text{trial}}(x) = \frac{A}{x^2 + b^2}
+\end{equation*}
+โดยที่ $b$ เป็นพารามิเตอร์แปรผันที่มีมิติของความยาว เพื่อประมาณค่าขอบเขตบนของพลังงานสถานะพื้น และเปรียบเทียบกับค่าจริง $E_0 = \frac{1}{2}\hbar\omega$
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} คำนวณค่านอร์มอลไลเซชัน $\braket{\psi}{\psi}$
+\begin{equation*}
+\int_{-\infty}^\infty |\psi(x)|^2 dx = A^2 \int_{-\infty}^\infty \frac{dx}{(x^2 + b^2)^2} = A^2 \left( \frac{\pi}{2 b^3} \right)
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณค่าคาดหวังของพลังงานจลน์ $\langle T \rangle$
+\begin{equation*}
+\frac{d\psi}{dx} = -\frac{2Ax}{(x^2 + b^2)^2} \quad \implies \quad \int_{-\infty}^\infty \left|\frac{d\psi}{dx}\right|^2 dx = 4A^2 \int_{-\infty}^\infty \frac{x^2}{(x^2 + b^2)^4} dx = 4A^2 \left( \frac{\pi}{16 b^5} \right) = \frac{\pi A^2}{4 b^5}
+\end{equation*}
+\begin{equation*}
+\langle T \rangle = \frac{\frac{\hbar^2}{2m}\int |d\psi/dx|^2 dx}{\int |\psi|^2 dx} = \frac{\frac{\hbar^2}{2m} \frac{\pi A^2}{4 b^5}}{\frac{\pi A^2}{2 b^3}} = \frac{\hbar^2}{4m b^2}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณค่าคาดหวังของพลังงานศักย์ $\langle V \rangle$
+\begin{equation*}
+\int_{-\infty}^\infty x^2 |\psi(x)|^2 dx = A^2 \int_{-\infty}^\infty \frac{x^2}{(x^2 + b^2)^2} dx = A^2 \left( \frac{\pi}{2 b} \right)
+\end{equation*}
+\begin{equation*}
+\langle V \rangle = \frac{\frac{1}{2}m\omega^2 \int x^2 |\psi|^2 dx}{\int |\psi|^2 dx} = \frac{\frac{1}{2}m\omega^2 \frac{\pi A^2}{2 b}}{\frac{\pi A^2}{2 b^3}} = \frac{1}{2} m \omega^2 b^2
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 4} หาค่าต่ำสุดของพลังงานรวมเทียบกับ $b$
+\begin{equation*}
+E(b) = \langle T \rangle + \langle V \rangle = \frac{\hbar^2}{4m b^2} + \frac{1}{2} m \omega^2 b^2
+\end{equation*}
+หาอนุพันธ์เทียบกับ $b^2$ และกำหนดให้เท่ากับศูนย์
+\begin{equation*}
+\frac{dE}{d(b^2)} = -\frac{\hbar^2}{4m (b^2)^2} + \frac{1}{2} m \omega^2 = 0 \quad \implies \quad b^4 = \frac{\hbar^2}{2 m^2 \omega^2}
+\end{equation*}
+แทนค่ากลับลงใน $E(b)$
+\begin{equation*}
+E_{\text{min}} = \frac{\hbar^2}{4m \left(\frac{\hbar}{\sqrt{2}m\omega}\right)} + \frac{1}{2} m\omega^2 \left(\frac{\hbar}{\sqrt{2}m\omega}\right) = \frac{\sqrt{2}}{4}\hbar\omega + \frac{\sqrt{2}}{4}\hbar\omega = \frac{\sqrt{2}}{2}\hbar\omega \approx 0.7071 \, \hbar\omega
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- $E_{\text{min}} \approx 0.7071\hbar\omega > E_0 = 0.5000\hbar\omega$ สอดคล้องกับหลักการแปรผันที่พลังงานทดลองต้องมากกว่าหรือเท่ากับพลังงานสถานะพื้นจริงเสมอ
+
+\textbf{Think (คิดต่อ)} ---- แม้ว่าฟังก์ชันทดลองแบบลอเรนท์เซียนจะมีหางที่สลายตัวช้ามาก ($1/x^2$) เมื่อเทียบกับเกาส์เซียน ($e^{-\alpha x^2}$) แต่ระเบียบวิธีแปรผันก็ยังคงให้ค่าขอบเขตบนที่ถูกต้องเสมอ หากเราเลือกฟังก์ชันทดลองแบบเกาส์เซียน จะได้ค่าแม่นตรง $0.5\hbar\omega$ พอดี
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 7.3
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 7.3 ---- การคำนวณพลังงานแฟร์มีและความดันดีเจเนอเรซีของอิเล็กตรอนในทองแดง}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+โลหะทองแดง ($\text{Cu}$) มีความหนาแน่นเชิงมวล $\rho = 8.96 \times 10^3~\text{kg/m}^3$ มวลโมลาร์ $M = 63.55~\text{g/mol}$ โดยอะตอมทองแดงแต่ละอะตอมให้อิเล็กตรอนอิสระนำไฟฟ้า 1 ตัว
+\begin{enumerate}
+    \item จงคำนวณความหนาแน่นของอิเล็กตรอนอิสระ $n$ และพลังงานแฟร์มี $E_F$ ในหน่วยอิเล็กตรอนโวลต์ ($\text{eV}$)
+    \item จงคำนวณความดันควอนตัมดีเจเนอเรซี $P$ ภายในแท่งทองแดงที่ $T = 0\text{ K}$
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} คำนวณความหนาแน่นของอิเล็กตรอนอิสระ $n$
+\begin{equation*}
+n = \frac{\rho N_A}{M} = \frac{(8.96 \times 10^6~\text{g/m}^3) \times (6.022 \times 10^{23}~\text{atoms/mol})}{63.55~\text{g/mol}} \approx 8.49 \times 10^{28}~\text{m}^{-3}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณพลังงานแฟร์มี $E_F$
+จากสมการ~\eqref{eq:fermi_energy_formula}
+\begin{equation*}
+E_F = \frac{\hbar^2}{2m_e} (3\pi^2 n)^{2/3}
+\end{equation*}
+คำนวณ $3\pi^2 n = 3 \pi^2 (8.49 \times 10^{28}) \approx 2.514 \times 10^{30}~\text{m}^{-3}$
+\begin{equation*}
+(3\pi^2 n)^{1/3} \approx 1.360 \times 10^{10}~\text{m}^{-1} \quad \implies \quad (3\pi^2 n)^{2/3} \approx 1.849 \times 10^{20}~\text{m}^{-2}
+\end{equation*}
+\begin{equation*}
+E_F = \frac{(1.0546 \times 10^{-34}~\text{J}\cdot\text{s})^2}{2(9.109 \times 10^{-31}~\text{kg})} \times (1.849 \times 10^{20}~\text{m}^{-2}) \approx 1.129 \times 10^{-18}~\text{J}
+\end{equation*}
+แปลงเป็นหน่วย $\text{eV}$
+\begin{equation*}
+E_F = \frac{1.129 \times 10^{-18}~\text{J}}{1.602 \times 10^{-19}~\text{J/eV}} \approx 7.05~\text{eV}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณความดันดีเจเนอเรซี $P$
+จากสมการ~\eqref{eq:degeneracy_pressure}
+\begin{equation*}
+P = \frac{2}{5} n E_F = \frac{2}{5} (8.49 \times 10^{28}~\text{m}^{-3}) \times (1.129 \times 10^{-18}~\text{J}) \approx 3.83 \times 10^{10}~\text{N/m}^2 = 38.3~\text{GPa}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ความดันระดับ $38.3~\text{GPa}$ เทียบเท่ากับประมาณ $380,000$ เท่าของความดันบรรยากาศโลก ($1\text{ atm} \approx 10^5\text{ Pa}$)
+
+\textbf{Think (คิดต่อ)} ---- ความดันควอนตัมมหาศาลเกือบ 4 หมื่นล้านปาสกาลนี้เกิดขึ้นภายในก้อนทองแดงธรรมดาตลอดเวลา โดยถูกเหนี่ยวรั้งไว้ด้วยแรงดึงดูดทางไฟฟ้าสถิตคูลอมบ์ของประจุบวกในไอออนแลตทิซ ความดันดีเจเนอเรซีนี้เองที่เป็นสาเหตุสำคัญที่ทำให้สสารของแข็งมีปริมาตรที่แน่นอนและต้านทานการถูกบีบอัดได้อย่างทรงพลัง
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 7.4
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 7.4 ---- อุณหภูมิวิกฤต $T_c$ และสัดส่วนการควบแน่นของก๊าซรูบิเดียม-87}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+ในการทดลองดักจับอะตอมรูบิเดียม-87 ($^{87}\text{Rb}$) มวล $m \approx 87 \times 1.66 \times 10^{-27}~\text{kg} \approx 1.444 \times 10^{-25}~\text{kg}$ ด้วยแสงเลเซอร์ในกับดักแม่เหล็ก ก๊าซมีความหนาแน่น $n = 1.0 \times 10^{14}~\text{atoms/cm}^3$
+\begin{enumerate}
+    \item จงคำนวณอุณหภูมิวิกฤต $T_c$ ของการเกิดการควบแน่นแบบโบส-ไอน์สไตน์
+    \item หากลดอุณหภูมิลงไปจนถึง $T = 0.5 T_c$ จงคำนวณสัดส่วนและร้อยละของอะตอมที่ควบแน่นในสถานะพื้น ($N_0/N$)
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} แปลงหน่วยความหนาแน่นเป็นระบบ SI
+\begin{equation*}
+n = 1.0 \times 10^{14}~\text{cm}^{-3} = 1.0 \times 10^{20}~\text{m}^{-3}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณอุณหภูมิวิกฤต $T_c$ จากสูตร~\eqref{eq:bec_tc_formula}
+\begin{equation*}
+T_c = \frac{3.3125 \hbar^2 n^{2/3}}{m k_B}
+\end{equation*}
+คำนวณเทอมย่อย
+\begin{equation*}
+n^{2/3} = (1.0 \times 10^{20})^{2/3} = 2.154 \times 10^{13}~\text{m}^{-2}
+\end{equation*}
+\begin{equation*}
+\hbar^2 = (1.0546 \times 10^{-34})^2 \approx 1.112 \times 10^{-68}~\text{J}^2\cdot\text{s}^2
+\end{equation*}
+\begin{align*}
+T_c &= \frac{3.3125 \times (1.112 \times 10^{-68}) \times (2.154 \times 10^{13})}{(1.444 \times 10^{-25}) \times (1.3806 \times 10^{-23})} \\
+&= \frac{7.935 \times 10^{-55}}{1.994 \times 10^{-48}} \approx 3.98 \times 10^{-7}~\text{K} \approx 398~\text{nK}
+\end{align*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณสัดส่วนการควบแน่นที่ $T = 0.5 T_c$
+จากสูตร~\eqref{eq:bec_condensate_fraction}
+\begin{equation*}
+\frac{N_0}{N} = 1 - \left( \frac{T}{T_c} \right)^{3/2} = 1 - (0.5)^{3/2} = 1 - \sqrt{0.125} \approx 1 - 0.3536 = 0.6464
+\end{equation*}
+คิดเป็นร้อยละ $64.64\%$
+
+\textbf{Check (ตรวจสอบ)} ---- อุณหภูมิวิกฤตอยู่ในระดับนาโนเคลวิน ($398\text{ nK}$) ซึ่งตรงกับเงื่อนไขการทดลองจริงของกลุ่มคอร์เนลล์และวีแมน และที่อุณหภูมิต่ำกว่า $T_c$ ประชากรส่วนใหญ่ ($> 50\%$) ตกลงสู่สถานะพื้น
+
+\textbf{Think (คิดต่อ)} ---- การบรรลุอุณหภูมิระดับนาโนเคลวินนี้ต้องอาศัยการผสมผสานสองเทคนิคปฏิวัติ คือ การทำความเย็นด้วยเลเซอร์ดอปเปลอร์ (Doppler Laser Cooling) เพื่อลดอุณหภูมิลงสู่ระดับไมโครเคลวิน ตามด้วยการทำความเย็นแบบระเหย (Evaporative Cooling) ในกับดักแม่เหล็กเพื่อคัดกรองอะตอมที่มีพลังงานสูงทิ้งไปจนเหลือเพียงกลุ่มอะตอมที่เย็นจัด
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 7.5
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 7.5 ---- ช่องว่างพลังงานยิ่งยวดและสนามแม่เหล็กวิกฤตของไนโอเบียม}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+โลหะไนโอเบียม ($\text{Nb}$) เป็นสารตัวนำยิ่งยวดดั้งเดิมแบบที่ 2 ที่นิยมใช้ทำแม่เหล็กตัวนำยิ่งยวด มีอุณหภูมิวิกฤต $T_c = 9.25~\text{K}$
+\begin{enumerate}
+    \item จงคำนวณช่องว่างพลังงานยิ่งยวดของคู่คูเปอร์ที่ศูนย์สัมบูรณ์ $\Delta(0)$ ในหน่วยมิลลิอิเล็กตรอนโวลต์ ($\text{meV}$) ตามทฤษฎี BCS ซึ่งกำหนดให้ $\Delta(0) = 1.764 \, k_B T_c$
+    \item จงหาความถี่และความยาวคลื่นของโฟตอนต่ำสุดที่สามารถทำลายคู่คูเปอร์ให้แตกออกได้
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} คำนวณช่องว่างพลังงานยิ่งยวด $\Delta(0)$
+\begin{equation*}
+\Delta(0) = 1.764 \times (1.3806 \times 10^{-23}~\text{J/K}) \times (9.25~\text{K}) \approx 2.253 \times 10^{-22}~\text{J}
+\end{equation*}
+แปลงเป็นหน่วย $\text{meV}$
+\begin{equation*}
+\Delta(0) = \frac{2.253 \times 10^{-22}~\text{J}}{1.602 \times 10^{-19}~\text{J/eV}} \approx 1.406 \times 10^{-3}~\text{eV} = 1.406~\text{meV}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณพลังงานขั้นต่ำในการทำลายคู่คูเปอร์
+เนื่องจากการทำลายคู่คูเปอร์หนึ่งคู่ต้องสร้างอนุภาคเสมือนสองตัวที่มีพลังงานอย่างน้อย $\Delta(0)$ พลังงานโฟตอนขั้นต่ำคือ $h\nu_{\text{min}} = 2\Delta(0)$
+\begin{equation*}
+E_{\text{photon}} = 2 \Delta(0) = 2 \times (2.253 \times 10^{-22}~\text{J}) = 4.506 \times 10^{-22}~\text{J} \approx 2.812~\text{meV}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} คำนวณความถี่และความยาวคลื่นโฟตอน
+\begin{equation*}
+\nu_{\text{min}} = \frac{E_{\text{photon}}}{h} = \frac{4.506 \times 10^{-22}~\text{J}}{6.626 \times 10^{-34}~\text{J}\cdot\text{s}} \approx 6.80 \times 10^{11}~\text{Hz} = 680~\text{GHz}
+\end{equation*}
+\begin{equation*}
+\lambda_{\text{max}} = \frac{c}{\nu_{\text{min}}} = \frac{3.0 \times 10^8~\text{m/s}}{6.80 \times 10^{11}~\text{s}^{-1}} \approx 4.41 \times 10^{-4}~\text{m} = 0.441~\text{mm}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ความยาวคลื่น $0.441~\text{mm}$ อยู่ในย่านคลื่นไมโครเวฟความถี่สูงมากหรือคลื่นมิลลิเมตร (Sub-millimeter / Far Infrared)
+
+\textbf{Think (คิดต่อ)} ---- ผลลัพธ์นี้อธิบายว่าเหตุใดตัวนำยิ่งยวดจึงนำไฟฟ้ากระแสสลับได้โดยปราศจากความต้านทานเฉพาะที่ความถี่ต่ำกว่า $2\Delta/h$ เท่านั้น หากความถี่สูงเกินกว่า $680\text{ GHz}$ โฟตอนของคลื่นแม่เหล็กไฟฟ้าจะมีพลังงานมากพอที่จะทำลายคู่คูเปอร์ให้แตกออกเป็นอิเล็กตรอนเดี่ยวปกติ ทำให้ความต้านทานไฟฟ้ากลับคืนมา
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 7.6
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 7.6 ---- อัตราการดูดกลืนรังสีและการเปลี่ยนสถานะด้วยกฎทองของแฟร์มี}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+ระบบควอนตัมหนึ่งมิติอยู่ในสถานะเริ่มต้น $\ket{i}$ ถูกรบกวนด้วยสนามไฟฟ้าฮาร์มอนิกสลับที่ $E(t) = E_0 \cos(\omega t)$ ทำให้เกิดฮามิลโทเนียนการรบกวน $\hat{V}(t) = -e E_0 x \cos(\omega t)$ หากความหนาแน่นสถานะสุดท้ายสเปกตรัมต่อเนื่องคือ $\rho(E_f) = C$ (คงตัว) จงคำนวณอัตราการเปลี่ยนสถานะต่อหนึ่งหน่วยเวลา $\Gamma_{i \to f}$ จากกฎทองของแฟร์มีในรูปของสมาชิกเมทริกซ์ขั้วคู่ไฟฟ้า $x_{fi} = \bra{f} x \ket{i}$
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} แยกเทอมการรบกวนในรูปเอกซ์โพเนนเชียล
+\begin{equation*}
+\hat{V}(t) = -e E_0 x \left( \frac{e^{-i\omega t} + e^{i\omega t}}{2} \right) = \hat{F} e^{-i\omega t} + \hat{F}^\dagger e^{i\omega t}
+\end{equation*}
+โดยที่ตัวดำเนินการดูดกลืนคือ
+\begin{equation*}
+\hat{F} = -\frac{1}{2} e E_0 x
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณสมาชิกเมทริกซ์การเปลี่ยนสถานะ
+\begin{equation*}
+|\bra{f} \hat{F} \ket{i}|^2 = \left| -\frac{1}{2} e E_0 \bra{f} x \ket{i} \right|^2 = \frac{1}{4} e^2 E_0^2 |x_{fi}|^2
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 3} แทนค่าลงในกฎทองของแฟร์มี
+จากสมการ~\eqref{eq:fermi_golden_rule}
+\begin{equation*}
+\Gamma_{i \to f} = \frac{2\pi}{\hbar} |\bra{f} \hat{F} \ket{i}|^2 \rho(E_f) = \frac{2\pi}{\hbar} \left( \frac{1}{4} e^2 E_0^2 |x_{fi}|^2 \right) C = \frac{\pi e^2 E_0^2 |x_{fi}|^2 C}{2\hbar}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- มิติของ $\Gamma$ คือความถี่หรือ $1/\text{s}$ ซึ่งสอดคล้องกับนิยามของอัตราการเปลี่ยนสถานะต่อหน่วยเวลา
+
+\textbf{Think (คิดต่อ)} ---- อัตราการเปลี่ยนสถานะแปรผันตรงกับกำลังสองของความเข้มสนามไฟฟ้า ($E_0^2 \propto \text{Intensity}$) และกำลังสองของสมาชิกเมทริกซ์ตำแหน่ง $|x_{fi}|^2$ หาก $|x_{fi}| = 0$ การเปลี่ยนสถานะนี้จะถูกห้ามตาม \textbf{กฎการเลือก (Selection Rules)} เช่น การเปลี่ยนสถานะระหว่างสองสถานะที่มีพาริตีเดียวกันจะถูกห้ามในอันตรกิริยาขั้วคู่ไฟฟ้า
+\end{psctbox}
+
+% ----------------------------------------------------------
+% ตัวอย่างที่ 7.7
+% ----------------------------------------------------------
+\begin{psctbox}{ตัวอย่างที่ 7.7 ---- การคำนวณสัญญาณแม่เหล็กควอนตัมในอุปกรณ์สควิด (SQUID)}
+
+\textbf{Problem (โจทย์ปัญหา)}
+
+วงแหวนตัวนำยิ่งยวดของเซนเซอร์ SQUID มีพื้นที่วงรอบ $A = 2.0~\text{mm}^2$ เชื่อมต่อด้วยรอยต่อโจเซฟสันสองรอยต่อ
+\begin{enumerate}
+    \item จงคำนวณขนาดของ \textbf{ควอนตัมของฟลักซ์แม่เหล็ก (Magnetic Flux Quantum, $\Phi_0 = h/2e$)}
+    \item จงหาความเปลี่ยนแปลงของสนามแม่เหล็ก $\Delta B$ ที่ทำให้ฟลักซ์แม่เหล็กผ่านวงแหวนเปลี่ยนไปเท่ากับ $1 \Phi_0$ พอดี
+\end{enumerate}
+
+\textbf{Solution (วิธีทำ)}
+
+\textbf{ขั้นตอนที่ 1} คำนวณควอนตัมของฟลักซ์แม่เหล็ก $\Phi_0$
+เนื่องจากพาหะในตัวนำยิ่งยวดคือคู่คูเปอร์ที่มีประจุเป็นคู่ $q = 2e$
+\begin{equation*}
+\Phi_0 = \frac{h}{2e} = \frac{6.626 \times 10^{-34}~\text{J}\cdot\text{s}}{2(1.602 \times 10^{-19}~\text{C})} \approx 2.0678 \times 10^{-15}~\text{Tesla}\cdot\text{m}^2 = 2.0678 \times 10^{-15}~\text{Wb}
+\end{equation*}
+
+\textbf{ขั้นตอนที่ 2} คำนวณความเปลี่ยนแปลงของสนามแม่เหล็ก $\Delta B$
+ความสัมพันธ์ระหว่างฟลักซ์แม่เหล็กและสนามแม่เหล็กคือ $\Phi = B A$
+\begin{equation*}
+\Delta B = \frac{\Phi_0}{A} = \frac{2.0678 \times 10^{-15}~\text{T}\cdot\text{m}^2}{2.0 \times 10^{-6}~\text{m}^2} \approx 1.034 \times 10^{-9}~\text{Tesla} = 1.034~\text{nT}
+\end{equation*}
+
+\textbf{Check (ตรวจสอบ)} ---- ค่า $\Delta B \approx 1.03~\text{nT}$ มีค่าน้อยกว่าสนามแม่เหล็กโลก ($\approx 50,000~\text{nT}$) ถึง 50,000 เท่า
+
+\textbf{Think (คิดต่อ)} ---- ในวงจรอิเล็กทรอนิกส์ของ SQUID สมัยใหม่ ระบบสามารถตรวจจับการเลื่อนของเฟสควอนตัมได้ละเอียดถึง $10^{-6} \Phi_0$ ส่งผลให้สามารถวัดสนามแม่เหล็กได้ละเอียดถึงระดับ $10^{-15}\text{ T}$ (เฟมโตเทสลา) ซึ่งละเอียดพอที่จะตรวจจับสนามแม่เหล็กอ่อนๆ จากการส่งสัญญาณประสาทในเซลล์สมองของมนุษย์โดยไม่ต้องผ่าตัดเปิดกะโหลกศีรษะ
+\end{psctbox}
+
+% ==========================================================
+% สคริปต์การคำนวณเชิงตัวเลขภาษา Python
+% ==========================================================
+\section{สคริปต์การคำนวณเชิงตัวเลขภาษา Python จำลองสถิติควอนตัมและ BEC}
+\index{การคำนวณเชิงตัวเลขด้วยไพทอน (Python Computation)}
+
+สคริปต์ภาษา Python ด้านล่างนี้จำลองการแจกแจงประชากรของสถิติเฟอร์มิ-ดิแรก โบส-ไอน์สไตน์ และแมกซ์เวลล์-โบลต์ซมันน์ พร้อมทั้งคำนวณและพล็อตกราฟสัดส่วนการควบแน่น $N_0/N = 1 - (T/T_c)^{3/2}$ ตามสมการ~\eqref{eq:bec_condensate_fraction}
+
+\begin{tcolorbox}[colback=slateGrey!5, colframe=darkNavy, title={\textbf{Python 3 Script ---- Quantum Statistics \& BEC Phase Transition Simulator}}]
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ==========================================================
+# ส่วนที่ 1: การเปรียบเทียบฟังก์ชันการแจกแจงสถิติควอนตัม
+# ==========================================================
+x = np.linspace(-3.0, 4.0, 1000)  # ตัวแปรไร้มิติ (E - mu) / (k_B * T)
+
+# ฟังก์ชันการแจกแจงทั้งสามแบบ
+fd = 1.0 / (np.exp(x) + 1.0)
+mb = np.exp(-x)
+# สำหรับโบส-ไอน์สไตน์ นิยามเฉพาะเมื่อ E - mu > 0 (x > 0)
+be_x = np.linspace(0.05, 4.0, 500)
+be = 1.0 / (np.exp(be_x) - 1.0)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5))
+
+# กราฟที่ 1: เปรียบเทียบ MB, FD, BE
+ax1.plot(x, fd, 'r-', lw=2.0, label='Fermi-Dirac (Fermions)')
+ax1.plot(x, mb, 'k--', lw=1.5, label='Maxwell-Boltzmann (Classical)')
+ax1.plot(be_x, be, 'b-', lw=2.0, label='Bose-Einstein (Bosons)')
+ax1.axhline(1.0, color='gray', linestyle=':', alpha=0.7)
+ax1.set_ylim(0, 3.0)
+ax1.set_xlim(-3.0, 4.0)
+ax1.set_title('Comparison of Quantum Distribution Functions')
+ax1.set_xlabel(r'$(\varepsilon - \mu) / k_B T$')
+ax1.set_ylabel(r'Average Occupancy $\bar{n}(\varepsilon)$')
+ax1.grid(True, linestyle='--', alpha=0.5)
+ax1.legend()
+
+# ==========================================================
+# ส่วนที่ 2: สัดส่วนการควบแน่น BEC (Condensate Fraction)
+# ==========================================================
+T_ratio = np.linspace(0, 1.5, 500)  # อัตราส่วน T / T_c
+condensate_fraction = np.zeros_like(T_ratio)
+
+for idx, t in enumerate(T_ratio):
+    if t < 1.0:
+        condensate_fraction[idx] = 1.0 - (t ** 1.5)
+    else:
+        condensate_fraction[idx] = 0.0
+
+excited_fraction = 1.0 - condensate_fraction
+
+ax2.plot(T_ratio, condensate_fraction, 'b-', lw=2.5, label='Condensate Fraction (N_0 / N)')
+ax2.plot(T_ratio, excited_fraction, 'r--', lw=2.0, label='Excited Fraction (N_ex / N)')
+ax2.axvline(1.0, color='purple', linestyle=':', lw=1.5, label=r'Critical Temp $T_c$')
+ax2.set_xlim(0, 1.5)
+ax2.set_ylim(0, 1.05)
+ax2.set_title('Bose-Einstein Condensation Phase Transition')
+ax2.set_xlabel(r'Temperature Ratio $T / T_c$')
+ax2.set_ylabel('Fraction of Particles')
+ax2.grid(True, linestyle='--', alpha=0.5)
+ax2.legend()
+
+plt.tight_layout()
+plt.savefig('quantum_statistics_simulation.png', dpi=300)
+print('กราฟการจำลองถูกบันทึกสำเร็จที่ quantum_statistics_simulation.png')
+\end{lstlisting}
+\end{tcolorbox}
+
+% ==========================================================
+% สรุปสาระสำคัญประจำบทที่ 7
+% ==========================================================
+\section{สรุปสาระสำคัญประจำบทที่ 7}
+
+\begin{itemize}
+    \item \textbf{ทฤษฎีการรบกวนไม่ขึ้นกับเวลาแบบไม่เสื่อม} ---- การแก้ไขพลังงานอันดับหนึ่งคือค่าคาดหวังของตัวดำเนินการรบกวนในสถานะเดิม $E_n^{(1)} = \bra{\psi_n^{(0)}}\hat{H}'\ket{\psi_n^{(0)}}$ และการแก้ไขพลังงานอันดับสองของสถานะพื้นมีค่าเป็นลบหรือศูนย์เสมอ ($E_0^{(2)} \le 0$)
+    \item \textbf{ทฤษฎีการรบกวนแบบเสื่อม} ---- เมื่อมีหลายสถานะที่มีพลังงานเท่ากัน การรบกวนจะทำให้เกิดการยกเลิกความเสื่อมผ่านการแก้สมการเซคิวลาร์ $\det(W - E^{(1)}I) = 0$ ซึ่งอธิบายปรากฏการณ์สตาร์กเชิงเส้นในอะตอมไฮโดรเจนได้อย่างแม่นตรง
+    \item \textbf{ระเบียบวิธีแปรผันของเรย์ลี-ริตซ์} ---- ค่าคาดหวังพลังงานของฟังก์ชันคลื่นทดลองใดๆ จะมีค่ามากกว่าหรือเท่ากับพลังงานสถานะพื้นที่แท้จริงเสมอ ($E[\psi_{\text{trial}}] \ge E_0$) ซึ่งใช้ประเมินพลังงานสถานะพื้นของอะตอมฮีเลียมได้แม่นยำภายใน $2\%$
+    \item \textbf{กฎทองของแฟร์มี} ---- ในทฤษฎีการรบกวนขึ้นกับเวลา อัตราการเปลี่ยนสถานะต่อหนึ่งหน่วยเวลาสำหรับสัญญาณรบกวนแบบฮาร์มอนิกกำหนดโดย $\Gamma = \frac{2\pi}{\hbar} |\bra{f}\hat{F}\ket{i}|^2 \rho(E_f)$ ซึ่งเป็นรากฐานของสเปกโทรสโกปีเชิงแสงและเลเซอร์
+    \item \textbf{สมมาตรการสลับที่และทฤษฎีบทสปิน-สถิติ} ---- โบซอน (สปินเต็ม) มีฟังก์ชันคลื่นสมมาตร ในขณะที่เฟอร์มิออน (สปินครึ่ง) มีฟังก์ชันคลื่นปฏิสมมาตร ซึ่งนำไปสู่หลักการกีดกันของเพาลีและดีเทอร์มิแนนต์สเลเตอร์
+    \item \textbf{สถิติควอนตัม} ---- การแจกแจงเฟอร์มิ-ดิแรกจำกัดการครอบครองไม่เกิน 1 อนุภาคต่อสถานะ ในขณะที่สถิติโบส-ไอน์สไตน์อนุญาตให้เกิดการรวมตัวอย่างไม่จำกัด และทั้งสองแบบจะลู่เข้าสู่สถิติแมกซ์เวลล์-โบลต์ซมันน์ในลิมิตอุณหภูมิสูง
+    \item \textbf{ก๊าซแฟร์มีอิสระ} ---- พลังงานแฟร์มี $E_F = \frac{\hbar^2}{2m}(3\pi^2 n)^{2/3}$ นำไปสู่ความดันควอนตัมดีเจเนอเรซีที่ค้ำจุนเสถียรภาพของดาวแคระขาวและดาวนิวตรอน
+    \item \textbf{การควบแน่นแบบโบส-ไอน์สไตน์ (BEC)} ---- เมื่ออุณหภูมิลดต่ำกว่า $T_c$ โบซอนจำนวนมหภาคจะควบแน่นลงสู่สถานะพื้นเดียวกัน เกิดเป็นคลื่นควอนตัมมหภาคที่มีสภาพของไหลยิ่งยวดและกระแสวนควอนตัม
+    \item \textbf{สภาพนำยิ่งยวดและทฤษฎี BCS} ---- การแลกเปลี่ยนโฟนอนเหนี่ยวนำให้อิเล็กตรอนจับคู่กันเป็นคู่คูเปอร์ที่มีสปินรวมเป็นศูนย์ ทำหน้าที่เสมือนโบซอนที่ควบแน่นเป็นสถานะตัวนำยิ่งยวดที่ความต้านทานไฟฟ้าเป็นศูนย์
+\end{itemize}
+
+% ==========================================================
+% แบบฝึกหัดท้ายบทที่ 7
+% ==========================================================
+\section*{แบบฝึกหัดท้ายบทที่ 7}
+\addcontentsline{toc}{section}{แบบฝึกหัดท้ายบทที่ 7}
+
+\subsection*{คำถามเชิงแนวคิด (Conceptual Questions)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item จงอธิบายเกณฑ์ความถูกต้องที่ทำให้เราสามารถใช้ทฤษฎีการรบกวนอันดับหนึ่งและอันดับสองในการคำนวณระบบควอนตัมได้อย่างน่าเชื่อถือ
+    \item เหตุใดการแก้ไขพลังงานอันดับสองของสถานะพื้น ($E_0^{(2)}$) จึงมีค่าเป็นลบหรือศูนย์เสมอในทฤษฎีการรบกวนไม่เสื่อม
+    \item ทำไมทฤษฎีการรบกวนแบบไม่เสื่อมจึงล้มเหลวโดยสิ้นเชิงเมื่อนำไปใช้กับระดับพลังงานที่มีภาวะเสื่อม และสมการเซคิวลาร์ช่วยแก้ปัญหานี้ได้อย่างไร
+    \item อธิบายความแตกต่างระหว่างปรากฏการณ์สตาร์กเชิงเส้น (Linear Stark Effect) และปรากฏการณ์สตาร์กกำลังสอง (Quadratic Stark Effect) เหตุใดสถานะพื้น $1s$ จึงไม่มีสตาร์กเชิงเส้น
+    \item ในระเบียบวิธีแปรผันของเรย์ลี-ริตซ์ หากเราเลือกฟังก์ชันคลื่นทดลองที่ผิดพลาดอย่างมาก เรายังคงมั่นใจได้หรือไม่ว่าพลังงานที่คำนวณได้จะไม่ต่ำกว่าพลังงานสถานะจริง จงอธิบาย
+    \item ในการคำนวณอะตอมฮีเลียมด้วยวิธีแปรผัน เหตุใดประจุยังผลของนิวเคลียสจึงมีค่าน้อยกว่าประจุจริง ($Z_{\text{eff}} = 1.6875 < 2$)
+    \item อธิบายความหมายทางกายภาพของกฎทองของแฟร์มี เหตุใดอัตราการเปลี่ยนสถานะจึงขึ้นอยู่กับความหนาแน่นสถานะสุดท้าย $\rho(E_f)$
+    \item สัจพจน์การทำให้สมมาตร (Symmetrization Postulate) แบ่งอนุภาคในธรรมชาติออกเป็นสองตระกูลอย่างไร และทฤษฎีบทสปิน-สถิติมีความเกี่ยวข้องอย่างไร
+    \item ทำไมดีเทอร์มิแนนต์สเลเตอร์จึงเป็นเครื่องมือทางคณิตศาสตร์ที่รับประกันว่าหลักการกีดกันของเพาลีจะได้รับการปฏิบัติตามอย่างเคร่งครัดเสมอ
+    \item เปรียบเทียบพฤติกรรมการเกาะกลุ่ม (Bunching) ของโบซอน และการต่อต้านการเกาะกลุ่ม (Antibunching) ของเฟอร์มิออน
+    \item จงอธิบายความหมายของความยาวคลื่นเดอบรอยล์เชิงความร้อน $\lambda_{\text{th}}$ และเงื่อนไขที่ทำให้ระบบก๊าซเปลี่ยนจากพฤติกรรมคลาสสิกสู่พฤติกรรมควอนตัม
+    \item เหตุใดศักย์เคมี $\mu$ ของก๊าซโบซอนจึงไม่สามารถมีค่ามากกว่าพลังงานสถานะพื้นได้ ($\mu < \varepsilon_0$)
+    \item อธิบายความหมายของอุณหภูมิแฟร์มี $T_F$ เหตุใดอิเล็กตรอนในโลหะที่อุณหภูมิห้องจึงประพฤติตนเป็นก๊าซควอนตัมเสื่อมยิ่งยวด
+    \item ความดันควอนตัมดีเจเนอเรซีเกิดขึ้นได้อย่างไรแม้ที่อุณหภูมิศูนย์สัมบูรณ์ ($T = 0\text{ K}$) และมีความสำคัญอย่างไรต่อโครงสร้างของดาวแคระขาว
+    \item อธิบายความแตกต่างพื้นฐานระหว่างการควบแน่นของไอน้ำเป็นหยดน้ำในทางอุณหพลศาสตร์คลาสสิก กับการควบแน่นแบบโบส-ไอน์สไตน์ (BEC)
+    \item เหตุใดการสังเกตการณ์ BEC ในห้องปฏิบัติการจึงต้องใช้ก๊าซที่มีความหนาแน่นเจือจางมาก แทนที่จะใช้ของเหลวความหนาแน่นสูง
+    \item อธิบายบทบาทของสมการกรอสส์-พิตาเยฟสกี (GPE) ในการอธิบายพฤติกรรมของหยดของไหลยิ่งยวด BEC
+    \item อิเล็กตรอนซึ่งมีประจุลบเหมือนกันและผลักกันทางไฟฟ้าสถิต สามารถจับคู่กันเป็นคู่คูเปอร์ (Cooper Pairs) ในตัวนำยิ่งยวดได้อย่างไร
+    \item ปรากฏการณ์ไมส์สเนอร์-อ็อคเซนเฟลด์ แตกต่างจากตัวนำไฟฟ้าสมบูรณ์แบบในอุดมคติ ($R = 0$) อย่างไร
+    \item อธิบายหลักการทำงานของเซนเซอร์ SQUID ในการตรวจวัดสนามแม่เหล็กสมองระดับเฟมโตเทสลา
+\end{enumerate}
+
+\subsection*{โจทย์ปัญหาเชิงวิเคราะห์และคำนวณ (Analytical Problems)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item อนุภาคในบ่อศักย์ลึกอนันต์ $0 \le x \le L$ ถูกรบกวนด้วยศักย์เชิงเส้น $\hat{H}' = \lambda x$ จงคำนวณการแก้ไขพลังงานอันดับหนึ่ง $E_n^{(1)}$ สำหรับทุกระดับ $n$
+    \item ตัวแกว่งกวัดฮาร์มอนิกหนึ่งมิติถูกรบกวนด้วยศักย์แอนฮาร์มอนิก $\hat{H}' = \lambda x^4$ จงใช้ตัวดำเนินการบันไดในการคำนวณการแก้ไขพลังงานอันดับหนึ่งของสถานะพื้น $E_0^{(1)}$
+    \item สำหรับตัวแกว่งกวัดฮาร์มอนิกหนึ่งมิติที่ถูกรบกวนด้วยศักย์เชิงเส้น $\hat{H}' = -q \mathcal{E} x$ (เช่น สนามไฟฟ้า) จงคำนวณการแก้ไขพลังงานอันดับสอง $E_n^{(2)}$ และเปรียบเทียบกับผลเฉลยแม่นตรงที่ได้จากการเลื่อนจุดกำเนิดของพิกัด
+    \item จงแสดงรายละเอียดการแก้สมการเซคิวลาร์ของปรากฏการณ์สตาร์กเชิงเส้นในอะตอมไฮโดรเจน $n = 2$ และหาสถานะเจาะจงของระดับพลังงานที่แยกตัว
+    \item จงใช้ระเบียบวิธีแปรผันของเรย์ลี-ริตซ์ในการประมาณพลังงานสถานะพื้นของอนุภาคในบ่อศักย์ลึกอนันต์ $0 \le x \le L$ โดยใช้ฟังก์ชันคลื่นทดลองรูปพาราโบลา $\psi_{\text{trial}}(x) = x(L - x)$ และเปรียบเทียบกับค่าจริง $E_1 = \frac{\pi^2 \hbar^2}{2m L^2}$
+    \item จงประมาณพลังงานสถานะพื้นของตัวแกว่งกวัดฮาร์มอนิกโดยใช้ฟังก์ชันคลื่นทดลองแบบเอกซ์โพเนนเชียลสมมาตร $\psi_{\text{trial}}(x) = e^{-\alpha |x|}$ โดยที่ $\alpha$ เป็นพารามิเตอร์แปรผัน
+    \item ระบบสองระดับถูกรบกวนด้วยศักย์ขึ้นกับเวลาแบบขั้นบันได $\hat{V}(t) = 0$ สำหรับ $t < 0$ และ $\hat{V}(t) = V_0 \sigma_x$ สำหรับ $t \ge 0$ หากที่ $t = 0$ ระบบอยู่ในสถานะ $\ket{1}$ จงคำนวณความน่าจะเป็น $P_{1 \to 2}(t)$ ในอันดับที่หนึ่งของการรบกวน
+    \item จงเขียนดีเทอร์มิแนนต์สเลเตอร์สำหรับสถานะของอิเล็กตรอน 3 ตัวที่ไม่มีปฏิสัมพันธ์กันในกล่องศักย์หนึ่งมิติ โดยอิเล็กตรอนสองตัวมีสปินขึ้นและอีกหนึ่งตัวมีสปินลง
+    \item จงคำนวณความยาวคลื่นเดอบรอยล์เชิงความร้อน $\lambda_{\text{th}}$ ของก๊าซฮีเลียม ($^4\text{He}$) ที่อุณหภูมิห้อง $T = 300\text{ K}$ และที่อุณหภูมิ $T = 4.2\text{ K}$ (จุดเดือดของฮีเลียมเหลว)
+    \item จงคำนวณความเร็วแฟร์มี $v_F = \hbar k_F / m_e$ ของอิเล็กตรอนในทองแดง ($n = 8.5 \times 10^{28}\text{ m}^{-3}$) และเปรียบเทียบกับความเร็วแสงในสุญญากาศ $c$
+    \item ดาวแคระขาวดวงหนึ่งมีมวลเท่ากับดวงอาทิตย์ ($M = 2.0 \times 10^{30}\text{ kg}$) และมีรัศมีเท่ากับโลก ($R = 6.4 \times 10^6\text{ m}$) หากดาวประกอบด้วยนิวเคลียสคาร์บอนและออกซิเจนที่แตกตัวเป็นไอออนหมดจด ($Z/A = 0.5$) จงคำนวณพลังงานแฟร์มีของอิเล็กตรอนในดาวดวงนี้ในหน่วย $\text{MeV}$
+    \item ก๊าซโซเดียม-23 ($^{23}\text{Na}$) มีความหนาแน่น $n = 5.0 \times 10^{13}\text{ cm}^{-3}$ จงคำนวณอุณหภูมิวิกฤต $T_c$ สำหรับการเกิดการควบแน่นแบบโบส-ไอน์สไตน์
+    \item สำหรับก๊าซโบซอนในกับดักฮาร์มอนิกสามมิติ ($V(r) = \frac{1}{2}m\omega^2 r^2$) จงแสดงว่าอุณหภูมิวิกฤตสอดคล้องกับ $k_B T_c = \hbar\omega [N/\zeta(3)]^{1/3}$ โดยที่ $\zeta(3) \approx 1.202$
+    \item แผ่นฟิล์มตัวนำยิ่งยวดตะกั่ว ($\text{Pb}$) มี $T_c = 7.2\text{ K}$ จงคำนวณขนาดของช่องว่างพลังงาน $\Delta(0)$ ในหน่วย $\text{meV}$
+    \item จงคำนวณฟลักซ์แม่เหล็กผ่านวงแหวนตัวนำยิ่งยวดที่มีสนามแม่เหล็กตั้งฉาก $B = 5.0 \times 10^{-5}\text{ T}$ (สนามแม่เหล็กโลก) และมีรัศมีวงแหวน $r = 1.0\text{ cm}$ ในรูปพหุคูณของควอนตัมฟลักซ์ $\Phi_0$
+    \item สำหรับอนุภาคสองตัวที่เหมือนกันทุกประการในบ่อศักย์ลึกอนันต์ จงคำนวณค่าคาดหวังของระยะห่างกำลังสอง $\langle (x_1 - x_2)^2 \rangle$ สำหรับกรณีที่ทั้งสองเป็นโบซอน และกรณีที่เป็นเฟอร์มิออน
+    \item จงคำนวณความจุความร้อนอิเล็กทรอนิกส์ต่อโมล $C_V = \frac{\pi^2}{2} R \frac{T}{T_F}$ ของทองแดงที่อุณหภูมิห้อง $T = 300\text{ K}$ และเปรียบเทียบกับค่าคลาสสิก $C_V = \frac{3}{2} R$
+    \item ในระบบก๊าซแฟร์มีสองมิติ (2D Fermi Gas) ในพื้นที่ $A$ จงแสดงว่าความหนาแน่นสถานะ $g(\varepsilon)$ มีค่าคงตัวไม่ขึ้นกับพลังงาน และหาความสัมพันธ์ระหว่างพลังงานแฟร์มีกับความหนาแน่นพื้นที่ $n_{2D}$
+    \item สำหรับการแจกแจงเฟอร์มิ-ดิแรก จงหาช่วงพลังงาน $\Delta\varepsilon$ รอบระดับเคมี $\mu$ ที่ทำให้ฟังก์ชันการแจกแจงลดลงจาก $0.9$ เหลือ $0.1$ ในรูปของ $k_B T$
+    \item \textbf{โจทย์ประยุกต์การคำนวณทางฟิสิกส์คอมพิวเตอร์ (Computational Task)} ---- จงพัฒนาต่อยอดสคริปต์ Python ในบทเรียนเพื่อคำนวณศักย์เคมี $\mu(T)$ ของก๊าซแฟร์มีอิสระในสามมิติเชิงตัวเลขเป็นฟังก์ชันของอุณหภูมิ $T/T_F$ ตั้งแต่ $0$ ถึง $2.0$ โดยแก้สมการปริพันธ์ $N = \int_0^\infty g(\varepsilon) \bar{n}_{\text{FD}}(\varepsilon, \mu, T) d\varepsilon$ และพล็อตกราฟแสดงการลดลงของ $\mu(T)$ จากค่า $E_F$ เมื่ออุณหภูมิเพิ่มสูงขึ้น
+\end{enumerate}

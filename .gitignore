@@ -29,3 +29,6 @@ my_skill2026/
 # Raw reference downloads (videos, archives, large datasets)
 **/source_docs/
 
+# Standalone WebAR Simulator Repository
+13_Intro_to_Quantum_Physics_AR_AI/webar_simulators/
+

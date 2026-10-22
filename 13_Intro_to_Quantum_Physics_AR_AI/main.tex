@@ -1,0 +1,65 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+% 1. Master Style for Quantum Physics with AR/XR & AI Deep Learning
+\usepackage{styles/quantum_physics_style}
+
+% 2. Font configuration for XeLaTeX (Sarabun font)
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Sarabun}
+\setmonofont{Sarabun}[Scale=0.9]
+
+% 3. Hyperref Setup
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyberBlue,
+    citecolor=neonPurple,
+    urlcolor=cyberBlue,
+    filecolor=emeraldGlow,
+    pdftitle={ควอนตัมฟิสิกส์เบื้องต้น: AR/XR & AI Deep Learning - ผศ.ดร.ชีวะ ทัศนา},
+    pdfauthor={ผู้ช่วยศาสตราจารย์ ดร.ชีวะ ทัศนา}
+}
+
+\begin{document}
+
+% Frontmatter
+\frontmatter
+\input{frontmatter/cover}
+\include{frontmatter/title}
+\include{frontmatter/preface}
+\include{frontmatter/syllabus}
+
+% Table of Contents, Figures, Tables
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+% Mainmatter: 10 Core Chapters
+\mainmatter
+\include{chapters/ch01_particle_properties}
+\include{chapters/ch02_wave_properties}
+\include{chapters/ch03_schrodinger_equation}
+\include{chapters/ch04_potential_wells_tunneling}
+\include{chapters/ch05_harmonic_oscillator}
+\include{chapters/ch06_hydrogen_atom_spin}
+\include{chapters/ch07_perturbation_statistics}
+\include{chapters/ch08_quantum_information_qubits}
+\include{chapters/ch09_entanglement_teleportation}
+\include{chapters/ch10_quantum_algorithms_frontiers}
+
+% Appendix & Backmatter
+\appendix
+\include{backmatter/appendix_constants}
+
+\backmatter
+\include{backmatter/bibliography}
+\printindex
+
+\end{document}
